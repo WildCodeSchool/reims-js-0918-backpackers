@@ -7,30 +7,40 @@ const Login = () => {
   return (
     <Fragment>
       <Row>
-        <Col xs="6">
-          <img source={require("./images/Logo-Backpackers.png")} alt="Logo Backpackers" />
+        <Col xs="12">
+          <h1 className="text-center my-3">Se connecter</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={{ size: 6, offset: 3 }}>
+          <img className="w-100 my-4" src={require("./images/Logo-Backpackers.png")} alt="Logo Backpackers" />
         </Col>
       </Row>
       <Row>
         <Col xs="12">
           <Form>
             <FormGroup>
-              <Input type="textarea" name="text" id="exampleText" placeholder="User Name" />
+              <Input type="text" name="loginUsername" id="loginUsername" placeholder="User Name" />
             </FormGroup>
             <FormGroup>
-              <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
+              <Input type="password" name="loginPassword" id="loginPassword" placeholder="password" />
             </FormGroup>
           </Form>
         </Col>
       </Row>
       <Row>
-        <Col xs="12">
-          <Button>Facebook</Button>
+        <Col xs={{ size: 8, offset: 2 }}>
+          <Button className="facebookLogin">Facebook</Button>
         </Col>
       </Row>
       <Row>
         <Col xs="12">
-          <Button>Se connecter</Button>
+          <Button className="login">Se connecter</Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs="12">
+          <p className="newAccount mt-4 text-center">Je n'ai pas de compte. <a>Créer un compte</a></p>
         </Col>
       </Row>
 
