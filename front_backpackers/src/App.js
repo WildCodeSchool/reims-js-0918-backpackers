@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Login from './Login.js';
+import Login from './Login';
+import HomePage from "./HomePage";
 import './App.css';
 import { Container } from 'reactstrap';
 
@@ -8,6 +9,7 @@ class App extends Component {
     return (
       <Container fluid>
         <Login />
+        <HomePage />
       </Container>
     );
   }
