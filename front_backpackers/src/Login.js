@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import './Login.css';
 import logoBackpackers from "./images/Logo-Backpackers.png"
 
 const Login = () => {
   return (
-    <Fragment>
+    <div className="loginBackground">
       <Row>
         <Col xs="12">
           <h1 className="text-center my-3">Se connecter</h1>
@@ -44,9 +44,9 @@ const Login = () => {
         </Col>
       </Row>
 
+    </div>
 
 
-    </Fragment>
   )
 }
 

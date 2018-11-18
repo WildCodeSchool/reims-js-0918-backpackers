@@ -1,6 +1,12 @@
-body{
-  opacity: 60%;
-  background: url('./images/loginBackground.jpg') center -300px no-repeat;
+.loginBackground{
+  height: 100vh;  
+  position: relative;
+
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: -15px;
+  margin-left: -15px;
+  background: url('./images/loginBackground.jpg')fixed center -300px no-repeat;
 }
 
 h1{
