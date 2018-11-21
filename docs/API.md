@@ -1,37 +1,119 @@
 # Routes
 
-> /lieux (GET: Récupérer la liste des lieux)
+> /places
 >
-> > /lieux/search/:city (GET: Rechercher un lieu par ville)
+> (GET: Récupérer la liste des lieux)
 >
-> > /lieux/ajouter (POST: Ajouter un lieu)
->
-> > /lieux/:id (GET: Récupérer la page d'un lieu)
+> (POST: Ajouter un lieu)
 
-> /activités (GET: Récupérer les activités)
->
-> > /activités/search/:city (GET: Récupérer les activités par ville)
->
-> > /activités/ajouter (POST: Ajouter une activité)
->
-> > /activités/:id (GET: Récupérer la page d'une activité)
->
-> > /activités/:id/participer (POST: Ajouter une participation)
->
-> > /activités/:id/chat
->
-> > /activités/:id/noter (POST: Ajouter une note à une activité)
+```javascript
+  {
+    idPlace:
+    name:
+    adress:
+    price:
+    type:
+    capacity:
+    description:
+    contact:
+    rating:
+  }
+```
 
-> > /profil/:utilisateur (GET: Récupérer la page d'un utilisateur)
+> /places/search/:city (GET: Rechercher un lieu par ville)
+
+```javascript
+  [{
+    idPlace:
+    name:
+    adress:
+    price:
+    type:
+    capacity:
+    description:
+    contact:
+    rating:
+  }]
+```
+
+> /places/:id (GET: Récupérer la page d'un lieu)
 >
-> > /profil/:utilisateur/messages
+> /activities
 >
-> > /profil/:utilisateur/calendrier
+> (GET: Récupérer les activités)
 >
-> > /profil/:utilisateur/coupscoeur (PUT: Ajouter les coups de coeurs)
+> (POST: Ajouter une activité)
+
+```javascript
+ {
+  idActivity:
+  idPlace:
+  name:
+  price:
+  type:
+  capacity:
+  description:
+  contact:
+  rating:
+  creator:
+  participants:
+  date:
+ }
+```
+
+> > /activities/search/:city (GET: Récupérer les activités par ville)
+
+```javascript
+  [{
+    idActivity:
+    idPlace:
+    name:
+    price:
+    type:
+    capacity:
+    description:
+    contact:
+    rating:
+    creator:
+    participants:
+    date:
+  }]
+```
+
+> /activities/:id (GET: Récupérer la page d'une activité)
 >
-> > /profil/:utilisateur/demandes (GET: Récupérer les demandes)
+> /activities/:id/join (POST: Ajouter une participation)
+
+```javascript
+  {
+    idUser:
+    firstname:
+    lastname:
+    picture:
+  }
+```
+
+> /activities/:id/chat
 >
-> > /profil/:utilisateur/modifier (PUT: Mettre à jour les infos utilisateurs)
+> /activities/:id/rate (POST: Ajouter une note à une activité)
+
+```javascript
+  {
+    idUser:
+    rating:
+  }
+```
+
+> /profile/:user (GET: Récupérer la page d'un utilisateur)
 >
-> > /profil/:utilisateur/notations (POST: Ajouter une notation)
+> /profile/:user/messages
+>
+> /profile/:user/calendar
+>
+> /profile/:user/favorites (PUT: Ajouter les coups de coeurs)
+>
+> /profile/:user/invitations (GET: Récupérer les demandes)
+>
+> /profile/:user/update (PUT: Mettre à jour les infos utilisateurs)
+>
+> /profile/:user/rating (POST: Ajouter une notation)
