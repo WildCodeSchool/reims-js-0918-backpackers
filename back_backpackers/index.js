@@ -28,6 +28,35 @@ app.post("/places", (req, res) => {
   });
 });
 
+// connection.query(
+//   `SELECT * FROM places WHERE name="${name}" AND adress="${adress}"`,
+//   (err, results) => {
+//     if (err) {
+//       res.status(500).send("Error retrieving place search");
+//     } else {
+//       res.json(results);
+//     }
+//   }
+// );
+
+app.get("/places/search/:name", (req, res) => {
+  const name = req.query.name;
+  const adress =
+    req.query.adress === undefined
+      ? req.query.adress
+      : req.query.adress.replace(" ", "");
+  connection.query(
+    `SELECT * FROM places WHERE (name LIKE "${name}" OR adress LIKE "${adress}") OR (name LIKE "${name}" AND adress LIKE "${!adress}")`,
+    (err, results) => {
+      if (err) {
+        res.status(500).send("Error retrieving place search");
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
 app.get("/activities", (req, res) => {
   connection.query("SELECT * FROM activities", (err, results) => {
     if (err) {
