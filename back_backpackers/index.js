@@ -62,6 +62,16 @@ app.get("/profile", (req, res) => {
 });
 
 
+app.get('/profile/favorite', (req, res) => {
+  connection.query("SELECT favorite FROM users WHERE idUser = ?", currentUserId, (err, results) => {
+    if (err) {
+      res.status("Error retrieving your favorite activities")
+    } else {
+      res.json(results)
+    }
+  })
+});
+
 app.listen(port, err => {
   if (err) {
     throw new Error("Something bad happened ...");
