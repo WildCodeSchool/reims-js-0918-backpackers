@@ -39,18 +39,22 @@ app.post("/places", (req, res) => {
 //   }
 // );
 
-app.get("/places/search/:name", (req, res) => {
+app.get("/places/search", (req, res) => {
   const name = req.query.name;
-  const adress =
-    req.query.adress === undefined
-      ? req.query.adress
-      : req.query.adress.replace(" ", "");
+  const adress = req.query.adress.split("_").join(" ");
+  console.log(adress);
   connection.query(
-    `SELECT * FROM places WHERE (name LIKE "${name}" OR adress LIKE "${adress}") OR (name LIKE "${name}" AND adress LIKE "${!adress}")`,
+    adress === undefined
+      ? `SELECT * FROM places WHERE name = "${name}"`
+      : name === undefined
+      ? `SELECT * FROM places WHERE adress = ${adress}`
+      : `SELECT * FROM places WHERE name ="${name}" AND adress = ${adress}`,
     (err, results) => {
       if (err) {
+        console.log(err);
         res.status(500).send("Error retrieving place search");
       } else {
+        console.log(results);
         res.json(results);
       }
     }
