@@ -4,7 +4,8 @@
   "description": "back part of the backpackers project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "node node_modules/db-migrate/bin/db-migrate"
   },
   "author": "NEOMA / WCS",
   "license": "ISC",

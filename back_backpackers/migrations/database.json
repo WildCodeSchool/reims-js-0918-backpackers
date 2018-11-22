@@ -1,0 +1,7 @@
+{
+  "prod": {
+    "driver": "mysql",
+    "user": { "ENV": "PRODUCTION_USERNAME" },
+    "password": { "ENV": "PRODUCTION_PASSWORD" }
+  }
+}
