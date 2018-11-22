@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const currentUserId
+const currentUserId = 42;
 
 app.get("/places", (req, res) => {
   connection.query("SELECT * FROM places", (err, results) => {
@@ -85,24 +85,31 @@ app.post("/activities", (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-  connection.query("SELECT * FROM users WHERE idUser = ? ", currentUserId,(err, results) => {
-    if (err) {
-      res.status(500).send("Error retrieving profile");
-    } else {
-      res.json(results);
+  connection.query(
+    "SELECT * FROM users WHERE idUser = ? ",
+    currentUserId,
+    (err, results) => {
+      if (err) {
+        res.status(500).send("Error retrieving profile");
+      } else {
+        res.json(results);
+      }
     }
-  });
+  );
 });
 
-
-app.get('/profile/favorite', (req, res) => {
-  connection.query("SELECT favorite FROM users WHERE idUser = ?", currentUserId, (err, results) => {
-    if (err) {
-      res.status("Error retrieving your favorite activities")
-    } else {
-      res.json(results)
+app.get("/profile/favorite", (req, res) => {
+  connection.query(
+    "SELECT favorite FROM users WHERE idUser = ?",
+    currentUserId,
+    (err, results) => {
+      if (err) {
+        res.status("Error retrieving your favorite activities");
+      } else {
+        res.json(results);
+      }
     }
-  })
+  );
 });
 
 app.listen(port, err => {
