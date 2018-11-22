@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const currentUserId
+
 app.get("/places", (req, res) => {
   connection.query("SELECT * FROM places", (err, results) => {
     if (err) {
@@ -80,6 +82,27 @@ app.post("/activities", (req, res) => {
       res.sendStatus(200);
     }
   });
+});
+
+app.get("/profile", (req, res) => {
+  connection.query("SELECT * FROM users WHERE idUser = ? ", currentUserId,(err, results) => {
+    if (err) {
+      res.status(500).send("Error retrieving profile");
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+
+app.get('/profile/favorite', (req, res) => {
+  connection.query("SELECT favorite FROM users WHERE idUser = ?", currentUserId, (err, results) => {
+    if (err) {
+      res.status("Error retrieving your favorite activities")
+    } else {
+      res.json(results)
+    }
+  })
 });
 
 app.listen(port, err => {
