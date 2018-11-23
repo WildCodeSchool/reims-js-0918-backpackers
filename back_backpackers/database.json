@@ -1,8 +1,9 @@
 {
   "dev": {
+    "host": { "ENV": "DB_HOST" },
     "user": { "ENV": "DB_USER" },
     "password": { "ENV": "DB_PASS" },
-    "database": "backpackersDb",
+    "database": { "ENV": "DB_DATABASE" },
     "driver": "mysql"
   }
 }
