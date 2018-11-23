@@ -25,33 +25,11 @@ exports.up = function(db, callback) {
       adress: { type: "text", notNull: true },
       mail: { type: "string", length: 100 },
       favorites: {
-        type: "int",
-        foreignKey: {
-          name: "favorite_activity",
-          table: "activities",
-          rules: {
-            onDelete: "CASCADE",
-            onUpdate: "RESTRICT"
-          },
-          mapping: {
-            activity_id: "id"
-          }
-        }
+        type: "int"
       },
       hobbies: { type: "string", length: 50 },
       historic: {
-        type: "int",
-        foreignKey: {
-          name: "historic_activity",
-          table: "activities",
-          rules: {
-            onDelete: "CASCADE",
-            onUpdate: "RESTRICT"
-          },
-          mapping: {
-            activity_id: "id"
-          }
-        }
+        type: "int"
       },
       rights: { type: "string", length: 50 },
       picture: { type: "text" },
