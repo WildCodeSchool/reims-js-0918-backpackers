@@ -73,6 +73,29 @@ app.get("/activities", (req, res) => {
   });
 });
 
+app.get("/activities/search", (req, res) => {
+  const name = req.query.name;
+  const type =
+    req.query.type === undefined ? "" : req.query.type.split("_").join(" ");
+  console.log(type);
+  connection.query(
+    type === ""
+      ? `SELECT * FROM activities WHERE name ="${name}"`
+      : name === undefined
+      ? `SELECT * FROM activities WHERE type ="${type}"`
+      : `SELECT * FROM activities WHERE name ="${name}" AND type ="${type}"`,
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error retrieving activities searched");
+      } else {
+        console.log(results);
+        res.json(results);
+      }
+    }
+  );
+});
+
 app.post("/activities", (req, res) => {
   const formData = req.body;
   connection.query("INSERT INTO activities SET ?", formData, (err, results) => {
