@@ -30,27 +30,17 @@ app.post("/places", (req, res) => {
   });
 });
 
-// connection.query(
-//   `SELECT * FROM places WHERE name="${name}" AND adress="${adress}"`,
-//   (err, results) => {
-//     if (err) {
-//       res.status(500).send("Error retrieving place search");
-//     } else {
-//       res.json(results);
-//     }
-//   }
-// );
-
 app.get("/places/search", (req, res) => {
   const name = req.query.name;
-  const adress = req.query.adress.split("_").join(" ");
+  const adress =
+    req.query.adress === undefined ? "" : req.query.adress.split("_").join(" ");
   console.log(adress);
   connection.query(
-    adress === undefined
+    adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === undefined
-      ? `SELECT * FROM places WHERE adress = ${adress}`
-      : `SELECT * FROM places WHERE name ="${name}" AND adress = ${adress}`,
+      ? `SELECT * FROM places WHERE adress = "${adress}"`
+      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
