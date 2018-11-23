@@ -24,7 +24,7 @@ exports.up = function(db, callback) {
       price: { type: "decimal", length: 50 },
       type: { type: "string", length: 100, notNull: true },
       capacity: { type: "int", length: 50 },
-      description: { type: "text" },
+      description: { type: "string", length: 255 },
       contact: { type: "text" }
     },
     callback
