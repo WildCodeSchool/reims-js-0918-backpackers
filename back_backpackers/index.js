@@ -31,17 +31,6 @@ app.post("/places", (req, res) => {
   });
 });
 
-// connection.query(
-//   `SELECT * FROM places WHERE name="${name}" AND adress="${adress}"`,
-//   (err, results) => {
-//     if (err) {
-//       res.status(500).send("Error retrieving place search");
-//     } else {
-//       res.json(results);
-//     }
-//   }
-// );
-
 app.get("/places/search", (req, res) => {
   const name = req.query.name;
   const adress =
