@@ -1,0 +1,15 @@
+{
+  "name": "back_backpackers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "conf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4"
+  }
+}
