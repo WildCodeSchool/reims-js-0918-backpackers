@@ -21,12 +21,16 @@ const DropdownButton = ({
         <Dropdown className="ml-3" isOpen={dropdownOpen} toggle={toggle}>
           <DropdownToggle caret>{view}</DropdownToggle>
           <DropdownMenu>
-            <DropdownItem onClick={() => changeViewToPlaces()}>
-              Places
-            </DropdownItem>
-            <DropdownItem onClick={() => changeViewToActivities()}>
-              Activities
-            </DropdownItem>
+            {view === "ACTIVITIES" && (
+              <DropdownItem onClick={() => changeViewToPlaces()}>
+                Places
+              </DropdownItem>
+            )}
+            {view === "PLACES" && (
+              <DropdownItem onClick={() => changeViewToActivities()}>
+                Activities
+              </DropdownItem>
+            )}
           </DropdownMenu>
         </Dropdown>
       </Col>
