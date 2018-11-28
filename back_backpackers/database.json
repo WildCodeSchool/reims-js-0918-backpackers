@@ -1,13 +1,16 @@
 {
   "dev": {
+    "host": {
+      "ENV": "DB_HOST"
+    },
     "driver": "mysql",
     "user": {
       "ENV": "DB_USER"
     },
     "password": {
-      "ENV": "DB__PASSWORD"
+      "ENV": "DB_PASSWORD"
     },
-    "databse": {
+    "database": {
       "ENV": "DB_DATABASE"
     }
   }
