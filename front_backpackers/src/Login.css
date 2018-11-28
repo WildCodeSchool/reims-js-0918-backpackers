@@ -1,7 +1,6 @@
 .loginBackground{
   height: 100vh;  
   position: relative;
-
   padding-right: 15px;
   padding-left: 15px;
   margin-right: -15px;
@@ -54,4 +53,5 @@ input, .form-control{
 
 .newAccount a{
   font-weight: bold;
+  color: #111
 }

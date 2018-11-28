@@ -1,7 +1,7 @@
 import React from "react";
 
 const Participer = () => (
-    <div>
+    <div className="Participer ">
       <button type="button" class="btn btn-primary">
         Participer
       </button>

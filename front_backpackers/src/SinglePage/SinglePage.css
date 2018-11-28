@@ -1,0 +1,39 @@
+.Participer {
+  width: 100%;
+  text-align: center;
+}
+
+.Placerestante {
+  position: relative;
+  left: 300px;
+}
+
+.Activite {
+  position: relative;
+  left: 175px;
+}
+
+.Prix {
+  position: relative;
+  left: 30px;
+}
+
+.Coeur {
+  position: relative;
+  left: 310px;
+}
+
+.Share {
+  position: relative;
+  left: 280px;
+}
+
+.Left {
+  position: relative;
+  left: 30px;
+}
+
+.Description {
+  position: relative;
+  left: 170px;
+}
