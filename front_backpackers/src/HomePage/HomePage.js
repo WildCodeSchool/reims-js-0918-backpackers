@@ -6,6 +6,8 @@ import DropdownButton from "./DropdownButton";
 
 const HomePage = ({
   view,
+  listActivity,
+  listPlace,
   toggleMethod,
   dropdownOpen,
   changeViewToActivities,
@@ -19,8 +21,12 @@ const HomePage = ({
       changeViewToActivities={changeViewToActivities}
       changeViewToPlaces={changeViewToPlaces}
     />
-    {view === "ACTIVITIES" && <ActivityThumbnail />}
-    {view === "PLACES" && <PlaceThumbnail />}
+    {view === "PLACES" &&
+      listPlace.map(place => <PlaceThumbnail {...place} key={place.id} />)}
+    {view === "ACTIVITIES" &&
+      listActivity.map(activity => (
+        <ActivityThumbnail {...activity} key={activity.id} />
+      ))}
   </div>
 );
 
