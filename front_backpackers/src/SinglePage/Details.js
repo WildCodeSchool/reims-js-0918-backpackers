@@ -4,16 +4,16 @@ import { Row, Col } from "reactstrap";
 const Details = () => (
   <header>
     <div className="text-center">
-      <h1 className="text-primary mt-1">Rafting à Athènes</h1>
+      <h1 className="text-primary mt-1">Rafting in Athènes</h1>
       <Row>
         <Col xs="12" />
-        <div className="Prix">
+        <div className="price">
           <p className="prix text-primary"><i className="fas fa-euro-sign"></i></p>
         </div>
-        <div className="Activite">
-          <p className="text-primary">Activité aquatique</p>
+        <div className="activity">
+          <p className="text-primary">To activate aquatics</p>
         </div>
-        <div className="Placerestante">
+        <div className="remainingPlace">
           <p className="text-primary"><i class="fas fa-user-alt"></i></p>
         </div>
       </Row>

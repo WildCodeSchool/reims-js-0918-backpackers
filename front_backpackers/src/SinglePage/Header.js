@@ -6,20 +6,20 @@ const Header = () => (
     <Row>
       <Col xs="12" />
       
-      <div className="Left">
+      <div className="left">
         <p className="prix text-primary">
           <i class="fas fa-chevron-left"></i>
         </p>
       </div>
-      <div className="Description">
+      <div className="description">
       <p class="text-primary">Rafting adulte</p>
      </div>
-      <div className="Share">
+      <div className="share">
         <p className="prix text-primary">
           <i class="fas fas fa-share-square"></i>
         </p>
       </div>
-      <div className="Coeur">
+      <div className="heart">
         <p className="prix text-primary">
           <i class="fas fa-heart"></i>
         </p>
