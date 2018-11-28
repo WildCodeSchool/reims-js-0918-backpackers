@@ -1,7 +1,7 @@
 import React from "react";
 import "./HomePage.css";
-import ActivitiesList from "./ActivitiesList";
-import PlacesList from "./PlacesList";
+import ActivityThumbnail from "./ActivityThumbnail";
+import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
 
 const HomePage = ({
@@ -19,8 +19,8 @@ const HomePage = ({
       changeViewToActivities={changeViewToActivities}
       changeViewToPlaces={changeViewToPlaces}
     />
-    {view === "ACTIVITIES" && <ActivitiesList />}
-    {view === "PLACES" && <PlacesList />}
+    {view === "ACTIVITIES" && <ActivityThumbnail />}
+    {view === "PLACES" && <PlaceThumbnail />}
   </div>
 );
 
