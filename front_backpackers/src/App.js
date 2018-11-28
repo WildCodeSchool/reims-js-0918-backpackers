@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Login from "./Login";
-import HomePage from "./HomePage";
+import HomePage from "./HomePage/HomePage";
 import "./App.css";
 import { Container } from "reactstrap";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
+      view: "ACTIVITIES",
+      dropdownOpen: false,
       placeList: [
         {
           idPlace: 1,
@@ -106,12 +108,35 @@ class App extends Component {
         }
       ]
     };
+    this.changeViewToActivities = this.changeViewToActivities.bind(this);
+    this.changeViewToPlaces = this.changeViewToPlaces.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
+
+  changeViewToActivities() {
+    this.setState({ view: "ACTIVITIES" });
+  }
+
+  changeViewToPlaces() {
+    this.setState({ view: "PLACES" });
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  }
+
   render() {
     return (
       <Container fluid>
         <Login />
         <HomePage
+          changeViewToActivities={this.changeViewToActivities}
+          changeViewToPlaces={this.changeViewToPlaces}
+          toggleMethod={this.toggle}
+          dropdownOpen={this.state.dropdownOpen}
+          view={this.state.view}
           listPlace={this.state.placeList}
           listActivity={this.state.activityList}
         />
