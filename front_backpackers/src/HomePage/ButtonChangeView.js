@@ -1,25 +1,32 @@
 import React from "react";
-import { Button, Col, Row } from "reactstrap";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Row
+} from "reactstrap";
 
-const ButtonChangeView = ({ changeViewToActivities, changeViewToPlaces }) => (
+const ButtonChangeView = ({
+  toggle,
+  view,
+  dropdownOpen,
+  changeViewToActivities,
+  changeViewToPlaces
+}) => (
   <div>
     <Row>
-      <Col xs={{ size: 2, offset: 2 }}>
-        <Button
-          className="buttonView mb-2"
-          onClick={() => changeViewToActivities()}
-        >
-          Activités
-        </Button>
-      </Col>
-      <Col xs={{ size: 2, offset: 2 }}>
-        <Button
-          className="buttonView mb-2"
-          onClick={() => changeViewToPlaces()}
-        >
-          Lieux
-        </Button>
-      </Col>
+      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+        <DropdownToggle caret>Menu</DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem onClick={() => changeViewToPlaces()}>
+            Lieux
+          </DropdownItem>
+          <DropdownItem onClick={() => changeViewToActivities()}>
+            Activités
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     </Row>
   </div>
 );

@@ -4,10 +4,18 @@ import ActivitiesList from "./ActivitiesList";
 import PlacesList from "./PlacesList";
 import ButtonChangeView from "./ButtonChangeView";
 
-const HomePage = ({ view, changeViewToActivities, changeViewToPlaces }) => (
+const HomePage = ({
+  view,
+  toggleMethod,
+  dropdownOpen,
+  changeViewToActivities,
+  changeViewToPlaces
+}) => (
   <div className="homePage">
     <ButtonChangeView
       view={view}
+      dropdownOpen={dropdownOpen}
+      toggle={toggleMethod}
       changeViewToActivities={changeViewToActivities}
       changeViewToPlaces={changeViewToPlaces}
     />
