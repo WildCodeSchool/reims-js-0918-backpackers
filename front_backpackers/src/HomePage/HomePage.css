@@ -79,6 +79,17 @@
   border-bottom: 1px solid #c1c1c2;
 }
 
-.homeLine {
-  border-left: 10px solid #1d1d85;
+.buttonView {
+  background: none;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-radius: 0;
+  color: #000000;
+  border-bottom: 3px solid #62258a;
+}
+
+.buttonView :active {
+  background-color: none;
+  border-bottom: #b66315;
 }

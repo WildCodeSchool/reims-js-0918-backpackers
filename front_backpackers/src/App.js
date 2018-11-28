@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Login from "./Login";
 import HomePage from "./HomePage/HomePage";
 import "./App.css";
-import { Container, Button } from "reactstrap";
+import { Container } from "reactstrap";
 
 class App extends Component {
   constructor() {
