@@ -8,7 +8,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      view: "activities",
+      view: "ACTIVITIES",
       dropdownOpen: false
     };
     this.changeViewToActivities = this.changeViewToActivities.bind(this);
@@ -17,11 +17,11 @@ class App extends Component {
   }
 
   changeViewToActivities() {
-    this.setState({ view: "activities" });
+    this.setState({ view: "ACTIVITIES" });
   }
 
   changeViewToPlaces() {
-    this.setState({ view: "places" });
+    this.setState({ view: "PLACES" });
   }
 
   toggle() {

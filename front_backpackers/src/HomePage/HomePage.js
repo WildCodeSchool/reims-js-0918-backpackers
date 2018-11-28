@@ -2,7 +2,7 @@ import React from "react";
 import "./HomePage.css";
 import ActivitiesList from "./ActivitiesList";
 import PlacesList from "./PlacesList";
-import ButtonChangeView from "./ButtonChangeView";
+import DropdownButton from "./DropdownButton";
 
 const HomePage = ({
   view,
@@ -12,15 +12,15 @@ const HomePage = ({
   changeViewToPlaces
 }) => (
   <div className="homePage">
-    <ButtonChangeView
+    <DropdownButton
       view={view}
       dropdownOpen={dropdownOpen}
       toggle={toggleMethod}
       changeViewToActivities={changeViewToActivities}
       changeViewToPlaces={changeViewToPlaces}
     />
-    {view === "activities" && <ActivitiesList />}
-    {view === "places" && <PlacesList />}
+    {view === "ACTIVITIES" && <ActivitiesList />}
+    {view === "PLACES" && <PlacesList />}
   </div>
 );
 
