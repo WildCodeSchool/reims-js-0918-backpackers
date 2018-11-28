@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = () => {
+const Header = () => (
   <header>
     <div>
       <h1 class="text-primary">Rafting adulte</h1>
@@ -14,6 +14,6 @@ const Header = () => {
         Coup de Coeur
       </button>
     </div>
-  </header>;
-};
+  </header>
+);
 export default Header;

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Details = () => {
+const Details = () => (
   <header>
     <div>
       <h1 class="text-primary">Rafting à Athènes</h1>
@@ -9,5 +9,5 @@ const Details = () => {
       <p class="text-primary">3 Places restantes</p>
     </div>
   </header>
-};
+);
 export default Details;

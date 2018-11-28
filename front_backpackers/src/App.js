@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Login from './Login.js';
-import SinglePage from './SinglePage';
+import SinglePage from './SinglePage/SinglePage';
 import './App.css';
 import { Container } from 'reactstrap';
 
