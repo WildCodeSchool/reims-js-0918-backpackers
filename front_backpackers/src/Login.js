@@ -1,6 +1,6 @@
-import React from 'react';
-import { Row, Col, Button, Form, FormGroup, Input } from 'reactstrap';
-import './Login.css';
+import React from "react";
+import { Row, Col, Button, Form, FormGroup, Input } from "reactstrap";
+import "./Login.css";
 
 const Login = () => {
   return (
@@ -12,17 +12,31 @@ const Login = () => {
       </Row>
       <Row>
         <Col xs={{ size: 6, offset: 3 }}>
-          <img className="w-100 my-4" src={require("./images/Logo-Backpackers.png")} alt="Logo Backpackers" />
+          <img
+            className="w-100 my-4"
+            src={require("./images/Logo-Backpackers.png")}
+            alt="Logo Backpackers"
+          />
         </Col>
       </Row>
       <Row>
         <Col xs="12">
           <Form>
             <FormGroup>
-              <Input type="text" name="loginUsername" id="loginUsername" placeholder="User Name" />
+              <Input
+                type="text"
+                name="loginUsername"
+                id="loginUsername"
+                placeholder="User Name"
+              />
             </FormGroup>
             <FormGroup>
-              <Input type="password" name="loginPassword" id="loginPassword" placeholder="password" />
+              <Input
+                type="password"
+                name="loginPassword"
+                id="loginPassword"
+                placeholder="password"
+              />
             </FormGroup>
           </Form>
         </Col>
@@ -39,14 +53,13 @@ const Login = () => {
       </Row>
       <Row>
         <Col xs="12">
-          <p className="newAccount mt-4 text-center">Je n'ai pas de compte. <a href="#">Créer un compte</a></p>
+          <p className="newAccount mt-4 text-center">
+            Je n'ai pas de compte.<a href="#">Créer un compte</a>
+          </p>
         </Col>
       </Row>
-
     </div>
+  );
+};
 
-
-  )
-}
-
-export default Login
+export default Login;
