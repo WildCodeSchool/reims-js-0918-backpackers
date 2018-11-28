@@ -20,15 +20,38 @@ exports.up = function (db, callback) {
     {
       idActivity: { type: "int", primaryKey: true, autoIncrement: true },
       name: { type: "string", length: 255, notNull: true },
-      creator: {
-        type: "string"
+      id_creator:
+      {
+        type: 'int',
+        notNull: true,
+        foreignKey: {
+          name: 'activities_users_creator_id_fk',
+          table: 'users',
+          rules: {
+            onDelete: 'CASCADE'
+          },
+          mapping: 'id'
+        }
       },
       price: { type: "decimal", length: 50 },
       capacity: { type: "int", length: 50 },
       picture: { type: "text" },
       description: { type: "string", length: 255 },
+      id_place:
+      {
+        type: 'int',
+        notNull: true,
+        foreignKey: {
+          name: 'activities_places_id_fk',
+          table: 'places',
+          rules: {
+            onDelete: 'CASCADE'
+          },
+          mapping: 'id'
+        }
+      },
       contact: { type: "text" },
-      date: { type: "date" }
+      date: { type: "date" },
     },
     callback
   );

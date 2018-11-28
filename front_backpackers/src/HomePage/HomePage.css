@@ -1,11 +1,13 @@
-.placethumbnail {
+.placethumbnail,
+.activitythumbnail {
   background-color: #ededee;
   padding: 5px 15px;
   margin-right: -15px;
   margin-left: -15px;
 }
 
-.placepicture {
+.placepicture,
+.activitypicture {
   background-size: cover;
   width: 100px;
   height: 100px;
@@ -82,4 +84,19 @@
 
 .homeUnderline {
   border-bottom: 1px solid #c1c1c2;
+}
+
+.buttonView {
+  background: none;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-radius: 0;
+  color: #000000;
+  border-bottom: 3px solid #62258a;
+}
+
+.buttonView :active {
+  background-color: none;
+  border-bottom: #b66315;
 }

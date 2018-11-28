@@ -18,7 +18,7 @@ exports.up = function (db, callback) {
   db.createTable(
     "places",
     {
-      idPlace: { type: "int", primaryKey: true, autoIncrement: true },
+      id: { type: "int", primaryKey: true, autoIncrement: true },
       name: { type: "string", length: 255, notNull: true },
       country: { type: "string", length: 100, notNull: true },
       city: { type: "string", length: 100, notNull: true },
