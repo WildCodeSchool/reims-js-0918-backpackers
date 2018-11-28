@@ -1,7 +1,6 @@
 import React from 'react';
-import { Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Row, Col, Button, Form, FormGroup, Input } from 'reactstrap';
 import './Login.css';
-import logoBackpackers from "./images/Logo-Backpackers.png"
 
 const Login = () => {
   return (
@@ -40,7 +39,7 @@ const Login = () => {
       </Row>
       <Row>
         <Col xs="12">
-          <p className="newAccount mt-4 text-center">Je n'ai pas de compte. <a>Créer un compte</a></p>
+          <p className="newAccount mt-4 text-center">Je n'ai pas de compte. <a href="#">Créer un compte</a></p>
         </Col>
       </Row>
 
