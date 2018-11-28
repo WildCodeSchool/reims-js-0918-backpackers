@@ -18,7 +18,7 @@ exports.up = function (db, callback) {
   db.insert(
     "activities",
     [
-      "name", "creator", "price", "capacity", "description", "contact", "date"
+      "name", "id_creator", "price", "capacity", "id_place", "description", "contact", "date"
 
     ],
     [
@@ -26,6 +26,7 @@ exports.up = function (db, callback) {
       1,
       7,
       5,
+      1,
       "Cherche petit groupe pour visiter ensemble la Tokyo Tower ce Samedi !",
       "0612345678",
       "2019-02-09"
@@ -35,13 +36,14 @@ exports.up = function (db, callback) {
   db.insert(
     "activities",
     [
-      "name", "creator", "capacity", "description", "contact", "date"
+      "name", "id_creator", "capacity", "id_place", "description", "contact", "date"
 
     ],
     [
       "Tour du musée de Ueno",
       1,
       3,
+      1,
       "Je cherche des gens pour apprécier la culture jap au musée de Ueno !",
       "0612345678",
       "2019-02-20"
