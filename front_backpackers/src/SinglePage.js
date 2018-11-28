@@ -1,13 +1,26 @@
-import React from 'react';
-import { Button, ButtonGroup } from 'reactstrap';
+import React from "react";
+import {
+  Row,
+  Col,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  FormText
+} from "reactstrap";
+import "./SinglePage.css";
 
-export default class Example extends React.Component {
-  render() {
-    return (
-        <ButtonGroup>
-        <Button>Left</Button>
-        <Button>Right</Button>
-      </ButtonGroup>
-    );
-  }
-}
+const SinglePage = () => {
+  return (
+    <header>
+    <div>
+      <h1 class="text-primary">Rating adulte</h1>
+      <button type="button" class="btn btn-primary">Primary</button>
+      <button type="button" class="btn btn-primary">Primary</button>
+    </div>
+    </header>
+  );
+};
+
+export default SinglePage;
