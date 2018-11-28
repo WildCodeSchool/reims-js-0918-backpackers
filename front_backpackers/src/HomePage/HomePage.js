@@ -22,10 +22,10 @@ const HomePage = ({
       changeViewToPlaces={changeViewToPlaces}
     />
     {view === "PLACES" &&
-      listPlace.map(place => <PlaceThumbnail {...place} key={place.id} />)}
+      listPlace.map(place => <PlaceThumbnail {...place} key={place.idPlace} />)}
     {view === "ACTIVITIES" &&
       listActivity.map(activity => (
-        <ActivityThumbnail {...activity} key={activity.id} />
+        <ActivityThumbnail {...activity} key={activity.idActivity} />
       ))}
   </div>
 );
