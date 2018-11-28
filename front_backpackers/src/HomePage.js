@@ -2,17 +2,19 @@ import React from "react";
 import { Row, Col, Media, Button } from "reactstrap";
 import "./HomePage.css";
 import PlaceThumbnail from "./PlaceThumbnail";
+import ActivityThumbnail from "./ActivityThumbnail";
 
-const HomePage = ({ listPlace }) => {
+const HomePage = ({ listPlace, listActivity }) => {
   return (
     <div className="homePage">
       <Row>
         <Col xs="12">
-          {/* <Media className="d-flex align-items-stretch"> */}
           {listPlace.map(place => (
             <PlaceThumbnail {...place} key={place.id} />
           ))}
-          {/* </Media> */}
+          {listActivity.map(activity => (
+            <ActivityThumbnail {...activity} key={activity.id} />
+          ))}
         </Col>
       </Row>
 
