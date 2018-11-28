@@ -4,7 +4,7 @@ import Header from"./Header.js";
 import Caroussel from "./Caroussel";
 import Details from "./Details";
 import Information from "./Information";
-import Participer from "./Participer";
+import Participate from "./Participate.js";
 
 const SinglePage = () => (
   <div>
@@ -12,7 +12,7 @@ const SinglePage = () => (
     <Caroussel />
     <Details />
     <Information />
-    <Participer />
+    <Participate />
   </div>
 );
 

@@ -1,10 +1,10 @@
 import React from "react";
 
-const Participer = () => (
+const Participate = () => (
     <div className="participate ">
       <button type="button" class="btn btn-primary">
         Participer
       </button>
     </div>
 );
-export default Participer;
+export default Participate;
