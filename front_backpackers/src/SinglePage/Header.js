@@ -2,28 +2,22 @@ import React from "react";
 import { Row, Col } from "reactstrap";
 
 const Header = () => (
-  <div class="btn-group mt-2 my-2">
+  <div>
     <Row>
-      <Col xs="12" />
-      
-      <div className="left">
+      <Col xs="2">
         <p className="price text-primary">
-          <i class="fas fa-chevron-left"></i>
+          <i class="fas fa-chevron-left" />
         </p>
-      </div>
-      <div className="description">
-      <p class="text-primary">Rafting adulte</p>
-     </div>
-      <div className="share">
+      </Col>
+      <Col xs="8">
+        <p class="text-primary text-center">Rafting adulte</p>
+      </Col>
+      <Col xs="2">
         <p className="price text-primary">
-          <i class="fas fas fa-share-square"></i>
+          <i class="fas fas fa-share-square px-2" />
+          <i class="fas fa-heart" />
         </p>
-      </div>
-      <div className="heart">
-        <p className="price text-primary">
-          <i class="fas fa-heart"></i>
-        </p>
-      </div>
+      </Col>
     </Row>
   </div>
 );
