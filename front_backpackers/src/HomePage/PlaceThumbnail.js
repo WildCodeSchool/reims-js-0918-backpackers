@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Row, Col, Media, Button } from "reactstrap";
 
 const PlaceThumbnail = ({ picture, name, city, description, price }) => (
@@ -29,7 +30,7 @@ const PlaceThumbnail = ({ picture, name, city, description, price }) => (
             <Button className="seeItem">Voir</Button>
             <span className="itemListPrice pr-2">
               {price}€ /
-                <i className="far fa-user" />
+              <i className="far fa-user" />
             </span>
           </div>
         </Media>
@@ -37,5 +38,12 @@ const PlaceThumbnail = ({ picture, name, city, description, price }) => (
     </Col>
   </Row>
 );
+
+PlaceThumbnail.propTypes = {
+  city: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired
+};
 
 export default PlaceThumbnail;
