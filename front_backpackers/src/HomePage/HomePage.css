@@ -99,3 +99,14 @@
   background-color: none;
   border-bottom: #b66315;
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gif {
+  width: 110px;
+  height: 150px;
+}
