@@ -3,12 +3,15 @@ const express = require("express");
 const connection = require("./conf");
 const app = express();
 const port = 3010;
+const cors = require("cors");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const currentUserId = 42;
+
+app.use(cors());
 
 app.get("/places", (req, res) => {
   connection.query("SELECT * FROM places", (err, results) => {
