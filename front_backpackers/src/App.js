@@ -4,6 +4,7 @@ import Login from "./Login";
 import HomePage from "./HomePage/HomePage";
 import "./App.css";
 import { Container } from "reactstrap";
+import axios from "axios";
 
 class App extends Component {
   constructor() {
@@ -17,6 +18,27 @@ class App extends Component {
     this.changeViewToActivities = this.changeViewToActivities.bind(this);
     this.changeViewToPlaces = this.changeViewToPlaces.bind(this);
     this.toggle = this.toggle.bind(this);
+  }
+
+  componentDidMount() {
+    this.callApiActivities();
+    this.callApiPlaces();
+  }
+
+  callApiActivities() {
+    const activities = [];
+    axios
+      .get("http://localhost:3010/activities")
+      .then(response => response.data.map(index => activities.push(index)));
+    this.setState({ activityList: activities });
+  }
+
+  callApiPlaces() {
+    const places = [];
+    axios
+      .get("http://localhost:3010/places")
+      .then(response => response.data.map(index => places.push(index)));
+    this.setState({ placeList: places });
   }
 
   changeViewToActivities() {

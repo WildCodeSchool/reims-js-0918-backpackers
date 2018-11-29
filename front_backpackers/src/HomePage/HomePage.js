@@ -22,7 +22,7 @@ const HomePage = ({
       changeViewToPlaces={changeViewToPlaces}
     />
     {view === "PLACES" &&
-      listPlace.map(place => <PlaceThumbnail {...place} key={place.idPlace} />)}
+      listPlace.map(place => <PlaceThumbnail {...place} key={place.id} />)}
     {view === "ACTIVITIES" &&
       listActivity.map(activity => (
         <ActivityThumbnail {...activity} key={activity.idActivity} />
