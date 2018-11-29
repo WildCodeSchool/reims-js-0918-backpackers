@@ -3,6 +3,7 @@ import "./HomePage.css";
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
+import { Row, Button } from "reactstrap";
 
 const HomePage = ({
   view,
@@ -13,21 +14,30 @@ const HomePage = ({
   changeViewToActivities,
   changeViewToPlaces
 }) => (
-  <div className="homePage">
-    <DropdownButton
-      view={view}
-      dropdownOpen={dropdownOpen}
-      toggle={toggleMethod}
-      changeViewToActivities={changeViewToActivities}
-      changeViewToPlaces={changeViewToPlaces}
-    />
-    {view === "PLACES" &&
-      listPlace.map(place => <PlaceThumbnail {...place} key={place.idPlace} />)}
-    {view === "ACTIVITIES" &&
-      listActivity.map(activity => (
-        <ActivityThumbnail {...activity} key={activity.idActivity} />
-      ))}
-  </div>
-);
+    <div className="homePage">
+      <DropdownButton
+        view={view}
+        dropdownOpen={dropdownOpen}
+        toggle={toggleMethod}
+        changeViewToActivities={changeViewToActivities}
+        changeViewToPlaces={changeViewToPlaces}
+      />
+      {view === "PLACES" &&
+        listPlace.map(place => <PlaceThumbnail {...place} key={place.idPlace} />)}
+      {view === "ACTIVITIES" &&
+        listActivity.map(activity => (
+          <ActivityThumbnail {...activity} key={activity.idActivity} />
+        ))}
+
+      <Row className="fixed-bottom listFooter">
+        <Button className="w-50 listSearchBtn">
+          Rechercher <i className="fas fa-search-location" />
+        </Button>
+        <Button className="w-50 listPostBtn">
+          <i className="fas fa-pencil-alt" /> Publier{" "}
+        </Button>
+      </Row>
+    </div>
+  );
 
 export default HomePage;

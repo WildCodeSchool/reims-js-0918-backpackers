@@ -1,13 +1,12 @@
-.placethumbnail,
-.activitythumbnail {
+.homePage{
   background-color: #ededee;
-  padding: 5px 15px;
   margin-right: -15px;
   margin-left: -15px;
+  padding: 5px 15px;
 }
 
-.placepicture,
-.activitypicture {
+.placePicture,
+.activityPicture {
   background-size: cover;
   width: 100px;
   height: 100px;

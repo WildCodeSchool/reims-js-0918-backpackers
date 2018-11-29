@@ -6,16 +6,16 @@ const Header = () => (
     <Row>
       <Col xs="2">
         <p className="price text-primary">
-          <i class="fas fa-chevron-left" />
+          <i className="fas fa-chevron-left" />
         </p>
       </Col>
       <Col xs="8">
-        <p class="text-primary text-center">Rafting adulte</p>
+        <p className="text-primary text-center">Rafting adulte</p>
       </Col>
       <Col xs="2">
         <p className="price text-primary">
-          <i class="fas fas fa-share-square px-2" />
-          <i class="fas fa-heart" />
+          <i className="fas fas fa-share-square px-2" />
+          <i className="fas fa-heart" />
         </p>
       </Col>
     </Row>
