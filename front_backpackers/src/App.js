@@ -32,7 +32,7 @@ class App extends Component {
       this.setState({
         loading: false
       });
-    }, 5000);
+    }, 3000);
   }
 
   callApiActivities() {

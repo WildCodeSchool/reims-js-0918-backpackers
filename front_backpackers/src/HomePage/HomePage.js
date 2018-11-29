@@ -17,6 +17,7 @@ const HomePage = ({
 }) => (
   <div className="homePage">
     <DropdownButton
+      className="mb-4"
       view={view}
       dropdownOpen={dropdownOpen}
       toggle={toggleMethod}
@@ -25,13 +26,13 @@ const HomePage = ({
       changeViewToPlaces={changeViewToPlaces}
     />
     {loading === true && view === "PLACES" ? (
-      <Loading />
+      <Loading className="mt-2" />
     ) : (
       view === "PLACES" &&
       listPlace.map(place => <PlaceThumbnail {...place} key={place.id} />)
     )}
     {loading === true ? (
-      <Loading />
+      <Loading className="mt-2" />
     ) : (
       view === "ACTIVITIES" &&
       listActivity.map(activity => (
