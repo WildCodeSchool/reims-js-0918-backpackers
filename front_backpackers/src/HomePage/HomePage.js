@@ -17,11 +17,9 @@ const HomePage = ({
 }) => (
   <div className="homePage">
     <DropdownButton
-      className="mb-4"
       view={view}
       dropdownOpen={dropdownOpen}
       toggle={toggleMethod}
-      loading={loading}
       changeViewToActivities={changeViewToActivities}
       changeViewToPlaces={changeViewToPlaces}
     />
@@ -39,6 +37,18 @@ const HomePage = ({
         <ActivityThumbnail {...activity} key={activity.idActivity} />
       ))
     )}
+
+    <Row className="fixed-bottom listFooter">
+      <Button className="w-50 listSearchBtn">
+        Rechercher <i className="fas fa-search-location" />
+      </Button>
+      <Button className="w-50 listPostBtn">
+        <i className="fas fa-pencil-alt" /> Publier{" "}
+      </Button>
+    </Row>
+    <Row>
+      <Col xs={{ size: 8, offset: 2 }} className="homeUnderline mt-3 mb-4" />
+    </Row>
   </div>
 );
 
