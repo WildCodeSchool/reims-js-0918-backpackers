@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SinglePage from "./SinglePage/SinglePage";
 import Login from "./Login";
 import HomePage from "./HomePage/HomePage";
 import "./App.css";
@@ -140,6 +141,7 @@ class App extends Component {
           listPlace={this.state.placeList}
           listActivity={this.state.activityList}
         />
+        <SinglePage />
       </Container>
     );
   }
