@@ -24,27 +24,32 @@ class App extends Component {
   componentDidMount() {
     this.callApiActivities();
     this.callApiPlaces();
-    this.loading();
-  }
-
-  loading() {
-    setTimeout(() => {
-      this.setState({
-        loading: false
-      });
-    }, 3000);
   }
 
   callApiActivities() {
     axios
       .get("http://localhost:3010/activities")
-      .then(response => this.setState({ activityList: response.data }));
+      .then(response => this.setState({ activityList: response.data }))
+      .then(
+        setTimeout(() => {
+          this.setState({
+            loading: false
+          });
+        }, 3000)
+      );
   }
 
   callApiPlaces() {
     axios
       .get("http://localhost:3010/places")
-      .then(response => this.setState({ placeList: response.data }));
+      .then(response => this.setState({ placeList: response.data }))
+      .then(
+        setTimeout(() => {
+          this.setState({
+            loading: false
+          });
+        }, 3000)
+      );
   }
 
   changeViewToActivities() {
