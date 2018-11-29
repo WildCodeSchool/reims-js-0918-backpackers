@@ -3,7 +3,7 @@ import "./HomePage.css";
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
-import { Row, Button } from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 
 const HomePage = ({
   view,
@@ -37,6 +37,10 @@ const HomePage = ({
           <i className="fas fa-pencil-alt" /> Publier{" "}
         </Button>
       </Row>
+      <Row>
+        <Col xs={{ size: 8, offset: 2 }} className="homeUnderline mt-3 mb-4"></Col>
+      </Row>
+
     </div>
   );
 
