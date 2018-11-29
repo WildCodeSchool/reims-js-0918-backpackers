@@ -36,19 +36,15 @@ class App extends Component {
   }
 
   callApiActivities() {
-    const activities = [];
     axios
       .get("http://localhost:3010/activities")
-      .then(response => response.data.map(index => activities.push(index)));
-    this.setState({ activityList: activities });
+      .then(response => this.setState({ activityList: response.data }));
   }
 
   callApiPlaces() {
-    const places = [];
     axios
       .get("http://localhost:3010/places")
-      .then(response => response.data.map(index => places.push(index)));
-    this.setState({ placeList: places });
+      .then(response => this.setState({ placeList: response.data }));
   }
 
   changeViewToActivities() {
