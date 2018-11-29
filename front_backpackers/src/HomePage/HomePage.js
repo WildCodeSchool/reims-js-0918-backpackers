@@ -3,11 +3,13 @@ import "./HomePage.css";
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
+import Loading from "./Loading";
 
 const HomePage = ({
   view,
   listActivity,
   listPlace,
+  loading,
   toggleMethod,
   dropdownOpen,
   changeViewToActivities,
@@ -18,15 +20,24 @@ const HomePage = ({
       view={view}
       dropdownOpen={dropdownOpen}
       toggle={toggleMethod}
+      loading={loading}
       changeViewToActivities={changeViewToActivities}
       changeViewToPlaces={changeViewToPlaces}
     />
-    {view === "PLACES" &&
-      listPlace.map(place => <PlaceThumbnail {...place} key={place.id} />)}
-    {view === "ACTIVITIES" &&
+    {loading === true && view === "PLACES" ? (
+      <Loading />
+    ) : (
+      view === "PLACES" &&
+      listPlace.map(place => <PlaceThumbnail {...place} key={place.id} />)
+    )}
+    {loading === true ? (
+      <Loading />
+    ) : (
+      view === "ACTIVITIES" &&
       listActivity.map(activity => (
         <ActivityThumbnail {...activity} key={activity.idActivity} />
-      ))}
+      ))
+    )}
   </div>
 );
 

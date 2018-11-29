@@ -13,7 +13,8 @@ class App extends Component {
       view: "ACTIVITIES",
       dropdownOpen: false,
       placeList: [],
-      activityList: []
+      activityList: [],
+      loading: true
     };
     this.changeViewToActivities = this.changeViewToActivities.bind(this);
     this.changeViewToPlaces = this.changeViewToPlaces.bind(this);
@@ -23,6 +24,15 @@ class App extends Component {
   componentDidMount() {
     this.callApiActivities();
     this.callApiPlaces();
+    this.loading();
+  }
+
+  loading() {
+    setTimeout(() => {
+      this.setState({
+        loading: false
+      });
+    }, 5000);
   }
 
   callApiActivities() {
@@ -65,6 +75,7 @@ class App extends Component {
           toggleMethod={this.toggle}
           dropdownOpen={this.state.dropdownOpen}
           view={this.state.view}
+          loading={this.state.loading}
           listPlace={this.state.placeList}
           listActivity={this.state.activityList}
         />

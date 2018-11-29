@@ -11,6 +11,7 @@ import {
 const DropdownButton = ({
   toggle,
   view,
+  loading,
   dropdownOpen,
   changeViewToActivities,
   changeViewToPlaces

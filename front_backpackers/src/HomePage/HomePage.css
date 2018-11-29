@@ -100,3 +100,9 @@
   background-color: none;
   border-bottom: #b66315;
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
