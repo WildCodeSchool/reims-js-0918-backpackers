@@ -105,7 +105,10 @@ app.post("/activities", (req, res) => {
 
 app.get("/profile", (req, res) => {
   connection.query(
-    "SELECT * FROM users WHERE idUser = ? ",
+    `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies, 
+    historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name, 
+    id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date
+    FROM users JOIN activities ON users.id = activities.id_creator `,
     currentUserId,
     (err, results) => {
       if (err) {
