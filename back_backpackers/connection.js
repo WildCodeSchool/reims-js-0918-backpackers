@@ -60,13 +60,19 @@ app.get("/places/search", (req, res) => {
 });
 
 app.get("/activities", (req, res) => {
-  connection.query("SELECT * FROM activities", (err, results) => {
-    if (err) {
-      res.status(500).send("Error retrieving activities");
-    } else {
-      res.json(results);
+  connection.query(
+    `SELECT idActivity, activities.name, id_creator, activities.price, activities.capacity, (activities.picture) AS pictureActivity, (activities.description) AS descriptionActivity, id_place, activities.contact, date, id, country, city, adress, type, (places.description) AS descriptionPlace, (places.picture) AS picturePlace 
+    FROM activities 
+    JOIN places 
+    ON activities.id_place = places.id`,
+    (err, results) => {
+      if (err) {
+        res.status(500).send("Error retrieving activities");
+      } else {
+        res.json(results);
+      }
     }
-  });
+  );
 });
 
 app.get("/activities/search", (req, res) => {
