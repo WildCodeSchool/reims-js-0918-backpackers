@@ -61,7 +61,12 @@ app.get("/places/search", (req, res) => {
 
 app.get("/activities", (req, res) => {
   connection.query(
-    `SELECT idActivity, activities.name, id_creator, activities.price, activities.capacity, (activities.picture) AS pictureActivity, (activities.description) AS descriptionActivity, id_place, activities.contact, date, id, country, city, adress, type, (places.description) AS descriptionPlace, (places.picture) AS picturePlace 
+    `SELECT idActivity, activities.name, id_creator, activities.price, 
+    activities.capacity, (activities.picture) AS pictureActivity, 
+    (activities.description) AS descriptionActivity, id_place, 
+    activities.contact, date, id, country, city, 
+    adress, type, (places.description) AS descriptionPlace, 
+    (places.picture) AS picturePlace 
     FROM activities 
     JOIN places 
     ON activities.id_place = places.id`,
