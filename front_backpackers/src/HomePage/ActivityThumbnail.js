@@ -2,14 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Media, Button } from "reactstrap";
 
-const ActivityThumbnail = ({ picture, city, name, description, price }) => (
+const ActivityThumbnail = ({
+  picture,
+  city,
+  name,
+  descriptionActivity,
+  descriptionPlace,
+  pictureActivity,
+  picturePlace,
+  price
+}) => (
   <Row>
     <Col xs="12">
       <Media className="d-flex align-items-stretch">
         <Media left href="#">
           <Media
             object
-            src={picture}
+            src={pictureActivity ? pictureActivity : picturePlace}
             alt="picture of activity"
             className="activityPicture"
           />
@@ -25,7 +34,7 @@ const ActivityThumbnail = ({ picture, city, name, description, price }) => (
               {name}
             </span>
           </Media>
-          {description}
+          {descriptionActivity ? descriptionActivity : descriptionPlace}
           <div className="d-flex align-items-end justify-content-between mt-auto">
             <Button className="seeItem">Voir</Button>
             <span className="itemListPrice pr-2">

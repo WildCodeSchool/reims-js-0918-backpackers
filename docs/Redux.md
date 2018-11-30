@@ -7,41 +7,52 @@
 - JOIN_ACTIVITY
 - VIEW_ACTIVITY
 - VIEW_PLACE
-- VIEW_ACITIVITIES
-- VIEW_PLACES
+
+- FETCH_ACTIVITIES is dispatched when we call the api
+- VIEW_ACTIVITIES is dispatched when we receive the api response
 
 ```javascript
-  [{
-    idPlace: 1
-    name: "Le Dropkick bar"
-    adress: "15 Rue du Colonel Fabien, 51100 Reims"
-    price:
-    type: "bar"
-    capacity:
-    description:
-    contact:
-    rating:
-  },{
-    idPlace: 2
-    name:
-    adress:
-    price:
-    type:
-    capacity:
-    description:
-    contact:
-    rating:
-  },{
-    idPlace: 3
-    name:
-    adress:
-    price:
-    type:
-    capacity:
-    description:
-    contact:
-    rating:
-  }]
+  {
+    type: VIEW_ACTIVITIES
+    activities: [...]
+  }
+```
+
+- FETCH_PLACES is dispatched when we call the api
+- VIEW_PLACES is dispatched when we receive the api response
+
+```javascript
+  {
+    type: VIEW_PLACES
+    places: [...]
+  }
 ```
 
 - VIEW_PROFIL
+
+## Reducers
+
+-placesReducer
+
+```javascript
+  const initialState: []
+```
+
+When VIEW_PLACES is dispatched, state becomes action.places
+
+-activitiesReducer
+
+```javascript
+  const initialState: []
+```
+
+When VIEW_ACTIVITIES is dispatched, state becomes action.activities
+
+-loadingReducer
+
+```javascript
+  const initialState: false
+```
+
+When FETCH_PLACES is dispatched, state becomes true  
+When FETCH_ACTIVITIES is dispatched, state becomes true

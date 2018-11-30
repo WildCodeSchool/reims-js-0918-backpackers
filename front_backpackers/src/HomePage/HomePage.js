@@ -1,4 +1,5 @@
 import React from "react";
+import { Row, Button, Col } from "reactstrap";
 import "./HomePage.css";
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
@@ -29,7 +30,7 @@ const HomePage = ({
       view === "PLACES" &&
       listPlace.map(place => <PlaceThumbnail {...place} key={place.id} />)
     )}
-    {loading === true ? (
+    {loading === true && view === "ACTIVITIES" ? (
       <Loading className="mt-2" />
     ) : (
       view === "ACTIVITIES" &&
