@@ -1,22 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore, combineReducers } from "redux";
+import { createStore } from "redux";
 import { Provider } from "react-redux";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import placesReducer from "./reducers/placesReducer";
-import loadingReducer from "./reducers/loadingReducer";
+import backpackersApp from "./reducers";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 
 const store = createStore(
-  combineReducers(
-    {
-      places: placesReducer,
-      loading: loadingReducer
-    },
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  backpackersApp,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 ReactDOM.render(
