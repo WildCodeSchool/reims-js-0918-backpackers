@@ -10,13 +10,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 
 const store = createStore(
-  combineReducers(
-    {
-      activities: activitiesReducer,
-      loading: loadingReducer
-    },
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  combineReducers({
+    activities: activitiesReducer,
+    loading: loadingReducer
+  }),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 ReactDOM.render(
