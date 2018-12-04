@@ -1,42 +1,35 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
-  Row,
-  Col
+  DropdownItem
 } from "reactstrap";
 
 const DropdownButton = ({
   toggle,
   view,
-  loading,
   dropdownOpen,
   changeViewToActivities,
   changeViewToPlaces
 }) => (
-  <div>
-    <Row>
-      <Col xs={{ size: 3, offset: 3 }}>
-        <Dropdown className="ml-3" isOpen={dropdownOpen} toggle={toggle}>
-          <DropdownToggle caret>{view}</DropdownToggle>
-          <DropdownMenu>
-            {view === "ACTIVITIES" && (
-              <DropdownItem onClick={() => changeViewToPlaces()}>
-                Places
+    <Fragment>
+      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+        <DropdownToggle className="w-100" caret>{view === "PLACES" ? "Lieux" : "Activités"}</DropdownToggle>
+        <DropdownMenu>
+          {view === "ACTIVITIES" && (
+            <DropdownItem onClick={() => changeViewToPlaces()}>
+              Lieux
               </DropdownItem>
-            )}
-            {view === "PLACES" && (
-              <DropdownItem onClick={() => changeViewToActivities()}>
-                Activities
+          )}
+          {view === "PLACES" && (
+            <DropdownItem onClick={() => changeViewToActivities()}>
+              Activités
               </DropdownItem>
-            )}
-          </DropdownMenu>
-        </Dropdown>
-      </Col>
-    </Row>
-  </div>
-);
+          )}
+        </DropdownMenu>
+      </Dropdown>
+    </Fragment>
+  );
 
 export default DropdownButton;
