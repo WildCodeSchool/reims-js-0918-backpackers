@@ -5,7 +5,6 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
   Col,
   Row
 } from "reactstrap";
@@ -28,8 +27,8 @@ class FormPage extends Component {
         <h5>Votre annonce</h5>
         <Form className="mb-5">
           <FormGroup>
-            <Label for="exampleSelect">Catégorie</Label>
-            <Input type="select" name="select" id="exampleSelect">
+            <Label for="category">Catégorie</Label>
+            <Input type="select" name="select" id="Select">
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -38,34 +37,30 @@ class FormPage extends Component {
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label for="exampleEmail">Titre</Label>
+            <Label for="Email">Titre</Label>
             <Input
               type="email"
               name="email"
-              id="exampleEmail"
-              placeholder="with a placeholder"
+              id="Email"
+              placeholder="Titre de l'annonce"
             />
           </FormGroup>
           <FormGroup>
-            <Label for="exampleText">Description</Label>
-            <Input type="textarea" name="text" id="exampleText" />
+            <Label for="Text">Description</Label>
+            <Input type="textarea" name="text" id="Text" />
           </FormGroup>
           <FormGroup>
-            <Label for="exampleEmail">Prix</Label>
+            <Label for="Email">Prix</Label>
             <Input
               type="email"
               name="email"
-              id="exampleEmail"
-              placeholder="with a placeholder"
+              id="Email"
+              placeholder="Prix"
             />
           </FormGroup>
           <FormGroup>
-            <Label for="exampleFile">Photos</Label>
-            <Input type="file" name="file" id="exampleFile" />
-            <FormText color="muted">
-              This is some placeholder block-level help text for the above
-              input. It's a bit lighter and easily wraps to a new line.
-            </FormText>
+            <Label for="photos">Photos</Label>
+            <Input type="file" name="file" id="File" />
           </FormGroup>
           <Button>Publier l'annonce</Button>
         </Form>
