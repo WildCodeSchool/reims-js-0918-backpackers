@@ -74,7 +74,7 @@ class HomePage extends Component {
           changeViewToActivities={this.changeViewToActivities}
           changeViewToPlaces={this.changeViewToPlaces}
         />
-        {this.props.loading === true && this.state.view === "PLACES" ? (
+        {this.props.loading && this.state.view === "PLACES" ? (
           <Loading className="mt-2" />
         ) : (
           this.state.view === "PLACES" &&
