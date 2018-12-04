@@ -54,13 +54,20 @@ class HomePage extends Component {
   render() {
     return (
       <div className="homePage">
-        <DropdownButton
-          view={this.state.view}
-          dropdownOpen={this.state.dropdownOpen}
-          toggle={this.toggle}
-          changeViewToActivities={this.changeViewToActivities}
-          changeViewToPlaces={this.changeViewToPlaces}
-        />
+        <Row className="homePage_Header">
+          <Col xs="2" />
+          <Col xs="8">
+            <DropdownButton
+              className="w-100"
+              view={this.state.view}
+              dropdownOpen={this.state.dropdownOpen}
+              toggle={this.toggle}
+              changeViewToActivities={this.changeViewToActivities}
+              changeViewToPlaces={this.changeViewToPlaces}
+            />
+          </Col>
+          <Col xs="2" />
+        </Row>
         {this.state.view === "PLACES" &&
           this.props.places.map(place => (
             <PlaceThumbnail {...place} key={place.id} />
