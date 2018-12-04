@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Row, Button, Col } from "reactstrap";
 import axios from "axios";
-import "./HomePage.css";
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
+import "./HomePage.css";
 
 class HomePage extends Component {
   constructor() {
