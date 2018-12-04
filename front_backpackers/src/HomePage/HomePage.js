@@ -6,14 +6,14 @@ import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
 import Loading from "./Loading";
+import axios from "axios";
 
 class HomePage extends Component {
   constructor() {
     super();
     this.state = {
       view: "PLACES",
-      dropdownOpen: false,
-      activityList: []
+      dropdownOpen: false
     };
     this.changeViewToActivities = this.changeViewToActivities.bind(this);
     this.changeViewToPlaces = this.changeViewToPlaces.bind(this);
@@ -21,7 +21,9 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchPlaces();
     this.callApiPlaces();
+    this.props.fetchActivities();
     this.callApiActivities();
   }
 
@@ -34,14 +36,7 @@ class HomePage extends Component {
   callApiActivities() {
     axios
       .get("http://localhost:3010/activities")
-      .then(response => this.setState({ activityList: response.data }))
-      .then(
-        setTimeout(() => {
-          this.setState({
-            loading: false
-          });
-        }, 3000)
-      );
+      .then(response => this.props.viewActivities(response.date));
   }
 
   changeViewToActivities() {
@@ -72,14 +67,10 @@ class HomePage extends Component {
           this.props.places.map(place => (
             <PlaceThumbnail {...place} key={place.id} />
           ))}
-        {this.props.loading && this.state.view === "ACTIVITIES" ? (
-          <Loading className="mt-2" />
-        ) : (
-          this.state.view === "ACTIVITIES" &&
-          this.state.activityList.map(activity => (
+        {this.state.view === "ACTIVITIES" &&
+          this.props.activities.map(activity => (
             <ActivityThumbnail {...activity} key={activity.idActivity} />
-          ))
-        )}
+          ))}
 
         <Row className="fixed-bottom listFooter">
           <Button className="w-50 listSearchBtn">
