@@ -10,7 +10,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      view: "ACTIVITIES",
+      view: "PLACES",
       dropdownOpen: false,
       placeList: [],
       activityList: [],
