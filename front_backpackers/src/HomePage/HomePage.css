@@ -1,34 +1,40 @@
-.homePage{
+.homePage {
   background-color: #ededee;
   margin-right: -15px;
   margin-left: -15px;
   padding: 0 15px 5px 15px;
 }
 
-.homePage_Header{
+.homePage_Header {
   background-color: #054762;
   margin-right: -15px;
   margin-left: -15px;
 }
 
-.homePage .dropdown{
+.homePage .dropdown {
   border-left: 1px solid #ededee;
   border-right: 1px solid #ededee;
   transition: all 0.2s;
 }
 
 /* CSS That negate some reactstrap style*/
-.btn-secondary.focus, .btn-secondary:focus,.btn-secondary:not(:disabled):not(.disabled).active:focus, .btn-secondary:not(:disabled):not(.disabled):active:focus, .show>.btn-secondary.dropdown-toggle:focus{
+.btn-secondary.focus,
+.btn-secondary:focus,
+.btn-secondary:not(:disabled):not(.disabled).active:focus,
+.btn-secondary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-secondary.dropdown-toggle:focus {
   box-shadow: none;
   background-color: #075b7c;
 }
 
-.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show > .btn-secondary.dropdown-toggle {
   color: #fff;
   background-color: #075b7c;
 }
 
-.homePage .dropdown button.btn-secondary{
+.homePage .dropdown button.btn-secondary {
   background: none;
   border: none;
 }
@@ -40,16 +46,16 @@
   top: 15px;
 }
 /* DropDown choices */
-.homePage .dropdown .dropdown-menu.show{
+.homePage .dropdown .dropdown-menu.show {
   padding: 0;
   width: 100%;
 }
 
-.homePage .dropdown .dropdown-menu.show button{
+.homePage .dropdown .dropdown-menu.show button {
   width: 100%;
-  line-height:30px;
+  line-height: 30px;
   background-color: #075b7c;
-  color: #FFF;
+  color: #fff;
   text-align: center;
 }
 

@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Row, Button, Col } from "reactstrap";
+import {
+  Row,
+  Button,
+  Col,
+  Nav,
+  NavItem,
+  NavLink,
+  NavbarToggler,
+  Collapse
+} from "reactstrap";
 import axios from "axios";
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
@@ -11,11 +20,13 @@ class HomePage extends Component {
     super();
     this.state = {
       view: "PLACES",
-      dropdownOpen: false
+      dropdownOpen: false,
+      collapsed: true
     };
     this.changeViewToActivities = this.changeViewToActivities.bind(this);
     this.changeViewToPlaces = this.changeViewToPlaces.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.toggleNavbar = this.toggleNavbar.bind(this);
   }
 
   componentDidMount() {
@@ -51,11 +62,43 @@ class HomePage extends Component {
     }));
   }
 
+  toggleNavbar() {
+    this.setState({
+      collapsed: !this.state.collapsed
+    });
+  }
+
   render() {
     return (
       <div className="homePage">
         <Row className="homePage_Header">
-          <Col xs="2" />
+          <Col xs="2">
+            <div className="navbar-left">
+              <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+              <Collapse isOpen={!this.state.collapsed} navbar>
+                <Nav navbar>
+                  <NavItem>
+                    <NavLink href="#">Profil</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="#">Messages</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="#">Calendrier</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="#">Coups de coeur</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="#">Paramètres</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="#">Se déconnecter</NavLink>
+                  </NavItem>
+                </Nav>
+              </Collapse>
+            </div>
+          </Col>
           <Col xs="8">
             <DropdownButton
               className="w-100"
