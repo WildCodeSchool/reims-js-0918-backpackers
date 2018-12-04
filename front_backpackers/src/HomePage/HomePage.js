@@ -34,7 +34,7 @@ class HomePage extends Component {
   callApiActivities() {
     axios
       .get("http://localhost:3010/activities")
-      .then(response => this.props.viewActivities(response.date));
+      .then(response => this.props.viewActivities(response.data));
   }
 
   changeViewToActivities() {
