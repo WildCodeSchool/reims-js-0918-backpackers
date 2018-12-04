@@ -72,7 +72,7 @@ class HomePage extends Component {
           this.props.places.map(place => (
             <PlaceThumbnail {...place} key={place.id} />
           ))}
-        {this.props.loading === true && this.state.view === "ACTIVITIES" ? (
+        {this.props.loading && this.state.view === "ACTIVITIES" ? (
           <Loading className="mt-2" />
         ) : (
           this.state.view === "ACTIVITIES" &&
