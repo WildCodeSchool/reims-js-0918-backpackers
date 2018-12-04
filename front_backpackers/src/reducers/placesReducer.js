@@ -4,7 +4,6 @@ const placesReducer = (previousState = [], action) => {
   switch (action.type) {
     case VIEW_PLACES:
       return action.places;
-
     default:
       return previousState;
   }
