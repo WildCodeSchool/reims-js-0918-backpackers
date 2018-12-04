@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import { Container } from "reactstrap";
 import SinglePage from "./SinglePage/SinglePage";
 import Login from "./Login";
 import HomepageContainer from "./containers/HomepageContainer";
 import "./App.css";
-import { Container } from "reactstrap";
 
 class App extends Component {
   render() {
