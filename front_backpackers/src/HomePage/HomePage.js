@@ -5,8 +5,6 @@ import "./HomePage.css";
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
-import Loading from "./Loading";
-import axios from "axios";
 
 class HomePage extends Component {
   constructor() {

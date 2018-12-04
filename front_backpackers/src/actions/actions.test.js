@@ -1,10 +1,15 @@
-import { VIEW_PLACES, VIEW_ACTIVITIES, FETCH_ACTIVITIES } from "./actionTypes";
+import {
+  VIEW_PLACES,
+  VIEW_ACTIVITIES,
+  FETCH_ACTIVITIES,
+  FETCH_PLACES
+} from "./actionTypes";
 import {
   makeViewPlacesAction,
+  makeFetchPlacesAction,
   makeViewActivitiesAction,
   makeFetchActivitiesAction
 } from "./actions";
-import axios from "axios";
 
 describe("makeViewPlacesAction", () => {
   it("should return a VIEW_PLACES action", () => {
@@ -26,42 +31,45 @@ describe("makeViewPlacesAction", () => {
 
     expect(makeViewPlacesAction(places)).toEqual(expected);
   });
-});
 
-describe("makeFetchPlacesAction", () => {
-  it("should return a FETCH_PLACES action", () => {
-    const expected = {
-      type: FETCH_PLACES
-    };
+  describe("makeFetchPlacesAction", () => {
+    it("should return a FETCH_PLACES action", () => {
+      const expected = {
+        type: FETCH_PLACES
+      };
 
-    expect(makeFetchPlacesAction()).toEqual(expected);
-describe("makeViewActivitiesAction", () => {
-  it("should return a VIEW_ACTIVITIES action", () => {
-    const activities = [
-      {
-        name: "Soirée au bar",
-        description: "on se retrouve tous au bar !"
-      },
-      {
-        name: "Soirée au bar",
-        description: "on se retrouve tous au bar !"
-      }
-    ];
-    const expected = {
-      type: VIEW_ACTIVITIES,
-      activities
-    };
-
-    expect(makeViewActivitiesAction(activities)).toEqual(expected);
+      expect(makeFetchPlacesAction()).toEqual(expected);
+    });
   });
-});
 
-describe("makeFetchActivitiesAction", () => {
-  it("should return a FETCH_ACTIVITIES", () => {
-    const expected = {
-      type: FETCH_ACTIVITIES
-    };
+  describe("makeViewActivitiesAction", () => {
+    it("should return a VIEW_ACTIVITIES action", () => {
+      const activities = [
+        {
+          name: "Soirée au bar",
+          description: "on se retrouve tous au bar !"
+        },
+        {
+          name: "Soirée au bar",
+          description: "on se retrouve tous au bar !"
+        }
+      ];
+      const expected = {
+        type: VIEW_ACTIVITIES,
+        activities
+      };
 
-    expect(makeFetchActivitiesAction()).toEqual(expected);
+      expect(makeViewActivitiesAction(activities)).toEqual(expected);
+    });
+  });
+
+  describe("makeFetchActivitiesAction", () => {
+    it("should return a FETCH_ACTIVITIES", () => {
+      const expected = {
+        type: FETCH_ACTIVITIES
+      };
+
+      expect(makeFetchActivitiesAction()).toEqual(expected);
+    });
   });
 });

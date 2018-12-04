@@ -1,7 +1,8 @@
 import loadingReducer from "./loadingReducer";
 import {
   makeFetchPlacesAction,
-  makeViewPlacesAction, makeFetchActivitiesAction,
+  makeViewPlacesAction,
+  makeFetchActivitiesAction,
   makeViewActivitiesAction
 } from "../actions/actions";
 
@@ -15,6 +16,7 @@ describe("loadingReducer", () => {
     const fakeState = true;
 
     expect(loadingReducer(fakeState, makeViewPlacesAction([]))).toEqual(false);
+  });
   it("handles FETCH_ACTIVITIES action", () => {
     const fakeState = false;
     expect(loadingReducer(fakeState, makeFetchActivitiesAction())).toEqual(
