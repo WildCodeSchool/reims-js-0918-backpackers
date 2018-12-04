@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SinglePage from "./SinglePage/SinglePage";
 import Login from "./Login";
 import HomePage from "./HomePage/HomePage";
+import FormPage from "./FormPage/FormPage";
 import "./App.css";
 import { Container } from "reactstrap";
 import axios from "axios";
@@ -81,6 +82,7 @@ class App extends Component {
           listActivity={this.state.activityList}
         />
         <SinglePage />
+        <FormPage />
       </Container>
     );
   }

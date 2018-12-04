@@ -1,5 +1,5 @@
-import { VIEW_PLACES } from "./actionTypes";
-import { makeViewPlacesAction } from "./actions";
+import { VIEW_PLACES, FETCH_PLACES } from "./actionTypes";
+import { makeViewPlacesAction, makeFetchPlacesAction } from "./actions";
 
 describe("makeViewPlacesAction", () => {
   it("should return a VIEW_PLACES action", () => {
@@ -20,5 +20,15 @@ describe("makeViewPlacesAction", () => {
     };
 
     expect(makeViewPlacesAction(places)).toEqual(expected);
+  });
+});
+
+describe("makeFetchPlacesAction", () => {
+  it("should return a FETCH_PLACES action", () => {
+    const expected = {
+      type: FETCH_PLACES
+    };
+
+    expect(makeFetchPlacesAction()).toEqual(expected);
   });
 });
