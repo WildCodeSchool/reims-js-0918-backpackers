@@ -72,33 +72,7 @@ class HomePage extends Component {
     return (
       <div className="homePage">
         <Row className="homePage_Header">
-          <Col xs="2">
-            <div className="navbar-left">
-              <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-              <Collapse isOpen={!this.state.collapsed} navbar>
-                <Nav navbar>
-                  <NavItem>
-                    <NavLink href="#">Profil</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="#">Messages</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="#">Calendrier</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="#">Coups de coeur</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="#">Paramètres</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="#">Se déconnecter</NavLink>
-                  </NavItem>
-                </Nav>
-              </Collapse>
-            </div>
-          </Col>
+          <Col xs="2" />
           <Col xs="8">
             <DropdownButton
               className="w-100"
