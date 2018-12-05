@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import backpackersApp from "./reducers";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 
 const store = createStore(
