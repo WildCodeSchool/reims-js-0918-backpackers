@@ -72,7 +72,30 @@ class HomePage extends Component {
     return (
       <div className="homePage">
         <Row className="homePage_Header">
-          <Col xs="2" />
+          <Col xs="2">
+            <nav
+              class="navbar navbar-light navbar-static bg-faded"
+              role="navigation"
+            >
+              <a class="navbar-brand" href="/">
+                Navbar
+              </a>
+              <ul class="nav navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="/">
+                    Home
+                  </a>
+                </li>
+                <button
+                  class="navbar-toggler pull-xs-right"
+                  id="navbarSideButton"
+                  type="button"
+                >
+                  &#9776;
+                </button>
+              </ul>
+            </nav>
+          </Col>
           <Col xs="8">
             <DropdownButton
               className="w-100"
