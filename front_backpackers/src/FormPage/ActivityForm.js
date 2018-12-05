@@ -19,9 +19,9 @@ const ActivityForm = props => {
       </Row>
       <h5>Votre annonce</h5>
       <div className="mb-5">
-        <div>
+        {/* <div>
           <label htmlFor="category">Catégorie</label>
-          <Field type="select" name="select" id="Select" component="select">
+          <Field type="select" name="category" id="Select" component="select">
             <option>Apéritifs</option>
             <option>Aquatique</option>
             <option>Aventure</option>
@@ -32,14 +32,26 @@ const ActivityForm = props => {
             <option>Nocturne</option>
             <option>Restauration</option>
           </Field>
-        </div>
+        </div> */}
         <div>
           <label htmlFor="Title">Titre</label>
-          <Field name="Title" component="input" type="text" />
+          <Field name="name" component="input" type="text" />
         </div>
         <div>
-          <label htmlFor="Text">Description</label>
-          <Field name="Description" component="input" type="text" />
+          <label htmlFor="Creator">Createur</label>
+          <Field name="id_creator" component="input" type="text" />
+        </div>
+        <div>
+          <label htmlFor="Place">Lieu</label>
+          <Field name="id_place" component="input" type="text" />
+        </div>
+        <div>
+          <label htmlFor="Description">Description</label>
+          <Field name="description" component="input" type="text" />
+        </div>
+        <div>
+          <label htmlFor="Capacity">Nombre de participants</label>
+          <Field name="capacity" component="input" type="text" />
         </div>
         <div>
           <Field
@@ -50,10 +62,10 @@ const ActivityForm = props => {
           />
           <label htmlFor="Price">€</label>
         </div>
-        <div>
+        {/* <div>
           <label htmlFor="photos">Photos</label>
           <Field type="file" name="file" id="File" component="input" />
-        </div>
+        </div> */}
         <button type="submit">Publier l'annonce</button>
       </div>
     </form>

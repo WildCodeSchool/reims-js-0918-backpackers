@@ -2,7 +2,8 @@ import {
   VIEW_PLACES,
   FETCH_PLACES,
   VIEW_ACTIVITIES,
-  FETCH_ACTIVITIES
+  FETCH_ACTIVITIES,
+  CREATE_ACTIVITY
 } from "./actionTypes";
 
 export const makeViewPlacesAction = places => ({
@@ -21,4 +22,8 @@ export const makeViewActivitiesAction = activities => ({
 
 export const makeFetchActivitiesAction = () => ({
   type: FETCH_ACTIVITIES
+});
+
+export const makeCreateActivityAction = () => ({
+  type: CREATE_ACTIVITY
 });
