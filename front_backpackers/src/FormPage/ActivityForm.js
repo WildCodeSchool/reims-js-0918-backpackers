@@ -17,9 +17,9 @@ const ActivityForm = props => {
           <p className="text-center">Publier une annonce</p>
         </Col>
       </Row>
-      <h5>Votre annonce</h5>
+      <h5 className="publicationUnderline">Votre annonce</h5>
       <div className="mb-5">
-        {/* <div>
+        {/* <div>  DON'T TOUCH ! ! ! ! ! !
           <label htmlFor="category">Catégorie</label>
           <Field type="select" name="category" id="Select" component="select">
             <option>Apéritifs</option>
@@ -34,24 +34,54 @@ const ActivityForm = props => {
           </Field>
         </div> */}
         <div>
-          <label htmlFor="Title">Titre</label>
-          <Field name="name" component="input" type="text" />
+          <label htmlFor="Title" />
+          <Field
+            name="name"
+            component="input"
+            type="text"
+            placeholder="Titre"
+            className="field w-100 mt-2"
+          />
         </div>
         <div>
-          <label htmlFor="Creator">Createur</label>
-          <Field name="id_creator" component="input" type="text" />
+          <label htmlFor="Creator" />
+          <Field
+            name="id_creator"
+            component="input"
+            type="text"
+            placeholder="Créateur"
+            className="field w-100 mt-2"
+          />
         </div>
         <div>
-          <label htmlFor="Place">Lieu</label>
-          <Field name="id_place" component="input" type="text" />
+          <label htmlFor="Place" />
+          <Field
+            name="id_place"
+            component="input"
+            type="text"
+            placeholder="Lieu"
+            className="field w-100 mt-2"
+          />
         </div>
         <div>
-          <label htmlFor="Description">Description</label>
-          <Field name="description" component="input" type="text" />
+          <label htmlFor="Description" />
+          <Field
+            name="description"
+            component="textarea"
+            type="text"
+            placeholder="Description"
+            className="field w-100 mt-2"
+          />
         </div>
         <div>
-          <label htmlFor="Capacity">Nombre de participants</label>
-          <Field name="capacity" component="input" type="text" />
+          <label htmlFor="Capacity" />
+          <Field
+            name="capacity"
+            component="input"
+            type="text"
+            placeholder="participants"
+            className="field width mt-2"
+          />
         </div>
         <div>
           <Field
@@ -59,21 +89,23 @@ const ActivityForm = props => {
             name="price"
             component="input"
             placeholder="Prix"
+            className="field width mt-2"
           />
           <label htmlFor="Price">€</label>
         </div>
-        {/* <div>
+        {/* <div>  DON'T TOUCH ! ! ! ! ! ! ! ! !
           <label htmlFor="photos">Photos</label>
           <Field type="file" name="file" id="File" component="input" />
         </div> */}
-        <button type="submit">Publier l'annonce</button>
+        <button type="submit" className="header cursor">
+          Publier l'annonce
+        </button>
       </div>
     </form>
   );
 };
 
 const ActivityFormContainer = reduxForm({
-  // a unique name for the form
   form: "createActivity"
 })(ActivityForm);
 

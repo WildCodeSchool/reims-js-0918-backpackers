@@ -4,10 +4,10 @@ import ActivityFormContainer from "./ActivityForm";
 
 class ActivityPage extends Component {
   submit = activities => {
-    const j = activities;
-    JSON.stringify(j);
+    const activity = activities;
+    JSON.stringify(activity);
     axios
-      .post("http://localhost:3010/activities", j)
+      .post("http://localhost:3010/activities", activity)
       .then(response => console.log(response));
     console.log(typeof activities);
   };
