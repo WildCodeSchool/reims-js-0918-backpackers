@@ -2,9 +2,9 @@ import React, { Fragment } from "react";
 
 import "./Sidebar.css";
 
-const Sidebar = ({ backdropClickHandler }) => (
+const Sidebar = ({ backdropClickHandler, show }) => (
   <Fragment>
-    <nav className="side-drawer">
+    <nav className={show ? "side-drawer open" : "side-drawer"}>
       <ul>
         <li>
           <a href="/">Profil</a>
@@ -14,7 +14,10 @@ const Sidebar = ({ backdropClickHandler }) => (
         </li>
       </ul>
     </nav>
-    <div onClick={() => backdropClickHandler()} className="backdrop" />
+    <div
+      onClick={() => backdropClickHandler()}
+      className={show ? "backdrop" : ""}
+    />
   </Fragment>
 );
 

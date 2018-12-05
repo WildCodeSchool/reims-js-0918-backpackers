@@ -80,9 +80,11 @@ class HomePage extends Component {
             <BurgerButton
               drawerToggleClickHandler={this.drawerToggleClickHandler}
             />
-            {this.state.sideDrawerOpen && (
-              <Sidebar backdropClickHandler={this.backdropClickHandler} />
-            )}
+
+            <Sidebar
+              show={this.state.sideDrawerOpen}
+              backdropClickHandler={this.backdropClickHandler}
+            />
           </Col>
           <Col xs="8">
             <DropdownButton
