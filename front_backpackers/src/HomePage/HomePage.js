@@ -1,18 +1,11 @@
 import React, { Component } from "react";
-import {
-  Row,
-  Button,
-  Col,
-  Nav,
-  NavItem,
-  NavLink,
-  NavbarToggler,
-  Collapse
-} from "reactstrap";
+import { Row, Button, Col } from "reactstrap";
 import axios from "axios";
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
+import BurgerButton from "./BurgerButton";
+import Sidebar from "./Sidebar";
 import "./HomePage.css";
 
 class HomePage extends Component {
@@ -21,12 +14,15 @@ class HomePage extends Component {
     this.state = {
       view: "PLACES",
       dropdownOpen: false,
-      collapsed: true
+      collapsed: true,
+      sideDrawerOpen: false
     };
     this.changeViewToActivities = this.changeViewToActivities.bind(this);
     this.changeViewToPlaces = this.changeViewToPlaces.bind(this);
     this.toggle = this.toggle.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
+    this.drawerToggleClickHandler = this.drawerToggleClickHandler.bind(this);
+    this.backdropClickHandler = this.backdropClickHandler.bind(this);
   }
 
   componentDidMount() {
@@ -68,33 +64,25 @@ class HomePage extends Component {
     });
   }
 
+  drawerToggleClickHandler() {
+    this.setState({ sideDrawerOpen: !this.state.sideDrawerOpen });
+  }
+
+  backdropClickHandler() {
+    this.setState({ sideDrawerOpen: false });
+  }
+
   render() {
     return (
       <div className="homePage">
         <Row className="homePage_Header">
           <Col xs="2">
-            <nav
-              class="navbar navbar-light navbar-static bg-faded"
-              role="navigation"
-            >
-              <a class="navbar-brand" href="/">
-                Navbar
-              </a>
-              <ul class="nav navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="/">
-                    Home
-                  </a>
-                </li>
-                <button
-                  class="navbar-toggler pull-xs-right"
-                  id="navbarSideButton"
-                  type="button"
-                >
-                  &#9776;
-                </button>
-              </ul>
-            </nav>
+            <BurgerButton
+              drawerToggleClickHandler={this.drawerToggleClickHandler}
+            />
+            {this.state.sideDrawerOpen && (
+              <Sidebar backdropClickHandler={this.backdropClickHandler} />
+            )}
           </Col>
           <Col xs="8">
             <DropdownButton
