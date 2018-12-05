@@ -5,7 +5,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 40%;
+  width: 80%;
   z-index: 1000;
   transform: translateX(-100%);
   transition: transform 0.3s ease-out;
@@ -13,16 +13,6 @@
 
 .side-drawer.open {
   transform: translateX(0);
-}
-
-.side-drawer ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-}
-
-.side-drawer li {
-  margin: 2px;
 }
 
 .side-drawer a {
@@ -48,4 +38,38 @@
 a.disable {
   pointer-events: none;
   cursor: default;
+}
+
+.profil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profil img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50px;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu li {
+  margin-bottom: 10px;
+}
+
+.mentions {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mentions li {
+  margin-bottom: 10px;
 }
