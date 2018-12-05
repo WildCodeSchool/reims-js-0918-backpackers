@@ -12,55 +12,85 @@ const Profile = () => {
         </Col>
       </Row>
       <Row>
-        <Col xs={{ size: 4, offset: 4 }} className="profilePicture">
-          <Button className="rounded-circle"><img src="https://via.placeholder.com/75" /></Button>
+        <Col xs={{ size: 6, offset: 3 }} className="profilePicture justify-content-center d-flex">
+          <Button className="bg-transparent border-0 mb-3 rounded-circle"><img className="rounded-circle" src="https://via.placeholder.com/75" /></Button>
         </Col>
       </Row>
-      <Row>
-        <Col xs={{ size: 8, offset: 2 }} className="text-center">
-          <h4>Aude Javel</h4>
-          <p>audej@gmail.com</p>
-        </Col>
-        <Col xs="2">
-          <Button><i className="fas fa-pencil-alt" alt="Photo de profil" ></i></Button>
-        </Col>
-      </Row>
+      <div className="userInfos">
+        <Row>
+          <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
+            <h4 className="mb-0">Aude Javel</h4>
+            <span>audej@gmail.com</span>
+          </Col>
+          <Col xs="2">
+            <Button className="bg-transparent border-0 text-secondary p-0"><i className="fas fa-pencil-alt" alt="Photo de profil" ></i></Button>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col xs={{ size: 8, offset: 2 }} className="text-center">
+            <p className="mb-0">Fan du japon, backpackeuse et gourmande</p>
+          </Col>
+        </Row>
+      </div>
+
 
       <Row>
-        <Col xs={{ size: 8, offset: 2 }} className="text-center">
-          <p>Fan du japon, backpackeuse et gourmande</p>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col xs={{ size: 8, offset: 2 }} className="text-center">
-          <div className="achievements">
-            <img src="https://via.placeholder.com/25" alt="badge" />
-            <img src="https://via.placeholder.com/25" alt="badge" />
-            <img src="https://via.placeholder.com/25" alt="badge" />
-            <img src="https://via.placeholder.com/25" alt="badge" />
+        <Col xs={{ size: 8, offset: 2 }} className="text-center mt-3">
+          <div className="achievements d-inline-block p-1">
+            <img className="px-1" src="https://via.placeholder.com/30" alt="badge" />
+            <img className="px-1" src="https://via.placeholder.com/30" alt="badge" />
+            <img className="px-1" src="https://via.placeholder.com/30" alt="badge" />
+            <img className="px-1" src="https://via.placeholder.com/30" alt="badge" />
           </div>
         </Col>
       </Row>
 
       <Row>
+        <Col
+          xs={{ size: 8, offset: 2 }}
+          className="homeUnderline my-2"
+        />
+      </Row>
+
+
+      <Row>
         <Col xs="12" className="text-center">
+          <Badge className="py-1 px-2 mx-1">AquaPoney</Badge>
+          <Badge className="py-1 px-2 mx-1">Cinéma</Badge>
+          <Badge className="py-1 px-2 mx-1">Japon</Badge>
+          <Badge className="py-1 px-2 mx-1">Jeux Vidéo</Badge>
+        </Col>
+      </Row>
+
+
+      <Row>
+        <Col
+          xs={{ size: 8, offset: 2 }}
+          className="homeUnderline my-2"
+        />
+      </Row>
+
+      <Row className="activityCreated">
+        <Col xs="12" className="text-center mt-2">
           <p>Vous n'avez proposé pour le moment aucune activité.</p>
         </Col>
       </Row>
 
       <Row>
-        <Col xs="12" className="text-center">
-          <Badge color="primary">AquaPoney</Badge>
-          <Badge color="primary">Cinéma</Badge>
-          <Badge color="primary">Japon</Badge>
-          <Badge color="primary">Jeux Vidéo</Badge>
-        </Col>
+        <Col
+          xs={{ size: 8, offset: 2 }}
+          className="homeUnderline my-2"
+        />
       </Row>
 
 
       <Row>
-        <h2>Historique des anciennes activitées</h2>
+        <Col xs="12">
+          <h2 className="pr-3">Historique des anciennes activitées</h2>
+          <div className="activitiesTitleUnderline mb-3 w-100"></div>
+        </Col>
+
         <Col xs="12">
           <Media className="d-flex align-items-stretch">
             <Media left href="#">
@@ -96,7 +126,7 @@ const Profile = () => {
       </Row>
 
 
-    </Fragment>
+    </Fragment >
   )
 
 }

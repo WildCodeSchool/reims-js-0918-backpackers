@@ -1,5 +1,4 @@
-$blueColor : #054762;
-$lightBlueColor : #00D3E5;
+@import "_styles.scss";
 
 button.previousPage{
   background-color: $blueColor;
@@ -7,7 +6,56 @@ button.previousPage{
 }
 
 .profilePicture button{
-  width: 100%;
-  height: width;
+  width: 100px;
+  height: 100px;
+  padding: 0;
+  img{
+    width:100%;
+    object-fit: cover;
+  }
+}
 
+.userInfos{
+  h4{
+    color: $lightBlueColor;
+  }
+  span{
+    font-weight: 100;
+  }
+  p{
+    font-size: 0.7rem;
+    font-weight: 400;
+  }
+}
+
+.achievements{
+  background-color: $grayColor
+}
+
+.activityCreated p{
+  font-style: italic;
+  font-weight: 100;
+  font-size: 0.8rem;
+}
+
+.badge{
+  border-radius: 10px;
+  font-size: 0.9rem;  
+  font-weight: 100;
+}
+
+h2{
+  font-size: 1rem;
+  font-weight: 800;
+  display: inline-block;
+  background-color: #FFF;
+  z-index: 5;
+}
+
+.activitiesTitleUnderline{
+  
+  z-index: 0;
+  margin-top: -15px;
+  height:1px;
+  border-bottom: 1px solid #000;
 }
