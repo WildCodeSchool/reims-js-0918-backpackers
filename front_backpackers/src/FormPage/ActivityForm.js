@@ -34,8 +34,9 @@ const ActivityForm = props => {
           </Field>
         </div> */}
         <div>
-          <label htmlFor="Title" />
+          <label htmlFor="name" />
           <Field
+            id="name"
             name="name"
             component="input"
             type="text"
@@ -44,9 +45,10 @@ const ActivityForm = props => {
           />
         </div>
         <div>
-          <label htmlFor="Creator" />
+          <label htmlFor="id_creator" />
           <Field
-            name="id_creator"
+            id="id_creator"
+            name="creator"
             component="input"
             type="text"
             placeholder="Créateur"
@@ -54,9 +56,10 @@ const ActivityForm = props => {
           />
         </div>
         <div>
-          <label htmlFor="Place" />
+          <label htmlFor="id_place" />
           <Field
-            name="id_place"
+            id="id_place"
+            name="place"
             component="input"
             type="text"
             placeholder="Lieu"
@@ -64,8 +67,9 @@ const ActivityForm = props => {
           />
         </div>
         <div>
-          <label htmlFor="Description" />
+          <label htmlFor="description" />
           <Field
+            id="decription"
             name="description"
             component="textarea"
             type="text"
@@ -74,8 +78,9 @@ const ActivityForm = props => {
           />
         </div>
         <div>
-          <label htmlFor="Capacity" />
+          <label htmlFor="capacity" />
           <Field
+            id="capacity"
             name="capacity"
             component="input"
             type="text"
@@ -85,13 +90,14 @@ const ActivityForm = props => {
         </div>
         <div>
           <Field
+            id="price"
             type="text"
             name="price"
             component="input"
             placeholder="Prix"
             className="field width mt-2"
           />
-          <label htmlFor="Price">€</label>
+          <label htmlFor="price">€</label>
         </div>
         {/* <div>  DON'T TOUCH ! ! ! ! ! ! ! ! !
           <label htmlFor="photos">Photos</label>
