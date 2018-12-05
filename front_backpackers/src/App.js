@@ -5,6 +5,7 @@ import HomePage from "./HomePage/HomePage";
 import "./App.css";
 import { Container } from "reactstrap";
 import axios from "axios";
+import Maps from "./Maps";
 
 class App extends Component {
   constructor() {
@@ -80,6 +81,7 @@ class App extends Component {
           listPlace={this.state.placeList}
           listActivity={this.state.activityList}
         />
+        <Maps />
         <SinglePage />
       </Container>
     );
