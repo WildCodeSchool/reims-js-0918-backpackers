@@ -17,7 +17,7 @@ const ActivityForm = props => {
           <p className="text-center">Publier une annonce</p>
         </Col>
       </Row>
-      <h5 className="publicationUnderline">Votre annonce</h5>
+      <h5 className="text-center publicationUnderline">Votre annonce</h5>
       <div className="mb-5">
         {/* <div>  DON'T TOUCH ! ! ! ! ! !
           <label htmlFor="category">Catégorie</label>
