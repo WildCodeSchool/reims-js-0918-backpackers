@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import backpackersApp from "./reducers";
+
 import "./index.css";
 
 const store = createStore(
