@@ -18,53 +18,39 @@ const Sidebar = ({ backdropClickHandler, show }) => (
       <Nav className="menu d-flex flex-column align-items-baseline align-self-baseline">
         <NavItem>
           <i className="mr-2 fas fa-user-alt" />
-          <NavLink className="pl-0" href="#">
-            Profil
-          </NavLink>
+          <NavLink className="pl-0">Profil</NavLink>
         </NavItem>
         <NavItem>
           <i className="mr-2 far fa-comments" />
-          <NavLink className="pl-0" href="#">
-            Messages
-          </NavLink>
+          <NavLink className="pl-0">Messages</NavLink>
         </NavItem>
         <NavItem>
           <i className="mr-2 far fa-calendar-alt" />
-          <NavLink className="pl-0" href="#">
-            Calendrier
-          </NavLink>
+          <NavLink className="pl-0">Calendrier</NavLink>
         </NavItem>
         <NavItem>
           <i className="mr-2 far fa-heart" />
-          <NavLink className="pl-0" href="#">
-            Coups de coeur
-          </NavLink>
+          <NavLink className="pl-0">Coups de coeur</NavLink>
         </NavItem>
         <NavItem>
           <i className="mr-2 fas fa-wrench" />
-          <NavLink className="pl-0" href="#">
-            Paramètres
-          </NavLink>
+          <NavLink className="pl-0">Paramètres</NavLink>
         </NavItem>
         <NavItem>
           <i className="mr-2 fas fa-comment-alt" />
-          <NavLink className="pl-0" href="#">
-            Demandes
-          </NavLink>
+          <NavLink className="pl-0">Demandes</NavLink>
         </NavItem>
         <NavItem>
           <i className="mr-2 fas fa-sign-out-alt" />
-          <NavLink className="pl-0" href="#">
-            Se déconnecter
-          </NavLink>
+          <NavLink className="pl-0">Se déconnecter</NavLink>
         </NavItem>
       </Nav>
       <Nav className="d-flex flex-column align-items-center">
         <NavItem>
-          <NavLink href="#">Mentions légales</NavLink>
+          <NavLink>Mentions légales</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#">CGU</NavLink>
+          <NavLink>CGU</NavLink>
         </NavItem>
       </Nav>
     </Navbar>

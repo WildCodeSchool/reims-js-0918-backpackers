@@ -8,7 +8,7 @@ const BurgerButton = ({ drawerToggleClickHandler }) => (
       className="toggle-button"
       onClick={() => drawerToggleClickHandler()}
     >
-      <i class="fas fa-bars" />
+      <i className="fas fa-bars" />
     </button>
   </Fragment>
 );
