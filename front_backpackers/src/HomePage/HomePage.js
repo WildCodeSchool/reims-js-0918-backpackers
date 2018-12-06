@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Row, Button, Col } from "reactstrap";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
@@ -109,9 +110,11 @@ class HomePage extends Component {
           <Button className="w-50 listSearchBtn">
             Rechercher <i className="fas fa-search-location" />
           </Button>
-          <Button className="w-50 listPostBtn">
-            <i className="fas fa-pencil-alt" /> Publier{" "}
-          </Button>
+          <Link to="/activities">
+            <Button className="w-50 listPostBtn">
+              <i className="fas fa-pencil-alt" /> Publier{" "}
+            </Button>
+          </Link>
         </Row>
         <Row>
           <Col

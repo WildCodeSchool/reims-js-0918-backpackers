@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Row, Col, Button, Media, Badge } from "reactstrap";
+import { Link } from "react-router-dom";
 
 import "./Profile.scss";
 
@@ -8,9 +9,12 @@ const Profile = () => {
     <Fragment>
       <Row>
         <Col xs="4">
-          <Button className="previousPage py-0 px-3 mt-4">
-            <i className="fas pr-2 fa-angle-left" />Retour
-          </Button>
+          <Link to="/">
+            <Button className="previousPage py-0 px-3 mt-4">
+              <i className="fas pr-2 fa-angle-left" />
+              Retour
+            </Button>
+          </Link>
         </Col>
       </Row>
       <Row>
