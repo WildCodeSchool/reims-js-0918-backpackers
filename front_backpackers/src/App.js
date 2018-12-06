@@ -1,25 +1,16 @@
-import React, { Component } from "react";
-import { Container } from "reactstrap";
-import ActivityPage from "./FormPage/ActivityPage";
-import SinglePage from "./SinglePage/SinglePage";
-import Login from "./Login";
-import HomepageContainer from "./containers/HomepageContainer";
-import Profile from "./Profile";
+import React from "react";
+import PropTypes from "prop-types";
+import routes from "./routes";
+import { ConnectedRouter } from "connected-react-router";
 
 import "./App.css";
 
-class App extends Component {
-  render() {
-    return (
-      <Container fluid>
-        <Login />
-        <Profile />
-        <HomepageContainer />
-        <SinglePage />
-        <ActivityPage />
-      </Container>
-    );
-  }
-}
+const App = ({ history }) => {
+  return <ConnectedRouter history={history}>{routes}</ConnectedRouter>;
+};
+
+App.propTypes = {
+  history: PropTypes.object
+};
 
 export default App;

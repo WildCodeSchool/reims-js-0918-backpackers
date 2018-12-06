@@ -1,17 +1,19 @@
 import { combineReducers } from "redux";
-
+import { connectRouter } from "connected-react-router";
 import loadingReducer from "./loadingReducer";
 import placesReducer from "./placesReducer";
 import activitiesReducer from "./activitiesReducer";
 import menuReducer from "./menuReducer";
 import { reducer as formReducer } from "redux-form";
 
-const backpackersApp = combineReducers({
-  loading: loadingReducer,
-  places: placesReducer,
-  activities: activitiesReducer,
-  form: formReducer,
-  menu: menuReducer
-});
+const backpackersApp = history =>
+  combineReducers({
+    loading: loadingReducer,
+    places: placesReducer,
+    activities: activitiesReducer,
+    form: formReducer,
+    menu: menuReducer,
+    router: connectRouter(history)
+  });
 
 export default backpackersApp;
