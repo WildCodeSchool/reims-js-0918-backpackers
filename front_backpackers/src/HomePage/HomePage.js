@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Row, Button, Col } from "reactstrap";
 import axios from "axios";
-import "./HomePage.css";
+import "./HomePage.scss";
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";

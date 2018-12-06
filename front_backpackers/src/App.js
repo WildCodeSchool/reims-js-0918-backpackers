@@ -3,6 +3,8 @@ import { Container } from "reactstrap";
 import SinglePage from "./SinglePage/SinglePage";
 import Login from "./Login";
 import HomepageContainer from "./containers/HomepageContainer";
+import Profile from "./Profile";
+
 import "./App.css";
 
 class App extends Component {
@@ -10,6 +12,7 @@ class App extends Component {
     return (
       <Container fluid>
         <Login />
+        <Profile />
         <HomepageContainer />
         <SinglePage />
       </Container>
