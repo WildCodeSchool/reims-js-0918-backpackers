@@ -2,13 +2,17 @@ import {
   VIEW_PLACES,
   VIEW_ACTIVITIES,
   FETCH_ACTIVITIES,
-  FETCH_PLACES
+  FETCH_PLACES,
+  OPEN_MENU,
+  CLOSE_MENU
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
   makeFetchPlacesAction,
   makeViewActivitiesAction,
-  makeFetchActivitiesAction
+  makeFetchActivitiesAction,
+  makeCloseMenuAction,
+  makeOpenMenuAction
 } from "./actions";
 
 describe("makeViewPlacesAction", () => {
@@ -70,6 +74,26 @@ describe("makeViewPlacesAction", () => {
       };
 
       expect(makeFetchActivitiesAction()).toEqual(expected);
+    });
+  });
+
+  describe("makeOpenMenuAction", () => {
+    it("should return a OPEN_MENU", () => {
+      const expected = {
+        type: OPEN_MENU
+      };
+
+      expect(makeOpenMenuAction()).toEqual(expected);
+    });
+  });
+
+  describe("makeCloseMenuAction", () => {
+    it("should return a CLOSE_MENU", () => {
+      const expected = {
+        type: CLOSE_MENU
+      };
+
+      expect(makeCloseMenuAction()).toEqual(expected);
     });
   });
 });

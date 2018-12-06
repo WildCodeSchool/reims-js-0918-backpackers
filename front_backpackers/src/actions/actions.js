@@ -2,7 +2,9 @@ import {
   VIEW_PLACES,
   FETCH_PLACES,
   VIEW_ACTIVITIES,
-  FETCH_ACTIVITIES
+  FETCH_ACTIVITIES,
+  OPEN_MENU,
+  CLOSE_MENU
 } from "./actionTypes";
 
 export const makeViewPlacesAction = places => ({
@@ -21,4 +23,12 @@ export const makeViewActivitiesAction = activities => ({
 
 export const makeFetchActivitiesAction = () => ({
   type: FETCH_ACTIVITIES
+});
+
+export const makeOpenMenuAction = () => ({
+  type: OPEN_MENU
+});
+
+export const makeCloseMenuAction = () => ({
+  type: CLOSE_MENU
 });
