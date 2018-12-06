@@ -1,3 +1,5 @@
+@import "../_styles.scss";
+
 .homePage {
   background-color: #ededee;
   margin-right: -15px;
@@ -133,10 +135,6 @@
 .listPostBtn {
   background-color: #00b273;
   padding-right: 30px;
-}
-
-.homeUnderline {
-  border-bottom: 1px solid #c1c1c2;
 }
 
 .loading {

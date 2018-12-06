@@ -4,7 +4,8 @@ import {
   VIEW_ACTIVITIES,
   FETCH_ACTIVITIES,
   OPEN_MENU,
-  CLOSE_MENU
+  CLOSE_MENU,
+  CREATE_ACTIVITY
 } from "./actionTypes";
 
 export const makeViewPlacesAction = places => ({
@@ -31,4 +32,8 @@ export const makeOpenMenuAction = () => ({
 
 export const makeCloseMenuAction = () => ({
   type: CLOSE_MENU
+});
+
+export const makeCreateActivityAction = () => ({
+  type: CREATE_ACTIVITY
 });
