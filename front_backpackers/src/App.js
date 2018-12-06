@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container } from "reactstrap";
+import ActivityPage from "./FormPage/ActivityPage";
 import SinglePage from "./SinglePage/SinglePage";
 import Login from "./Login";
 import HomepageContainer from "./containers/HomepageContainer";
@@ -15,6 +16,7 @@ class App extends Component {
         <Profile />
         <HomepageContainer />
         <SinglePage />
+        <ActivityPage />
       </Container>
     );
   }
