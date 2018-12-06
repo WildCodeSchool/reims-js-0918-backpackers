@@ -105,13 +105,18 @@ app.get("/activities/search", (req, res) => {
 
 app.post("/activities", (req, res) => {
   const formData = req.body;
-  connection.query("INSERT INTO activities SET ?", formData, (err, results) => {
-    if (err) {
-      res.status(500).send("Failed to add activity");
-    } else {
-      res.sendStatus(200);
+  connection.query(
+    "INSERT INTO activities SET ? ",
+    formData,
+    (err, results) => {
+      if (err) {
+        res.status(500).send("Failed to add activity");
+        console.log(err);
+      } else {
+        res.sendStatus(200);
+      }
     }
-  });
+  );
 });
 
 app.get("/profile", (req, res) => {
