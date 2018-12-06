@@ -15,8 +15,7 @@ class HomePage extends Component {
     this.state = {
       view: "PLACES",
       dropdownOpen: false,
-      collapsed: true,
-      sideDrawerOpen: false
+      collapsed: true
     };
     this.changeViewToActivities = this.changeViewToActivities.bind(this);
     this.changeViewToPlaces = this.changeViewToPlaces.bind(this);
@@ -66,11 +65,11 @@ class HomePage extends Component {
   }
 
   drawerToggleClickHandler() {
-    this.setState({ sideDrawerOpen: !this.state.sideDrawerOpen });
+    this.props.openMenu();
   }
 
   backdropClickHandler() {
-    this.setState({ sideDrawerOpen: false });
+    this.props.closeMenu();
   }
 
   render() {
@@ -83,7 +82,7 @@ class HomePage extends Component {
             />
 
             <Sidebar
-              show={this.state.sideDrawerOpen}
+              show={this.props.menu}
               backdropClickHandler={this.backdropClickHandler}
             />
           </Col>
