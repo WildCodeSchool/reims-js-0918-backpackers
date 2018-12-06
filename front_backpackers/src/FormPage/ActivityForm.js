@@ -48,7 +48,7 @@ const ActivityForm = props => {
           <label htmlFor="id_creator" />
           <Field
             id="id_creator"
-            name="creator"
+            name="id_creator"
             component="input"
             type="text"
             placeholder="Créateur"
@@ -59,7 +59,7 @@ const ActivityForm = props => {
           <label htmlFor="id_place" />
           <Field
             id="id_place"
-            name="place"
+            name="id_place"
             component="input"
             type="text"
             placeholder="Lieu"
