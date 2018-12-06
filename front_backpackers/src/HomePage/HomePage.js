@@ -6,7 +6,8 @@ import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
 import BurgerButton from "./BurgerButton";
 import Sidebar from "./Sidebar";
-import "./HomePage.css";
+
+import "./HomePage.scss";
 
 class HomePage extends Component {
   constructor() {
