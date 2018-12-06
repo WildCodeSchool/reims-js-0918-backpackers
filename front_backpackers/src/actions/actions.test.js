@@ -3,6 +3,8 @@ import {
   VIEW_ACTIVITIES,
   FETCH_ACTIVITIES,
   FETCH_PLACES,
+  OPEN_MENU,
+  CLOSE_MENU,
   CREATE_ACTIVITY
 } from "./actionTypes";
 import {
@@ -10,6 +12,8 @@ import {
   makeFetchPlacesAction,
   makeViewActivitiesAction,
   makeFetchActivitiesAction,
+  makeCloseMenuAction,
+  makeOpenMenuAction,
   makeCreateActivityAction
 } from "./actions";
 
@@ -82,5 +86,25 @@ describe("makeCreateActivityAction", () => {
       type: CREATE_ACTIVITY
     };
     expect(makeCreateActivityAction()).toEqual(expected);
+  });
+});
+
+describe("makeOpenMenuAction", () => {
+  it("should return a OPEN_MENU", () => {
+    const expected = {
+      type: OPEN_MENU
+    };
+
+    expect(makeOpenMenuAction()).toEqual(expected);
+  });
+});
+
+describe("makeCloseMenuAction", () => {
+  it("should return a CLOSE_MENU", () => {
+    const expected = {
+      type: CLOSE_MENU
+    };
+
+    expect(makeCloseMenuAction()).toEqual(expected);
   });
 });

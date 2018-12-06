@@ -4,20 +4,25 @@ import {
   makeViewPlacesAction,
   makeFetchPlacesAction,
   makeViewActivitiesAction,
-  makeFetchActivitiesAction
+  makeFetchActivitiesAction,
+  makeOpenMenuAction,
+  makeCloseMenuAction
 } from "../actions/actions";
 
 const mapStateToProps = state => ({
   places: state.places,
   activities: state.activities,
-  loading: state.loading
+  loading: state.loading,
+  menu: state.menu
 });
 
 const mapDispatchToProps = dispatch => ({
   viewPlaces: places => dispatch(makeViewPlacesAction(places)),
   fetchPlaces: () => dispatch(makeFetchPlacesAction()),
   viewActivities: activities => dispatch(makeViewActivitiesAction(activities)),
-  fetchActivities: () => dispatch(makeFetchActivitiesAction())
+  fetchActivities: () => dispatch(makeFetchActivitiesAction()),
+  openMenu: menu => dispatch(makeOpenMenuAction(menu)),
+  closeMenu: menu => dispatch(makeCloseMenuAction(menu))
 });
 
 export default connect(
