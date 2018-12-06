@@ -5,10 +5,7 @@ import { Provider } from "react-redux";
 import App from "./App";
 import backpackersApp from "./reducers";
 
-const store = createStore(
-  backpackersApp,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = createStore(backpackersApp);
 
 it("renders without crashing", () => {
   const div = document.createElement("div");
