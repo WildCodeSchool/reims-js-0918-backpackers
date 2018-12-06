@@ -1,9 +1,17 @@
 import React, { Component, Fragment } from "react"
 import { Row, Col, Button, Media, Badge } from "reactstrap"
 
+import axios from "axios";
+
 import "./Profile.scss"
 
 class Profile extends Component {
+
+  componentDidMount() {
+    axios
+      .get("http://localhost:3010/profile")
+      .then(response => this.props.viewProfile(response.data));
+  }
 
   render() {
     return (
@@ -13,29 +21,34 @@ class Profile extends Component {
             <Button className="previousPage py-0 px-3 mt-4"><i className="fas pr-2 fa-angle-left"></i>Retour</Button>
           </Col>
         </Row>
-        <Row>
-          <Col xs={{ size: 6, offset: 3 }} className="profilePicture justify-content-center d-flex">
-            <Button className="bg-transparent border-0 mb-3 rounded-circle"><img className="rounded-circle" src="https://via.placeholder.com/75" /></Button>
-          </Col>
-        </Row>
-        <div className="userInfos">
-          <Row>
-            <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
-              <h4 className="mb-0">Aude Javel</h4>
-              <span>audej@gmail.com</span>
-            </Col>
-            <Col xs="2">
-              <Button className="bg-transparent border-0 text-secondary p-0"><i className="fas fa-pencil-alt" alt="Photo de profil" ></i></Button>
-            </Col>
-          </Row>
+        {this.props.profile[0] ?
 
-          <Row>
-            <Col xs={{ size: 8, offset: 2 }} className="text-center">
-              <p className="mb-0">Fan du japon, backpackeuse et gourmande</p>
-            </Col>
-          </Row>
-        </div>
+          <Fragment>
+            <Row>
+              <Col xs={{ size: 6, offset: 3 }} className="profilePicture justify-content-center d-flex">
+                <Button className="bg-transparent border-0 mb-3 rounded-circle"><img className="rounded-circle" src="https://via.placeholder.com/75" /></Button>
+              </Col>
+            </Row>
+            <div className="userInfos">
+              <Row>
+                <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
+                  <h4 className="mb-0">{this.props.profile[0].firstName + " " + this.props.profile[0].lastName}</h4>
+                  <span>{this.props.profile[0].mail}</span>
+                </Col>
+                <Col xs="2">
+                  <Button className="bg-transparent border-0 text-secondary p-0"><i className="fas fa-pencil-alt" alt="Photo de profil" ></i></Button>
+                </Col>
+              </Row>
 
+              <Row>
+                <Col xs={{ size: 8, offset: 2 }} className="text-center">
+                  <p className="mb-0">{this.props.profile[0].description}</p>
+                </Col>
+              </Row>
+            </div>
+          </Fragment>
+          : ""
+        }
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="text-center mt-3">
