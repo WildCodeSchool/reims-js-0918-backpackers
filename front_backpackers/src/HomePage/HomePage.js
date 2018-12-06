@@ -33,14 +33,12 @@ class HomePage extends Component {
   }
 
   callApiPlaces() {
-    axios
-      .get("http://localhost:3010/places")
-      .then(response => this.props.viewPlaces(response.data));
+    axios.get("/places").then(response => this.props.viewPlaces(response.data));
   }
 
   callApiActivities() {
     axios
-      .get("http://localhost:3010/activities")
+      .get("/activities")
       .then(response => this.props.viewActivities(response.data));
   }
 
