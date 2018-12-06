@@ -43,7 +43,7 @@ PlaceThumbnail.propTypes = {
   city: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired
+  price: PropTypes.number
 };
 
 export default PlaceThumbnail;

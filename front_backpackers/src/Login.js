@@ -54,7 +54,7 @@ const Login = () => {
       <Row>
         <Col xs="12">
           <p className="newAccount mt-4 text-center">
-            Je n'ai pas de compte.<a href="#">Créer un compte</a>
+            Je n'ai pas de compte.<a href="/">Créer un compte</a>
           </p>
         </Col>
       </Row>
