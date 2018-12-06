@@ -2,13 +2,15 @@ import {
   VIEW_PLACES,
   VIEW_ACTIVITIES,
   FETCH_ACTIVITIES,
-  FETCH_PLACES
+  FETCH_PLACES,
+  VIEW_PROFILE
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
   makeFetchPlacesAction,
   makeViewActivitiesAction,
-  makeFetchActivitiesAction
+  makeFetchActivitiesAction,
+  makeViewProfileAction
 } from "./actions";
 
 describe("makeViewPlacesAction", () => {
@@ -72,4 +74,22 @@ describe("makeViewPlacesAction", () => {
       expect(makeFetchActivitiesAction()).toEqual(expected);
     });
   });
+
+
+  describe("makeViewProfileAction", () => {
+    it("should return a VIEW_PROFILE action", () => {
+      const profile = {
+        lastname: "nom",
+        firstname: "prenom"
+      };
+
+      const expected = {
+        type: VIEW_PROFILE,
+        profile
+      };
+
+      expect(makeViewProfileAction(profile)).toEqual(expected);
+    });
+  })
+
 });
