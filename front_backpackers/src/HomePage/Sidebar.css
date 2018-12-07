@@ -3,18 +3,18 @@
   flex-direction: column;
   list-style: none;
   background: white;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
   width: 80%;
   z-index: 1000;
   transform: translateX(-100%);
-  transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
 .side-drawer.open {
   transform: translateX(0);
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
 }
 
 .side-drawer a {
