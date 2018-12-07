@@ -12,6 +12,7 @@ import {
   makeFetchPlacesAction,
   makeViewActivitiesAction,
   makeFetchActivitiesAction,
+  makeViewProfileAction,
   makeCloseMenuAction,
   makeOpenMenuAction,
   makeCreateActivityAction
@@ -107,4 +108,22 @@ describe("makeCloseMenuAction", () => {
 
     expect(makeCloseMenuAction()).toEqual(expected);
   });
+
+
+  describe("makeViewProfileAction", () => {
+    it("should return a VIEW_PROFILE action", () => {
+      const profile = {
+        lastname: "nom",
+        firstname: "prenom"
+      };
+
+      const expected = {
+        type: VIEW_PROFILE,
+        profile
+      };
+
+      expect(makeViewProfileAction(profile)).toEqual(expected);
+    });
+  })
+
 });

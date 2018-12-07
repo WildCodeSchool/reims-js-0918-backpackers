@@ -3,6 +3,7 @@ import {
   FETCH_PLACES,
   VIEW_ACTIVITIES,
   FETCH_ACTIVITIES,
+  VIEW_PROFILE,
   OPEN_MENU,
   CLOSE_MENU,
   CREATE_ACTIVITY
@@ -15,6 +16,12 @@ export const makeViewPlacesAction = places => ({
 
 export const makeFetchPlacesAction = () => ({
   type: FETCH_PLACES
+});
+
+
+export const makeViewProfileAction = (profile) => ({
+  type: VIEW_PROFILE,
+  profile
 });
 
 export const makeViewActivitiesAction = activities => ({
