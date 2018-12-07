@@ -4,7 +4,7 @@ import ActivityPage from "./FormPage/ActivityPage";
 import SinglePage from "./SinglePage/SinglePage";
 import Login from "./Login";
 import HomepageContainer from "./containers/HomepageContainer";
-import Profile from "./Profile";
+import ProfileContainer from "./containers/ProfileContainer";
 
 import "./App.css";
 
@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <Container fluid>
         <Login />
-        <Profile />
+        <ProfileContainer />
         <HomepageContainer />
         <SinglePage />
         <ActivityPage />
