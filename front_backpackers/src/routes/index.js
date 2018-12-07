@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router";
+import { Container } from "reactstrap";
 import HomePageContainer from "../containers/HomepageContainer";
 import Login from "../Login";
 import ActivityPage from "../FormPage/ActivityPage";
@@ -7,7 +8,7 @@ import Profile from "../Profile";
 import SinglePage from "../SinglePage/SinglePage";
 
 const routes = (
-  <div>
+  <Container fluid>
     <Switch>
       <Route exact path="/" component={HomePageContainer} />
       <Route path="/login" component={Login} />
@@ -15,7 +16,7 @@ const routes = (
       <Route path="/profil" component={Profile} />
       <Route path="/activity" component={SinglePage} />
     </Switch>
-  </div>
+  </Container>
 );
 
 export default routes;

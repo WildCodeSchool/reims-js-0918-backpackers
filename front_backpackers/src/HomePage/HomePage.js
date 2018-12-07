@@ -107,13 +107,17 @@ class HomePage extends Component {
           ))}
 
         <Row className="fixed-bottom listFooter">
-          <Button className="w-50 listSearchBtn">
+          <Link
+            to="/activities"
+            className="w-50 listSearchBtn text-white text-center"
+          >
             Rechercher <i className="fas fa-search-location" />
-          </Button>
-          <Link to="/activities">
-            <Button className="w-50 listPostBtn">
-              <i className="fas fa-pencil-alt" /> Publier{" "}
-            </Button>
+          </Link>
+          <Link
+            to="/activities"
+            className="w-50 listPostBtn text-white text-center"
+          >
+            <i className="fas fa-pencil-alt" /> Publier{" "}
           </Link>
         </Row>
         <Row>
