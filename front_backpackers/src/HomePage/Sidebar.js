@@ -1,14 +1,13 @@
 import React, { Fragment } from "react";
 import { Nav, NavItem, NavLink, Navbar } from "reactstrap";
 
-import Michel from "../images/Michel400.jpg";
 import "./Sidebar.css";
 
 const Sidebar = ({ backdropClickHandler, show }) => (
   <Fragment>
     <Navbar className={show ? "side-drawer open" : "side-drawer"}>
       <NavItem className="profil d-flex flex-column align-items-center mt-4">
-        <img src={Michel} alt="profil" />
+        <img src="https://via.placeholder.com/100" alt="profil" />
         <h4>Michel Descotes</h4>
         <p className="rounded-circle">michel.descotes@mail.com</p>
       </NavItem>
