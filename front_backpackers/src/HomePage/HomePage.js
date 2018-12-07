@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Button, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ActivityThumbnail from "./ActivityThumbnail";

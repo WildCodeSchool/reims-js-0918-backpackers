@@ -1,12 +1,29 @@
-import { VIEW_PLACES } from "../actions/actionTypes";
+import placesReducer from "./placesReducer";
 import { makeViewPlacesAction } from "../actions/actions";
 
 describe("placesReducer", () => {
-  it("should return a VIEW_PLACES action", () => {
-    const expected = {
-      type: VIEW_PLACES
-    };
+  it("should return places with 2 objects", () => {
+    const previousState = [];
+    const places = [
+      {
+        name: "Pêche"
+      },
+      {
+        name: "Visite du musée"
+      }
+    ];
 
-    expect(makeViewPlacesAction()).toEqual(expected);
+    const expected = [
+      {
+        name: "Pêche"
+      },
+      {
+        name: "Visite du musée"
+      }
+    ];
+
+    expect(placesReducer(previousState, makeViewPlacesAction(places))).toEqual(
+      expected
+    );
   });
 });
