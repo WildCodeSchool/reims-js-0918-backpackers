@@ -9,7 +9,7 @@ class Profile extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:3010/profile")
+      .get("/profile")
       .then(response => this.props.viewProfile(response.data));
   }
 
@@ -26,13 +26,13 @@ class Profile extends Component {
           <Fragment>
             <Row>
               <Col xs={{ size: 6, offset: 3 }} className="profilePicture justify-content-center d-flex">
-                <Button className="bg-transparent border-0 mb-3 rounded-circle"><img className="rounded-circle" src="https://via.placeholder.com/75" /></Button>
+                <Button className="bg-transparent border-0 mb-3 rounded-circle"><img className="rounded-circle" src="https://via.placeholder.com/75" alt="Profil" /></Button>
               </Col>
             </Row>
             <div className="userInfos">
               <Row>
                 <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
-                  <h4 className="mb-0">{this.props.profile[0].firstName + " " + this.props.profile[0].lastName}</h4>
+                  <h4 className="mb-0">{`${this.props.profile[0].firstName} ${this.props.profile[0].lastName}`}</h4>
                   <span>{this.props.profile[0].mail}</span>
                 </Col>
                 <Col xs="2">
