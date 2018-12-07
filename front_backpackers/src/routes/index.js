@@ -6,6 +6,7 @@ import Login from "../Login";
 import ActivityPage from "../FormPage/ActivityPage";
 import Profile from "../Profile";
 import SinglePage from "../SinglePage/SinglePage";
+import ProfileContainer from "../containers/ProfileContainer";
 
 const routes = (
   <Container fluid>
@@ -13,7 +14,7 @@ const routes = (
       <Route exact path="/" component={HomePageContainer} />
       <Route path="/login" component={Login} />
       <Route path="/activities" component={ActivityPage} />
-      <Route path="/profil" component={Profile} />
+      <Route path="/profil" component={ProfileContainer} />
       <Route path="/activity" component={SinglePage} />
     </Switch>
   </Container>

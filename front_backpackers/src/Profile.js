@@ -8,7 +8,7 @@ import "./Profile.scss";
 class Profile extends Component {
   componentDidMount() {
     axios
-      .get("http://localhost:3010/profile")
+      .get("/profile")
       .then(response => this.props.viewProfile(response.data));
   }
 
@@ -18,7 +18,8 @@ class Profile extends Component {
         <Row>
           <Col xs="4">
             <Button className="previousPage py-0 px-3 mt-4">
-              <i className="fas pr-2 fa-angle-left" />Retour
+              <i className="fas pr-2 fa-angle-left" />
+              Retour
             </Button>
           </Col>
         </Row>
