@@ -41,11 +41,7 @@ class Profile extends Component {
             <div className="userInfos">
               <Row>
                 <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
-                  <h4 className="mb-0">
-                    {this.props.profile[0].firstName +
-                      " " +
-                      this.props.profile[0].lastName}
-                  </h4>
+                  <h4 className="mb-0">{`${this.props.profile[0].firstName} ${this.props.profile[0].lastName}`}</h4>
                   <span>{this.props.profile[0].mail}</span>
                 </Col>
                 <Col xs="2">
