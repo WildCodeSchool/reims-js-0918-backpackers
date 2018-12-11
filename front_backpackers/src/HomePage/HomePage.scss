@@ -5,6 +5,7 @@
   margin-right: -15px;
   margin-left: -15px;
   padding: 0 15px 5px 15px;
+  min-height: 100vh;
 }
 
 .homePage_Header {
@@ -116,11 +117,8 @@
   margin: 0 15px;
 }
 
-.listFooter button {
-  border-radius: 0px;
-  width: 100%;
-  border: none;
-  height: 40px;
+.listFooter a {
+  line-height: 40px;
 }
 .listFooter > div {
   padding-left: 0;
