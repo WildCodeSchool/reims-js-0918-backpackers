@@ -1,8 +1,9 @@
 @import "_styles.scss";
 
-button.previousPage{
+a.previousPage{
   background-color: $blueColor;
   border-radius: 10px;
+  line-height: 25px;
 }
 
 .profilePicture button{

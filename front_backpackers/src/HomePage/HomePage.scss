@@ -120,9 +120,15 @@
 .listFooter a {
   line-height: 40px;
 }
+
+.listFooter {
+  z-index: 5;
+}
+
 .listFooter > div {
   padding-left: 0;
   padding-right: 0;
+  z-index: 10;
 }
 
 .listSearchBtn {
