@@ -1,17 +1,31 @@
 require("dotenv").config();
+const auth = require("./auth/auth");
 const express = require("express");
 const connection = require("./conf");
 const app = express();
 const port = 3010;
 const cors = require("cors");
+const passport = require("passport");
+require("./passport/passport-strategy");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.use("/auth", auth);
 
 const currentUserId = 1;
 
 app.use(cors());
+
+app.get(
+  "/test",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("connected user", req.user);
+    res.send(`authorized for user ${req.user.username} with id ${req.user.id}`);
+  }
+);
 
 app.get("/places", (req, res) => {
   connection.query("SELECT * FROM places", (err, results) => {
@@ -45,8 +59,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-        ? `SELECT * FROM places WHERE adress = "${adress}"`
-        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+      ? `SELECT * FROM places WHERE adress = "${adress}"`
+      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -89,8 +103,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-        ? `SELECT * FROM activities WHERE creator ="${creator}"`
-        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+      ? `SELECT * FROM activities WHERE creator ="${creator}"`
+      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -121,8 +135,8 @@ app.post("/activities", (req, res) => {
 
 app.get("/profile", (req, res) => {
   connection.query(
-    // `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies, 
-    // historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name, 
+    // `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies,
+    // historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,
     // id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date
     // FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?`,
     "SELECT * FROM users WHERE id=?",
