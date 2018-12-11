@@ -4,7 +4,6 @@ import { Container } from "reactstrap";
 import HomePageContainer from "../containers/HomepageContainer";
 import Login from "../Login";
 import ActivityPage from "../FormPage/ActivityPage";
-import Profile from "../Profile";
 import SinglePage from "../SinglePage/SinglePage";
 import ProfileContainer from "../containers/ProfileContainer";
 
