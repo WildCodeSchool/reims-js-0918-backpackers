@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Nav, NavItem, NavLink, Navbar } from "reactstrap";
+import { Link } from "react-router-dom";
 
 import "./Sidebar.css";
 
@@ -15,10 +16,12 @@ const Sidebar = ({ backdropClickHandler, show }) => (
         <div className="underline mt-3 mb-4" />
       </NavItem>
       <Nav className="menu d-flex flex-column align-items-baseline align-self-baseline">
-        <NavItem>
-          <i className="mr-2 fas fa-user-alt" />
-          <NavLink className="pl-0">Profil</NavLink>
-        </NavItem>
+        <Link to="/profil">
+          <NavItem>
+            <i className="mr-2 fas fa-user-alt" />
+            <NavLink className="pl-0">Profil</NavLink>
+          </NavItem>
+        </Link>
         <NavItem>
           <i className="mr-2 far fa-comments" />
           <NavLink className="pl-0">Messages</NavLink>

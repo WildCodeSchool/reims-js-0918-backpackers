@@ -1,12 +1,11 @@
-import React, { Component, Fragment } from "react"
-import { Row, Col, Button, Media, Badge } from "reactstrap"
+import React, { Component, Fragment } from "react";
+import { Row, Col, Button, Media, Badge } from "reactstrap";
 
 import axios from "axios";
 
-import "./Profile.scss"
+import "./Profile.scss";
 
 class Profile extends Component {
-
   componentDidMount() {
     axios
       .get("/profile")
@@ -18,15 +17,25 @@ class Profile extends Component {
       <Fragment>
         <Row>
           <Col xs="4">
-            <Button className="previousPage py-0 px-3 mt-4"><i className="fas pr-2 fa-angle-left"></i>Retour</Button>
+            <Button className="previousPage py-0 px-3 mt-4">
+              <i className="fas pr-2 fa-angle-left" />
+              Retour
+            </Button>
           </Col>
         </Row>
-        {this.props.profile[0] ?
-
+        {this.props.profile[0] ? (
           <Fragment>
             <Row>
-              <Col xs={{ size: 6, offset: 3 }} className="profilePicture justify-content-center d-flex">
-                <Button className="bg-transparent border-0 mb-3 rounded-circle"><img className="rounded-circle" src="https://via.placeholder.com/75" alt="Profil" /></Button>
+              <Col
+                xs={{ size: 6, offset: 3 }}
+                className="profilePicture justify-content-center d-flex"
+              >
+                <Button className="bg-transparent border-0 mb-3 rounded-circle">
+                  <img
+                    className="rounded-circle"
+                    src="https://via.placeholder.com/75"
+                  />
+                </Button>
               </Col>
             </Row>
             <div className="userInfos">
@@ -36,7 +45,9 @@ class Profile extends Component {
                   <span>{this.props.profile[0].mail}</span>
                 </Col>
                 <Col xs="2">
-                  <Button className="bg-transparent border-0 text-secondary p-0"><i className="fas fa-pencil-alt" alt="Photo de profil" ></i></Button>
+                  <Button className="bg-transparent border-0 text-secondary p-0">
+                    <i className="fas fa-pencil-alt" alt="Photo de profil" />
+                  </Button>
                 </Col>
               </Row>
 
@@ -47,27 +58,40 @@ class Profile extends Component {
               </Row>
             </div>
           </Fragment>
-          : ""
-        }
+        ) : (
+          ""
+        )}
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="text-center mt-3">
             <div className="achievements d-inline-block p-1">
-              <img className="px-1" src="https://via.placeholder.com/30" alt="badge" />
-              <img className="px-1" src="https://via.placeholder.com/30" alt="badge" />
-              <img className="px-1" src="https://via.placeholder.com/30" alt="badge" />
-              <img className="px-1" src="https://via.placeholder.com/30" alt="badge" />
+              <img
+                className="px-1"
+                src="https://via.placeholder.com/30"
+                alt="badge"
+              />
+              <img
+                className="px-1"
+                src="https://via.placeholder.com/30"
+                alt="badge"
+              />
+              <img
+                className="px-1"
+                src="https://via.placeholder.com/30"
+                alt="badge"
+              />
+              <img
+                className="px-1"
+                src="https://via.placeholder.com/30"
+                alt="badge"
+              />
             </div>
           </Col>
         </Row>
 
         <Row>
-          <Col
-            xs={{ size: 8, offset: 2 }}
-            className="homeUnderline my-2"
-          />
+          <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
         </Row>
-
 
         <Row>
           <Col xs="12" className="text-center">
@@ -78,12 +102,8 @@ class Profile extends Component {
           </Col>
         </Row>
 
-
         <Row>
-          <Col
-            xs={{ size: 8, offset: 2 }}
-            className="homeUnderline my-2"
-          />
+          <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
         </Row>
 
         <Row className="activityCreated">
@@ -93,17 +113,13 @@ class Profile extends Component {
         </Row>
 
         <Row>
-          <Col
-            xs={{ size: 8, offset: 2 }}
-            className="homeUnderline my-2"
-          />
+          <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
         </Row>
-
 
         <Row>
           <Col xs="12">
             <h2 className="pr-3">Historique des anciennes activitées</h2>
-            <div className="activitiesTitleUnderline mb-3 w-100"></div>
+            <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
 
           <Col xs="12">
@@ -117,34 +133,35 @@ class Profile extends Component {
                 />
               </Media>
               <Media body className="d-flex flex-column">
-                <Media heading className="mb-1 mx-1 d-flex justify-content-between">
+                <Media
+                  heading
+                  className="mb-1 mx-1 d-flex justify-content-between"
+                >
                   <span>
                     <i className="fas fa-location-arrow pr-1" />
                     ATHENES
-                </span>
+                  </span>
                   <span>
                     <i className="fas fa-calendar pr-1" />
                     Ferme dans 5 jours
-                </span>
+                  </span>
                 </Media>
-                Salut ! Je Cherche 5 rafteurs pour rafter le long du fleuve ! Va va être CHANMAXX n'hésitez pas à vous inscrire!
-            <div className="d-flex align-items-end justify-content-between mt-auto">
+                Salut ! Je Cherche 5 rafteurs pour rafter le long du fleuve ! Va
+                va être CHANMAXX n'hésitez pas à vous inscrire!
+                <div className="d-flex align-items-end justify-content-between mt-auto">
                   <Button className="seeItem">Voir</Button>
                   <span className="itemListPrice pr-2">
                     15€ /
-              <i className="far fa-user" />
+                    <i className="far fa-user" />
                   </span>
                 </div>
               </Media>
             </Media>
           </Col>
         </Row>
-
-
-      </Fragment >
-    )
+      </Fragment>
+    );
   }
-
 }
 
-export default Profile
+export default Profile;

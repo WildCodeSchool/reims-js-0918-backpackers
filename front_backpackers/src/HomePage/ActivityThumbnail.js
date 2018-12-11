@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Media, Button } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const ActivityThumbnail = ({
   city,
@@ -35,7 +36,9 @@ const ActivityThumbnail = ({
           </Media>
           {descriptionActivity ? descriptionActivity : descriptionPlace}
           <div className="d-flex align-items-end justify-content-between mt-auto">
-            <Button className="seeItem">Voir</Button>
+            <Link to="/activity">
+              <Button className="seeItem">Voir</Button>
+            </Link>
             <span className="itemListPrice pr-2">
               {price}€ /
               <i className="far fa-user" />
