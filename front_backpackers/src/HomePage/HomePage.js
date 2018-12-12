@@ -3,7 +3,7 @@ import { Row, Col, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap
 import classnames from "classnames"
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Maps from "../Maps";
+import { geolocated } from 'react-geolocated'
 
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
@@ -12,6 +12,7 @@ import BurgerButton from "./BurgerButton";
 import Sidebar from "./Sidebar";
 
 import "./HomePage.scss";
+import MapsContainer from "../containers/MapsContainer";
 
 class HomePage extends Component {
   constructor() {
@@ -35,7 +36,7 @@ class HomePage extends Component {
     this.props.fetchPlaces();
     this.callApiPlaces();
     this.props.fetchActivities();
-    this.callApiActivities();
+    this.callApiActivities()
   }
 
   callApiPlaces() {
@@ -121,7 +122,10 @@ class HomePage extends Component {
               <NavItem>
                 <NavLink
                   className={classnames({ active: this.state.activeTab === '2' })}
-                  onClick={() => { this.toggleMap('2'); }}
+                  onClick={() => {
+                    this.toggleMap('2');
+                    this.props.getCoords([this.props.coords.latitude, this.props.coords.longitude]);
+                  }}
                 >
                   <i class="text-white fas fa-map-marked-alt"></i>
                 </NavLink>
@@ -163,11 +167,7 @@ class HomePage extends Component {
             </Row>
           </TabPane>
           <TabPane tabId="2">
-            <Row>
-              <Col xs="12">
-                {this.state.activeTab === "2" ? <Maps /> : ""}
-              </Col>
-            </Row>
+            {this.state.activeTab === "2" ? <MapsContainer /> : ""}
           </TabPane>
         </TabContent>
 
@@ -177,4 +177,9 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+export default geolocated({
+  positionOptions: {
+    enableHighAccuracy: false
+  },
+  userDecisionTimeout: 5000
+})(HomePage);
