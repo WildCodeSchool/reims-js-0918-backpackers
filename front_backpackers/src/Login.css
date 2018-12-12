@@ -1,36 +1,37 @@
-.loginBackground{
-  height: 100vh;  
+.loginBackground {
+  height: 100vh;
   position: relative;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: -15px;
   margin-left: -15px;
-  background: url('./images/loginBackground.jpg')fixed center -300px no-repeat;
+  background: url("./images/loginBackground.jpg") fixed center -300px no-repeat;
 }
 
-h1{
-  color: #FFF;
+h1 {
+  color: #fff;
   font-size: 1rem;
 }
 
-form{
+form {
   padding: 5px 10px;
   border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.5)
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
-input, .form-control{
+input,
+.form-control {
   border: none;
-  background-color: rgba(255, 255, 255, 0.0);
+  background-color: rgba(255, 255, 255, 0);
 }
 
-.form-group{
+.form-group {
   margin-top: 10px;
   border-bottom: 1px solid #000;
 }
 
-.facebookLogin{
-  background-color: #3b5998; 
+.facebookLogin {
+  background-color: #3b5998;
   width: 100%;
   margin: 20px 0;
   height: 40px;
@@ -38,20 +39,20 @@ input, .form-control{
   border-radius: 20px;
 }
 
-.login{
-  background-color: #1c6793; 
+.login {
+  background-color: #1c6793;
   width: 100%;
   margin-top: 50px;
-  height: 60px;
+  line-height: 60px;
   border: none;
   border-radius: 30px;
 }
 
-.newAccount{
+.newAccount {
   font-size: 0.7rem;
 }
 
-.newAccount a{
+.newAccount a {
   font-weight: bold;
-  color: #111
+  color: #111;
 }

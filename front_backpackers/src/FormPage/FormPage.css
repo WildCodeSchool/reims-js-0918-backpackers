@@ -1,0 +1,23 @@
+.header {
+  background-color: #00b273;
+  color: white;
+  line-height: 40px;
+}
+
+.field {
+  border-style: groove;
+  border: 2px solid #c1c1c1;
+  border-radius: 5px;
+}
+
+.width {
+  width: 30%;
+}
+
+.publicationUnderline {
+  border-bottom: 1px solid #c1c1c2;
+}
+
+.cursor {
+  cursor: pointer;
+}

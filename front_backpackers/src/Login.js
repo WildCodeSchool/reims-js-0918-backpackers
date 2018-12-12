@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Button, Form, FormGroup, Input } from "reactstrap";
+import { Link } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
@@ -48,13 +49,15 @@ const Login = () => {
       </Row>
       <Row>
         <Col xs="12">
-          <Button className="login">Se connecter</Button>
+          <Link to="/" className="login d-block text-white text-center">
+            Se connecter
+          </Link>
         </Col>
       </Row>
       <Row>
         <Col xs="12">
           <p className="newAccount mt-4 text-center">
-            Je n'ai pas de compte.<a href="#">Créer un compte</a>
+            Je n'ai pas de compte.<a href="/">Créer un compte</a>
           </p>
         </Col>
       </Row>

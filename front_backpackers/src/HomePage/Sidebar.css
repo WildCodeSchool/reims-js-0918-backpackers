@@ -1,0 +1,56 @@
+.side-drawer {
+  height: 94%;
+  flex-direction: column;
+  list-style: none;
+  background: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%;
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.side-drawer.open {
+  transform: translateX(0);
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.side-drawer a {
+  color: #718f9b;
+  text-decoration: none;
+}
+
+.backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+.profil img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50px;
+}
+
+.menu :nth-child(1n) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.underline {
+  border-bottom: 1px solid #c1c1c2;
+  width: 200px;
+}
+
+.menu i {
+  width: 16px;
+  color: #718f9b;
+}
