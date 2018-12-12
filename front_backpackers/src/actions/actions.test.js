@@ -5,7 +5,9 @@ import {
   FETCH_PLACES,
   OPEN_MENU,
   CLOSE_MENU,
-  CREATE_ACTIVITY
+  CREATE_ACTIVITY,
+  VIEW_ACTIVITY,
+  VIEW_PROFILE
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -15,7 +17,8 @@ import {
   makeViewProfileAction,
   makeCloseMenuAction,
   makeOpenMenuAction,
-  makeCreateActivityAction
+  makeCreateActivityAction,
+  makeViewActivityAction
 } from "./actions";
 
 describe("makeViewPlacesAction", () => {
@@ -68,6 +71,22 @@ describe("makeViewActivitiesAction", () => {
     };
 
     expect(makeViewActivitiesAction(activities)).toEqual(expected);
+  });
+});
+
+describe("makeViewActivityAction", () => {
+  it("should return a VIEW_ACTIVITY action", () => {
+    const activity = {
+      name: "Soirée au bar",
+      description: "on se retrouve tous au bar !"
+    };
+
+    const expected = {
+      type: VIEW_ACTIVITY,
+      activity
+    };
+
+    expect(makeViewActivityAction(activity)).toEqual(expected);
   });
 });
 

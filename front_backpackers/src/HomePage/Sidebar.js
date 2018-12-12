@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Nav, NavItem, Navbar } from "reactstrap";
+import { NavItem, Navbar } from "reactstrap";
 import { NavLink } from "react-router-dom";
 
 import "./Sidebar.scss";

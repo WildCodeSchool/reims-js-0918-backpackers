@@ -1,19 +1,25 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 
-import Header from"./Header.js";
+import Header from "./Header.js";
 import Caroussel from "./Caroussel";
 import Details from "./Details";
-import Information from "./Information";
-import Participate from "./Participate.js";
 
-const SinglePage = () => (
-  <div>
-    <Header />
-    <Caroussel />
-    <Details />
-    <Information />
-    <Participate />
-  </div>
-);
+class SinglePage extends Component {
+  render() {
+    return (
+      <Fragment>
+        {this.props.activity.name ?
+          <Fragment>
+            <Header place={this.props.activity.city} />
+            <Caroussel activity={this.props.activity} />
+            <Details activity={this.props.activity} />
+          </Fragment>
+          : ""
+        }
+      </Fragment>
+    )
+  }
+
+}
 
 export default SinglePage;
