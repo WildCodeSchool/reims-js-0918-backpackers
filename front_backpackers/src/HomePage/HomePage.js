@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
+import classnames from "classnames"
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Maps from "../Maps";
+
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
@@ -9,7 +12,6 @@ import BurgerButton from "./BurgerButton";
 import Sidebar from "./Sidebar";
 
 import "./HomePage.scss";
-import Maps from "../Maps";
 
 class HomePage extends Component {
   constructor() {
@@ -17,11 +19,13 @@ class HomePage extends Component {
     this.state = {
       view: "PLACES",
       dropdownOpen: false,
-      collapsed: true
+      collapsed: true,
+      activeTab: '1'
     };
     this.changeViewToActivities = this.changeViewToActivities.bind(this);
     this.changeViewToPlaces = this.changeViewToPlaces.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.toggleMap = this.toggleMap.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.drawerToggleClickHandler = this.drawerToggleClickHandler.bind(this);
     this.backdropClickHandler = this.backdropClickHandler.bind(this);
@@ -56,6 +60,14 @@ class HomePage extends Component {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
     }));
+  }
+
+  toggleMap(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
   }
 
   toggleNavbar() {
@@ -96,43 +108,70 @@ class HomePage extends Component {
               changeViewToPlaces={this.changeViewToPlaces}
             />
           </Col>
-          <Col xs="2" />
-        </Row>
-        {this.state.view === "PLACES" &&
-          this.props.places.map(place => (
-            <PlaceThumbnail {...place} key={place.id} />
-          ))}
-        {this.state.view === "ACTIVITIES" &&
-          this.props.activities.map(activity => (
-            <ActivityThumbnail {...activity} key={activity.idActivity} />
-          ))}
-
-        <Row className="fixed-bottom listFooter">
-          <Link
-            to="/activities"
-            className="w-50 listSearchBtn text-white text-center"
-          >
-            Rechercher <i className="fas fa-search-location" />
-          </Link>
-          <Link
-            to="/activities"
-            className="w-50 listPostBtn text-white text-center"
-          >
-            <i className="fas fa-pencil-alt" /> Publier{" "}
-          </Link>
-        </Row>
-        <Row>
-          <Col
-            xs={{ size: 8, offset: 2 }}
-            className="homeUnderline mt-3 mb-4"
-          />
-        </Row>
-
-        <Row>
-          <Col xs="12">
-            <Maps />
+          <Col xs="2">
+            <Nav tabs>
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: this.state.activeTab === '1' })}
+                  onClick={() => { this.toggleMap('1'); }}
+                >
+                  <i class="far fa-list-alt"></i>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: this.state.activeTab === '2' })}
+                  onClick={() => { this.toggleMap('2'); }}
+                >
+                  <i class="text-white fas fa-map-marked-alt"></i>
+                </NavLink>
+              </NavItem>
+            </Nav>
           </Col>
         </Row>
+
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
+            {this.state.view === "PLACES" &&
+              this.props.places.map(place => (
+                <PlaceThumbnail {...place} key={place.id} />
+              ))}
+            {this.state.view === "ACTIVITIES" &&
+              this.props.activities.map(activity => (
+                <ActivityThumbnail {...activity} key={activity.idActivity} />
+              ))}
+
+            <Row className="fixed-bottom listFooter">
+              <Link
+                to="/activities"
+                className="w-50 listSearchBtn text-white text-center"
+              >
+                Rechercher <i className="fas fa-search-location" />
+              </Link>
+              <Link
+                to="/activities"
+                className="w-50 listPostBtn text-white text-center"
+              >
+                <i className="fas fa-pencil-alt" /> Publier{" "}
+              </Link>
+            </Row>
+            <Row>
+              <Col
+                xs={{ size: 8, offset: 2 }}
+                className="homeUnderline mt-3 mb-4"
+              />
+            </Row>
+          </TabPane>
+          <TabPane tabId="2">
+            <Row>
+              <Col xs="12">
+                {this.state.activeTab === "2" ? <Maps /> : ""}
+              </Col>
+            </Row>
+          </TabPane>
+        </TabContent>
+
+
       </div>
     );
   }

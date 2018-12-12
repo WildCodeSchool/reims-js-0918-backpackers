@@ -14,9 +14,12 @@ class Maps extends Component {
     }
   }
   render() {
+
     const position = [this.state.lat, this.state.lng]
+
     return (
       <Row>
+
         <Col xs="12">
           <Map center={position} zoom={this.state.zoom}>
             <TileLayer
