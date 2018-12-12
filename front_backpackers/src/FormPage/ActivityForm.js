@@ -6,6 +6,7 @@ import "./FormPage.css";
 
 const ActivityForm = props => {
   const { handleSubmit } = props;
+
   return (
     <Fragment>
       <Row className="header">
@@ -106,9 +107,11 @@ const ActivityForm = props => {
           <label htmlFor="photos">Photos</label>
           <Field type="file" name="file" id="File" component="input" />
         </div> */}
+          {/* <Link to="/"> */}
           <button type="submit" className="header cursor">
             Publier l'annonce
           </button>
+          {/* </Link> */}
         </form>
       </div>
     </Fragment>
@@ -116,7 +119,21 @@ const ActivityForm = props => {
 };
 
 const ActivityFormContainer = reduxForm({
-  form: "createActivity"
+  form: "createActivity",
+  fields: ["name", "id_place", "id_creator"],
+  validate: fields => {
+    const errors = {};
+    if (!fields.name) {
+      errors.name = "required";
+    }
+    if (!fields.id_place) {
+      errors.id_place = "required";
+    }
+    if (!fields.id_creator) {
+      errors.id_creator = "required";
+    }
+    return errors;
+  }
 })(ActivityForm);
 
 export default ActivityFormContainer;
