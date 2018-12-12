@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
-import { Row, Col } from "reactstrap"
+import { Row } from "reactstrap"
 
 import "./Maps.scss"
 

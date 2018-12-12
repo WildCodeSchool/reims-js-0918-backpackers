@@ -20,6 +20,28 @@
   transition: all 0.2s;
 }
 
+.homePage .nav-tabs{
+  position: relative;
+  border: 0px;
+  .nav-item{
+    position: absolute;
+    top:0;
+    z-index: 0;
+    right:10;
+    .nav-link{
+      border:0px;
+      z-index: 20;
+      font-size: 1.7rem;
+      padding:0;
+      &.active{
+        display: none;
+        background-color: inherit;
+      }
+    }
+    
+  }
+}
+
 /* CSS That negate some reactstrap style*/
 .btn-secondary.focus,
 .btn-secondary:focus,

@@ -116,7 +116,7 @@ class HomePage extends Component {
                   className={classnames({ active: this.state.activeTab === '1' })}
                   onClick={() => { this.toggleMap('1'); }}
                 >
-                  <i class="far fa-list-alt"></i>
+                  <i class="text-white far fa-list-alt"></i>
                 </NavLink>
               </NavItem>
               <NavItem>
