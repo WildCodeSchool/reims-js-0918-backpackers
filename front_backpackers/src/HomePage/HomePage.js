@@ -50,7 +50,7 @@ class HomePage extends Component {
   callApiActivity(idActivity) {
     axios
       .get(`/activity/${idActivity}`)
-      .then(response => this.props.viewActivity(response.data[0]))
+      .then(response => this.props.viewActivity(response.data[0]));
   }
 
   changeViewToPlaces() {
@@ -109,12 +109,16 @@ class HomePage extends Component {
           ))}
         {this.state.view === "ACTIVITIES" &&
           this.props.activities.map(activity => (
-            <ActivityThumbnail {...activity} viewActivity={() => this.callApiActivity(activity.idActivity)} key={activity.idActivity} />
+            <ActivityThumbnail
+              {...activity}
+              viewActivity={() => this.callApiActivity(activity.idActivity)}
+              key={activity.idActivity}
+            />
           ))}
 
         <Row className="fixed-bottom listFooter">
           <Link
-            to="/activities"
+            to="/search"
             className="w-50 listSearchBtn text-white text-center"
           >
             Rechercher <i className="fas fa-search-location" />

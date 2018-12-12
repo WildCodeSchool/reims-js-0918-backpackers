@@ -6,6 +6,7 @@ import Login from "../Login";
 import ActivityPage from "../FormPage/ActivityPage";
 import ProfileContainer from "../containers/ProfileContainer";
 import ActivityContainer from "../containers/ActivityContainer";
+import SearchActivity from "../searchPage/SearchActivity";
 
 const routes = (
   <Container fluid>
@@ -15,6 +16,7 @@ const routes = (
       <Route path="/activities" component={ActivityPage} />
       <Route path="/profil" component={ProfileContainer} />
       <Route path="/activity" component={ActivityContainer} />
+      <Route path="/search" component={SearchActivity} />
     </Switch>
   </Container>
 );

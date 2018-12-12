@@ -1,0 +1,37 @@
+.search-header {
+  background-color: #054762;
+  color: white;
+  line-height: 40px;
+}
+
+.search-btn {
+  background-color: #054762;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  width: 90px;
+  height: 30px;
+  font-size: 0.9rem;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.search-bar {
+  border-style: groove;
+  border: 2px solid #c1c1c1;
+  border-radius: 5px;
+  width: 90px;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.activitiesTitleUnderline {
+  z-index: 0;
+  margin-top: -15px;
+  height: 1px;
+  border-bottom: 1px solid #000;
+}
+
+input {
+  text-align: center;
+}

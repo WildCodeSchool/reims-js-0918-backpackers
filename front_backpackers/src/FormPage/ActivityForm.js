@@ -8,7 +8,7 @@ const ActivityForm = props => {
   const { handleSubmit } = props;
   return (
     <Fragment>
-      <Row className="header">
+      <Row className="formPage-header">
         <Col xs="2">
           <Link to="/" className="price text-primary">
             <i className="fas fa-chevron-left text-white" />
