@@ -10,8 +10,8 @@ import ProfileContainer from "../containers/ProfileContainer";
 const routes = (
   <Container fluid>
     <Switch>
-      <Route exact path="/" component={HomePageContainer} />
-      <Route path="/login" component={Login} />
+      <Route exact path="/homepage" component={HomePageContainer} />
+      <Route path="/" component={Login} />
       <Route path="/activities" component={ActivityPage} />
       <Route path="/profil" component={ProfileContainer} />
       <Route path="/activity" component={SinglePage} />
