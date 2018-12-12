@@ -6,7 +6,8 @@ import {
   VIEW_PROFILE,
   OPEN_MENU,
   CLOSE_MENU,
-  CREATE_ACTIVITY
+  CREATE_ACTIVITY,
+  GET_GEOLOCATION
 } from "./actionTypes";
 
 export const makeViewPlacesAction = places => ({
@@ -43,4 +44,11 @@ export const makeCloseMenuAction = () => ({
 
 export const makeCreateActivityAction = () => ({
   type: CREATE_ACTIVITY
+});
+
+
+
+export const makeGetGeolocationAction = (coords) => ({
+  type: GET_GEOLOCATION,
+  coords
 });

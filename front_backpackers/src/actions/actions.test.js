@@ -5,7 +5,9 @@ import {
   FETCH_PLACES,
   OPEN_MENU,
   CLOSE_MENU,
-  CREATE_ACTIVITY
+  CREATE_ACTIVITY,
+  GET_GEOLOCATION,
+  VIEW_PROFILE
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -15,7 +17,8 @@ import {
   makeViewProfileAction,
   makeCloseMenuAction,
   makeOpenMenuAction,
-  makeCreateActivityAction
+  makeCreateActivityAction,
+  makeGetGeolocationAction
 } from "./actions";
 
 describe("makeViewPlacesAction", () => {
@@ -126,4 +129,17 @@ describe("makeCloseMenuAction", () => {
     });
   })
 
+});
+
+
+describe("makeGetGeoLocationAction", () => {
+  it("should return a GET_GEOLOCATION", () => {
+    const coords = [51.123, 0.431]
+    const expected = {
+      type: GET_GEOLOCATION,
+      coords
+    };
+
+    expect(makeGetGeolocationAction(coords)).toEqual(expected);
+  });
 });
