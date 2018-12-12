@@ -7,7 +7,8 @@ import {
   makeFetchActivitiesAction,
   makeOpenMenuAction,
   makeCloseMenuAction,
-  makeGetGeolocationAction
+  makeGetGeolocationAction,
+  makeViewActivityAction
 } from "../actions/actions";
 
 const mapStateToProps = state => ({
@@ -15,13 +16,15 @@ const mapStateToProps = state => ({
   activities: state.activities,
   loading: state.loading,
   menu: state.menu,
-  map: state.map
+  map: state.map,
+  activity: state.activity
 });
 
 const mapDispatchToProps = dispatch => ({
   viewPlaces: places => dispatch(makeViewPlacesAction(places)),
   fetchPlaces: () => dispatch(makeFetchPlacesAction()),
   viewActivities: activities => dispatch(makeViewActivitiesAction(activities)),
+  viewActivity: activity => dispatch(makeViewActivityAction(activity)),
   fetchActivities: () => dispatch(makeFetchActivitiesAction()),
   openMenu: menu => dispatch(makeOpenMenuAction(menu)),
   closeMenu: menu => dispatch(makeCloseMenuAction(menu)),

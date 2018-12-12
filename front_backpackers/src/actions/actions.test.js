@@ -7,6 +7,7 @@ import {
   CLOSE_MENU,
   CREATE_ACTIVITY,
   GET_GEOLOCATION,
+  VIEW_ACTIVITY,
   VIEW_PROFILE
 } from "./actionTypes";
 import {
@@ -18,7 +19,8 @@ import {
   makeCloseMenuAction,
   makeOpenMenuAction,
   makeCreateActivityAction,
-  makeGetGeolocationAction
+  makeGetGeolocationAction,
+  makeViewActivityAction
 } from "./actions";
 
 describe("makeViewPlacesAction", () => {
@@ -71,6 +73,22 @@ describe("makeViewActivitiesAction", () => {
     };
 
     expect(makeViewActivitiesAction(activities)).toEqual(expected);
+  });
+});
+
+describe("makeViewActivityAction", () => {
+  it("should return a VIEW_ACTIVITY action", () => {
+    const activity = {
+      name: "Soirée au bar",
+      description: "on se retrouve tous au bar !"
+    };
+
+    const expected = {
+      type: VIEW_ACTIVITY,
+      activity
+    };
+
+    expect(makeViewActivityAction(activity)).toEqual(expected);
   });
 });
 
