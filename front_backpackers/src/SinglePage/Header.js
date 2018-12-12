@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 import "./SinglePage.scss"
 
-const Header = () => (
+const Header = (props) => (
   <Fragment>
     <Row className="blueHeader mb-2">
       <Col xs="3">
@@ -13,7 +13,7 @@ const Header = () => (
         </Link>
       </Col>
       <Col xs="6">
-        <p className="text-white text-center mb-0">Rafting adulte</p>
+        <p className="text-white text-center mb-0">{props.place}</p>
       </Col>
       <Col xs="3">
         <p className="header-btn text-right text-primary pt-2 mb-0 d-flex justify-content-between">
