@@ -23,7 +23,7 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     console.log("connected user", req.user);
-    res.send(`authorized for user ${req.user.username} with id ${req.user.id}`);
+    res.send(`authorized for user ${req.user.mail} with an id ${req.user.id}`);
   }
 );
 
