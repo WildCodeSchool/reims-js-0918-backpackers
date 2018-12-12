@@ -6,6 +6,12 @@
 - SEARCH_PLACE
 - JOIN_ACTIVITY
 - VIEW_ACTIVITY
+```javascript
+  {
+    type: VIEW_ACTIVITY
+    activity: [...]
+  }
+```
 
 - VIEW_PLACE
 
@@ -45,6 +51,11 @@ When VIEW_PLACES is dispatched, state becomes action.places
 
 ```javascript
   const initialState: []
+```
+
+-activityReducer
+```javascript
+  const initialState: {}
 ```
 
 When VIEW_ACTIVITIES is dispatched, state becomes action.activities
