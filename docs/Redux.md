@@ -6,6 +6,7 @@
 - SEARCH_PLACE
 - JOIN_ACTIVITY
 - VIEW_ACTIVITY
+
 - VIEW_PLACE
 
 - FETCH_ACTIVITIES is dispatched when we call the api

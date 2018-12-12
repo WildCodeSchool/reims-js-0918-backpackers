@@ -74,7 +74,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className="homePage">
-        <Row className="homePage_Header">
+        <Row className="blueHeader">
           <Col xs="2">
             <BurgerButton
               drawerToggleClickHandler={this.drawerToggleClickHandler}
