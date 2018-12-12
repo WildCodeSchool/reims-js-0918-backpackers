@@ -8,9 +8,9 @@ const Sidebar = ({ backdropClickHandler, show }) => (
   <Fragment>
     <Navbar className={show ? "d-flex flex-column side-drawer open" : "d-flex flex-column side-drawer"}>
       <div className="profil d-flex flex-column align-items-center mt-3">
-        <img src="https://via.placeholder.com/75" alt="profil" />
+        <img src="https://via.placeholder.com/75" className="rounded-circle" alt="profil" />
         <h4>Michel Descotes</h4>
-        <p className="rounded-circle">michel.descotes@mail.com</p>
+        <p>michel.descotes@mail.com</p>
       </div>
       <div className="menu d-flex flex-column align-items-baseline align-self-baseline pt-3">
         <NavItem>

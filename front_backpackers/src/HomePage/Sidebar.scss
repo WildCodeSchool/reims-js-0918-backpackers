@@ -1,3 +1,5 @@
+@import "../_styles.scss";
+
 .side-drawer {
   height: 100%;
   list-style: none;
@@ -21,7 +23,7 @@
 }
 
 .side-drawer a {
-  color: #C6D0D5;
+  color: $darkGrayColor;
   text-decoration: none;
 }
 
@@ -36,28 +38,21 @@
 }
 
 .profil img {
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   object-fit: cover;
-  border-radius: 50px;
 }
 
 .menu{
-  border-top: #C6D0D5 solid 1px;
-  width: 100%
-}
-
-.menu :nth-child(1n) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.underline {
-  border-bottom: 1px solid #c1c1c2;
-  width: 200px;
-}
-.menu i {
-  width: 16px;
-  color: #718f9b;
+  border-top: $darkGrayColor solid 1px;
+  width: 100%;
+  li:nth-child(1n) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  i {
+    width: 16px;
+    color: $darkGrayColor;
+  }
 }

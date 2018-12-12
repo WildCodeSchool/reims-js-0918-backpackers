@@ -1,17 +1,14 @@
-$blueColor : #054762;
-$lightBlueColor : #00D3E5;
-$darkGrayColor: #8C8C8C;
-$grayColor: #E5E4E9;
-$greenColor: #03AA6F;
-$orangeColor: #FFB900;
-$peachColor: #FF896D;
-
+$blueColor: #054762;
+$lightBlueColor: #00d3e5;
+$darkGrayColor: #8c8c8c;
+$grayColor: #e5e4e9;
+$greenColor: #03aa6f;
+$orangeColor: #ffb900;
+$peachColor: #ff896d;
 
 .homeUnderline {
   border-bottom: 1px solid $grayColor;
 }
-
-
 
 .blueHeader {
   background-color: $blueColor;
@@ -21,7 +18,7 @@ $peachColor: #FF896D;
   height: 45px;
 }
 
-h3{
+h3 {
   background-color: $grayColor;
   font-size: 1.1rem;
   color: $blueColor;
