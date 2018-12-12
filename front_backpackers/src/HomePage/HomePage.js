@@ -103,7 +103,7 @@ class HomePage extends Component {
           ))}
         {this.state.view === "ACTIVITIES" &&
           this.props.activities.map(activity => (
-            <ActivityThumbnail {...activity} key={activity.idActivity} />
+            <ActivityThumbnail {...activity} viewActivity={() => this.props.viewActivity(activity.idActivity)} key={activity.idActivity} />
           ))}
 
         <Row className="fixed-bottom listFooter">
