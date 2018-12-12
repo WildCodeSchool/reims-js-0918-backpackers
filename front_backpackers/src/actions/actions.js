@@ -6,7 +6,8 @@ import {
   VIEW_PROFILE,
   OPEN_MENU,
   CLOSE_MENU,
-  CREATE_ACTIVITY
+  CREATE_ACTIVITY,
+  VIEW_ACTIVITY
 } from "./actionTypes";
 
 export const makeViewPlacesAction = places => ({
@@ -27,6 +28,12 @@ export const makeViewProfileAction = (profile) => ({
 export const makeViewActivitiesAction = activities => ({
   type: VIEW_ACTIVITIES,
   activities
+});
+
+
+export const makeViewActivityAction = activity => ({
+  type: VIEW_ACTIVITY,
+  activity
 });
 
 export const makeFetchActivitiesAction = () => ({

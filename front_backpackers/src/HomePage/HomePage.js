@@ -47,6 +47,12 @@ class HomePage extends Component {
     this.setState({ view: "ACTIVITIES" });
   }
 
+  callApiActivity(idActivity) {
+    axios
+      .get(`/activity/${idActivity}`)
+      .then(response => this.props.viewActivity(response.data[0]))
+  }
+
   changeViewToPlaces() {
     this.setState({ view: "PLACES" });
   }
@@ -74,7 +80,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className="homePage">
-        <Row className="homePage_Header">
+        <Row className="blueHeader">
           <Col xs="2">
             <BurgerButton
               drawerToggleClickHandler={this.drawerToggleClickHandler}
@@ -103,7 +109,7 @@ class HomePage extends Component {
           ))}
         {this.state.view === "ACTIVITIES" &&
           this.props.activities.map(activity => (
-            <ActivityThumbnail {...activity} key={activity.idActivity} />
+            <ActivityThumbnail {...activity} viewActivity={() => this.callApiActivity(activity.idActivity)} key={activity.idActivity} />
           ))}
 
         <Row className="fixed-bottom listFooter">

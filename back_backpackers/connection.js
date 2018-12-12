@@ -133,6 +133,29 @@ app.post("/activities", (req, res) => {
   );
 });
 
+app.get("/activity/:id", (req, res) => {
+  const idActivity = req.params.id
+  connection.query(
+    `SELECT idActivity, activities.name, id_creator, activities.price, 
+    activities.capacity, (activities.picture) AS pictureActivity, 
+    (activities.description) AS descriptionActivity, id_place, 
+    activities.contact, date, id, country, city, 
+    adress, type, (places.description) AS descriptionPlace, 
+    (places.picture) AS picturePlace 
+    FROM activities 
+    JOIN places 
+    ON activities.id_place = places.id
+    WHERE idActivity=?`, idActivity,
+    (err, results) => {
+      if (err) {
+        res.status(500).send("Error retrieving activity");
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
 app.get("/profile", (req, res) => {
   connection.query(
     // `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies,
