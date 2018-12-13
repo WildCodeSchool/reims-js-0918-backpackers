@@ -4,8 +4,35 @@ import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 import "./FormPage.css";
 
+const validate = values => {
+  const errors = {};
+  if (!values.name) {
+    errors.name = "Required";
+  }
+  if (!values.id_place) {
+    errors.id_place = "Required";
+  }
+  if (!values.id_creator) {
+    errors.id_creator = "Required";
+  }
+  console.log(errors);
+  return errors;
+};
+
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <div>
+    <input
+      {...input}
+      placeholder={label}
+      type={type}
+      className="field w-100 mt-2"
+    />
+    {touched && (error && <span className="formRequired">{error}</span>)}
+  </div>
+);
+
 const ActivityForm = props => {
-  const { handleSubmit } = props;
+  const { handleSubmit, submitting } = props;
 
   return (
     <Fragment>
@@ -38,40 +65,27 @@ const ActivityForm = props => {
 
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name" />
             <Field
               id="name"
               name="name"
-              component="input"
+              component={renderField}
               type="text"
-              placeholder="Titre"
-              className="field w-100 mt-2"
+              label="Titre"
             />
-          </div>
-          <div>
-            <label htmlFor="id_creator" />
             <Field
               id="id_creator"
               name="id_creator"
-              component="input"
-              type="text"
-              placeholder="Créateur"
-              className="field w-100 mt-2"
+              component={renderField}
+              type="number"
+              label="Créateur"
             />
-          </div>
-          <div>
-            <label htmlFor="id_place" />
             <Field
               id="id_place"
               name="id_place"
-              component="input"
-              type="text"
-              placeholder="Lieu"
-              className="field w-100 mt-2"
+              component={renderField}
+              type="number"
+              label="Lieu"
             />
-          </div>
-          <div>
-            <label htmlFor="description" />
             <Field
               id="decription"
               name="description"
@@ -80,38 +94,24 @@ const ActivityForm = props => {
               placeholder="Description"
               className="field w-100 mt-2"
             />
-          </div>
-          <div>
-            <label htmlFor="capacity" />
             <Field
               id="capacity"
               name="capacity"
-              component="input"
-              type="text"
-              placeholder="participants"
-              className="field width mt-2"
+              component={renderField}
+              type="number"
+              label="participants"
             />
-          </div>
-          <div>
             <Field
               id="price"
-              type="text"
+              type="number"
               name="price"
-              component="input"
-              placeholder="Prix"
-              className="field width mt-2"
+              component={renderField}
+              label="Prix"
             />
-            <label htmlFor="price">€</label>
           </div>
-          {/* <div>  DON'T TOUCH ! ! ! ! ! ! ! ! !
-          <label htmlFor="photos">Photos</label>
-          <Field type="file" name="file" id="File" component="input" />
-        </div> */}
-          {/* <Link to="/"> */}
-          <button type="submit" className="header cursor">
+          <button type="submit" disabled={submitting} className="header cursor">
             Publier l'annonce
           </button>
-          {/* </Link> */}
         </form>
       </div>
     </Fragment>
@@ -120,20 +120,7 @@ const ActivityForm = props => {
 
 const ActivityFormContainer = reduxForm({
   form: "createActivity",
-  fields: ["name", "id_place", "id_creator"],
-  validate: fields => {
-    const errors = {};
-    if (!fields.name) {
-      errors.name = "required";
-    }
-    if (!fields.id_place) {
-      errors.id_place = "required";
-    }
-    if (!fields.id_creator) {
-      errors.id_creator = "required";
-    }
-    return errors;
-  }
+  validate
 })(ActivityForm);
 
 export default ActivityFormContainer;
