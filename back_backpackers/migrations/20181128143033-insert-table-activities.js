@@ -43,7 +43,7 @@ exports.up = function (db, callback) {
       "Tour du musée de Ueno",
       1,
       3,
-      1,
+      2,
       "Je cherche des gens pour apprécier la culture jap au musée de Ueno !",
       "0612345678",
       "2019-02-20"
