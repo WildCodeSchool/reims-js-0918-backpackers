@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/auth", auth);
 
+const currentUserId = 1;
+
 app.use(cors());
 
 app.get(
