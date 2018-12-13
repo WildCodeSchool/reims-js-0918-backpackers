@@ -7,10 +7,8 @@ class ActivityPage extends Component {
     const activity = activities;
     JSON.stringify(activity);
     axios.post("http://localhost:3010/activities", activity).then(response => {
-      console.log(response);
       this.props.history.push("/");
     });
-    console.log(typeof activities);
   };
   render() {
     return <ActivityFormContainer onSubmit={this.submit} />;
