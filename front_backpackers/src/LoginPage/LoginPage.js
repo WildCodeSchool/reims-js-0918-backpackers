@@ -7,7 +7,10 @@ class LoginPage extends Component {
     const log = logs;
     axios
       .post("/auth/login", { mail: log.mail, password: log.password })
-      .then(response => localStorage.setItem("token", response.data.token));
+      .then(response => {
+        localStorage.setItem("token", response.data.token);
+        this.props.history.push("/");
+      });
   };
   render() {
     return <LoginFormContainer onSubmit={this.submit} />;
