@@ -5,7 +5,6 @@ import ActivityFormContainer from "./ActivityForm";
 class ActivityPage extends Component {
   submit = activities => {
     const activity = activities;
-    console.log(activity);
     JSON.stringify(activity);
     axios.post("/activities", activity).then(response => {
       this.props.history.push("/");
