@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { UncontrolledCarousel, Row, Col } from "reactstrap";
-import activityReducer from "../reducers/activityReducer";
 
 const items = [
   {

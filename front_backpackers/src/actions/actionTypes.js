@@ -7,3 +7,6 @@ export const FETCH_ACTIVITIES = "FETCH_ACTIVITIES";
 export const OPEN_MENU = "OPEN_MENU";
 export const CLOSE_MENU = "CLOSE_MENU";
 export const CREATE_ACTIVITY = "CREATE_ACTIVITY";
+
+
+export const GET_GEOLOCATION = "GET_GEOLOCATION";

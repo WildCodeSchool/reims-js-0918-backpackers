@@ -18,15 +18,6 @@ const currentUserId = 1;
 
 app.use(cors());
 
-app.get(
-  "/test",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log("connected user", req.user);
-    res.send(`authorized for user ${req.user.mail} with an id ${req.user.id}`);
-  }
-);
-
 app.get("/places", (req, res) => {
   connection.query("SELECT * FROM places", (err, results) => {
     if (err) {
@@ -117,21 +108,36 @@ app.get("/activities/search", (req, res) => {
   );
 });
 
-app.post("/activities", (req, res) => {
-  const formData = req.body;
-  connection.query(
-    "INSERT INTO activities SET ? ",
-    formData,
-    (err, results) => {
-      if (err) {
-        res.status(500).send("Failed to add activity");
-        console.log(err);
-      } else {
-        res.sendStatus(200);
+app.get(
+  "/test",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("connected user", req.user);
+    res.send(`authorized for user ${req.user.mail} with an id ${req.user.id}`);
+  }
+);
+
+app.post(
+  "/activities",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("user_id", req.user.id);
+    const id_creator = req.user.id;
+    const formData = { ...req.body, id_creator };
+    connection.query(
+      "INSERT INTO activities SET ? ",
+      formData,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Failed to add activity");
+          console.log(err);
+        } else {
+          res.sendStatus(200);
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 app.get("/activity/:id", (req, res) => {
   const idActivity = req.params.id;

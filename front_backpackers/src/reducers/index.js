@@ -7,6 +7,7 @@ import profileReducer from "./profileReducer";
 import menuReducer from "./menuReducer";
 import activityReducer from "./activityReducer";
 import { reducer as formReducer } from "redux-form";
+import mapReducer from "./mapReducer";
 
 const backpackersApp = history =>
   combineReducers({
@@ -17,6 +18,7 @@ const backpackersApp = history =>
     form: formReducer,
     profile: profileReducer,
     menu: menuReducer,
+    map: mapReducer,
     activity: activityReducer
   });
 
