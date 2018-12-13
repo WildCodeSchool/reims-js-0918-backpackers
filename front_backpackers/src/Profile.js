@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Row, Col, Button, Media, Badge } from "reactstrap";
+import { Link } from "react-router-dom"
 
 import axios from "axios";
 
@@ -16,11 +17,11 @@ class Profile extends Component {
     return (
       <Fragment>
         <Row>
-          <Col xs="4">
-            <Button className="previousPage py-0 px-3 mt-4">
+          <Col xs="4" className="mt-4" >
+            <Link to="/" className="previousPage py-0 px-3 d-inline-block text-white">
               <i className="fas pr-2 fa-angle-left" />
               Retour
-            </Button>
+            </Link>
           </Col>
         </Row>
         {this.props.profile[0] ? (
@@ -34,6 +35,7 @@ class Profile extends Component {
                   <img
                     className="rounded-circle"
                     src="https://via.placeholder.com/75"
+                    alt="Profile"
                   />
                 </Button>
               </Col>
@@ -59,8 +61,8 @@ class Profile extends Component {
             </div>
           </Fragment>
         ) : (
-          ""
-        )}
+            ""
+          )}
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="text-center mt-3">
@@ -128,7 +130,7 @@ class Profile extends Component {
                 <Media
                   object
                   src="https://via.placeholder.com/150"
-                  alt="picture of activity"
+                  alt="activity"
                   className="activityPicture"
                 />
               </Media>

@@ -5,7 +5,7 @@
   padding-left: 15px;
   margin-right: -15px;
   margin-left: -15px;
-  background: url("./images/loginBackground.jpg") fixed center -300px no-repeat;
+  background: url("../images/loginBackground.jpg") fixed center -300px no-repeat;
 }
 
 h1 {
@@ -13,7 +13,7 @@ h1 {
   font-size: 1rem;
 }
 
-form {
+.formBack {
   padding: 5px 10px;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.5);
@@ -23,17 +23,16 @@ input,
 .form-control {
   border: none;
   background-color: rgba(255, 255, 255, 0);
-}
-
-.form-group {
-  margin-top: 10px;
   border-bottom: 1px solid #000;
+  border-radius: 0px;
+  width: 100%;
 }
 
 .facebookLogin {
   background-color: #3b5998;
   width: 100%;
   margin: 20px 0;
+  margin-top: 50px;
   height: 40px;
   border: none;
   border-radius: 20px;
@@ -42,7 +41,7 @@ input,
 .login {
   background-color: #1c6793;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 30px;
   line-height: 60px;
   border: none;
   border-radius: 30px;
@@ -55,4 +54,8 @@ input,
 .newAccount a {
   font-weight: bold;
   color: #111;
+}
+
+.formRequired {
+  color: #f00;
 }

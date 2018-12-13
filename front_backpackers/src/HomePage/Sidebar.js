@@ -1,60 +1,48 @@
 import React, { Fragment } from "react";
-import { Nav, NavItem, NavLink, Navbar } from "reactstrap";
-import { Link } from "react-router-dom";
+import { NavItem, Navbar } from "reactstrap";
+import { NavLink } from "react-router-dom";
 
-import "./Sidebar.css";
+import "./Sidebar.scss";
 
 const Sidebar = ({ backdropClickHandler, show }) => (
   <Fragment>
-    <Navbar className={show ? "side-drawer open" : "side-drawer"}>
-      <NavItem className="profil d-flex flex-column align-items-center mt-4">
-        <img src="https://via.placeholder.com/100" alt="profil" />
+    <Navbar className={show ? "d-flex flex-column side-drawer open" : "d-flex flex-column side-drawer"}>
+      <div className="profil d-flex flex-column align-items-center mt-3">
+        <img src="https://via.placeholder.com/75" className="rounded-circle" alt="profil" />
         <h4>Michel Descotes</h4>
-        <p className="rounded-circle">michel.descotes@mail.com</p>
-      </NavItem>
-      <NavItem>
-        <div className="underline mt-3 mb-4" />
-      </NavItem>
-      <Nav className="menu d-flex flex-column align-items-baseline align-self-baseline">
-        <Link to="/profil">
-          <NavItem>
-            <i className="mr-2 fas fa-user-alt" />
-            <NavLink className="pl-0">Profil</NavLink>
-          </NavItem>
-        </Link>
+        <p>michel.descotes@mail.com</p>
+      </div>
+      <div className="menu d-flex flex-column align-items-baseline align-self-baseline pt-3">
         <NavItem>
-          <i className="mr-2 far fa-comments" />
-          <NavLink className="pl-0">Messages</NavLink>
+          <NavLink to="/profil" className="pl-0 my-1"><i className="mr-2 fas fa-user-alt" />Profil</NavLink>
         </NavItem>
         <NavItem>
-          <i className="mr-2 far fa-calendar-alt" />
-          <NavLink className="pl-0">Calendrier</NavLink>
+          <NavLink to="/" className="pl-0 my-1"> <i className="mr-2 far fa-comments" />Messages</NavLink>
         </NavItem>
         <NavItem>
-          <i className="mr-2 far fa-heart" />
-          <NavLink className="pl-0">Coups de coeur</NavLink>
+          <NavLink to="/" className="pl-0 my-1"> <i className="mr-2 far fa-calendar-alt" />Calendrier</NavLink>
         </NavItem>
         <NavItem>
-          <i className="mr-2 fas fa-wrench" />
-          <NavLink className="pl-0">Paramètres</NavLink>
+          <NavLink to="/" className="pl-0 my-1"> <i className="mr-2 far fa-heart" />Coups de coeur</NavLink>
         </NavItem>
         <NavItem>
-          <i className="mr-2 fas fa-comment-alt" />
-          <NavLink className="pl-0">Demandes</NavLink>
+          <NavLink to="/" className="pl-0 my-1"><i className="mr-2 fas fa-wrench" />Paramètres</NavLink>
         </NavItem>
         <NavItem>
-          <i className="mr-2 fas fa-sign-out-alt" />
-          <NavLink className="pl-0">Se déconnecter</NavLink>
-        </NavItem>
-      </Nav>
-      <Nav className="d-flex flex-column align-items-center">
-        <NavItem>
-          <NavLink>Mentions légales</NavLink>
+          <NavLink to="/" className="pl-0 my-1"><i className="mr-2 fas fa-comment-alt" />Demandes</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink>CGU</NavLink>
+          <NavLink to="/" className="pl-0 my-1"><i className="mr-2 fas fa-sign-out-alt" />Se déconnecter</NavLink>
         </NavItem>
-      </Nav>
+      </div>
+      <div className="d-flex mb-2 flex-column mt-auto align-items-center">
+        <NavItem>
+          <NavLink to="/" >Mentions légales</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/" >CGU</NavLink>
+        </NavItem>
+      </div>
     </Navbar>
     <div
       onClick={() => backdropClickHandler()}
