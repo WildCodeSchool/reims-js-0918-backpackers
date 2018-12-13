@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Row, Col } from "reactstrap";
+import React from "react";
+import { Row, Col, Button, Container } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 import "./FormPage.css";
@@ -15,7 +15,9 @@ const validate = values => {
   if (!values.id_creator) {
     errors.id_creator = "Required";
   }
-  console.log(errors);
+  if (!values.capacity) {
+    errors.capacity = "Required";
+  }
   return errors;
 };
 
@@ -35,7 +37,7 @@ const ActivityForm = props => {
   const { handleSubmit, submitting } = props;
 
   return (
-    <Fragment>
+    <Container fluid className="p-0 formContainer">
       <Row className="header">
         <Col xs="2">
           <Link to="/" className="price text-primary">
@@ -46,7 +48,7 @@ const ActivityForm = props => {
           <p className="text-center mb-0">Publier une annonce</p>
         </Col>
       </Row>
-      <h5 className="text-center publicationUnderline">Votre annonce</h5>
+      <h5 className="text-center publicationUnderline mt-2">Votre annonce</h5>
       <div className="mb-5">
         {/* <div>  DON'T TOUCH ! ! ! ! ! !
           <label htmlFor="category">Catégorie</label>
@@ -63,7 +65,12 @@ const ActivityForm = props => {
           </Field>
         </div> */}
 
-        <form onSubmit={handleSubmit}>
+        <form
+          method="POST"
+          encType="multipart/form-data"
+          action="upload"
+          onSubmit={handleSubmit}
+        >
           <div>
             <Field
               id="name"
@@ -93,13 +100,14 @@ const ActivityForm = props => {
               type="text"
               placeholder="Description"
               className="field w-100 mt-2"
+              rows="4"
             />
             <Field
               id="capacity"
               name="capacity"
               component={renderField}
               type="number"
-              label="participants"
+              label="Participants"
             />
             <Field
               id="price"
@@ -108,13 +116,24 @@ const ActivityForm = props => {
               component={renderField}
               label="Prix"
             />
+            <input
+              type="file"
+              name="picture"
+              multiple
+              className="uploadFile mt-2"
+              accept="image/png"
+            />
           </div>
-          <button type="submit" disabled={submitting} className="header cursor">
-            Publier l'annonce
-          </button>
+          <Button
+            type="submit"
+            disabled={submitting}
+            className="submitButton mt-5 cursor"
+          >
+            Publier
+          </Button>
         </form>
       </div>
-    </Fragment>
+    </Container>
   );
 };
 

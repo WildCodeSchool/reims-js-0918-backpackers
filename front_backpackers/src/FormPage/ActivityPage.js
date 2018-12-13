@@ -5,12 +5,11 @@ import ActivityFormContainer from "./ActivityForm";
 class ActivityPage extends Component {
   submit = activities => {
     const activity = activities;
+    console.log(activity);
     JSON.stringify(activity);
-    axios.post("http://localhost:3010/activities", activity).then(response => {
-      console.log(response);
+    axios.post("/activities", activity).then(response => {
       this.props.history.push("/");
     });
-    console.log(typeof activities);
   };
   render() {
     return <ActivityFormContainer onSubmit={this.submit} />;

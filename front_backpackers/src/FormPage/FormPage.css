@@ -1,7 +1,18 @@
 .header {
   background-color: #00b273;
   color: white;
-  line-height: 40px;
+  line-height: 30px;
+}
+
+.uploadFile {
+  border: none;
+}
+
+.submitButton {
+  background-color: #00b273;
+  color: white;
+  line-height: 30px;
+  border: none;
 }
 
 .field {

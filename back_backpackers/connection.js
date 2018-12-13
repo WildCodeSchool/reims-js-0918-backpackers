@@ -14,8 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/auth", auth);
 
-const currentUserId = 1;
-
 app.use(cors());
 
 app.get(
@@ -134,7 +132,7 @@ app.post("/activities", (req, res) => {
 });
 
 app.get("/activity/:id", (req, res) => {
-  const idActivity = req.params.id
+  const idActivity = req.params.id;
   connection.query(
     `SELECT idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
@@ -145,7 +143,8 @@ app.get("/activity/:id", (req, res) => {
     FROM activities 
     JOIN places 
     ON activities.id_place = places.id
-    WHERE idActivity=?`, idActivity,
+    WHERE idActivity=?`,
+    idActivity,
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving activity");
