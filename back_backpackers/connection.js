@@ -146,7 +146,7 @@ app.get("/activity/:id", (req, res) => {
     activities.capacity, (activities.picture) AS pictureActivity, 
     (activities.description) AS descriptionActivity, id_place, 
     activities.contact, date, id, country, city, 
-    adress, type, (places.description) AS descriptionPlace, 
+    address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace 
     FROM activities 
     JOIN places 
