@@ -6,6 +6,7 @@ import {
   OPEN_MENU,
   CLOSE_MENU,
   CREATE_ACTIVITY,
+  GET_GEOLOCATION,
   VIEW_ACTIVITY,
   VIEW_PROFILE
 } from "./actionTypes";
@@ -18,6 +19,7 @@ import {
   makeCloseMenuAction,
   makeOpenMenuAction,
   makeCreateActivityAction,
+  makeGetGeolocationAction,
   makeViewActivityAction
 } from "./actions";
 
@@ -145,4 +147,17 @@ describe("makeCloseMenuAction", () => {
     });
   })
 
+});
+
+
+describe("makeGetGeoLocationAction", () => {
+  it("should return a GET_GEOLOCATION", () => {
+    const coords = [51.123, 0.431]
+    const expected = {
+      type: GET_GEOLOCATION,
+      coords
+    };
+
+    expect(makeGetGeolocationAction(coords)).toEqual(expected);
+  });
 });

@@ -7,6 +7,7 @@ import {
   makeFetchActivitiesAction,
   makeOpenMenuAction,
   makeCloseMenuAction,
+  makeGetGeolocationAction,
   makeViewActivityAction
 } from "../actions/actions";
 
@@ -15,6 +16,7 @@ const mapStateToProps = state => ({
   activities: state.activities,
   loading: state.loading,
   menu: state.menu,
+  map: state.map,
   activity: state.activity
 });
 
@@ -25,7 +27,8 @@ const mapDispatchToProps = dispatch => ({
   viewActivity: activity => dispatch(makeViewActivityAction(activity)),
   fetchActivities: () => dispatch(makeFetchActivitiesAction()),
   openMenu: menu => dispatch(makeOpenMenuAction(menu)),
-  closeMenu: menu => dispatch(makeCloseMenuAction(menu))
+  closeMenu: menu => dispatch(makeCloseMenuAction(menu)),
+  getCoords: coords => dispatch(makeGetGeolocationAction(coords))
 });
 
 export default connect(
