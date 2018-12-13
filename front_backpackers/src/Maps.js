@@ -17,6 +17,7 @@ const MyMarkersList = ({ markers }) => {
   return <Fragment>{items}</Fragment>
 }
 
+
 class Maps extends Component {
   state = {
     markers: [
@@ -25,7 +26,13 @@ class Maps extends Component {
       { key: 'marker3', position: [49.259273, 4.017972], content: 'My third popup' },
     ],
   }
+
+  componentDidMount() {
+  }
+
   render() {
+    const markers = this.props.places.map(place => ({ key: place.name, position: [place.latitude, place.longitude], content: place.name }))
+    console.log(markers)
 
     return (
       <Row>
@@ -34,7 +41,7 @@ class Maps extends Component {
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <MyMarkersList markers={this.state.markers} />
+          <MyMarkersList markers={markers} />
         </Map>
       </Row>
 
