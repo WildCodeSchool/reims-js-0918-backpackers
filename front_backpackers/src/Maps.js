@@ -1,11 +1,30 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Row } from "reactstrap"
 
 import "./Maps.scss"
 
-class Maps extends Component {
+const MyPopupMarker = ({ content, position }) => (
+  <Marker position={position}>
+    {content ? <Popup>{content}</Popup> : ""}
+  </Marker>
+)
 
+const MyMarkersList = ({ markers }) => {
+  const items = markers.map(({ key, ...props }) => (
+    <MyPopupMarker key={key} {...props} />
+  ))
+  return <Fragment>{items}</Fragment>
+}
+
+class Maps extends Component {
+  state = {
+    markers: [
+      { key: 'marker1', position: this.props.map },
+      { key: 'marker2', position: [49.259705, 4.020208], content: 'My second popup' },
+      { key: 'marker3', position: [49.259273, 4.017972], content: 'My third popup' },
+    ],
+  }
   render() {
 
     return (
@@ -15,11 +34,7 @@ class Maps extends Component {
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={this.props.map}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-          </Marker>
+          <MyMarkersList markers={this.state.markers} />
         </Map>
       </Row>
 

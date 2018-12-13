@@ -23,6 +23,8 @@ exports.up = function (db, callback) {
       country: { type: "string", length: 100, notNull: true },
       city: { type: "string", length: 100, notNull: true },
       adress: { type: "text", notNull: true },
+      latitude: { type: "decimal", notNull: true },
+      longitude: { type: "decimal", notNull: true },
       price: { type: "decimal", length: 50 },
       type: { type: "string", length: 100, notNull: true },
       capacity: { type: "int", length: 50 },
