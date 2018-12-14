@@ -2,6 +2,7 @@ import { connect } from "react-redux"
 import Maps from "../Maps";
 
 const mapStateToProps = state => ({
+  places: state.places,
   map: state.map
 })
 
