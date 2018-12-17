@@ -42,7 +42,7 @@ exports.up = function (db, callback) {
       "foot, jeux vidéos",
       0,
       "user",
-      "google.com",
+      "https://via.placeholder.com/75",
       "Je m'appelle Jean Dupont, j'aime le foot et les jeux vidéos dont surtout FIFA 2019. J'aime aussi la randonnée mais seulement en voiture."
     ],
     callback
