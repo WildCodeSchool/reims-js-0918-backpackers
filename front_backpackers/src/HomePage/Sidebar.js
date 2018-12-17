@@ -4,15 +4,16 @@ import { NavLink } from "react-router-dom";
 
 import "./Sidebar.scss";
 
-const Sidebar = ({ backdropClickHandler, show }) => (
+const Sidebar = ({ backdropClickHandler, show, picture, firstName, lastName, mail }) => (
   <Fragment>
     <Navbar className={show ? "d-flex flex-column side-drawer open" : "d-flex flex-column side-drawer"}>
-      <div className="profil d-flex flex-column align-items-center mt-3">
-        <img src="https://via.placeholder.com/75" className="rounded-circle" alt="profil" />
-        <h4>Michel Descotes</h4>
-        <p>michel.descotes@mail.com</p>
-      </div>
-      <div className="menu d-flex flex-column align-items-baseline align-self-baseline pt-3">
+      {firstName ? (
+        <div className="profil d-flex flex-column align-items-center mt-3">
+          <img src={picture} className="rounded-circle" alt="profil" />
+          <h4>{`${firstName} ${lastName}`}</h4>
+          <p>{mail}</p>
+        </div>) : ""}
+      < div className="menu d-flex flex-column align-items-baseline align-self-baseline pt-3">
         <NavItem>
           <NavLink to="/profil" className="pl-0 my-1"><i className="mr-2 fas fa-user-alt" />Profil</NavLink>
         </NavItem>
@@ -48,7 +49,7 @@ const Sidebar = ({ backdropClickHandler, show }) => (
       onClick={() => backdropClickHandler()}
       className={show ? "backdrop" : ""}
     />
-  </Fragment>
+  </Fragment >
 );
 
 export default Sidebar;

@@ -34,7 +34,7 @@ class Profile extends Component {
                 <Button className="bg-transparent border-0 mb-3 rounded-circle">
                   <img
                     className="rounded-circle"
-                    src="https://via.placeholder.com/75"
+                    src={this.props.profile[0].picture}
                     alt="Profile"
                   />
                 </Button>
