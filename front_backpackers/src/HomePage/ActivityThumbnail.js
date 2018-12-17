@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Media, Button } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -41,8 +41,11 @@ const ActivityThumbnail = ({
                 <Button onClick={viewActivity} className="seeItem">Voir</Button>
               </Link>
               <span className="itemListPrice pr-2">
-                {price}€ /
+                {price ? <Fragment>
+                  {price}€ /
               <i className="far fa-user" />
+                </Fragment>
+                  : "Gratuit"}
               </span>
             </div>
           </Media>
