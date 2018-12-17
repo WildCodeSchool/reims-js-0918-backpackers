@@ -123,6 +123,7 @@ app.post(
   (req, res) => {
     console.log("user_id", req.user.id);
     const id_creator = req.user.id;
+    console.log(req.user)
     const formData = { ...req.body, id_creator };
     connection.query(
       "INSERT INTO activities SET ? ",

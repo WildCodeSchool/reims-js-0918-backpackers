@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
-router.post("/login", function(req, res, next) {
+router.post("/login", function (req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
       // console.log("error", err);
@@ -16,6 +16,7 @@ router.post("/login", function(req, res, next) {
       if (err) {
         res.send(err);
       }
+      console.log(user, "lol")
       const token = jwt.sign(user, "your_jwt_secret");
       return res.json({ user, token });
     });
