@@ -1,9 +1,17 @@
 import React, { Component } from "react";
-import { Row, Col, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
-import classnames from "classnames"
+import {
+  Row,
+  Col,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane
+} from "reactstrap";
+import classnames from "classnames";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { geolocated } from 'react-geolocated'
+import { geolocated } from "react-geolocated";
 
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
@@ -20,7 +28,7 @@ class HomePage extends Component {
     this.state = {
       dropdownOpen: false,
       collapsed: true,
-      activeTab: '1'
+      activeTab: "1"
     };
     this.toggle = this.toggle.bind(this);
     this.toggleMap = this.toggleMap.bind(this);
@@ -33,7 +41,7 @@ class HomePage extends Component {
     this.props.fetchPlaces();
     this.callApiPlaces();
     this.props.fetchActivities();
-    this.callApiActivities()
+    this.callApiActivities();
     this.callApiProfile();
   }
 
@@ -56,7 +64,7 @@ class HomePage extends Component {
   callApiActivity(idActivity) {
     axios
       .get(`/activity/${idActivity}`)
-      .then(response => this.props.viewActivity(response.data[0]))
+      .then(response => this.props.viewActivity(response.data[0]));
   }
 
   toggle() {
@@ -116,21 +124,30 @@ class HomePage extends Component {
             <Nav tabs>
               <NavItem>
                 <NavLink
-                  className={classnames({ active: this.state.activeTab === '1' })}
-                  onClick={() => { this.toggleMap('1'); }}
+                  className={classnames({
+                    active: this.state.activeTab === "1"
+                  })}
+                  onClick={() => {
+                    this.toggleMap("1");
+                  }}
                 >
-                  <i className="text-white far fa-list-alt"></i>
+                  <i className="text-white far fa-list-alt" />
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
-                  className={classnames({ active: this.state.activeTab === '2' })}
+                  className={classnames({
+                    active: this.state.activeTab === "2"
+                  })}
                   onClick={() => {
-                    this.toggleMap('2');
-                    this.props.getCoords([this.props.coords.latitude, this.props.coords.longitude]);
+                    this.toggleMap("2");
+                    this.props.getCoords([
+                      this.props.coords.latitude,
+                      this.props.coords.longitude
+                    ]);
                   }}
                 >
-                  <i className="text-white fas fa-map-marked-alt"></i>
+                  <i className="text-white fas fa-map-marked-alt" />
                 </NavLink>
               </NavItem>
             </Nav>
@@ -145,7 +162,7 @@ class HomePage extends Component {
               ))}
             {this.props.displayHomePage === "activities" &&
               this.props.activities.map(activity => (
-                <ActivityThumbnail {...activity} viewActivity={() => this.callApiActivity(activity.idActivity)} key={activity.idActivity} />
+                <ActivityThumbnail {...activity} key={activity.idActivity} />
               ))}
 
             <Row className="fixed-bottom listFooter">
@@ -173,8 +190,6 @@ class HomePage extends Component {
             {this.state.activeTab === "2" ? <MapsContainer /> : ""}
           </TabPane>
         </TabContent>
-
-
       </div>
     );
   }
