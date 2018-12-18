@@ -12,9 +12,6 @@ const validate = values => {
   if (!values.id_place) {
     errors.id_place = "Required";
   }
-  if (!values.id_creator) {
-    errors.id_creator = "Required";
-  }
   console.log(errors);
   return errors;
 };
@@ -71,13 +68,6 @@ const ActivityForm = props => {
               component={renderField}
               type="text"
               label="Titre"
-            />
-            <Field
-              id="id_creator"
-              name="id_creator"
-              component={renderField}
-              type="number"
-              label="Créateur"
             />
             <Field
               id="id_place"

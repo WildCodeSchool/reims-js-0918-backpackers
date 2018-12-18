@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Media, Button } from "reactstrap";
 
@@ -29,8 +29,11 @@ const PlaceThumbnail = ({ picture, name, city, description, price }) => (
           <div className="d-flex align-items-end justify-content-between mt-auto">
             <Button className="seeItem">Voir</Button>
             <span className="itemListPrice pr-2">
-              {price}€ /
+              {price ? <Fragment>
+                {price}€ /
               <i className="far fa-user" />
+              </Fragment>
+                : "Gratuit"}
             </span>
           </div>
         </Media>

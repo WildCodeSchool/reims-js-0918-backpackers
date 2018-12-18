@@ -24,6 +24,7 @@ exports.up = function (db, callback) {
       birthDate: { type: "date", notNull: true },
       adress: { type: "text", notNull: true },
       mail: { type: "string", length: 100 },
+      password: { type: "string", length: 50 },
       favorites: {
         type: "int"
       },

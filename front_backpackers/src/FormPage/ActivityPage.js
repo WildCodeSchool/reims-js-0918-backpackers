@@ -6,9 +6,11 @@ class ActivityPage extends Component {
   submit = activities => {
     const activity = activities;
     JSON.stringify(activity);
-    axios.post("http://localhost:3010/activities", activity).then(response => {
-      this.props.history.push("/");
-    });
+    console.log("Bearer " + localStorage.getItem('token'))
+    axios
+      .post("http://localhost:3010/activities", activity, { headers: { "Authorization": "Bearer " + localStorage.getItem('token') } }).then(response => {
+        this.props.history.push("/");
+      });
   };
   render() {
     return <ActivityFormContainer onSubmit={this.submit} />;

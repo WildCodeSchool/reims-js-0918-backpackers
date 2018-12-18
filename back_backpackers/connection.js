@@ -89,7 +89,6 @@ app.get("/activities/search", (req, res) => {
   const name =
     req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
   const creator = req.query.creator === undefined ? "" : req.query.creator;
-  console.log(creator);
   connection.query(
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
@@ -121,7 +120,6 @@ app.post(
   "/activities",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("user_id", req.user.id);
     const id_creator = req.user.id;
     const formData = { ...req.body, id_creator };
     connection.query(
