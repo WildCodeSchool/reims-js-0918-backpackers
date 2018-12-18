@@ -11,7 +11,8 @@ const ActivityThumbnail = ({
   pictureActivity,
   picturePlace,
   price,
-  viewActivity
+  viewActivity,
+  date_diff
 }) => (
     <Row>
       <Col xs="12">
@@ -32,7 +33,7 @@ const ActivityThumbnail = ({
               </span>
               <span>
                 <i className="fas fa-calendar pr-1" />
-                {name}
+                <span className={"timeLeft" + (date_diff <= 2 ? " text-danger" : date_diff < 7 ? " text-warning" : " text-success")}>{date_diff}</span> jours restants
               </span>
             </Media>
             {descriptionActivity ? descriptionActivity : descriptionPlace}

@@ -110,10 +110,6 @@
   color: #054762;
 }
 
-.itemDaysLeft {
-  color: #f5ad9d;
-}
-
 .media-body {
   font-size: 10px;
   background-color: #e5e4e9;
@@ -130,6 +126,10 @@
   height: 20px;
   font-size: 0.9rem;
   padding: 0;
+}
+
+.timeLeft{
+  font-size: 0.8rem;
 }
 
 .itemListPrice {
