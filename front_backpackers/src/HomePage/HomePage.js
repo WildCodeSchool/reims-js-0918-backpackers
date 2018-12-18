@@ -18,13 +18,10 @@ class HomePage extends Component {
   constructor() {
     super();
     this.state = {
-      view: "PLACES",
       dropdownOpen: false,
       collapsed: true,
       activeTab: '1'
     };
-    this.changeViewToActivities = this.changeViewToActivities.bind(this);
-    this.changeViewToPlaces = this.changeViewToPlaces.bind(this);
     this.toggle = this.toggle.bind(this);
     this.toggleMap = this.toggleMap.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
@@ -56,18 +53,10 @@ class HomePage extends Component {
       .then(response => this.props.viewActivities(response.data));
   }
 
-  changeViewToActivities() {
-    this.setState({ view: "ACTIVITIES" });
-  }
-
   callApiActivity(idActivity) {
     axios
       .get(`/activity/${idActivity}`)
       .then(response => this.props.viewActivity(response.data[0]))
-  }
-
-  changeViewToPlaces() {
-    this.setState({ view: "PLACES" });
   }
 
   toggle() {
@@ -116,11 +105,11 @@ class HomePage extends Component {
           <Col xs="8">
             <DropdownButton
               className="w-100"
-              view={this.state.view}
+              view={this.props.displayHomePage}
               dropdownOpen={this.state.dropdownOpen}
               toggle={this.toggle}
-              changeViewToActivities={this.changeViewToActivities}
-              changeViewToPlaces={this.changeViewToPlaces}
+              changeViewToActivities={this.props.displayActivities}
+              changeViewToPlaces={this.props.displayPlaces}
             />
           </Col>
           <Col xs="2">
@@ -150,11 +139,11 @@ class HomePage extends Component {
 
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            {this.state.view === "PLACES" &&
+            {this.props.displayHomePage === "places" &&
               this.props.places.map(place => (
                 <PlaceThumbnail {...place} key={place.id} />
               ))}
-            {this.state.view === "ACTIVITIES" &&
+            {this.props.displayHomePage === "activities" &&
               this.props.activities.map(activity => (
                 <ActivityThumbnail {...activity} viewActivity={() => this.callApiActivity(activity.idActivity)} key={activity.idActivity} />
               ))}
