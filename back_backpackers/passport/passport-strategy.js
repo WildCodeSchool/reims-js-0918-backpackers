@@ -17,7 +17,6 @@ passport.use(
         `SELECT id, mail, password FROM users WHERE mail = ? AND password = ?`,
         [mail, password],
         (err, results) => {
-          console.log(results, "lolololololololol");
           if (!results.length) {
             return cb(null, false, { message: "Incorrect mail or password. " });
           } else {
