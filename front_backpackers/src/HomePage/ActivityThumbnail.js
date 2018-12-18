@@ -4,6 +4,7 @@ import { Row, Col, Media, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const ActivityThumbnail = ({
+  idActivity,
   city,
   name,
   descriptionActivity,
@@ -38,7 +39,7 @@ const ActivityThumbnail = ({
             </Media>
             {descriptionActivity ? descriptionActivity : descriptionPlace}
             <div className="d-flex align-items-end justify-content-between mt-auto">
-              <Link to="/activity">
+              <Link to={`/activity/${idActivity}`}>
                 <Button onClick={viewActivity} className="seeItem">Voir</Button>
               </Link>
               <span className="itemListPrice pr-2">
