@@ -8,10 +8,12 @@ import menuReducer from "./menuReducer";
 import activityReducer from "./activityReducer";
 import { reducer as formReducer } from "redux-form";
 import mapReducer from "./mapReducer";
+import displayHomePageReducer from "./displayHomePageReducer";
 
 const backpackersApp = history =>
   combineReducers({
     router: connectRouter(history),
+    displayHomePage: displayHomePageReducer,
     loading: loadingReducer,
     places: placesReducer,
     activities: activitiesReducer,

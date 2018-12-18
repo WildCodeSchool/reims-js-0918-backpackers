@@ -8,8 +8,18 @@ import {
   CLOSE_MENU,
   CREATE_ACTIVITY,
   GET_GEOLOCATION,
-  VIEW_ACTIVITY
+  VIEW_ACTIVITY,
+  DISPLAY_PLACES,
+  DISPLAY_ACTIVITIES
 } from "./actionTypes";
+
+export const makeDisplayPlacesAction = () => ({
+  type: DISPLAY_PLACES
+});
+
+export const makeDisplayActivitiesAction = () => ({
+  type: DISPLAY_ACTIVITIES
+});
 
 export const makeViewPlacesAction = places => ({
   type: VIEW_PLACES,
