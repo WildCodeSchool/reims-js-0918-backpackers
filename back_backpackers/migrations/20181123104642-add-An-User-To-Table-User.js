@@ -23,6 +23,7 @@ exports.up = function (db, callback) {
       "birthDate",
       "adress",
       "mail",
+      "password",
       "favorites",
       "hobbies",
       "historic",
@@ -36,11 +37,12 @@ exports.up = function (db, callback) {
       "1995-01-24",
       "9 rue du Général Leclerc",
       "jean.dupont@gmail.com",
+      "password",
       0,
       "foot, jeux vidéos",
       0,
       "user",
-      "google.com",
+      "https://via.placeholder.com/75",
       "Je m'appelle Jean Dupont, j'aime le foot et les jeux vidéos dont surtout FIFA 2019. J'aime aussi la randonnée mais seulement en voiture."
     ],
     callback

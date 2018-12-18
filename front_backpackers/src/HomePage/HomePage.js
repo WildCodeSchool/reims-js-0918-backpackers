@@ -37,6 +37,13 @@ class HomePage extends Component {
     this.callApiPlaces();
     this.props.fetchActivities();
     this.callApiActivities()
+    this.callApiProfile();
+  }
+
+  callApiProfile() {
+    axios
+      .get("/profile")
+      .then(response => this.props.viewProfile(response.data));
   }
 
   callApiPlaces() {
@@ -101,6 +108,7 @@ class HomePage extends Component {
             />
 
             <Sidebar
+              {...this.props.profile[0]}
               show={this.props.menu}
               backdropClickHandler={this.backdropClickHandler}
             />

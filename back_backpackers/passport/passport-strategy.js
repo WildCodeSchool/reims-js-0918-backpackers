@@ -12,16 +12,15 @@ passport.use(
       usernameField: "mail",
       passwordField: "password"
     },
-    function(mail, password, cb) {
+    function (mail, password, cb) {
       connection.query(
         `SELECT id, mail, password FROM users WHERE mail = ? AND password = ?`,
         [mail, password],
         (err, results) => {
-          console.log(results);
           if (!results.length) {
             return cb(null, false, { message: "Incorrect mail or password. " });
           } else {
-            return cb(null, { mail }, { message: "Logged In Successfully" });
+            return cb(null, { mail, id: results[0].id }, { message: "Logged In Successfully" });
           }
         }
       );
@@ -35,7 +34,7 @@ passport.use(
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: "your_jwt_secret"
     },
-    function(jwtPayload, cb) {
+    function (jwtPayload, cb) {
       const user = jwtPayload;
       return cb(null, user);
     }

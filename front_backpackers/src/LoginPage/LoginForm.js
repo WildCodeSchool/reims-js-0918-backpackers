@@ -55,7 +55,7 @@ const LoginForm = props => {
               />
               <Field
                 name="password"
-                type="text"
+                type="password"
                 component={renderField}
                 label="Password"
               />
