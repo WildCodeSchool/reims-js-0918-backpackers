@@ -32,11 +32,12 @@ passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: "your_jwt_secret"
+      secretOrKey: 'your_jwt_secret'
     },
     function (jwtPayload, cb) {
+
       const user = jwtPayload;
-      return cb(null, user);
+      return cb(null, jwtPayload);
     }
   )
 );
