@@ -5,7 +5,7 @@ import Header from "./Header.js";
 import Caroussel from "./Caroussel";
 import Details from "./Details";
 
-class SinglePage extends Component {
+class PlacePage extends Component {
   constructor(props) {
     super(props)
   }
@@ -34,4 +34,4 @@ class SinglePage extends Component {
 
 }
 
-export default SinglePage;
+export default PlacePage;
