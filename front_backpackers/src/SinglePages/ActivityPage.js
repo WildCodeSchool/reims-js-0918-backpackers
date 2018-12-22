@@ -6,9 +6,6 @@ import Caroussel from "./Caroussel";
 import ActivityDetails from "./ActivityDetails";
 
 class ActivityPage extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   componentDidMount() {
     axios

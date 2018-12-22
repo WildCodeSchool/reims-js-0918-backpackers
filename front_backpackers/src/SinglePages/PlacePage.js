@@ -6,14 +6,11 @@ import Caroussel from "./Caroussel";
 import PlaceDetails from "./PlaceDetails.js";
 
 class PlacePage extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   componentDidMount() {
     axios
       .get(`/place/${this.props.match.params.id}`)
-      .then(response => this.props.viewPlace(response.data[0]))
+      .then(response => this.props.viewPlace({ ...response.data[0], activities: response.data.activities }))
   }
 
   render() {

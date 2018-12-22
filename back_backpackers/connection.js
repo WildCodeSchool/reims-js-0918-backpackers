@@ -163,7 +163,6 @@ app.get("/activity/:id", (req, res) => {
   );
 });
 
-
 app.get("/place/:id", (req, res) => {
   const idPlace = req.params.id;
   connection.query(
@@ -175,7 +174,28 @@ app.get("/place/:id", (req, res) => {
       } if (results.length < 1) {
         res.status(404).send("This place doesn't exist")
       } else {
-        res.json(results);
+        // res.json(results);
+        connection.query(
+          `SELECT idActivity, activities.name, id_creator, activities.price, 
+          activities.capacity, (activities.picture) AS pictureActivity, 
+          (activities.description) AS descriptionActivity, id_place, 
+          activities.contact, date, id, country, city, 
+          address, type, (places.description) AS descriptionPlace, 
+          (places.picture) AS picturePlace 
+          FROM activities 
+          JOIN places 
+          ON activities.id_place = places.id
+          WHERE id_place = ?`,
+          idPlace,
+          (err, actiResults) => {
+            if (err) {
+              res.status(500).send("Error retrieving activities of this place");
+            } else {
+              const place = { ...results, activities: actiResults }
+              res.json(place);
+            }
+          }
+        )
       }
     }
   );

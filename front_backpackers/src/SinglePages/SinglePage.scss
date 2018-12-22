@@ -5,7 +5,7 @@
 }
 
 .carousel{
-  margin-bottom: 30px;
+  margin: 60px 0 30px 0;
   .carousel-indicators{
     bottom: -35px;
     li{
@@ -96,5 +96,10 @@
 
 .participate{
   background-color: $blueColor;
+  line-height: 50px;
+}
+
+.new_activity{
+  background-color: $greenColor;
   line-height: 50px;
 }

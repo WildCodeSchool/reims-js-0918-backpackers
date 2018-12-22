@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Row, Col, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from 'classnames';
+import ActivityThumbnail from "../HomePage/ActivityThumbnail";
+import { Link } from "react-router-dom"
 
 class PlaceDetails extends Component {
   constructor(props) {
@@ -51,22 +53,16 @@ class PlaceDetails extends Component {
                   </Col>
                 </Row>
                 <Row className="mt-2">
-                  <Col xs="4">
+                  <Col xs="6">
                     <div className="price characteristic text-center">
                       <p className="mb-0"><i className="fas fa-coins"></i></p>
                       <p>{this.props.place.price > 0 ? <Fragment>{this.props.place.price}<i className="fas fa-euro-sign pl-1"></i></Fragment> : "Gratuit"}</p>
                     </div>
                   </Col>
-                  <Col xs="4">
+                  <Col xs="6">
                     <div className="characteristic text-center">
                       <p className="mb-0"><i className="fas fa-swimmer"></i></p>
                       <p className="">Activité {this.props.place.type}</p>
-                    </div>
-                  </Col>
-                  <Col xs="4">
-                    <div className="characteristic text-center">
-                      <p className="mb-0"><i className="fas fa-user-alt"></i></p>
-                      <p>{this.props.place.capacity} Places Restantes</p>
                     </div>
                   </Col>
                 </Row>
@@ -86,13 +82,25 @@ class PlaceDetails extends Component {
           </TabPane>
         </TabContent>
 
+        <Row>
+          <Col xs="12">
+            <h3 className="text-center p-1 mt-1">Les activités</h3>
+          </Col>
+        </Row>
 
+        {this.props.place.activities.map(activity => (
+          <ActivityThumbnail {...activity} key={activity.idActivity} />
+        ))}
 
-
-
-        <div className="participate">
-
-        </div>
+        <Row>
+          <Col xs="12">
+            <Link
+              to="/activities"
+              className="w-100 d-block text-white text-center new_activity mt-3">
+              <i className="fas fa-pencil-alt" /> Nouvelle Activité
+            </Link>
+          </Col>
+        </Row>
       </Fragment >
 
     )
