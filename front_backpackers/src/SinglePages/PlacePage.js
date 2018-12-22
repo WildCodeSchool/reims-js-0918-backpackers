@@ -3,7 +3,7 @@ import axios from "axios"
 
 import Header from "./Header.js";
 import Caroussel from "./Caroussel";
-import Details from "./Details";
+import PlaceDetails from "./PlaceDetails.js";
 
 class PlacePage extends Component {
   constructor(props) {
@@ -12,19 +12,18 @@ class PlacePage extends Component {
 
   componentDidMount() {
     axios
-      .get(`/activity/${this.props.match.params.id}`)
-      .then(response => this.props.viewActivity(response.data[0]))
+      .get(`/place/${this.props.match.params.id}`)
+      .then(response => this.props.viewPlace(response.data[0]))
   }
 
   render() {
     return (
       <Fragment>
-        {this.props.activity.name ?
+        {this.props.place.name ?
           <Fragment>
-            {console.log(this.props.match.params.id)}
-            <Header place={this.props.activity.city} />
-            <Caroussel activity={this.props.activity} />
-            <Details activity={this.props.activity} />
+            <Header place={this.props.place.name} />
+            <Caroussel place={this.props.place} />
+            <PlaceDetails place={this.props.place} />
           </Fragment>
           : ""
         }

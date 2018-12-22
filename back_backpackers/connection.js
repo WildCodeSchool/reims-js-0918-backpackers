@@ -163,6 +163,24 @@ app.get("/activity/:id", (req, res) => {
   );
 });
 
+
+app.get("/place/:id", (req, res) => {
+  const idPlace = req.params.id;
+  connection.query(
+    `SELECT * FROM places WHERE id=?`,
+    idPlace,
+    (err, results) => {
+      if (err) {
+        res.status(500).send("Error retrieving place");
+      } if (results.length < 1) {
+        res.status(404).send("This place doesn't exist")
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
 app.get("/profile", (req, res) => {
   connection.query(
     // `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies,
