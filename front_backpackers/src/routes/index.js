@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router";
 import { Container } from "reactstrap";
 import HomePageContainer from "../containers/HomepageContainer";
 import LoginPage from "../LoginPage/LoginPage";
-import ActivityPage from "../FormPage/ActivityPage";
+import CreateActivityPage from "../FormPage/CreateActivityPage";
 import ProfileContainer from "../containers/ProfileContainer";
 import ActivityContainer from "../containers/ActivityContainer";
 import PlaceContainer from "../containers/PlaceContainer";
@@ -13,7 +13,7 @@ const routes = (
     <Switch>
       <Route exact path="/" component={HomePageContainer} />
       <Route path="/login" component={LoginPage} />
-      <Route path="/activities" component={ActivityPage} />
+      <Route path="/place/:id/newactivity" component={CreateActivityPage} />
       <Route path="/profil" component={ProfileContainer} />
       <Route path="/activity/:id" component={ActivityContainer} />
       <Route path="/place/:id" component={PlaceContainer} />

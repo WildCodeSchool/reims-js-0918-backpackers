@@ -95,7 +95,7 @@ class PlaceDetails extends Component {
         <Row>
           <Col xs="12">
             <Link
-              to="/activities"
+              to={`/place/${this.props.place.id}/newactivity`}
               className="w-100 d-block text-white text-center new_activity mt-3">
               <i className="fas fa-pencil-alt" /> Nouvelle Activité
             </Link>
