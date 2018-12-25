@@ -1,3 +1,5 @@
+@import '../_styles.scss';
+
 .loginBackground {
   height: 100vh;
   position: relative;
@@ -14,19 +16,21 @@ h1 {
 }
 
 .formBack {
+  .formRequired {
+  color: #f00;
+  }
   padding: 5px 10px;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.5);
+  input, .form-control {
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    border-bottom: 1px solid #000;
+    width: 100%;
+  }
 }
 
-input,
-.form-control {
-  border: none;
-  background-color: rgba(255, 255, 255, 0);
-  border-bottom: 1px solid #000;
-  border-radius: 0px;
-  width: 100%;
-}
+
 
 .facebookLogin {
   background-color: #3b5998;
@@ -39,7 +43,7 @@ input,
 }
 
 .login {
-  background-color: #1c6793;
+  background-color: $blueColor;
   width: 100%;
   margin-top: 30px;
   line-height: 60px;
@@ -49,13 +53,10 @@ input,
 
 .newAccount {
   font-size: 0.7rem;
-}
-
-.newAccount a {
+  a {
   font-weight: bold;
   color: #111;
+  }
 }
 
-.formRequired {
-  color: #f00;
-}
+

@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Row, Col, Button } from "reactstrap";
-import "./Login.css";
+import "./Login.scss";
 
 const validate = values => {
   const errors = {};

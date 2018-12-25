@@ -17,14 +17,15 @@
   justify-content: inherit;
 }
 
-.side-drawer.open {
+.side-drawer{
+  &.open {
   transform: translateX(0);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
-}
-
-.side-drawer a {
+  }
+  a {
   color: $darkGrayColor;
   text-decoration: none;
+  }
 }
 
 .backdrop {
