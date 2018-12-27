@@ -9,7 +9,9 @@ import {
   makeCloseMenuAction,
   makeGetGeolocationAction,
   makeViewActivityAction,
-  makeViewProfileAction
+  makeViewProfileAction,
+  makeDisplayActivitiesAction,
+  makeDisplayPlacesAction
 } from "../actions/actions";
 
 const mapStateToProps = state => ({
@@ -19,14 +21,16 @@ const mapStateToProps = state => ({
   menu: state.menu,
   map: state.map,
   activity: state.activity,
-  profile: state.profile
+  profile: state.profile,
+  displayHomePage: state.displayHomePage
 });
 
 const mapDispatchToProps = dispatch => ({
+  displayPlaces: () => dispatch(makeDisplayPlacesAction()),
+  displayActivities: () => dispatch(makeDisplayActivitiesAction()),
   viewPlaces: places => dispatch(makeViewPlacesAction(places)),
   fetchPlaces: () => dispatch(makeFetchPlacesAction()),
   viewActivities: activities => dispatch(makeViewActivitiesAction(activities)),
-  viewActivity: activity => dispatch(makeViewActivityAction(activity)),
   fetchActivities: () => dispatch(makeFetchActivitiesAction()),
   openMenu: menu => dispatch(makeOpenMenuAction(menu)),
   closeMenu: menu => dispatch(makeCloseMenuAction(menu)),

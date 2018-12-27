@@ -14,7 +14,7 @@ const routes = (
       <Route path="/login" component={LoginPage} />
       <Route path="/activities" component={ActivityPage} />
       <Route path="/profil" component={ProfileContainer} />
-      <Route path="/activity" component={ActivityContainer} />
+      <Route path="/activity/:id" component={ActivityContainer} />
     </Switch>
   </Container>
 );

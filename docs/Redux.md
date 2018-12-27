@@ -12,6 +12,20 @@
     activity: [...]
   }
 ```
+- DISPLAY_ACTIVITIES
+```javascript
+  {
+    type: DISPLAY_ACTIVITIES
+  }
+```
+  
+- DISPLAY_PLACES
+```javascript
+  {
+    type: DISPLAY_PLACES
+  }
+```
+
 
 - VIEW_PLACE
 
@@ -47,6 +61,15 @@
 ```
 
 ## Reducers
+
+-homePageReducer
+
+```javascript
+  const initialState: "places"
+```
+
+When DISPLAY_PLACES is dispatched, state becomes places
+When DISPLAY_ACTIVITIES is dispatched, state becomes activities
 
 -placesReducer
 
