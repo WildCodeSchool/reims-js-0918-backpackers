@@ -8,7 +8,9 @@ import {
   CREATE_ACTIVITY,
   GET_GEOLOCATION,
   VIEW_ACTIVITY,
-  VIEW_PROFILE
+  VIEW_PROFILE,
+  DISPLAY_PLACES,
+  DISPLAY_ACTIVITIES
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -20,8 +22,30 @@ import {
   makeOpenMenuAction,
   makeCreateActivityAction,
   makeGetGeolocationAction,
-  makeViewActivityAction
+  makeViewActivityAction,
+  makeDisplayPlacesAction,
+  makeDisplayActivitiesAction
 } from "./actions";
+
+describe("makeDisplayActivitiesAction", () => {
+  it("should return a DISPLAY_PLACES action", () => {
+    const expected = {
+      type: DISPLAY_PLACES
+    };
+
+    expect(makeDisplayPlacesAction()).toEqual(expected);
+  });
+});
+
+describe("makeDisplayActivitiesAction", () => {
+  it("should return a DISPLAY_ACTIVITIES action", () => {
+    const expected = {
+      type: DISPLAY_ACTIVITIES
+    };
+
+    expect(makeDisplayActivitiesAction()).toEqual(expected);
+  });
+});
 
 describe("makeViewPlacesAction", () => {
   it("should return a VIEW_PLACES action", () => {
