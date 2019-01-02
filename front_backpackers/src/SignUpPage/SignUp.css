@@ -1,0 +1,51 @@
+.signUpBackground {
+  height: 100vh;
+  position: relative;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: -15px;
+  margin-left: -15px;
+  background: url("../images/loginBackground.jpg") fixed center -300px no-repeat;
+}
+
+h1 {
+  color: #fff;
+  font-size: 1rem;
+}
+
+.formBackground {
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+input,
+.form-control {
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+  border-bottom: 1px solid #000;
+  border-radius: 0px;
+  width: 100%;
+}
+
+.signup {
+  background-color: #1c6793;
+  width: 100%;
+  margin-top: 30px;
+  line-height: 60px;
+  border: none;
+  border-radius: 30px;
+}
+
+.Account {
+  font-size: 0.7rem;
+}
+
+.Account a {
+  font-weight: bold;
+  color: #111;
+}
+
+.formRequired {
+  color: #f00;
+}
