@@ -1,4 +1,6 @@
-# backpackers
+![logo](/front_backpackers/images/Logo-Backpackers.png)
+
+# BACKPACKERS
 
 [API.md](/docs/API.md)
 
@@ -10,9 +12,28 @@ Use the following command to install packages in front_backpackers and back_back
   npm install
 ```
 
+Use the following command to install db-migrate in back_backpackers folder. It's for migration database data.
+
+[db-migrate source](https://db-migrate.readthedocs.io/en/latest/)
+
+```bash
+  npm install db-migrate --save-dev
+  npm install db-migrate-mysql --save-dev //For MySQL users
+```
+
+(Optionnal) Use the following command to install nodemon in back_backpackers folder. It's for restart server automatically when you save your files.
+
+[nodemon source](https://github.com/remy/nodemon)
+
+```bash
+  npm install --save-dev nodemon
+```
+
 ## Database installation
 
-Open .env.dev file in back_backpackers folder and replace the following fields.
+First, create a database in a database management application.
+
+Create an .env file in back_backpackers folder, write and replace the following fields.
 
 ```bash
   DB_HOST=yourlocalhost
@@ -21,8 +42,7 @@ Open .env.dev file in back_backpackers folder and replace the following fields.
   DB_DATABASE=yourdatabasename
 ```
 
-Rename .env.dev file .env .
-<br />Use the following command to create all tables and fields of our database.
+Use the following command to create all tables and fields of our database.
 
 ```bash
   npm run migrate up
@@ -36,8 +56,22 @@ To undo the migrations.
 
 ## Use the website
 
-Use the following command to use the website.
+Use the following command to use the website on front side.
 
 ```bash
   npm start
+```
+
+And use the following command to start your server on back side.
+
+If you don't use nodemon :
+
+```bash
+  node connection.js
+```
+
+If you use nodemon :
+
+```bash
+  npm run nodemon
 ```
