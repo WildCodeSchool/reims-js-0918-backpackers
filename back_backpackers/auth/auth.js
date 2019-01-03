@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
+const connection = require("../conf");
 
 router.post("/login", function(req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
@@ -22,19 +24,20 @@ router.post("/login", function(req, res, next) {
   })(req, res);
 });
 
-router.post("/signup", function(req, res, next) {
-  connection.query(
-    "INSERT INTO users(mail, password, firstName, lastName) VALUES(?,?,?,?)",
-    [req.body.mail, req.body.password, req.body.firstName, req.body.lastName],
-    function(error, results, fields) {
-      if (error) {
-        res.status(500).json({ flash: error.message });
-      }
-      res
-        .status(200)
-        .json({ flash: "User has been signed up !", type: "success" });
+router.post("/signup", (req, res) => {
+  let hash = bcrypt.hashSync(req.body.password, 10);
+  const formData = {
+    ...req.body,
+    password: hash
+  };
+  connection.query("INSERT INTO users SET ?", formData, (err, results) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Failed to create an account");
+    } else {
+      res.sendStatus(200);
     }
-  );
+  });
 });
 
 module.exports = router;

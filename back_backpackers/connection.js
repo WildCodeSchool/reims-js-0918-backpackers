@@ -172,8 +172,9 @@ app.get("/place/:id", (req, res) => {
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving place");
-      } if (results.length < 1) {
-        res.status(404).send("This place doesn't exist")
+      }
+      if (results.length < 1) {
+        res.status(404).send("This place doesn't exist");
       } else {
         // res.json(results);
         connection.query(
@@ -192,11 +193,11 @@ app.get("/place/:id", (req, res) => {
             if (err) {
               res.status(500).send("Error retrieving activities of this place");
             } else {
-              const place = { ...results, activities: actiResults }
+              const place = { ...results, activities: actiResults };
               res.json(place);
             }
           }
-        )
+        );
       }
     }
   );
@@ -232,18 +233,6 @@ app.get("/profile/favorite", (req, res) => {
       }
     }
   );
-});
-
-app.post("/profile/signup", (req, res) => {
-  const formData = req.body;
-  connection.query("INSERT INTO users SET ?", formData, (err, results) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Failed to create an account");
-    } else {
-      res.sendStatus(200);
-    }
-  });
 });
 
 app.listen(port, err => {

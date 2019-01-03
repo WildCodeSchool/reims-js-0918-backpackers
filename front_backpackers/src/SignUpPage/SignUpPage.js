@@ -6,7 +6,7 @@ class SignUpPage extends Component {
   submit = users => {
     const user = users;
     JSON.stringify(user);
-    console.log("coucou", user);
+    console.log("inscription", user);
     axios
       .post("/profile/signup", user, {
         method: "POST",

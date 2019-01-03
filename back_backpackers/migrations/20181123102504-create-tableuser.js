@@ -23,7 +23,7 @@ exports.up = function(db, callback) {
       firstName: { type: "string", length: 100, notNull: true },
       birthDate: { type: "date", notNull: true },
       mail: { type: "string", length: 100 },
-      password: { type: "string", length: 50 },
+      password: { type: "string", length: 100 },
       favorites: {
         type: "int"
       },
