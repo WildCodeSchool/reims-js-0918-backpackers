@@ -1,5 +1,3 @@
-![logo](/front_backpackers/images/Logo-Backpackers.png)
-
 # BACKPACKERS
 
 [API.md](/docs/API.md)
