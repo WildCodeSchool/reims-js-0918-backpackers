@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
-import "./SignUp.css";
+import "../LoginPage/Login.scss";
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
@@ -34,7 +34,7 @@ const SignUpForm = props => {
         <Row>
           <Col xs="12">
             <form onSubmit={handleSubmit}>
-              <div className="formBackground">
+              <div className="formBack">
                 <Field
                   id="lastName"
                   name="lastName"
@@ -93,7 +93,7 @@ const SignUpForm = props => {
         <Row>
           <Link to="/login">
             <Col xs="12">
-              <p className="Account mt-5 text-center text-white">
+              <p className="account mt-5 text-center text-white">
                 J'ai déjà un compte.<a href="/">Se connecter</a>
               </p>
             </Col>
