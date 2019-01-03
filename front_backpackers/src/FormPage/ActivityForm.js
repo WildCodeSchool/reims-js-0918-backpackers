@@ -70,13 +70,6 @@ const ActivityForm = props => {
               label="Titre"
             />
             <Field
-              id="id_place"
-              name="id_place"
-              component={renderField}
-              type="number"
-              label="Lieu"
-            />
-            <Field
               id="decription"
               name="description"
               component="textarea"

@@ -50,8 +50,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-        ? `SELECT * FROM places WHERE adress = "${adress}"`
-        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+      ? `SELECT * FROM places WHERE adress = "${adress}"`
+      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -69,7 +69,7 @@ app.get("/activities", (req, res) => {
     `SELECT idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
     (activities.description) AS descriptionActivity, id_place, 
-    activities.contact, date, id, country, city, 
+    activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace 
     FROM activities 
@@ -93,8 +93,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-        ? `SELECT * FROM activities WHERE creator ="${creator}"`
-        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+      ? `SELECT * FROM activities WHERE creator ="${creator}"`
+      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -154,10 +154,49 @@ app.get("/activity/:id", (req, res) => {
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving activity");
-      } if (results.length < 1) {
-        res.status(404).send("This activity doesn't exist")
+      }
+      if (results.length < 1) {
+        res.status(404).send("This activity doesn't exist");
       } else {
         res.json(results);
+      }
+    }
+  );
+});
+
+app.get("/place/:id", (req, res) => {
+  const idPlace = req.params.id;
+  connection.query(
+    `SELECT * FROM places WHERE id=?`,
+    idPlace,
+    (err, results) => {
+      if (err) {
+        res.status(500).send("Error retrieving place");
+      } if (results.length < 1) {
+        res.status(404).send("This place doesn't exist")
+      } else {
+        // res.json(results);
+        connection.query(
+          `SELECT idActivity, activities.name, id_creator, activities.price, 
+          activities.capacity, (activities.picture) AS pictureActivity, 
+          (activities.description) AS descriptionActivity, id_place, 
+          activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
+          address, type, (places.description) AS descriptionPlace, 
+          (places.picture) AS picturePlace 
+          FROM activities 
+          JOIN places 
+          ON activities.id_place = places.id
+          WHERE id_place = ?`,
+          idPlace,
+          (err, actiResults) => {
+            if (err) {
+              res.status(500).send("Error retrieving activities of this place");
+            } else {
+              const place = { ...results, activities: actiResults }
+              res.json(place);
+            }
+          }
+        )
       }
     }
   );
@@ -193,6 +232,18 @@ app.get("/profile/favorite", (req, res) => {
       }
     }
   );
+});
+
+app.post("/profile/signup", (req, res) => {
+  const formData = req.body;
+  connection.query("INSERT INTO users SET ?", formData, (err, results) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Failed to create an account");
+    } else {
+      res.sendStatus(200);
+    }
+  });
 });
 
 app.listen(port, err => {

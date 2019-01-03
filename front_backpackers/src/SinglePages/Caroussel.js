@@ -25,16 +25,18 @@ const items = [
   }
 ];
 
-const Caroussel = () => (
+const Caroussel = (props) => (
   <Fragment>
     <UncontrolledCarousel items={items} />
-    <Row>
-      <Col xs="6" className="creatorFrame">
-        <img className="rounded-circle" src="https://via.placeholder.com/75" alt="Createur" />
-        <p className="frame-name pl-3 pr-1 d-inline-block  bg-white ">Paul.P</p>
-        <p className="d-inline-block text-white pr-1 pl-3">4.5<i className=" pl-1 fas fa-star"></i></p>
-      </Col>
-    </Row>
+    {props.activity ?
+      <Row>
+        <Col xs="6" className="creatorFrame">
+          <img className="rounded-circle" src="https://via.placeholder.com/75" alt="Createur" />
+          <p className="frame-name pl-3 pr-1 d-inline-block  bg-white ">Paul.P</p>
+          <p className="d-inline-block text-white pr-1 pl-3">4.5<i className=" pl-1 fas fa-star"></i></p>
+        </Col>
+      </Row>
+      : ""}
   </Fragment>
 );
 

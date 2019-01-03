@@ -61,12 +61,6 @@ class HomePage extends Component {
       .then(response => this.props.viewActivities(response.data));
   }
 
-  callApiActivity(idActivity) {
-    axios
-      .get(`/activity/${idActivity}`)
-      .then(response => this.props.viewActivity(response.data[0]));
-  }
-
   toggle() {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
