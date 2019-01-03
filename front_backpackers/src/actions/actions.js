@@ -9,13 +9,10 @@ import {
   CREATE_ACTIVITY,
   GET_GEOLOCATION,
   VIEW_ACTIVITY,
-<<<<<<< HEAD
   UPLOAD_FAIL,
-  UPLOAD_SUCCESS
-=======
+  UPLOAD_SUCCESS,
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES
->>>>>>> dev
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
