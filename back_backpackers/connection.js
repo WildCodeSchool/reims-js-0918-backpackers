@@ -6,13 +6,16 @@ const app = express();
 const port = 3010;
 const cors = require("cors");
 const passport = require("passport");
+const index = require("./auth/index");
 require("./passport/passport-strategy");
 
+app.use(express.static(__dirname + "/public"));
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/auth", auth);
+app.use("/", index);
 
 const currentUserId = 1;
 
@@ -194,18 +197,6 @@ app.get("/profile/favorite", (req, res) => {
       }
     }
   );
-});
-
-app.post("/upload", (req, res) => {
-  let uploadFile = req.files.file;
-  const fileName = req.files.file.name;
-  uploadFile.mv(`/public/files/${fileName}`, err => {
-    if (err) {
-      res.status(500).send("Erreur lors de l'upload");
-    } else {
-      res.json({ file: `public/${req.files.file.name}` });
-    }
-  });
 });
 
 app.listen(port, err => {
