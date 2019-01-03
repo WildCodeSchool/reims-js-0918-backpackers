@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import ActivityFormContainer from "./ActivityForm";
 
-class ActivityPage extends Component {
+class CreateActivityPage extends Component {
   submit = activities => {
-    const activity = activities;
+    const activity = { ...activities, id_place: this.props.match.params.id };
+    console.log(activity)
     JSON.stringify(activity);
     console.log("Bearer " + localStorage.getItem('token'))
     axios
@@ -17,4 +18,4 @@ class ActivityPage extends Component {
   }
 }
 
-export default ActivityPage;
+export default CreateActivityPage;
