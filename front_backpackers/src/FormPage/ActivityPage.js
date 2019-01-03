@@ -6,9 +6,12 @@ class ActivityPage extends Component {
   submit = activities => {
     const activity = activities;
     JSON.stringify(activity);
-    console.log("Bearer " + localStorage.getItem('token'))
+    console.log("Bearer " + localStorage.getItem("token"));
     axios
-      .post("http://localhost:3010/activities", activity, { headers: { "Authorization": "Bearer " + localStorage.getItem('token') } }).then(response => {
+      .post("http://localhost:3010/activities", activity, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+      })
+      .then(response => {
         this.props.history.push("/");
       });
   };

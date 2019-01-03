@@ -63,16 +63,6 @@ export const makeCreateActivityAction = () => ({
   type: CREATE_ACTIVITY
 });
 
-export const makeUploadSuccessAction = data => ({
-  type: UPLOAD_SUCCESS,
-  data
-});
-
-export const makeUploadFailAction = error => ({
-  type: UPLOAD_FAIL,
-  error
-});
-
 export const makeGetGeolocationAction = coords => ({
   type: GET_GEOLOCATION,
   coords

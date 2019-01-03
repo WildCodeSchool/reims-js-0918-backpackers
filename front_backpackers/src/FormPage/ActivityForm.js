@@ -98,7 +98,6 @@ const ActivityForm = props => {
               component={renderField}
               label="Prix"
             />
-            <Field name="picture" component="input" type="file" value="" />
           </div>
           <button type="submit" disabled={submitting} className="header cursor">
             Publier l'annonce
