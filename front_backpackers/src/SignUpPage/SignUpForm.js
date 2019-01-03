@@ -57,13 +57,6 @@ const SignUpForm = props => {
                   label="Date de naissance"
                 />
                 <Field
-                  id="adress"
-                  name="adress"
-                  component={renderField}
-                  type="text"
-                  label="Adresse"
-                />
-                <Field
                   id="mail"
                   name="mail"
                   component={renderField}
