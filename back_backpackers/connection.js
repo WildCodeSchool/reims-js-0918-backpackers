@@ -50,8 +50,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-        ? `SELECT * FROM places WHERE adress = "${adress}"`
-        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+      ? `SELECT * FROM places WHERE adress = "${adress}"`
+      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -93,8 +93,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-        ? `SELECT * FROM activities WHERE creator ="${creator}"`
-        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+      ? `SELECT * FROM activities WHERE creator ="${creator}"`
+      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -154,8 +154,9 @@ app.get("/activity/:id", (req, res) => {
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving activity");
-      } if (results.length < 1) {
-        res.status(404).send("This activity doesn't exist")
+      }
+      if (results.length < 1) {
+        res.status(404).send("This activity doesn't exist");
       } else {
         res.json(results);
       }
@@ -231,6 +232,18 @@ app.get("/profile/favorite", (req, res) => {
       }
     }
   );
+});
+
+app.post("/profile/signup", (req, res) => {
+  const formData = req.body;
+  connection.query("INSERT INTO users SET ?", formData, (err, results) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Failed to create an account");
+    } else {
+      res.sendStatus(200);
+    }
+  });
 });
 
 app.listen(port, err => {

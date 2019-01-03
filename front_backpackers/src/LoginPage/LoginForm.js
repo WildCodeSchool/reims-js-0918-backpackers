@@ -1,6 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Row, Col, Button } from "reactstrap";
+import { Link } from "react-router-dom";
 import "./Login.css";
 
 const validate = values => {
@@ -78,11 +79,13 @@ const LoginForm = props => {
         </Col>
       </Row>
       <Row>
-        <Col xs="12">
-          <p className="newAccount mt-5 text-center">
-            Je n'ai pas de compte.<a href="/">Créer un compte</a>
-          </p>
-        </Col>
+        <Link to="/signup">
+          <Col xs="12">
+            <p className="newAccount mt-5 text-white text-center">
+              Je n'ai pas de compte.<a href="/">Créer un compte</a>
+            </p>
+          </Col>
+        </Link>
       </Row>
     </div>
   );

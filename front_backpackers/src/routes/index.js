@@ -6,6 +6,7 @@ import LoginPage from "../LoginPage/LoginPage";
 import CreateActivityPage from "../FormPage/CreateActivityPage";
 import ProfileContainer from "../containers/ProfileContainer";
 import ActivityContainer from "../containers/ActivityContainer";
+import SignUpPage from "../SignUpPage/SignUpPage";
 import PlaceContainer from "../containers/PlaceContainer";
 
 const routes = (
@@ -16,6 +17,7 @@ const routes = (
       <Route path="/place/:id/newactivity" component={CreateActivityPage} />
       <Route path="/profil" component={ProfileContainer} />
       <Route path="/activity/:id" component={ActivityContainer} />
+      <Route path="/signup" component={SignUpPage} />
       <Route path="/place/:id" component={PlaceContainer} />
     </Switch>
   </Container>
