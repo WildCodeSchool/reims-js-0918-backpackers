@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Row, Col, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from 'classnames';
 
-class Details extends Component {
+class ActivityDetails extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
@@ -101,4 +101,4 @@ class Details extends Component {
   }
 
 };
-export default Details;
+export default ActivityDetails;

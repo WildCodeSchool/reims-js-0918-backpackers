@@ -6,7 +6,7 @@ import "./SinglePage.scss"
 
 const Header = (props) => (
   <Fragment>
-    <Row className="blueHeader mb-2">
+    <Row className="blueHeader mb-2 fixed-top px-4">
       <Col xs="3">
         <Link to="/">
           <i className="fas fa-chevron-left text-white" />
@@ -21,7 +21,7 @@ const Header = (props) => (
           <i className="far fa-heart text-white" />
         </p>
       </Col>
-    </Row>
-  </Fragment>
+    </Row >
+  </Fragment >
 );
 export default Header;
