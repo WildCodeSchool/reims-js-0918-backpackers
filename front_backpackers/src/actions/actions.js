@@ -10,7 +10,8 @@ import {
   GET_GEOLOCATION,
   VIEW_ACTIVITY,
   DISPLAY_PLACES,
-  DISPLAY_ACTIVITIES
+  DISPLAY_ACTIVITIES,
+  VIEW_PLACE
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
@@ -43,6 +44,11 @@ export const makeViewActivitiesAction = activities => ({
 export const makeViewActivityAction = activity => ({
   type: VIEW_ACTIVITY,
   activity
+});
+
+export const makeViewPlaceAction = place => ({
+  type: VIEW_PLACE,
+  place
 });
 
 export const makeFetchActivitiesAction = () => ({

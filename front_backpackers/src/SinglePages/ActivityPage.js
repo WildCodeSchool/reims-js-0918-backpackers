@@ -3,9 +3,9 @@ import axios from "axios";
 
 import Header from "./Header.js";
 import Caroussel from "./Caroussel";
-import Details from "./Details";
+import ActivityDetails from "./ActivityDetails";
 
-class SinglePage extends Component {
+class ActivityPage extends Component {
   componentDidMount() {
     axios
       .get(`/activity/${this.props.match.params.id}`)
@@ -17,10 +17,9 @@ class SinglePage extends Component {
       <Fragment>
         {this.props.activity.name ? (
           <Fragment>
-            {console.log(this.props.match.params.id)}
             <Header place={this.props.activity.city} />
             <Caroussel activity={this.props.activity} />
-            <Details activity={this.props.activity} />
+            <ActivityDetails activity={this.props.activity} />
           </Fragment>
         ) : (
           ""
@@ -30,4 +29,4 @@ class SinglePage extends Component {
   }
 }
 
-export default SinglePage;
+export default ActivityPage;
