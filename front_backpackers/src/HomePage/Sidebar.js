@@ -5,7 +5,8 @@ import { NavLink } from "react-router-dom";
 import "./Sidebar.scss";
 
 class Sidebar extends Component {
-  click() {
+  logOut() {
+    this.props.backdropClickHandler();
     localStorage.removeItem("BackpackersToken");
   }
 
@@ -34,47 +35,71 @@ class Sidebar extends Component {
           )}
           <div className="menu d-flex flex-column align-items-baseline align-self-baseline pt-3">
             <NavItem>
-              <NavLink to="/profil" className="pl-0 my-1">
+              <NavLink
+                onClick={() => this.props.backdropClickHandler()}
+                to="/profil"
+                className="pl-0 my-1"
+              >
                 <i className="mr-2 fas fa-user-alt" />
                 Profil
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/" className="pl-0 my-1">
+              <NavLink
+                onClick={() => this.props.backdropClickHandler()}
+                to="/"
+                className="pl-0 my-1"
+              >
                 {" "}
                 <i className="mr-2 far fa-comments" />
                 Messages
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/" className="pl-0 my-1">
+              <NavLink
+                onClick={() => this.props.backdropClickHandler()}
+                to="/"
+                className="pl-0 my-1"
+              >
                 {" "}
                 <i className="mr-2 far fa-calendar-alt" />
                 Calendrier
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/" className="pl-0 my-1">
+              <NavLink
+                onClick={() => this.props.backdropClickHandler()}
+                to="/"
+                className="pl-0 my-1"
+              >
                 {" "}
                 <i className="mr-2 far fa-heart" />
                 Coups de coeur
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/" className="pl-0 my-1">
+              <NavLink
+                onClick={() => this.props.backdropClickHandler()}
+                to="/"
+                className="pl-0 my-1"
+              >
                 <i className="mr-2 fas fa-wrench" />
                 Paramètres
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/" className="pl-0 my-1">
+              <NavLink
+                onClick={() => this.props.backdropClickHandler()}
+                to="/"
+                className="pl-0 my-1"
+              >
                 <i className="mr-2 fas fa-comment-alt" />
                 Demandes
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
-                onClick={this.click.bind(this)}
+                onClick={this.logOut.bind(this)}
                 to="/login"
                 className="pl-0 my-1"
               >
@@ -85,10 +110,14 @@ class Sidebar extends Component {
           </div>
           <div className="d-flex mb-2 flex-column mt-auto align-items-center">
             <NavItem>
-              <NavLink to="/">Mentions légales</NavLink>
+              <NavLink onClick={() => this.props.backdropClickHandler()} to="/">
+                Mentions légales
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/">CGU</NavLink>
+              <NavLink onClick={() => this.props.backdropClickHandler()} to="/">
+                CGU
+              </NavLink>
             </NavItem>
           </div>
         </Navbar>
