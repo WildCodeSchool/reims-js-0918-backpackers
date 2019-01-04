@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const connection = require("../conf");
+const tinify = require("tinify");
+tinify.key = process.env.TINIFY_API;
 
 const multer = require("multer");
 const upload = multer({
@@ -21,19 +23,14 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.post("/upload", upload.array("monfichier"), (req, res, next) => {
-  console.log(req.files);
   req.files.map(file =>
-    fs.rename(
-      file.path,
-      "../front_backpackers/src/images/" + file.originalname,
-      (err, results) => {
-        if (err) {
-          res.status(500).send(err);
-        } else {
-          res.json(results);
-        }
+    fs.rename(file.path, "../images/" + file.originalname, (err, results) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json(results);
       }
-    )
+    })
   );
 });
 
