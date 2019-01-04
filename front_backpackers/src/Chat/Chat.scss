@@ -1,2 +1,56 @@
-@import "../_styles.scss"
+@import "../_styles.scss";
 
+.chatList{
+  button{
+    background-color: $grayColor;
+    line-height: 40px;
+    border-radius: 20px;
+    color: #111;
+    font-size: 1rem;
+  }
+}
+
+.chatPage{
+  height: 100vh;
+  padding-top:45px;
+  .messageList{
+    flex: 1;
+    overflow: scroll; 
+    ul{
+      list-style: none;
+      padding-left: 0px;
+      .myMessage{
+        background-color: $grayColor;
+        border-radius: 20px 20px 20px 0;
+      }
+      .messageReceived{
+        background-color: $greenColor;
+        border-radius: 20px 20px 0 20px;
+        p{
+          word-break: break-all;
+        }
+      }
+    } 
+  }
+  form{
+    display:flex;
+    input[type=text]{
+      border: 2px solid $grayColor;
+      line-height: 30px;
+      border-radius: 15px;
+      flex:1;
+      &:focus{
+        outline:none;
+      }
+    }
+    button[type=submit]{
+      background-color: $greenColor;
+      width:30px;
+      height:30px;
+      font-size: 1.2rem;
+    }
+    &:focus{
+      outline:none;
+    }
+  }   
+}

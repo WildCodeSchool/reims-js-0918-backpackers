@@ -1,7 +1,9 @@
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import Chatkit from "@pusher/chatkit"
 import MessageList from "./MessageList";
 import SendMessageForm from "./SendMessageForm";
+import { Row, Col } from "reactstrap"
+import "./Chat.scss"
 
 class ChatScreen extends Component {
   constructor(props) {
@@ -29,7 +31,7 @@ class ChatScreen extends Component {
       .then(currentUser => {
         this.setState({ currentUser })
         return currentUser.subscribeToRoom({
-          roomId: 19594094,
+          roomId: this.props.currentChat.id,
           messageLimit: 100,
           hooks: {
             onNewMessage: message => {
@@ -75,10 +77,27 @@ class ChatScreen extends Component {
 
   render() {
     return (
-      <Fragment>
-        <MessageList messages={this.state.messages} />
-        <SendMessageForm onSubmit={this.sendMessage} onChange={this.sendTypingEvent} />
-      </Fragment>
+      <div className="d-flex flex-column">
+        <Row className="blueHeader fixed-top px-4">
+          <Col xs="3">
+            <button onClick={() => this.props.changeView()}>
+              <i className="fas fa-chevron-left text-white" />
+            </button>
+          </Col>
+          <Col xs="6">
+            <p className="text-white text-center mb-0">{this.props.currentChat.name}</p>
+          </Col>
+          <Col xs="3">
+          </Col>
+        </Row >
+        <Row>
+          <Col xs="12" className="d-flex flex-column chatPage">
+            <MessageList messages={this.state.messages} currentUser={this.state.currentUser} />
+            <SendMessageForm onSubmit={this.sendMessage} onChange={this.sendTypingEvent} />
+          </Col>
+        </Row>
+
+      </div>
     )
   }
 }

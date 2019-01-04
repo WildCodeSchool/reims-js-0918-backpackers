@@ -5,13 +5,18 @@ import ChatScreen from "./ChatScreen"
 import { Link } from "react-router-dom"
 import { Row, Col } from "reactstrap"
 
+import "./Chat.scss"
+
 class ChatList extends Component {
   constructor(props) {
     super(props)
     this.state = {
       currentScreen: "ChatList",
-      currentUser: {}
+      currentUser: {},
+      currentChat: {}
     }
+    this.viewChat = this.viewChat.bind(this)
+    this.viewChatList = this.viewChatList.bind(this)
   }
 
   componentDidMount() {
@@ -25,11 +30,6 @@ class ChatList extends Component {
             lastName: this.props.profile[0].lastName,
             firstName: this.props.profile[0].firstName
           })
-          // .then(response => {
-          //   this.setState({
-          //     currentScreen: "ChatScreen"
-          //   })
-          // })
           .catch(error => { console.log(error) })
       ))
       .then(() => {
@@ -48,43 +48,58 @@ class ChatList extends Component {
       })
   }
 
+  viewChat(room) {
+    this.setState({
+      currentScreen: "ChatScreen",
+      currentChat: {
+        id: room.id,
+        name: room.name
+      }
+    })
+  }
+
+  viewChatList() {
+    this.setState({
+      currentScreen: "ChatList"
+    })
+  }
+
   render() {
     return (
       <Fragment>
-        <Row className="blueHeader mb-2 fixed-top px-4">
-          <Col xs="3">
-            <Link to="/">
-              <i className="fas fa-chevron-left text-white" />
-            </Link>
-          </Col>
-          <Col xs="6">
-            <p className="text-white text-center mb-0">Mes conversations</p>
-          </Col>
-          <Col xs="3">
-            <p className="header-btn text-right text-primary pt-2 mb-0 d-flex justify-content-between">
-              <i className="fas fas fa-share-square text-white px-2" />
-              <i className="far fa-heart text-white" />
-            </p>
-          </Col>
-        </Row >
+
         {
           this.state.currentScreen === "ChatList" ?
-            <div>
-              {console.log("rrom", this.state.currentUser.rooms)}
-              {this.state.currentUser.rooms ?
-                this.state.currentUser.rooms.length === 0 ?
-                  <p>vous n'êtes inscrit à aucune activité</p>
-                  :
-                  this.state.currentUser.rooms.map((room, index) => (
-                    <button key={index}>
-                      {room.name}
-                    </button>
-                  )) : ""}
-
-
-            </div>
+            <Fragment>
+              <Row className="blueHeader fixed-top px-4">
+                <Col xs="3">
+                  <Link to="/">
+                    <i className="fas fa-chevron-left text-white" />
+                  </Link>
+                </Col>
+                <Col xs="6">
+                  <p className="text-white text-center mb-0">Mes conversations</p>
+                </Col>
+                <Col xs="3">
+                </Col>
+              </Row >
+              <div className="chatList pt-5">
+                {this.state.currentUser.rooms ?
+                  this.state.currentUser.rooms.length === 0 ?
+                    <p>vous n'êtes inscrit à aucune activité</p>
+                    :
+                    this.state.currentUser.rooms.map((room, index) => (
+                      <button onClick={() => this.viewChat(room)} key={index} className="my-2">
+                        {room.name}
+                      </button>
+                    )) : ""}
+                <div className="homeUnderline" />
+              </div>
+            </Fragment>
             : this.state.currentScreen === "ChatScreen" ?
-              <ChatScreen currentUsername={this.props.profile[0].mail} />
+              <ChatScreen currentUsername={this.props.profile[0].mail}
+                currentChat={this.state.currentChat} changeView={this.viewChatList}
+              />
               : ""
         }
       </Fragment >

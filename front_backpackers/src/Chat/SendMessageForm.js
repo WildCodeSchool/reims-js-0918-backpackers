@@ -1,4 +1,5 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
+import "./Chat.scss"
 
 class SendMessageForm extends Component {
   constructor(props) {
@@ -20,16 +21,20 @@ class SendMessageForm extends Component {
   onSubmit(e) {
     e.preventDefault()
     this.props.onSubmit(this.state.text)
+    this.setState({
+      text: ""
+    })
   }
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.onSubmit}>
-          <input onChange={this.onChange} type="text" placeholder="What is your text" />
-          <input type="submit" />
+      <Fragment>
+        <form className="mb-2" onSubmit={this.onSubmit}>
+          <input className="px-2 mr-2" value={this.state.text} onSubmit={() => console.log("lol")} onChange={this.onChange} type="text" placeholder="What is your text" />
+          <button className="rounded-circle" type="submit"><i className="fas w-100 fa-arrow-up"></i>
+          </button>
         </form>
-      </div>
+      </Fragment>
     )
   }
 }
