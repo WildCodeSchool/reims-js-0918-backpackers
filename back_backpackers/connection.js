@@ -7,12 +7,17 @@ const port = 3010;
 const cors = require("cors");
 const passport = require("passport");
 require("./passport/passport-strategy");
-
+const Chatkit = require("@pusher/chatkit-server")
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/auth", auth);
+
+const chatkit = new Chatkit.default({
+  instanceLocator: process.env.CHAT_INSTANCE_LOCATOR,
+  key: process.env.CHAT_SECRET_KEY
+})
 
 const currentUserId = 1;
 
@@ -50,8 +55,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-      ? `SELECT * FROM places WHERE adress = "${adress}"`
-      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+        ? `SELECT * FROM places WHERE adress = "${adress}"`
+        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -93,8 +98,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-      ? `SELECT * FROM activities WHERE creator ="${creator}"`
-      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+        ? `SELECT * FROM activities WHERE creator ="${creator}"`
+        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -245,6 +250,30 @@ app.post("/profile/signup", (req, res) => {
     }
   });
 });
+
+
+app.post('/users', (req, res) => {
+  chatkit.createUser({
+    name: `${req.body.firstName} ${req.body.lastName.charAt(0)}`,
+    id: req.body.mail
+  })
+    .then(() => res.sendStatus(201))
+    .catch(error => {
+      if (error.error === 'services/chatkit/user_already_exists') {
+        res.sendStatus(200)
+      } else {
+        res.status(error.statusCode).json(error)
+      }
+    })
+})
+
+app.post("/authenticate", (req, res) => {
+  const authData = chatkit.authenticate({
+    userId: req.query.user_id
+  })
+  res.status(authData.status).send(authData.body)
+})
+
 
 app.listen(port, err => {
   if (err) {

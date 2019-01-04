@@ -18,7 +18,7 @@ const Sidebar = ({ backdropClickHandler, show, picture, firstName, lastName, mai
           <NavLink to="/profil" className="pl-0 my-1"><i className="mr-2 fas fa-user-alt" />Profil</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink to="/" className="pl-0 my-1"> <i className="mr-2 far fa-comments" />Messages</NavLink>
+          <NavLink to="/chatlist" className="pl-0 my-1"> <i className="mr-2 far fa-comments" />Messages</NavLink>
         </NavItem>
         <NavItem>
           <NavLink to="/" className="pl-0 my-1"> <i className="mr-2 far fa-calendar-alt" />Calendrier</NavLink>
