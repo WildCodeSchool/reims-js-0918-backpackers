@@ -10,7 +10,8 @@ class LoginPage extends Component {
       .then(response => {
         localStorage.setItem("BackpackersToken", response.data.token);
         this.props.history.push("/");
-      });
+      })
+      .catch(results => console.error(results));
   };
   render() {
     return <LoginFormContainer onSubmit={this.submit} />;

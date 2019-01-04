@@ -18,8 +18,10 @@ passport.use(
         `SELECT id, mail, password FROM users WHERE mail = ?`,
         mail,
         (err, results) => {
-          let isSame = bcrypt.compareSync(password, results[0].password);
-          if (!isSame) {
+          if (
+            results.length < 1 ||
+            !bcrypt.compareSync(password, results[0].password)
+          ) {
             return cb(null, false, {
               message: "Incorrect mail or password. "
             });

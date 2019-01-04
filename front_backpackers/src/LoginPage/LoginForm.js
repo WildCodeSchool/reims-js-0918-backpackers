@@ -79,13 +79,11 @@ const LoginForm = props => {
         </Col>
       </Row>
       <Row>
-        <Link to="/signup">
-          <Col xs="12">
-            <p className="newAccount mt-5 text-white text-center">
-              Je n'ai pas de compte.<a href="/">Créer un compte</a>
-            </p>
-          </Col>
-        </Link>
+        <Col xs="12">
+          <p className="newAccount mt-5 text-white text-center">
+            Je n'ai pas de compte.<Link to="/signup">Créer un compte</Link>
+          </p>
+        </Col>
       </Row>
     </div>
   );

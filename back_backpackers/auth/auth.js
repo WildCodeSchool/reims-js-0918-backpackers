@@ -8,10 +8,8 @@ const connection = require("../conf");
 router.post("/login", function(req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
-      // console.log("error", err);
       return res.status(400).json({
-        message: "Something is not right",
-        user: user
+        message: "Something is not right"
       });
     }
     req.login(user, { session: false }, err => {
