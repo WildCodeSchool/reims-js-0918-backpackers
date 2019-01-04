@@ -20,21 +20,17 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.post("/upload", upload.array("monfichier"), (req, res, next) => {
-  console.log(req.files);
-  req.files.map(file =>
-    fs.rename(
-      file.path,
-      "front_backpackers/images/" + file.originalname,
-      err => {
-        if (err) {
-          res.send("problème durant le déplacement");
-        } else {
-          res.send("Fichier uploadé avec succès");
-        }
-      }
-    )
-  );
+router.post("/upload", upload.single("monfichier"), (req, res, next) => {
+  console.log(req.file);
+  // req.files.map(file =>
+  fs.rename(req.file.path, "/images/" + req.file.originalname, err => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send("Fichier uploadé avec succès");
+    }
+  });
+  // );
 });
 
 module.exports = router;
