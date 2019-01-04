@@ -8,9 +8,10 @@ class LoginPage extends Component {
     axios
       .post("/auth/login", { mail: log.mail, password: log.password })
       .then(response => {
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("BackpackersToken", response.data.token);
         this.props.history.push("/");
-      });
+      })
+      .catch(results => console.error(results));
   };
   render() {
     return <LoginFormContainer onSubmit={this.submit} />;
