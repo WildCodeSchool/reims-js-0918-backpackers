@@ -57,13 +57,6 @@ const SignUpForm = props => {
                   label="Date de naissance"
                 />
                 <Field
-                  id="adress"
-                  name="adress"
-                  component={renderField}
-                  type="text"
-                  label="Adresse"
-                />
-                <Field
                   id="mail"
                   name="mail"
                   component={renderField}
@@ -91,13 +84,11 @@ const SignUpForm = props => {
           </Col>
         </Row>
         <Row>
-          <Link to="/login">
-            <Col xs="12">
-              <p className="account mt-5 text-center text-white">
-                J'ai déjà un compte.<a href="/">Se connecter</a>
-              </p>
-            </Col>
-          </Link>
+          <Col xs="12">
+            <p className="Account mt-5 text-center text-white">
+              J'ai déjà un compte.<Link to="/login">Se connecter</Link>
+            </p>
+          </Col>
         </Row>
       </Fragment>
     </div>
