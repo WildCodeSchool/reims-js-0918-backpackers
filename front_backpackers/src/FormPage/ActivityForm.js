@@ -93,7 +93,7 @@ const ActivityForm = props => {
             />
           </div>
           <button type="submit" disabled={submitting} className="mt-3 postBtn">
-            Publier l'annonce
+            Etape 2
           </button>
         </form>
       </div>

@@ -1,13 +1,18 @@
 import React, { Component } from "react";
+import { Button } from "reactstrap";
 import axios from "axios";
 
 class UploadFiles extends Component {
   sendPictures() {
-    axios.post("/upload", {
-      headers: new Headers({
-        "Content-Type": "application/json"
+    axios
+      .post("/upload", {
+        headers: new Headers({
+          "Content-Type": "application/json"
+        })
       })
-    });
+      .then(response => {
+        this.props.history.push("/");
+      });
   }
 
   render() {
@@ -20,7 +25,7 @@ class UploadFiles extends Component {
           onSubmit={() => this.sendPictures()}
         >
           <input accept="image/png" type="file" name="monfichier" multiple />
-          <button>Envoyer</button>
+          <Button>Envoyer</Button>
         </form>
       </div>
     );
