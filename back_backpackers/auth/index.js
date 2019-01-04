@@ -24,13 +24,17 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.post("/upload", upload.array("monfichier"), (req, res, next) => {
   req.files.map(file =>
-    fs.rename(file.path, "../images/" + file.originalname, (err, results) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.json(results);
+    fs.rename(
+      file.path,
+      "public/images/" + file.originalname,
+      (err, results) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.json(results);
+        }
       }
-    })
+    )
   );
 });
 
