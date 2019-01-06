@@ -13,24 +13,27 @@ class Routes extends Component {
   render() {
     return (
       <Container fluid>
-        <Switch>
-          <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={SignUpPage} />
-          <Route exact path="/" component={HomePageContainer} />
-          <Route path="/activity/:id" component={ActivityContainer} />
-          <Route path="/place/:id" component={PlaceContainer} />
-          {!localStorage.getItem('BackpackersToken') ?
-            <Fragment>
-              <Redirect from="/place/:id/newactivity" to="/login" />
-              <Redirect from="/profil" to="/login" />
-            </Fragment>
-            :
-            <Fragment>
-              <Route path="/place/:id/newactivity" component={CreateActivityPage} />
-              <Route path="/profil" component={ProfileContainer} />
-            </Fragment>
-          }
-        </Switch>
+        {localStorage.getItem('BackpackersToken') ?
+          <Switch>
+            <Route path="/login" component={LoginPage} />
+            <Route path="/signup" component={SignUpPage} />
+            <Route exact path="/" component={HomePageContainer} />
+            <Route path="/activity/:id" component={ActivityContainer} />
+            <Route path="/place/:id" component={PlaceContainer} />
+            <Route path="/place/:id/newactivity" component={CreateActivityPage} />
+            <Route path="/profil" component={ProfileContainer} />
+          </Switch>
+          :
+          <Switch>
+            <Route path="/login" component={LoginPage} />
+            <Route path="/signup" component={SignUpPage} />
+            <Route exact path="/" component={HomePageContainer} />
+            <Route path="/activity/:id" component={ActivityContainer} />
+            <Route path="/place/:id" component={PlaceContainer} />
+            <Redirect from="/place/:id/newactivity" to="/login" />
+            <Redirect from="/profil" to="/login" />
+          </Switch>
+        }
       </Container>
     )
   }

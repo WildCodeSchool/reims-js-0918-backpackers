@@ -6,7 +6,7 @@ import { ConnectedRouter } from "connected-react-router";
 import "./App.css";
 
 const App = ({ history }) => {
-  return <ConnectedRouter history={history}><Routes/></ConnectedRouter>;
+  return <ConnectedRouter history={history}><Routes /></ConnectedRouter>;
 };
 
 App.propTypes = {
