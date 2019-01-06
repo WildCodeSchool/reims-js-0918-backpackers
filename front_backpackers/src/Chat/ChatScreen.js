@@ -4,6 +4,8 @@ import MessageList from "./MessageList";
 import SendMessageForm from "./SendMessageForm";
 import { Row, Col } from "reactstrap"
 import "./Chat.scss"
+import TypingIndicator from "./UserWhoAreTyping";
+import UsersList from "./UsersList";
 
 class ChatScreen extends Component {
   constructor(props) {
@@ -12,10 +14,12 @@ class ChatScreen extends Component {
       messages: [],
       currentRoom: {},
       currentUser: {},
-      userWhoAreTyping: []
+      userWhoAreTyping: [],
+      collapsed: false
     }
     this.sendMessage = this.sendMessage.bind(this)
     this.sendTypingEvent = this.sendTypingEvent.bind(this)
+    this.toggleNavbar = this.toggleNavbar.bind(this)
   }
 
   componentDidMount() {
@@ -75,6 +79,13 @@ class ChatScreen extends Component {
       .catch(error => console.error("error", error))
   }
 
+  toggleNavbar() {
+    this.setState({
+      collapsed: !this.state.collapsed
+    });
+  }
+
+
   render() {
     return (
       <div className="d-flex flex-column">
@@ -88,11 +99,19 @@ class ChatScreen extends Component {
             <p className="text-white text-center mb-0">{this.props.currentChat.name}</p>
           </Col>
           <Col xs="3">
+            <button onClick={() => this.toggleNavbar()}>
+              <i className="fas fa-users"></i>
+            </button>
           </Col>
         </Row >
         <Row>
           <Col xs="12" className="d-flex flex-column chatPage">
+            <UsersList
+              users={this.state.currentRoom.users}
+              show={this.state.collapsed}
+              backdropClickHandler={this.toggleNavbar} />
             <MessageList messages={this.state.messages} currentUser={this.state.currentUser} />
+            <TypingIndicator userWhoAreTyping={this.state.userWhoAreTyping} />
             <SendMessageForm onSubmit={this.sendMessage} onChange={this.sendTypingEvent} />
           </Col>
         </Row>

@@ -3,14 +3,12 @@ import { Col } from "reactstrap"
 
 class MessageList extends Component {
   componentDidUpdate() {
-    // I was not using an li but may work to keep your div scrolled to the bottom as li's are getting pushed to the div
     const chatScroll = document.getElementById('test');
     chatScroll.scrollTop = chatScroll.scrollHeight;
   }
   render() {
     return (
       <div id="test" className="messageList">
-        {console.log(this.props.messages)}
         <ul>
           {!this.props.messages ?
             <i className="fas fa-spinner fa-spin" />
