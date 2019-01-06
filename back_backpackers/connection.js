@@ -135,7 +135,15 @@ app.post(
           res.status(500).send("Failed to add activity");
           console.log(err);
         } else {
-          res.sendStatus(200);
+          chatkit.createRoom({
+            creatorId: req.user.mail,
+            name: req.body.name
+          })
+            .then((response) => {
+              res.status(200).send(response);
+            }).catch((err) => {
+              res.status(400).send(err);
+            });
         }
       }
     );
@@ -145,16 +153,16 @@ app.post(
 app.get("/activity/:id", (req, res) => {
   const idActivity = req.params.id;
   connection.query(
-    `SELECT idActivity, activities.name, id_creator, activities.price, 
-    activities.capacity, (activities.picture) AS pictureActivity, 
-    (activities.description) AS descriptionActivity, id_place, 
-    activities.contact, date, id, country, city, 
-    address, type, (places.description) AS descriptionPlace, 
-    (places.picture) AS picturePlace 
+    `SELECT idActivity, activities.name, id_creator, activities.price,
+            activities.capacity, (activities.picture) AS pictureActivity,
+            (activities.description) AS descriptionActivity, id_place,
+            activities.contact, date, id, country, city,
+            address, type, (places.description) AS descriptionPlace,
+            (places.picture) AS picturePlace 
     FROM activities 
     JOIN places 
     ON activities.id_place = places.id
-    WHERE idActivity=?`,
+    WHERE idActivity =? `,
     idActivity,
     (err, results) => {
       if (err) {
@@ -172,7 +180,7 @@ app.get("/activity/:id", (req, res) => {
 app.get("/place/:id", (req, res) => {
   const idPlace = req.params.id;
   connection.query(
-    `SELECT * FROM places WHERE id=?`,
+    `SELECT * FROM places WHERE id =? `,
     idPlace,
     (err, results) => {
       if (err) {
@@ -183,16 +191,16 @@ app.get("/place/:id", (req, res) => {
       } else {
         // res.json(results);
         connection.query(
-          `SELECT idActivity, activities.name, id_creator, activities.price, 
-          activities.capacity, (activities.picture) AS pictureActivity, 
-          (activities.description) AS descriptionActivity, id_place, 
-          activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
-          address, type, (places.description) AS descriptionPlace, 
-          (places.picture) AS picturePlace 
+          `SELECT idActivity, activities.name, id_creator, activities.price,
+            activities.capacity, (activities.picture) AS pictureActivity,
+            (activities.description) AS descriptionActivity, id_place,
+            activities.contact, date, DATEDIFF(date, CURRENT_TIMESTAMP) as date_diff, id, country, city,
+            address, type, (places.description) AS descriptionPlace,
+            (places.picture) AS picturePlace 
           FROM activities 
           JOIN places 
           ON activities.id_place = places.id
-          WHERE id_place = ?`,
+          WHERE id_place = ? `,
           idPlace,
           (err, actiResults) => {
             if (err) {
@@ -275,6 +283,17 @@ app.post("/authenticate", (req, res) => {
   res.status(authData.status).send(authData.body)
 })
 
+app.post('/newroom', (req, res) => {
+  chatkit.createRoom({
+    creatorId: req.body.userId,
+    name: req.body.name
+  })
+    .then((response) => {
+      res.status(200).send(response);
+    }).catch((err) => {
+      res.status(400).send(err);
+    });
+})
 
 app.listen(port, err => {
   if (err) {
