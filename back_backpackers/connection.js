@@ -50,8 +50,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-      ? `SELECT * FROM places WHERE adress = "${adress}"`
-      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+        ? `SELECT * FROM places WHERE adress = "${adress}"`
+        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -93,8 +93,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-      ? `SELECT * FROM activities WHERE creator ="${creator}"`
-      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+        ? `SELECT * FROM activities WHERE creator ="${creator}"`
+        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -203,14 +203,14 @@ app.get("/place/:id", (req, res) => {
   );
 });
 
-app.get("/profile", (req, res) => {
+app.get("/profile", passport.authenticate("jwt", { session: false }), (req, res) => {
   connection.query(
     // `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies,
     // historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,
     // id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date
     // FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?`,
     "SELECT * FROM users WHERE id=?",
-    currentUserId,
+    req.user.id,
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving profile");
