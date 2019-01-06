@@ -47,7 +47,7 @@ class Sidebar extends Component {
             <NavItem>
               <NavLink
                 onClick={() => this.props.backdropClickHandler()}
-                to="/"
+                to="/chatlist"
                 className="pl-0 my-1"
               >
                 {" "}
