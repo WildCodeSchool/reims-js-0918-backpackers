@@ -67,7 +67,6 @@ class ChatList extends Component {
   render() {
     return (
       <Fragment>
-
         {
           this.state.currentScreen === "ChatList" ?
             <Fragment>
@@ -92,7 +91,7 @@ class ChatList extends Component {
                       <button onClick={() => this.viewChat(room)} key={index} className="my-2">
                         {room.name}
                       </button>
-                    )) : ""}
+                    )) : <i className="fas fa-spinner fa-spin"></i>}
                 <div className="homeUnderline" />
               </div>
             </Fragment>
