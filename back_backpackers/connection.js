@@ -240,7 +240,6 @@ app.get("/profile/favorite", (req, res) => {
   );
 });
 
-<<<<<<< HEAD
 app.post("/profile/signup", (req, res) => {
   const formData = req.body;
   connection.query("INSERT INTO users SET ?", formData, (err, results) => {
@@ -277,8 +276,6 @@ app.post("/authenticate", (req, res) => {
 })
 
 
-=======
->>>>>>> 28ba11379b97c9676bf428df0c5cade676add72b
 app.listen(port, err => {
   if (err) {
     throw new Error("Something bad happened ...");
