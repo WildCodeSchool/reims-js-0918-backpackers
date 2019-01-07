@@ -8,6 +8,7 @@ import ProfileContainer from "../containers/ProfileContainer";
 import ActivityContainer from "../containers/ActivityContainer";
 import SignUpPage from "../SignUpPage/SignUpPage";
 import PlaceContainer from "../containers/PlaceContainer";
+import ChatContainer from "../containers/ChatContainer";
 
 const routes = (
   <Container fluid>
@@ -19,6 +20,7 @@ const routes = (
       <Route path="/activity/:id" component={ActivityContainer} />
       <Route path="/signup" component={SignUpPage} />
       <Route path="/place/:id" component={PlaceContainer} />
+      <Route path="/chatlist" component={ChatContainer} />
     </Switch>
   </Container>
 );
