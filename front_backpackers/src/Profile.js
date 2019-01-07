@@ -9,7 +9,12 @@ import "./Profile.scss";
 class Profile extends Component {
   componentDidMount() {
     axios
-      .get("/profile")
+      .get("/profile", {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
       .then(response => this.props.viewProfile(response.data));
   }
 
