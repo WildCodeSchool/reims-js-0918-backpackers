@@ -36,18 +36,11 @@ const SignUpForm = props => {
             <form onSubmit={handleSubmit}>
               <div className="formBack">
                 <Field
-                  id="lastName"
-                  name="lastName"
+                  id="username"
+                  name="username"
                   component={renderField}
                   type="text"
-                  label="Nom"
-                />
-                <Field
-                  id="firstName"
-                  name="firstName"
-                  component={renderField}
-                  type="text"
-                  label="Prénom"
+                  label="Pseudonyme"
                 />
                 <Field
                   id="birthDate"
