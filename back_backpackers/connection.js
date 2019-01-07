@@ -10,7 +10,7 @@ const index = require("./auth/index");
 require("./passport/passport-strategy");
 
 app.use(express.static(__dirname + "/public"));
-const Chatkit = require("@pusher/chatkit-server")
+const Chatkit = require("@pusher/chatkit-server");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,7 +21,7 @@ app.use("/", index);
 const chatkit = new Chatkit.default({
   instanceLocator: process.env.CHAT_INSTANCE_LOCATOR,
   key: process.env.CHAT_SECRET_KEY
-})
+});
 
 const currentUserId = 1;
 
@@ -59,8 +59,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-        ? `SELECT * FROM places WHERE adress = "${adress}"`
-        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+      ? `SELECT * FROM places WHERE adress = "${adress}"`
+      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -102,8 +102,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-        ? `SELECT * FROM activities WHERE creator ="${creator}"`
-        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+      ? `SELECT * FROM activities WHERE creator ="${creator}"`
+      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -139,15 +139,34 @@ app.post(
           res.status(500).send("Failed to add activity");
           console.log(err);
         } else {
-          chatkit.createRoom({
-            creatorId: req.user.mail,
-            name: req.body.name
-          })
-            .then((response) => {
+          chatkit
+            .createRoom({
+              creatorId: req.user.mail,
+              name: req.body.name
+            })
+            .then(response => {
               res.status(200).send(response);
-            }).catch((err) => {
+            })
+            .catch(err => {
               res.status(400).send(err);
             });
+        }
+      }
+    );
+  }
+);
+
+app.post(
+  "/participate/:idActivity",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      "INSERT INTO participation SET ?",
+      { idActivity: req.params.idActivity, idUser: req.user.id },
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Failed to participate to an activity");
+          console.log(err);
         }
       }
     );
@@ -220,23 +239,27 @@ app.get("/place/:id", (req, res) => {
   );
 });
 
-app.get("/profile", passport.authenticate("jwt", { session: false }), (req, res) => {
-  connection.query(
-    // `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies,
-    // historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,
-    // id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date
-    // FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?`,
-    "SELECT * FROM users WHERE id=?",
-    req.user.id,
-    (err, results) => {
-      if (err) {
-        res.status(500).send("Error retrieving profile");
-      } else {
-        res.json(results);
+app.get(
+  "/profile",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      // `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies,
+      // historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,
+      // id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date
+      // FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?`,
+      "SELECT * FROM users WHERE id=?",
+      req.user.id,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Error retrieving profile");
+        } else {
+          res.json(results);
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 app.get("/profile/favorite", (req, res) => {
   connection.query(
@@ -264,40 +287,42 @@ app.post("/profile/signup", (req, res) => {
   });
 });
 
-
-app.post('/users', (req, res) => {
-  chatkit.createUser({
-    name: `${req.body.firstName} ${req.body.lastName.charAt(0)}`,
-    id: req.body.mail
-  })
+app.post("/users", (req, res) => {
+  chatkit
+    .createUser({
+      name: `${req.body.firstName} ${req.body.lastName.charAt(0)}`,
+      id: req.body.mail
+    })
     .then(() => res.sendStatus(201))
     .catch(error => {
-      if (error.error === 'services/chatkit/user_already_exists') {
-        res.sendStatus(200)
+      if (error.error === "services/chatkit/user_already_exists") {
+        res.sendStatus(200);
       } else {
-        res.status(error.statusCode).json(error)
+        res.status(error.statusCode).json(error);
       }
-    })
-})
+    });
+});
 
 app.post("/authenticate", (req, res) => {
   const authData = chatkit.authenticate({
     userId: req.query.user_id
-  })
-  res.status(authData.status).send(authData.body)
-})
+  });
+  res.status(authData.status).send(authData.body);
+});
 
-app.post('/newroom', (req, res) => {
-  chatkit.createRoom({
-    creatorId: req.body.userId,
-    name: req.body.name
-  })
-    .then((response) => {
+app.post("/newroom", (req, res) => {
+  chatkit
+    .createRoom({
+      creatorId: req.body.userId,
+      name: req.body.name
+    })
+    .then(response => {
       res.status(200).send(response);
-    }).catch((err) => {
+    })
+    .catch(err => {
       res.status(400).send(err);
     });
-})
+});
 
 app.listen(port, err => {
   if (err) {
