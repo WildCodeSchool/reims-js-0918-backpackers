@@ -40,7 +40,7 @@ const SignUpForm = props => {
                   name="username"
                   component={renderField}
                   type="text"
-                  label="Pseudo"
+                  label="Pseudonyme"
                 />
                 <Field
                   id="birthDate"
