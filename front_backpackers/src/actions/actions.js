@@ -31,8 +31,7 @@ export const makeFetchPlacesAction = () => ({
   type: FETCH_PLACES
 });
 
-
-export const makeViewProfileAction = (profile) => ({
+export const makeViewProfileAction = profile => ({
   type: VIEW_PROFILE,
   profile
 });
@@ -41,7 +40,6 @@ export const makeViewActivitiesAction = activities => ({
   type: VIEW_ACTIVITIES,
   activities
 });
-
 
 export const makeViewActivityAction = activity => ({
   type: VIEW_ACTIVITY,
@@ -69,9 +67,7 @@ export const makeCreateActivityAction = () => ({
   type: CREATE_ACTIVITY
 });
 
-
-
-export const makeGetGeolocationAction = (coords) => ({
+export const makeGetGeolocationAction = coords => ({
   type: GET_GEOLOCATION,
   coords
 });

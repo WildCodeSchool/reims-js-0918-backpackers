@@ -6,13 +6,17 @@ const app = express();
 const port = 3010;
 const cors = require("cors");
 const passport = require("passport");
+const index = require("./auth/index");
 require("./passport/passport-strategy");
+
+app.use(express.static(__dirname + "/public"));
 const Chatkit = require("@pusher/chatkit-server")
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/auth", auth);
+app.use("/", index);
 
 const chatkit = new Chatkit.default({
   instanceLocator: process.env.CHAT_INSTANCE_LOCATOR,
@@ -216,14 +220,14 @@ app.get("/place/:id", (req, res) => {
   );
 });
 
-app.get("/profile", (req, res) => {
+app.get("/profile", passport.authenticate("jwt", { session: false }), (req, res) => {
   connection.query(
     // `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies,
     // historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,
     // id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date
     // FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?`,
     "SELECT * FROM users WHERE id=?",
-    currentUserId,
+    req.user.id,
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving profile");
