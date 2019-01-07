@@ -47,7 +47,12 @@ class HomePage extends Component {
 
   callApiProfile() {
     axios
-      .get("/profile")
+      .get("/profile", {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
       .then(response => this.props.viewProfile(response.data));
   }
 
@@ -166,10 +171,7 @@ class HomePage extends Component {
               >
                 Rechercher <i className="fas fa-search-location" />
               </Link>
-              <Link
-                to="/activities"
-                className="w-50 listPostBtn text-white text-center"
-              >
+              <Link to="/" className="w-50 listPostBtn text-white text-center">
                 <i className="fas fa-pencil-alt" /> Publier{" "}
               </Link>
             </Row>

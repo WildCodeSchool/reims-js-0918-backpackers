@@ -31,8 +31,8 @@ class Sidebar extends Component {
               <p>{this.props.mail}</p>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
           <div className="menu d-flex flex-column align-items-baseline align-self-baseline pt-3">
             <NavItem>
               <NavLink
@@ -47,7 +47,7 @@ class Sidebar extends Component {
             <NavItem>
               <NavLink
                 onClick={() => this.props.backdropClickHandler()}
-                to="/"
+                to="/chatlist"
                 className="pl-0 my-1"
               >
                 {" "}

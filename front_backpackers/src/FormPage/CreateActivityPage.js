@@ -5,12 +5,16 @@ import ActivityFormContainer from "./ActivityForm";
 class CreateActivityPage extends Component {
   submit = activities => {
     const activity = { ...activities, id_place: this.props.match.params.id };
-    console.log(activity)
+    console.log(activity);
     JSON.stringify(activity);
-    console.log("Bearer " + localStorage.getItem('token'))
     axios
-      .post("http://localhost:3010/activities", activity, { headers: { "Authorization": "Bearer " + localStorage.getItem('token') } }).then(response => {
-        this.props.history.push("/");
+      .post("http://localhost:3010/activities", activity, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response => {
+        this.props.history.push("/upload");
       });
   };
   render() {
