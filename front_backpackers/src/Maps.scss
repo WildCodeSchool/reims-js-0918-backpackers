@@ -5,10 +5,12 @@
   z-index: 0;
 }
 
-.leaflet-popup{
+.mapPopup{
   display: block;
-  width: 100vh;
-  height: 100px;
   position: absolute;
   bottom: 0;
+  z-index:100;
+  .media{
+    margin: 0px;
+  }
 }
