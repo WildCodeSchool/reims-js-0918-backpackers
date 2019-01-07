@@ -14,7 +14,7 @@ const Chatkit = require("@pusher/chatkit-server");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public/images"));
+app.use(express.static("public"));
 app.use("/auth", auth);
 app.use("/", index);
 
@@ -150,6 +150,7 @@ app.post(
             .catch(err => {
               res.status(400).send(err);
             });
+          res.sendStatus(200);
         }
       }
     );

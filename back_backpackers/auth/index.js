@@ -30,9 +30,19 @@ router.post("/upload", upload.array("monfichier"), (req, res, next) => {
       (err, results) => {
         if (err) {
           res.status(500).send(err);
-        } else {
-          res.json(results);
         }
+        connection.query(
+          `UPDATE activities SET picture = "${
+            file.originalname
+          }" WHERE idActivity = (SELECT LAST_INSERT_ID())`,
+          err => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.sendStatus(200);
+            }
+          }
+        );
       }
     )
   );
