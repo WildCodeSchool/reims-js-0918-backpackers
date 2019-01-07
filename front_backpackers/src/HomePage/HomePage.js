@@ -47,7 +47,12 @@ class HomePage extends Component {
 
   callApiProfile() {
     axios
-      .get("/profile")
+      .get("/profile", {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
       .then(response => this.props.viewProfile(response.data));
   }
 
