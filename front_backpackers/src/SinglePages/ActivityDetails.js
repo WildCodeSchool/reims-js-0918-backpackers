@@ -9,6 +9,7 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
+import { Link } from "react-router-dom";
 import classnames from "classnames";
 
 class ActivityDetails extends Component {
@@ -40,7 +41,9 @@ class ActivityDetails extends Component {
           }
         }
       )
-      .then(response => console.log(response.data));
+      .then(response => {
+        this.props.history.push("/");
+      });
   }
 
   render() {
@@ -133,13 +136,15 @@ class ActivityDetails extends Component {
         </TabContent>
 
         <div className="participate">
-          <button
-            onClick={this.activeParticipation.bind(this)}
-            type="button"
-            className="btn"
-          >
-            Participer
-          </button>
+          <Link to="/">
+            <button
+              onClick={this.activeParticipation.bind(this)}
+              type="button"
+              className="btn"
+            >
+              Participer
+            </button>
+          </Link>
         </div>
       </Fragment>
     );
