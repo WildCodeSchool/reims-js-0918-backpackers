@@ -160,8 +160,6 @@ app.post(
   "/participate/:idActivity",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("allo", req.user.id);
-    console.log("coucou", req.params.idActivity);
     connection.query(
       "INSERT INTO participation SET ?",
       { idActivity: req.params.idActivity, idUser: req.user.id },
