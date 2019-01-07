@@ -1,20 +1,28 @@
 import React from "react";
 import { Route, Switch } from "react-router";
 import { Container } from "reactstrap";
-import HomePageContainer from "../containers/HomepageContainer";
+import HomePage from "../containers/HomepageContainer";
+import UploadFiles from "../FormPage/UploadFiles";
 import LoginPage from "../LoginPage/LoginPage";
-import ActivityPage from "../FormPage/ActivityPage";
+import CreateActivityPage from "../FormPage/CreateActivityPage";
 import ProfileContainer from "../containers/ProfileContainer";
 import ActivityContainer from "../containers/ActivityContainer";
+import SignUpPage from "../SignUpPage/SignUpPage";
+import PlaceContainer from "../containers/PlaceContainer";
+import ChatContainer from "../containers/ChatContainer";
 
 const routes = (
   <Container fluid>
     <Switch>
-      <Route exact path="/" component={HomePageContainer} />
+      <Route exact path="/" component={HomePage} />
       <Route path="/login" component={LoginPage} />
-      <Route path="/activities" component={ActivityPage} />
+      <Route path="/place/:id/newactivity" component={CreateActivityPage} />
       <Route path="/profil" component={ProfileContainer} />
-      <Route path="/activity" component={ActivityContainer} />
+      <Route path="/activity/:id" component={ActivityContainer} />
+      <Route path="/signup" component={SignUpPage} />
+      <Route path="/place/:id" component={PlaceContainer} />
+      <Route path="/upload" component={UploadFiles} />
+      <Route path="/chatlist" component={ChatContainer} />
     </Switch>
   </Container>
 );

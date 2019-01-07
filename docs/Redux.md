@@ -9,11 +9,31 @@
 ```javascript
   {
     type: VIEW_ACTIVITY
-    activity: [...]
+    activity: [}
+  }
+```
+- DISPLAY_ACTIVITIES
+```javascript
+  {
+    type: DISPLAY_ACTIVITIES
+  }
+```
+  
+- DISPLAY_PLACES
+```javascript
+  {
+    type: DISPLAY_PLACES
   }
 ```
 
+
 - VIEW_PLACE
+```javascript
+  {
+    type: VIEW_PLACE
+    place: {}
+  }
+```
 
 - FETCH_ACTIVITIES is dispatched when we call the api
 - VIEW_ACTIVITIES is dispatched when we receive the api response
@@ -48,6 +68,15 @@
 
 ## Reducers
 
+-homePageReducer
+
+```javascript
+  const initialState: "places"
+```
+
+When DISPLAY_PLACES is dispatched, state becomes places
+When DISPLAY_ACTIVITIES is dispatched, state becomes activities
+
 -placesReducer
 
 ```javascript
@@ -63,6 +92,11 @@ When VIEW_PLACES is dispatched, state becomes action.places
 ```
 
 -activityReducer
+```javascript
+  const initialState: {}
+```
+
+-placeReducer
 ```javascript
   const initialState: {}
 ```

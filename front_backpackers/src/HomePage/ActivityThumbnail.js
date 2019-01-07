@@ -4,6 +4,7 @@ import { Row, Col, Media, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const ActivityThumbnail = ({
+  idActivity,
   city,
   name,
   descriptionActivity,
@@ -11,7 +12,8 @@ const ActivityThumbnail = ({
   pictureActivity,
   picturePlace,
   price,
-  viewActivity
+  viewActivity,
+  date_diff
 }) => (
     <Row>
       <Col xs="12">
@@ -32,12 +34,12 @@ const ActivityThumbnail = ({
               </span>
               <span>
                 <i className="fas fa-calendar pr-1" />
-                {name}
+                <span className={"timeLeft" + (date_diff <= 2 ? " text-danger" : date_diff < 7 ? " text-warning" : " text-success")}>{date_diff}</span> jours restants
               </span>
             </Media>
             {descriptionActivity ? descriptionActivity : descriptionPlace}
             <div className="d-flex align-items-end justify-content-between mt-auto">
-              <Link to="/activity">
+              <Link to={`/activity/${idActivity}`}>
                 <Button onClick={viewActivity} className="seeItem">Voir</Button>
               </Link>
               <span className="itemListPrice pr-2">

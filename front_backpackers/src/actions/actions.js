@@ -8,8 +8,19 @@ import {
   CLOSE_MENU,
   CREATE_ACTIVITY,
   GET_GEOLOCATION,
-  VIEW_ACTIVITY
+  VIEW_ACTIVITY,
+  DISPLAY_PLACES,
+  DISPLAY_ACTIVITIES,
+  VIEW_PLACE
 } from "./actionTypes";
+
+export const makeDisplayPlacesAction = () => ({
+  type: DISPLAY_PLACES
+});
+
+export const makeDisplayActivitiesAction = () => ({
+  type: DISPLAY_ACTIVITIES
+});
 
 export const makeViewPlacesAction = places => ({
   type: VIEW_PLACES,
@@ -20,8 +31,7 @@ export const makeFetchPlacesAction = () => ({
   type: FETCH_PLACES
 });
 
-
-export const makeViewProfileAction = (profile) => ({
+export const makeViewProfileAction = profile => ({
   type: VIEW_PROFILE,
   profile
 });
@@ -31,10 +41,14 @@ export const makeViewActivitiesAction = activities => ({
   activities
 });
 
-
 export const makeViewActivityAction = activity => ({
   type: VIEW_ACTIVITY,
   activity
+});
+
+export const makeViewPlaceAction = place => ({
+  type: VIEW_PLACE,
+  place
 });
 
 export const makeFetchActivitiesAction = () => ({
@@ -53,9 +67,7 @@ export const makeCreateActivityAction = () => ({
   type: CREATE_ACTIVITY
 });
 
-
-
-export const makeGetGeolocationAction = (coords) => ({
+export const makeGetGeolocationAction = coords => ({
   type: GET_GEOLOCATION,
   coords
 });

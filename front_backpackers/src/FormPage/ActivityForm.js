@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
-import "./FormPage.css";
+import "./FormPage.scss";
 
 const validate = values => {
   const errors = {};
@@ -33,7 +33,7 @@ const ActivityForm = props => {
 
   return (
     <Fragment>
-      <Row className="header">
+      <Row className="greenHeader text-white">
         <Col xs="2">
           <Link to="/" className="price text-primary">
             <i className="fas fa-chevron-left text-white" />
@@ -43,7 +43,7 @@ const ActivityForm = props => {
           <p className="text-center mb-0">Publier une annonce</p>
         </Col>
       </Row>
-      <h5 className="text-center publicationUnderline">Votre annonce</h5>
+      <h5 className="text-center pt-3 homeUnderline">Votre annonce</h5>
       <div className="mb-5">
         {/* <div>  DON'T TOUCH ! ! ! ! ! !
           <label htmlFor="category">Catégorie</label>
@@ -70,13 +70,6 @@ const ActivityForm = props => {
               label="Titre"
             />
             <Field
-              id="id_place"
-              name="id_place"
-              component={renderField}
-              type="number"
-              label="Lieu"
-            />
-            <Field
               id="decription"
               name="description"
               component="textarea"
@@ -99,8 +92,8 @@ const ActivityForm = props => {
               label="Prix"
             />
           </div>
-          <button type="submit" disabled={submitting} className="header cursor">
-            Publier l'annonce
+          <button type="submit" disabled={submitting} className="mt-3 postBtn">
+            Etape 2
           </button>
         </form>
       </div>

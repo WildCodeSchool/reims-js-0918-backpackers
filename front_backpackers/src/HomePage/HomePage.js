@@ -1,9 +1,17 @@
 import React, { Component } from "react";
-import { Row, Col, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
-import classnames from "classnames"
+import {
+  Row,
+  Col,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane
+} from "reactstrap";
+import classnames from "classnames";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { geolocated } from 'react-geolocated'
+import { geolocated } from "react-geolocated";
 
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
@@ -18,13 +26,10 @@ class HomePage extends Component {
   constructor() {
     super();
     this.state = {
-      view: "PLACES",
       dropdownOpen: false,
       collapsed: true,
-      activeTab: '1'
+      activeTab: "1"
     };
-    this.changeViewToActivities = this.changeViewToActivities.bind(this);
-    this.changeViewToPlaces = this.changeViewToPlaces.bind(this);
     this.toggle = this.toggle.bind(this);
     this.toggleMap = this.toggleMap.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
@@ -36,13 +41,18 @@ class HomePage extends Component {
     this.props.fetchPlaces();
     this.callApiPlaces();
     this.props.fetchActivities();
-    this.callApiActivities()
+    this.callApiActivities();
     this.callApiProfile();
   }
 
   callApiProfile() {
     axios
-      .get("/profile")
+      .get("/profile", {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
       .then(response => this.props.viewProfile(response.data));
   }
 
@@ -54,20 +64,6 @@ class HomePage extends Component {
     axios
       .get("/activities")
       .then(response => this.props.viewActivities(response.data));
-  }
-
-  changeViewToActivities() {
-    this.setState({ view: "ACTIVITIES" });
-  }
-
-  callApiActivity(idActivity) {
-    axios
-      .get(`/activity/${idActivity}`)
-      .then(response => this.props.viewActivity(response.data[0]))
-  }
-
-  changeViewToPlaces() {
-    this.setState({ view: "PLACES" });
   }
 
   toggle() {
@@ -116,32 +112,41 @@ class HomePage extends Component {
           <Col xs="8">
             <DropdownButton
               className="w-100"
-              view={this.state.view}
+              view={this.props.displayHomePage}
               dropdownOpen={this.state.dropdownOpen}
               toggle={this.toggle}
-              changeViewToActivities={this.changeViewToActivities}
-              changeViewToPlaces={this.changeViewToPlaces}
+              changeViewToActivities={this.props.displayActivities}
+              changeViewToPlaces={this.props.displayPlaces}
             />
           </Col>
           <Col xs="2">
             <Nav tabs>
               <NavItem>
                 <NavLink
-                  className={classnames({ active: this.state.activeTab === '1' })}
-                  onClick={() => { this.toggleMap('1'); }}
+                  className={classnames({
+                    active: this.state.activeTab === "1"
+                  })}
+                  onClick={() => {
+                    this.toggleMap("1");
+                  }}
                 >
-                  <i className="text-white far fa-list-alt"></i>
+                  <i className="text-white far fa-list-alt" />
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
-                  className={classnames({ active: this.state.activeTab === '2' })}
+                  className={classnames({
+                    active: this.state.activeTab === "2"
+                  })}
                   onClick={() => {
-                    this.toggleMap('2');
-                    this.props.getCoords([this.props.coords.latitude, this.props.coords.longitude]);
+                    this.toggleMap("2");
+                    this.props.getCoords([
+                      this.props.coords.latitude,
+                      this.props.coords.longitude
+                    ]);
                   }}
                 >
-                  <i className="text-white fas fa-map-marked-alt"></i>
+                  <i className="text-white fas fa-map-marked-alt" />
                 </NavLink>
               </NavItem>
             </Nav>
@@ -150,13 +155,13 @@ class HomePage extends Component {
 
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            {this.state.view === "PLACES" &&
+            {this.props.displayHomePage === "places" &&
               this.props.places.map(place => (
                 <PlaceThumbnail {...place} key={place.id} />
               ))}
-            {this.state.view === "ACTIVITIES" &&
+            {this.props.displayHomePage === "activities" &&
               this.props.activities.map(activity => (
-                <ActivityThumbnail {...activity} viewActivity={() => this.callApiActivity(activity.idActivity)} key={activity.idActivity} />
+                <ActivityThumbnail {...activity} key={activity.idActivity} />
               ))}
 
             <Row className="fixed-bottom listFooter">
@@ -166,10 +171,7 @@ class HomePage extends Component {
               >
                 Rechercher <i className="fas fa-search-location" />
               </Link>
-              <Link
-                to="/activities"
-                className="w-50 listPostBtn text-white text-center"
-              >
+              <Link to="/" className="w-50 listPostBtn text-white text-center">
                 <i className="fas fa-pencil-alt" /> Publier{" "}
               </Link>
             </Row>
@@ -184,8 +186,6 @@ class HomePage extends Component {
             {this.state.activeTab === "2" ? <MapsContainer /> : ""}
           </TabPane>
         </TabContent>
-
-
       </div>
     );
   }
