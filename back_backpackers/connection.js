@@ -59,8 +59,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-      ? `SELECT * FROM places WHERE adress = "${adress}"`
-      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+        ? `SELECT * FROM places WHERE adress = "${adress}"`
+        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -102,8 +102,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-      ? `SELECT * FROM activities WHERE creator ="${creator}"`
-      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+        ? `SELECT * FROM activities WHERE creator ="${creator}"`
+        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -290,8 +290,8 @@ app.post("/profile/signup", (req, res) => {
 app.post("/users", (req, res) => {
   chatkit
     .createUser({
-      name: `${req.body.firstName} ${req.body.lastName.charAt(0)}`,
-      id: req.body.mail
+      name: req.body.username,
+      id: req.body.username
     })
     .then(() => res.sendStatus(201))
     .catch(error => {
