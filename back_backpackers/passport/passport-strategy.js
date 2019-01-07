@@ -15,7 +15,7 @@ passport.use(
     },
     function (mail, password, cb) {
       connection.query(
-        `SELECT id, mail, password FROM users WHERE mail = ?`,
+        `SELECT id, mail, username, password FROM users WHERE mail = ?`,
         mail,
         (err, results) => {
           if (
@@ -28,7 +28,7 @@ passport.use(
           } else {
             return cb(
               null,
-              { mail, id: results[0].id },
+              { mail, username: results[0].username, id: results[0].id },
               { message: "Logged In Successfully" }
             );
           }
