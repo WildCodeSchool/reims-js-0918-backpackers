@@ -1,0 +1,105 @@
+@import "../_styles.scss";
+
+.header-btn{
+  font-size: 1.6rem;
+}
+
+.carousel{
+  margin: 60px 0 30px 0;
+  .carousel-indicators{
+    bottom: -35px;
+    li{
+      background-color: $grayColor;
+      width: 10px;
+      height: 10px;
+      margin: 0 10px;
+      border-radius: 100%;
+      &.active{      
+        background-color: $blueColor
+      }
+    }
+    
+  }
+}
+
+.creatorFrame{
+  margin-top: -75px;
+  height: 20px;
+  img{
+    float:left;
+    margin-top:-13px;
+    margin-left:-3px;
+    width:50px;
+    height:50px;
+    position: relative;
+    z-index: 15;
+    border: white 1px solid;
+  }
+  p{
+    background-color: $orangeColor;
+    position: relative;
+    z-index: 0;
+    line-height: 30px;
+    border-radius: 0 15px 15px 0;
+    font-weight: 800;
+    font-size: 0.9rem;
+    margin-left: -12px;
+    &.frame-name{
+      color: $blueColor;
+      line-height: 30px;
+      z-index: 10;
+      border-radius: 0 15px 15px 0;
+    }
+  }
+}
+
+.nav-tabs{
+  border:0;
+  a.nav-link{
+    cursor: pointer;
+    border:0;
+    &:hover{
+      color: $blueColor;
+      font-weight:inherit;
+    }
+    &.active{
+      border: 0px;
+      border-bottom: 2px solid $greenColor !important;
+
+    }
+  }
+  
+}
+
+.characteristic{
+  color: $darkGrayColor;
+  font-weight: 800;
+  line-height: 15px;
+  &.price{
+    color: $peachColor;
+  }
+  p:nth-child(1){
+    font-size: 1.3rem;
+  }
+  :nth-child(2){
+    font-size: 0.8rem;
+  }
+}
+
+.singleDescr{
+  background-color: $grayColor;
+  line-height: 16px;
+  border-radius: 10px 10px 10px 0;
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.participate{
+  background-color: $blueColor;
+  line-height: 50px;
+}
+
+.new_activity{
+  background-color: $greenColor;
+  line-height: 50px;
+}

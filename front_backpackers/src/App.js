@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import Login from './Login.js';
-import './App.css';
-import { Container } from 'reactstrap';
+import React from "react";
+import PropTypes from "prop-types";
+import routes from "./routes";
+import { ConnectedRouter } from "connected-react-router";
 
-class App extends Component {
-  render() {
-    return (
-      <Container fluid>
-        <Login />
-      </Container>
-    );
-  }
-}
+import "./App.css";
+
+const App = ({ history }) => {
+  return <ConnectedRouter history={history}>{routes}</ConnectedRouter>;
+};
+
+App.propTypes = {
+  history: PropTypes.object
+};
 
 export default App;

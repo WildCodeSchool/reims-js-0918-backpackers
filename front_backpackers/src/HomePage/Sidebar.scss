@@ -1,0 +1,59 @@
+@import "../_styles.scss";
+
+.side-drawer {
+  height: 100%;
+  list-style: none;
+  background: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%;
+  z-index: 100;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.navbar{
+  justify-content: inherit;
+}
+
+.side-drawer{
+  &.open {
+  transform: translateX(0);
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+  }
+  a {
+  color: $darkGrayColor;
+  text-decoration: none;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.profil img {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+}
+
+.menu{
+  border-top: $darkGrayColor solid 1px;
+  width: 100%;
+  li:nth-child(1n) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  i {
+    width: 16px;
+    color: $darkGrayColor;
+  }
+}

@@ -18,12 +18,17 @@ exports.up = function(db, callback) {
   db.createTable(
     "places",
     {
-      idPlace: { type: "int", primaryKey: true, autoIncrement: true },
+      id: { type: "int", primaryKey: true, autoIncrement: true },
       name: { type: "string", length: 255, notNull: true },
-      adress: { type: "text", notNull: true },
+      country: { type: "string", length: 100, notNull: true },
+      city: { type: "string", length: 100, notNull: true },
+      address: { type: "text", notNull: true },
+      latitude: { type: "decimal", length: 10.5, notNull: true },
+      longitude: { type: "decimal", length: 10.5, notNull: true },
       price: { type: "decimal", length: 50 },
       type: { type: "string", length: 100, notNull: true },
       capacity: { type: "int", length: 50 },
+      picture: { type: "text" },
       description: { type: "string", length: 255 },
       contact: { type: "text" }
     },

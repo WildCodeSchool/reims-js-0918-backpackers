@@ -18,12 +18,11 @@ exports.up = function(db, callback) {
   db.createTable(
     "users",
     {
-      idUser: { type: "int", primaryKey: true, autoIncrement: true },
-      lastName: { type: "string", length: 100, notNull: true },
-      firstName: { type: "string", length: 100, notNull: true },
+      id: { type: "int", primaryKey: true, autoIncrement: true },
+      username: { type: "string", length: 100, notNull: true },
       birthDate: { type: "date", notNull: true },
-      adress: { type: "text", notNull: true },
       mail: { type: "string", length: 100 },
+      password: { type: "string", length: 100 },
       favorites: {
         type: "int"
       },

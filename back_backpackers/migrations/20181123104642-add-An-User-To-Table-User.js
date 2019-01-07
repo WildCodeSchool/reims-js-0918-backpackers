@@ -18,30 +18,28 @@ exports.up = function(db, callback) {
   db.insert(
     "users",
     [
-      "lastName",
-      "firstName",
+      "username",
       "birthDate",
-      "adress",
       "mail",
       "favorites",
       "hobbies",
       "historic",
       "rights",
       "picture",
-      "description"
+      "description",
+      "password"
     ],
     [
-      "Dupont",
-      "Jean",
+      "Jeanjean",
       "1995-01-24",
-      "9 rue du Général Leclerc",
       "jean.dupont@gmail.com",
       0,
       "foot, jeux vidéos",
       0,
       "user",
       "google.com",
-      "Je m'appelle Jean Dupont, j'aime le foot et les jeux vidéos dont surtout FIFA 2019. J'aime aussi la randonnée mais seulement en voiture."
+      "Je m'appelle Jean Dupont, j'aime le foot et les jeux vidéos dont surtout FIFA 2019. J'aime aussi la randonnée mais seulement en voiture.",
+      "2a10$epyqxVloTDZuMeglsT5DX.LQJmnmuZYzU.ZionLqCCYiIPSH7s63u"
     ],
     callback
   );
