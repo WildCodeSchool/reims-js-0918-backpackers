@@ -1,35 +1,46 @@
 import React, { Component } from "react";
+import { post } from "axios";
 import { Button } from "reactstrap";
-import axios from "axios";
 
-class UploadFiles extends Component {
-  sendPictures() {
-    axios
-      .post("/upload", {
-        headers: new Headers({
-          "Content-Type": "application/json"
-        })
-      })
-      .then(response => {
-        this.props.history.push("/");
-      });
+class Avatar extends Component {
+  constructor(props) {
+    super(props);
+    this.file = null;
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.fileUpload = this.fileUpload.bind(this);
+  }
+  onFormSubmit(e) {
+    e.preventDefault(); // Stop form submit
+
+    this.fileUpload(this.file).then(res => {
+      this.props.history.push("/");
+    });
+  }
+  onChange(e) {
+    this.file = e.target.files[0];
+  }
+  fileUpload(file) {
+    const url = "/upload";
+    const formData = new FormData();
+    formData.append("monfichier", file);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    };
+    return post(url, formData, config);
   }
 
   render() {
     return (
-      <div>
-        <form
-          method="POST"
-          encType="multipart/form-data"
-          action="upload"
-          onSubmit={() => this.sendPictures()}
-        >
-          <input accept="image/png" type="file" name="monfichier" multiple />
-          <Button>Envoyer</Button>
-        </form>
-      </div>
+      <form onSubmit={this.onFormSubmit}>
+        <h3>File Upload</h3>
+        <input type="file" onChange={this.onChange} />
+        <Button type="submit">Upload</Button>
+      </form>
     );
   }
 }
 
-export default UploadFiles;
+export default Avatar;
