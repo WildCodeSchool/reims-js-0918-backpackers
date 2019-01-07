@@ -7,7 +7,6 @@ class CreateActivityPage extends Component {
     const activity = { ...activities, id_place: this.props.match.params.id };
     console.log(activity);
     JSON.stringify(activity);
-    console.log("Bearer " + localStorage.getItem("BackpackersToken"));
     axios
       .post("http://localhost:3010/activities", activity, {
         headers: {

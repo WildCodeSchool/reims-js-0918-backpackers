@@ -1,0 +1,88 @@
+@import "../_styles.scss";
+
+.chatList{
+  button{
+    background-color: $grayColor;
+    line-height: 40px;
+    border-radius: 20px;
+    color: #111;
+    font-size: 1rem;
+  }
+}
+
+.chatPage{
+  height: 100vh;
+  padding-top:45px;
+  .messageList{
+    flex: 1;
+    overflow: scroll; 
+    ul{
+      list-style: none;
+      padding-left: 0px;
+      .myMessage{
+        background-color: $grayColor;
+        border-radius: 20px 20px 20px 0;
+      }
+      .messageReceived{
+        background-color: $greenColor;
+        border-radius: 20px 20px 0 20px;
+        p{
+          word-break: break-all;
+        }
+      }
+    } 
+  }
+  form{
+    display:flex;
+    input[type=text]{
+      border: 2px solid $grayColor;
+      line-height: 30px;
+      border-radius: 15px;
+      flex:1;
+      &:focus{
+        outline:none;
+      }
+    }
+    button[type=submit]{
+      background-color: $greenColor;
+      width:30px;
+      height:30px;
+      font-size: 1.2rem;
+    }
+    &:focus{
+      outline:none;
+    }
+  }   
+}
+
+.side-drawer {
+  height: 100%;
+  list-style: none;
+  background: white;
+  position: fixed;
+  left: 40%;
+  top: 0;
+  width: 60%;
+  z-index: 100;
+  padding-top:60px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  &.open {
+  transform: translateX(0%);
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+  }
+  a {
+  color: $darkGrayColor;
+  text-decoration: none;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
