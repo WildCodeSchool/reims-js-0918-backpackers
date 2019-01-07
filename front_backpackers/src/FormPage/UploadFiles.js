@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import { post } from "axios";
 import { Button } from "reactstrap";
 
-class Avatar extends Component {
+class UploadFiles extends Component {
   constructor(props) {
     super(props);
     this.file = null;
-    this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.fileUpload = this.fileUpload.bind(this);
   }
+
   onFormSubmit(e) {
     e.preventDefault(); // Stop form submit
 
@@ -20,6 +19,7 @@ class Avatar extends Component {
   onChange(e) {
     this.file = e.target.files[0];
   }
+
   fileUpload(file) {
     const url = "/upload";
     const formData = new FormData();
@@ -34,7 +34,7 @@ class Avatar extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onFormSubmit}>
+      <form onSubmit={e => this.onFormSubmit(e)}>
         <h3>File Upload</h3>
         <input type="file" onChange={this.onChange} />
         <Button type="submit">Upload</Button>
@@ -43,4 +43,4 @@ class Avatar extends Component {
   }
 }
 
-export default Avatar;
+export default UploadFiles;
