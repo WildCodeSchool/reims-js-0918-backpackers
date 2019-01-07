@@ -4,3 +4,11 @@
   width: 100%;
   z-index: 0;
 }
+
+.leaflet-popup{
+  display: block;
+  width: 100vh;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+}

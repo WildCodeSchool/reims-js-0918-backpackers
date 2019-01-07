@@ -3,10 +3,11 @@ import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Row } from "reactstrap"
 
 import "./Maps.scss"
+import PlaceThumbnail from './HomePage/PlaceThumbnail';
 
-const MyPopupMarker = ({ content, position }) => (
-  <Marker position={position}>
-    {content ? <Popup>{content}</Popup> : ""}
+const MyPopupMarker = ({ content, position, getMarkerInfos }) => (
+  <Marker onClick={() => getMarkerInfos} position={position}>{console.log("hello", content)}
+    {content ? <Popup>{content.name}</Popup> : ""}
   </Marker>
 )
 
@@ -19,17 +20,25 @@ const MyMarkersList = ({ markers }) => {
 
 
 class Maps extends Component {
-  state = {
-    markers: [
-      { key: 'marker1', position: this.props.map }
-    ],
+  constructor(props) {
+    super(props)
+    this.state = {
+      markerInfos: {},
+      markers: [
+        { key: 'marker1', position: this.props.map }
+      ],
+    }
+    this.getMarkerInfos = this.getMarkerInfos.bind(this)
+
   }
 
-  componentDidMount() {
+  getMarkerInfos(content) {
+    console.log("lol", content)
+    this.setState({ markerInfos: content })
   }
 
   render() {
-    const markers = this.props.places.map(place => ({ key: place.name, position: [place.latitude, place.longitude], content: place.name }))
+    const markers = this.props.places.map(place => ({ key: place.name, position: [place.latitude, place.longitude], content: place }))
 
 
     return (
@@ -40,6 +49,12 @@ class Maps extends Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <MyMarkersList markers={[{ key: 'marker1', position: this.props.map }, ...markers]} />
+          {this.state.markerInfos.name ?
+            <div className="mapPopup">
+              <PlaceThumbnail {...this.state.markerInfos} />
+            </div>
+            : ""
+          }
         </Map>
       </Row>
 
