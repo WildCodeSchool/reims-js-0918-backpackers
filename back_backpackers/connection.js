@@ -157,6 +157,23 @@ app.post(
   }
 );
 
+app.post(
+  "/participate/:idActivity",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      "INSERT INTO participation SET ?",
+      { idActivity: req.params.idActivity, idUser: req.user.id },
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Failed to participate to an activity");
+          console.log(err);
+        }
+      }
+    );
+  }
+);
+
 app.get("/activity/:id", (req, res) => {
   const idActivity = req.params.id;
   connection.query(
