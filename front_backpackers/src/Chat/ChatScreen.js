@@ -24,7 +24,7 @@ class ChatScreen extends Component {
 
   componentDidMount() {
     const chatManager = new Chatkit.ChatManager({
-      instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
+      instanceLocator: "v1:us1:b0eaa80f-5c88-4b49-b457-a758cc15ded0",
       userId: this.props.currentUsername,
       tokenProvider: new Chatkit.TokenProvider({
         url: "/authenticate"
