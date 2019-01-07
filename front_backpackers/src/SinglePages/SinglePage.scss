@@ -94,6 +94,15 @@
   font-size: 0.8rem;
 }
 
+.mapDetails{
+  .leaflet-container {
+    height: 250px;
+    margin-bottom: 30px;
+    width: 100%;
+    z-index: 0;
+  }
+}
+
 .participate{
   background-color: $blueColor;
   line-height: 50px;
