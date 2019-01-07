@@ -244,11 +244,7 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      // `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies,
-      // historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,
-      // id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date
-      // FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?`,
-      "SELECT * FROM users WHERE id=?",
+      "SELECT id, username, birthDate, adress, mail, favorites, hobbies, historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, dateFROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
       req.user.id,
       (err, results) => {
         if (err) {

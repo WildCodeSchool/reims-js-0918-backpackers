@@ -20,19 +20,19 @@ class Sidebar extends Component {
               : "d-flex flex-column side-drawer"
           }
         >
-          {this.props.firstName ? (
+          {this.props.username ? (
             <div className="profil d-flex flex-column align-items-center mt-3">
               <img
                 src={this.props.picture}
                 className="rounded-circle"
                 alt="profil"
               />
-              <h4>{`${this.props.firstName} ${this.props.lastName}`}</h4>
+              <h4>{`${this.props.username} `}</h4>
               <p>{this.props.mail}</p>
             </div>
           ) : (
-              ""
-            )}
+            ""
+          )}
           <div className="menu d-flex flex-column align-items-baseline align-self-baseline pt-3">
             <NavItem>
               <NavLink
