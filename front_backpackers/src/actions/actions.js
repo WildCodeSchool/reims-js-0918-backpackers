@@ -12,7 +12,8 @@ import {
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES,
   VIEW_PLACE,
-  FETCH_ID_ACTIVITY
+  FETCH_ID_ACTIVITY,
+  VIEW_FORM
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
@@ -71,6 +72,10 @@ export const makeCreateActivityAction = () => ({
 export const makeAFetchIdActivityAction = idCurrent => ({
   type: FETCH_ID_ACTIVITY,
   idCurrent
+});
+
+export const makeAViewFormAction = () => ({
+  type: VIEW_FORM
 });
 
 export const makeGetGeolocationAction = coords => ({
