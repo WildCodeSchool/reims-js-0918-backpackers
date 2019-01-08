@@ -59,8 +59,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-        ? `SELECT * FROM places WHERE adress = "${adress}"`
-        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+      ? `SELECT * FROM places WHERE adress = "${adress}"`
+      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -102,8 +102,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-        ? `SELECT * FROM activities WHERE creator ="${creator}"`
-        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+      ? `SELECT * FROM activities WHERE creator ="${creator}"`
+      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -139,17 +139,6 @@ app.post(
           res.status(500).send("Failed to add activity");
           console.log(err);
         } else {
-          chatkit
-            .createRoom({
-              creatorId: req.user.mail,
-              name: req.body.name
-            })
-            .then(response => {
-              res.status(200).send(response);
-            })
-            .catch(err => {
-              res.status(400).send(err);
-            });
           res.json(results.insertId);
         }
       }
@@ -323,6 +312,22 @@ app.post("/newroom", (req, res) => {
     .catch(err => {
       res.status(400).send(err);
     });
+});
+
+app.get("/participation/:id", (req, res) => {
+  const formData = req.params.id;
+  connection.query(
+    "SELECT COUNT(*) AS participants FROM participation JOIN activities ON participation.idActivity = activities.idActivity WHERE participation.idActivity = ?",
+    formData,
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Erreur lors de la récupération des personnes");
+      } else {
+        res.json(results);
+      }
+    }
+  );
 });
 
 app.listen(port, err => {

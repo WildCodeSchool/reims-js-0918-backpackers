@@ -18,8 +18,15 @@ class ActivityDetails extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: "1"
+      activeTab: "1",
+      participants: 0
     };
+  }
+
+  componentDidMount() {
+    axios
+      .get(`/participation/${this.props.activity.idActivity}`)
+      .then(res => this.setState({ participants: res.data[0].participants }));
   }
 
   toggle(tab) {
@@ -33,7 +40,7 @@ class ActivityDetails extends Component {
   activeParticipation() {
     axios
       .post(
-        `/participate/${this.props.activity.id}`,
+        `/participate/${this.props.activity.idActivity}`,
         {},
         {
           headers: {
@@ -96,8 +103,8 @@ class ActivityDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                            "Gratuit"
-                          )}
+                          "Gratuit"
+                        )}
                       </p>
                     </div>
                   </Col>
@@ -114,7 +121,19 @@ class ActivityDetails extends Component {
                       <p className="mb-0">
                         <i className="fas fa-user-alt" />
                       </p>
-                      <p>{this.props.activity.capacity} Places Restantes</p>
+                      {this.props.activity.capacity -
+                        this.state.participants -
+                        1 <
+                      0 ? (
+                        <p>0 Places Restantes</p>
+                      ) : (
+                        <p>
+                          {this.props.activity.capacity -
+                            this.state.participants -
+                            1}{" "}
+                          Places Restantes
+                        </p>
+                      )}
                     </div>
                   </Col>
                 </Row>
@@ -132,10 +151,14 @@ class ActivityDetails extends Component {
           <TabPane tabId="2">
             <Row className="mapDetails">
               <Col xs="12">
-                {this.state.activeTab === "2" ?
-                  <MapPlace lat={this.props.activity.latitude} long={this.props.activity.longitude} />
-                  :
-                  ""}
+                {this.state.activeTab === "2" ? (
+                  <MapPlace
+                    lat={this.props.activity.latitude}
+                    long={this.props.activity.longitude}
+                  />
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
           </TabPane>
