@@ -33,7 +33,7 @@ class ActivityDetails extends Component {
     axios
       .post(
         `/participate/${this.props.activity.id}`,
-        {},
+        { idChat: this.props.activity.idChat },
         {
           headers: {
             accept: "application/json",
@@ -95,8 +95,8 @@ class ActivityDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                          "Gratuit"
-                        )}
+                            "Gratuit"
+                          )}
                       </p>
                     </div>
                   </Col>

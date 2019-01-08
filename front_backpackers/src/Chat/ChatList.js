@@ -38,7 +38,7 @@ class ChatList extends Component {
       .then(() => {
         const chatManager = new Chatkit.ChatManager({
           instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
-          userId: this.props.profile[0].req.body.username,
+          userId: this.props.profile[0].username,
           tokenProvider: new Chatkit.TokenProvider({
             url: "/authenticate"
           })
@@ -99,7 +99,7 @@ class ChatList extends Component {
               </div>
             </Fragment>
             : this.state.currentScreen === "ChatScreen" ?
-              <ChatScreen currentUsername={this.props.profile[0].mail}
+              <ChatScreen currentUsername={this.props.profile[0].username} getChat={this.props.addChat} chats={this.props.chats}
                 currentChat={this.state.currentChat} changeView={this.viewChatList}
               />
               : ""

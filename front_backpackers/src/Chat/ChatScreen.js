@@ -39,6 +39,8 @@ class ChatScreen extends Component {
           messageLimit: 100,
           hooks: {
             onNewMessage: message => {
+              console.log(this.props.currentChat.id)
+              console.log(this.state.messages)
               this.setState({
                 messages: [...this.state.messages, message]
               })
@@ -60,6 +62,7 @@ class ChatScreen extends Component {
           }
         })
       })
+      //      .then(() => this.props.getChat(this.props.currentChat.id, this.state.messages))
       .then(currentRoom => {
         this.setState({ currentRoom })
       })

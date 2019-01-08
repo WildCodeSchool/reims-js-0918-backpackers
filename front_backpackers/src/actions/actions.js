@@ -11,7 +11,8 @@ import {
   VIEW_ACTIVITY,
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES,
-  VIEW_PLACE
+  VIEW_PLACE,
+  GET_CHATS
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
@@ -70,4 +71,10 @@ export const makeCreateActivityAction = () => ({
 export const makeGetGeolocationAction = coords => ({
   type: GET_GEOLOCATION,
   coords
+});
+
+export const makeGetChatsAction = (chat, messages) => ({
+  type: GET_CHATS,
+  chat,
+  messages
 });
