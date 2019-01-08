@@ -151,6 +151,7 @@ app.post(
 
             } else {
               res.status(200).send(response);
+<<<<<<< HEAD
             }
           }
         );
@@ -158,6 +159,16 @@ app.post(
       .catch(err => {
         res.status(400).send(err);
       });
+=======
+            })
+            .catch(err => {
+              res.status(400).send(err);
+            });
+          res.sendStatus(200);
+        }
+      }
+    );
+>>>>>>> dev
   }
 );
 
