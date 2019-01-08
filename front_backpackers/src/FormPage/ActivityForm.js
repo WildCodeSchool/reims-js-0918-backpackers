@@ -9,10 +9,6 @@ const validate = values => {
   if (!values.name) {
     errors.name = "Required";
   }
-  if (!values.id_place) {
-    errors.id_place = "Required";
-  }
-  console.log(errors);
   return errors;
 };
 
@@ -30,7 +26,6 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 
 const ActivityForm = props => {
   const { handleSubmit, submitting } = props;
-
   return (
     <Fragment>
       <Row className="greenHeader text-white">
@@ -54,7 +49,7 @@ const ActivityForm = props => {
             <option>Bien-être</option>
             <option>Culturel</option>
             <option>Déplacements</option>
-            <option>Enfants</option>
+            <option>Enfants</option>url
             <option>Nocturne</option>
             <option>Restauration</option>
           </Field>

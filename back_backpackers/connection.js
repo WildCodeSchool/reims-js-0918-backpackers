@@ -150,7 +150,7 @@ app.post(
                 .catch(deleteErr => console.error(deleteErr))
 
             } else {
-              res.status(200).send(response);
+              res.json(results.insertId);
             }
           }
         );
@@ -160,6 +160,7 @@ app.post(
       });
   }
 );
+
 
 app.post(
   "/participate/:idActivity",
@@ -193,8 +194,8 @@ app.get("/activity/:id", (req, res) => {
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
             activities.contact, date, id, country, city,
-            address, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace, idChat
+            address, latitude, longitude, type, (places.description) AS descriptionPlace,
+            (places.picture) AS picturePlace, idChat 
     FROM activities 
     JOIN places 
     ON activities.id_place = places.id
