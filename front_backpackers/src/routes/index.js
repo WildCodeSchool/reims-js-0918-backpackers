@@ -26,7 +26,6 @@ class Routes extends Component {
             <Route exact path="/" component={HomePageContainer} />
             <Route path="/activity/:id" component={ActivityContainer} />
             <Route path="/place/:id" component={PlaceContainer} />
-
             <Route path="/profil" component={ProfileContainer} />
             <Route path="/upload" component={UploadFiles} />
             <Route path="/chatlist" component={ChatContainer} />
