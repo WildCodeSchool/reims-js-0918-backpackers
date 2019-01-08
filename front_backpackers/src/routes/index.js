@@ -10,6 +10,7 @@ import ActivityContainer from "../containers/ActivityContainer";
 import SignUpPage from "../SignUpPage/SignUpPage";
 import PlaceContainer from "../containers/PlaceContainer";
 import ChatContainer from "../containers/ChatContainer";
+import CreatePlaceContainer from "../containers/CreatePlaceContainer";
 
 class Routes extends Component {
   render() {
@@ -23,6 +24,7 @@ class Routes extends Component {
             <Route path="/activity/:id" component={ActivityContainer} />
             <Route path="/place/:id" component={PlaceContainer} />
             <Route path="/place/:id/newactivity" component={CreateActivityPage} />
+            <Route path="/newplace" component={CreatePlaceContainer} />
             <Route path="/profil" component={ProfileContainer} />
             <Route path="/upload" component={UploadFiles} />
             <Route path="/chatlist" component={ChatContainer} />
@@ -35,6 +37,7 @@ class Routes extends Component {
             <Route path="/activity/:id" component={ActivityContainer} />
             <Route path="/place/:id" component={PlaceContainer} />
             <Redirect from="/place/:id/newactivity" to="/login" />
+            <Redirect from="/newplace" to="/login" />
             <Redirect from="/profil" to="/login" />
             <Redirect from="/upload" to="/login" component={UploadFiles} />
             <Redirect from="/chatlist" to="/login" component={ChatContainer} />
