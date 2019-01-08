@@ -53,7 +53,9 @@ class HomePage extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response => this.props.viewProfile(response.data));
+      .then(response =>
+        this.props.viewProfile([{ ...response.data[0], activities: [] }])
+      );
   }
 
   callApiPlaces() {

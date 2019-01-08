@@ -10,7 +10,8 @@ import {
   VIEW_ACTIVITY,
   VIEW_PROFILE,
   DISPLAY_PLACES,
-  DISPLAY_ACTIVITIES
+  DISPLAY_ACTIVITIES,
+  VIEW_PROFILE_ACTIVITY
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -24,8 +25,35 @@ import {
   makeGetGeolocationAction,
   makeViewActivityAction,
   makeDisplayPlacesAction,
-  makeDisplayActivitiesAction
+  makeDisplayActivitiesAction,
+  makeViewProfileActivityAction
 } from "./actions";
+
+describe("makeViewProfileActivityAction", () => {
+  it("should return a VIEW_PROFILE_ACTIVITY action", () => {
+    const profile = { username: "Teoxane" };
+    const profileActivities = [
+      {
+        name: "piscine",
+        description: "go piscine"
+      },
+      {
+        name: "foot",
+        description: "go foot"
+      }
+    ];
+
+    const expected = {
+      type: VIEW_PROFILE_ACTIVITY,
+      profile,
+      profileActivities
+    };
+
+    expect(makeViewProfileActivityAction(profileActivities, profile)).toEqual(
+      expected
+    );
+  });
+});
 
 describe("makeDisplayActivitiesAction", () => {
   it("should return a DISPLAY_PLACES action", () => {
@@ -154,7 +182,6 @@ describe("makeCloseMenuAction", () => {
     expect(makeCloseMenuAction()).toEqual(expected);
   });
 
-
   describe("makeViewProfileAction", () => {
     it("should return a VIEW_PROFILE action", () => {
       const profile = {
@@ -169,14 +196,12 @@ describe("makeCloseMenuAction", () => {
 
       expect(makeViewProfileAction(profile)).toEqual(expected);
     });
-  })
-
+  });
 });
-
 
 describe("makeGetGeoLocationAction", () => {
   it("should return a GET_GEOLOCATION", () => {
-    const coords = [51.123, 0.431]
+    const coords = [51.123, 0.431];
     const expected = {
       type: GET_GEOLOCATION,
       coords

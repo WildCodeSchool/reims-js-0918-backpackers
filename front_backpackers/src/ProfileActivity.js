@@ -34,7 +34,7 @@ const ProfileActivity = ({
           <Media heading className="mb-1 mx-1 d-flex justify-content-between">
             <span>
               <i className="fas fa-location-arrow pr-1" />
-              {city}
+              {name}
             </span>
             <span>
               <i className="fas fa-calendar pr-1" />
