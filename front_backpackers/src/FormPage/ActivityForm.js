@@ -9,7 +9,6 @@ const validate = values => {
   if (!values.name) {
     errors.name = "Required";
   }
-  console.log(errors);
   return errors;
 };
 
@@ -50,7 +49,7 @@ const ActivityForm = props => {
             <option>Bien-être</option>
             <option>Culturel</option>
             <option>Déplacements</option>
-            <option>Enfants</option>
+            <option>Enfants</option>url
             <option>Nocturne</option>
             <option>Restauration</option>
           </Field>
