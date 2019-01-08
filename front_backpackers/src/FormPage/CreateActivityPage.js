@@ -14,6 +14,7 @@ class CreateActivityPage extends Component {
         }
       })
       .then(response => {
+        this.props.idCurrent(response.data);
         this.props.history.push("/upload");
       });
   };
