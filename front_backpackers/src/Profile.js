@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import { Row, Col, Button, Media, Badge } from "reactstrap";
 import { Link } from "react-router-dom";
 
+import ProfileActivity from "./ProfileActivity";
+
 import axios from "axios";
 
 import "./Profile.scss";
@@ -15,12 +17,22 @@ class Profile extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response =>
-        console.log("allo", this.props.viewProfile(response.data))
-      );
+      .then(response => this.props.viewProfile(response.data));
   }
 
   render() {
+    const {
+      idActivity,
+      city,
+      name,
+      descriptionActivity,
+      descriptionPlace,
+      pictureActivity,
+      picturePlace,
+      price,
+      viewActivity,
+      date_diff
+    } = this.props;
     return (
       <Fragment>
         <Row>
@@ -53,9 +65,9 @@ class Profile extends Component {
             <div className="userInfos">
               <Row>
                 <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
-                  <h4 className="mb-0">{`${
-                    this.props.profile[0].username
-                  } `}</h4>
+                  <h4 className="mb-0">
+                    {`${this.props.profile[0].username} `}
+                  </h4>
                   <span>{this.props.profile[0].mail}</span>
                 </Col>
                 <Col xs="2">
@@ -119,9 +131,22 @@ class Profile extends Component {
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
         </Row>
-
-        {this.props.id_creator ? (
-          <p>coucou</p>
+        {console.log("username", this.props.profile)}
+        {this.props.profile ? (
+          <Fragment>
+            <Row>
+              <Col xs="12">
+                <h2 className="pr-3">Activités organiser par vous</h2>
+                <div className="activitiesTitleUnderline mb-3 w-100" />
+              </Col>
+            </Row>
+            {/* {this.props.profile.activities.map(profileActivity => (
+              <ProfileActivity
+                {...profileActivity}
+                key={profileActivity.idActivity}
+              />
+            ))} */}
+          </Fragment>
         ) : (
           <Row className="activityCreated">
             <Col xs="12" className="text-center mt-2">

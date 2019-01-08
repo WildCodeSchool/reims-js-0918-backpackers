@@ -245,9 +245,9 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, dateFROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
-      "SELECT * FROM users WHERE id=?",
-
+      // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, dateFROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+      "SELECT id, username, birthDate, mail, favorites, hobbies, historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, (activities.idActivity) AS idActivity, (activities.name) AS nameActivity, (activities.id_creator) AS idCreator, (activities.price) AS activityPrice, (activities.capacity) AS activityCapacity, (activities.picture) AS activityPicture, (activities.description) AS descriptionActivity, (activities.id_place) AS activityIdPlace, (activities.contact) AS activityContact, (activities.date) AS activityDate FROM users JOIN activities ON users.id = activities.id_creator WHERE id = ?",
+      // "SELECT * FROM users WHERE id=?",
       req.user.id,
       (err, results) => {
         if (err) {
