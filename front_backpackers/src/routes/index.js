@@ -15,19 +15,23 @@ class Routes extends Component {
   render() {
     return (
       <Container fluid>
-        {localStorage.getItem('BackpackersToken') ?
+        {localStorage.getItem("BackpackersToken") ? (
           <Switch>
             <Route path="/login" component={LoginPage} />
+            <Route
+              path="/place/:id/newactivity"
+              component={CreateActivityPage}
+            />
             <Route path="/signup" component={SignUpPage} />
             <Route exact path="/" component={HomePageContainer} />
             <Route path="/activity/:id" component={ActivityContainer} />
             <Route path="/place/:id" component={PlaceContainer} />
-            <Route path="/place/:id/newactivity" component={CreateActivityPage} />
+
             <Route path="/profil" component={ProfileContainer} />
             <Route path="/upload" component={UploadFiles} />
             <Route path="/chatlist" component={ChatContainer} />
           </Switch>
-          :
+        ) : (
           <Switch>
             <Route path="/login" component={LoginPage} />
             <Route path="/signup" component={SignUpPage} />
@@ -39,9 +43,9 @@ class Routes extends Component {
             <Redirect from="/upload" to="/login" component={UploadFiles} />
             <Redirect from="/chatlist" to="/login" component={ChatContainer} />
           </Switch>
-        }
+        )}
       </Container>
-    )
+    );
   }
 }
 
