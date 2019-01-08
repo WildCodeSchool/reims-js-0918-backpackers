@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
+import MapPlace from "./MapPlace";
 
 class ActivityDetails extends Component {
   constructor(props) {
@@ -95,8 +96,8 @@ class ActivityDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                          "Gratuit"
-                        )}
+                            "Gratuit"
+                          )}
                       </p>
                     </div>
                   </Col>
@@ -129,8 +130,13 @@ class ActivityDetails extends Component {
             </Row>
           </TabPane>
           <TabPane tabId="2">
-            <Row>
-              <p>Map</p>
+            <Row className="mapDetails">
+              <Col xs="12">
+                {this.state.activeTab === "2" ?
+                  <MapPlace lat={this.props.activity.latitude} long={this.props.activity.longitude} />
+                  :
+                  ""}
+              </Col>
             </Row>
           </TabPane>
         </TabContent>

@@ -1,24 +1,20 @@
-import React, { Component, Fragment } from "react";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-import { Row } from "reactstrap";
+import React, { Component } from "react";
+import { Map, TileLayer, Marker } from "react-leaflet";
 
-import "../Maps.scss";
+import "./SinglePage.scss";
 
 class MapPlace extends Component {
-  state = {
-    marker: [{ key: "marker1", position: this.props.map }]
-  };
   render() {
+    const position = [this.props.lat, this.props.long]
     return (
-      <Row>
-        <Map center={this.props.map} zoom="15">
-          <TileLayer
-            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-        </Map>
-      </Row>
-    );
+      <Map center={position} zoom="17">
+        <TileLayer
+          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={position} />
+      </Map>
+    )
   }
 }
 
