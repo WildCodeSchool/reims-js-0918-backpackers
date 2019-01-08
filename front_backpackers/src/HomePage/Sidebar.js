@@ -7,7 +7,8 @@ import "./Sidebar.scss";
 class Sidebar extends Component {
   logOut() {
     this.props.backdropClickHandler();
-    localStorage.removeItem("BackpackersToken");
+    localStorage.removeItem("BackpackersToken")
+    this.props.history.push("/")
   }
 
   render() {

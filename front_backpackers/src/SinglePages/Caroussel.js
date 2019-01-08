@@ -27,15 +27,15 @@ const items = [
 
 const Caroussel = props => (
   <Fragment>
-    {props.activity.pictureActivity ? (
+    {/* {props.activity.pictureActivity ? (
       <img
         src={`http://localhost:3010/images/${props.activity.pictureActivity}`}
         className="nocarousel"
         alt="noslide"
       />
-    ) : (
-      <UncontrolledCarousel items={items} />
-    )}
+    ) : ( */}
+    <UncontrolledCarousel items={items} />
+    {/* )} */}
     {props.activity ? (
       <Row>
         <Col xs="6" className="creatorFrame">

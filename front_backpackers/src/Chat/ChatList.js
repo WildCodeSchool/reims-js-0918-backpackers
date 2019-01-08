@@ -106,7 +106,9 @@ class ChatList extends Component {
           </Fragment>
         ) : this.state.currentScreen === "ChatScreen" ? (
           <ChatScreen
-            currentUsername={this.props.profile[0].mail}
+            currentUsername={this.props.profile[0].username}
+            getChat={this.props.addChat}
+            chats={this.props.chats}
             currentChat={this.state.currentChat}
             changeView={this.viewChatList}
           />

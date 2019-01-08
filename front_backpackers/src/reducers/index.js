@@ -10,6 +10,9 @@ import { reducer as formReducer } from "redux-form";
 import mapReducer from "./mapReducer";
 import displayHomePageReducer from "./displayHomePageReducer";
 import placeReducer from "./placeReducer";
+import chatsReducer from "./chatsReducer";
+import uploadReducer from "./uploadReducer";
+import viewReducer from "./viewReducer";
 
 const backpackersApp = history =>
   combineReducers({
@@ -23,7 +26,10 @@ const backpackersApp = history =>
     menu: menuReducer,
     map: mapReducer,
     activity: activityReducer,
-    place: placeReducer
+    place: placeReducer,
+    chats: chatsReducer,
+    idCurrent: uploadReducer,
+    viewForm: viewReducer
   });
 
 export default backpackersApp;

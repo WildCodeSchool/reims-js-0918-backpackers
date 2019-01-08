@@ -11,7 +11,8 @@ import {
   VIEW_PROFILE,
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES,
-  VIEW_PROFILE_ACTIVITY
+  VIEW_PROFILE_ACTIVITY,
+  GET_CHATS
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -26,7 +27,8 @@ import {
   makeViewActivityAction,
   makeDisplayPlacesAction,
   makeDisplayActivitiesAction,
-  makeViewProfileActivityAction
+  makeViewProfileActivityAction,
+  makeGetChatsAction
 } from "./actions";
 
 describe("makeViewProfileActivityAction", () => {
@@ -208,5 +210,19 @@ describe("makeGetGeoLocationAction", () => {
     };
 
     expect(makeGetGeolocationAction(coords)).toEqual(expected);
+  });
+});
+
+describe("makeGetChatsAction", () => {
+  it("should return a GET_CHATS", () => {
+    const messages = [{ message: 1 }, { message: 2 }];
+    const chat = 42;
+    const expected = {
+      type: GET_CHATS,
+      messages,
+      chat
+    };
+
+    expect(makeGetChatsAction(chat, messages)).toEqual(expected);
   });
 });
