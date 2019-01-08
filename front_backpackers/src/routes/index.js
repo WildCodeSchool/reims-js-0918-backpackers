@@ -1,8 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router";
 import { Container } from "reactstrap";
 import HomePageContainer from "../containers/HomepageContainer";
-import UploadFiles from "../FormPage/UploadFiles";
 import LoginPage from "../LoginPage/LoginPage";
 import UploadContainer from "../containers/UploadContainer";
 import ProfileContainer from "../containers/ProfileContainer";

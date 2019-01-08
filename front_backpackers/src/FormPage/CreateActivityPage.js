@@ -23,16 +23,17 @@ class CreateActivityPage extends Component {
 
   fileUpload(file) {
     const url = "/upload";
-    const idActivity = this.props.idCurrent;
+    const idActivity = this.props.id;
     const formData = new FormData();
     formData.append("monfichier", file);
-    const data = { formData, idActivity };
     const config = {
       headers: {
         "content-type": "multipart/form-data"
       }
     };
-    return post(url, data, config);
+    return post(url, formData, idActivity, config).then(res =>
+      this.props.viewForm()
+    );
   }
 
   submit = activities => {
@@ -47,16 +48,14 @@ class CreateActivityPage extends Component {
       })
       .then(response => {
         this.props.idCurrent(response.data);
-        this.props.viewForm();
-        this.props.history.push("/upload");
+        this.props.viewUpload();
       });
   };
   render() {
     return (
       <div>
-        {this.props.viewForm ? (
-          <ActivityFormContainer onSubmit={this.submit} />
-        ) : (
+        {!this.props.view && <ActivityFormContainer onSubmit={this.submit} />}
+        {this.props.view && (
           <form onSubmit={e => this.onFormSubmit(e)}>
             <h3>File Upload</h3>
             <input type="file" onChange={this.onChange} />

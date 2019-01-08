@@ -1,18 +1,20 @@
 import { connect } from "react-redux";
 import {
   makeAFetchIdActivityAction,
-  makeAViewFormAction
+  makeAViewFormAction,
+  makeAViewUploadAction
 } from "../actions/actions";
 import CreateActivityPage from "../FormPage/CreateActivityPage";
 
 const mapStateToProps = state => ({
-  idCurrent: state.idCurrent,
-  viewForm: state.viewForm
+  id: state.idCurrent,
+  view: state.viewForm
 });
 
 const mapDispatchToProps = dispatch => ({
   idCurrent: idCurrent => dispatch(makeAFetchIdActivityAction(idCurrent)),
-  viewForm: () => dispatch(makeAViewFormAction())
+  viewForm: () => dispatch(makeAViewFormAction()),
+  viewUpload: () => dispatch(makeAViewUploadAction())
 });
 
 export default connect(
