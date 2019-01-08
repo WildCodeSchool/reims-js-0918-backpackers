@@ -31,16 +31,14 @@ class ChatList extends Component {
       .then(() => (
         axios
           .post("/users", {
-            mail: this.props.profile[0].mail,
-            lastName: this.props.profile[0].lastName,
-            firstName: this.props.profile[0].firstName
+            username: this.props.profile[0].username
           })
           .catch(error => { console.log(error) })
       ))
       .then(() => {
         const chatManager = new Chatkit.ChatManager({
           instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
-          userId: this.props.profile[0].mail,
+          userId: this.props.profile[0].username,
           tokenProvider: new Chatkit.TokenProvider({
             url: "/authenticate"
           })
@@ -101,7 +99,7 @@ class ChatList extends Component {
               </div>
             </Fragment>
             : this.state.currentScreen === "ChatScreen" ?
-              <ChatScreen currentUsername={this.props.profile[0].mail}
+              <ChatScreen currentUsername={this.props.profile[0].username} getChat={this.props.addChat} chats={this.props.chats}
                 currentChat={this.state.currentChat} changeView={this.viewChatList}
               />
               : ""

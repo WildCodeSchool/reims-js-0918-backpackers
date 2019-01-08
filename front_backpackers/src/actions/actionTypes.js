@@ -15,4 +15,5 @@ export const FETCH_ID_ACTIVITY = "FETCH_ID_ACTIVITY";
 export const VIEW_FORM = "VIEW_FORM";
 export const VIEW_UPLOAD = "VIEW_UPLOAD";
 
+export const GET_CHATS = "GET_CHATS";
 export const GET_GEOLOCATION = "GET_GEOLOCATION";

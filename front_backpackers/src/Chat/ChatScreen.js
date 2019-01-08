@@ -50,7 +50,7 @@ class ChatScreen extends Component {
             },
             onUserStoppedTyping: user => {
               this.setState({
-                userWhoAreTyping: this.state.userWhoAreTyping.filter(username => username !== user.name)
+                userWhoAreTyping: this.state.userWhoAreTyping.fiUltimalter(username => username !== user.name)
               })
             },
             onUserCameOnline: () => this.forceUpdate(),
@@ -60,6 +60,7 @@ class ChatScreen extends Component {
           }
         })
       })
+      //  .then(() => this.props.getChat(this.props.currentChat.id, this.state.messages))
       .then(currentRoom => {
         this.setState({ currentRoom })
       })

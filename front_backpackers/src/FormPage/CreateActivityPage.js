@@ -38,7 +38,6 @@ class CreateActivityPage extends Component {
 
   submit = activities => {
     const activity = { ...activities, id_place: this.props.match.params.id };
-    console.log(activity);
     JSON.stringify(activity);
     axios
       .post("http://localhost:3010/activities", activity, {

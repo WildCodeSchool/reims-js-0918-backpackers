@@ -129,33 +129,38 @@ app.post(
   "/activities",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const id_creator = req.user.id;
-    const formData = { ...req.body, id_creator };
-    connection.query(
-      "INSERT INTO activities SET ? ",
-      formData,
-      (err, results) => {
-        if (err) {
-          res.status(500).send("Failed to add activity");
-          console.log(err);
-        } else {
-          chatkit
-            .createRoom({
-              creatorId: req.user.mail,
-              name: req.body.name
-            })
-            .then(response => {
-              res.status(200).send(response);
-            })
-            .catch(err => {
-              res.status(400).send(err);
-            });
-          res.json(results.insertId);
-        }
-      }
-    );
+    chatkit
+      .createRoom({
+        creatorId: req.user.username,
+        name: req.body.name
+      })
+      .then(response => {
+        const id_creator = req.user.id;
+        const idChat = response.id
+        const formData = { ...req.body, id_creator, idChat: idChat };
+        connection.query(
+          "INSERT INTO activities SET ? ",
+          formData,
+          (error, results) => {
+            if (error) {
+              chatkit.deleteRoom({
+                id: idChat
+              })
+                .then(() => res.status(500).send("Failed to add activity"))
+                .catch(deleteErr => console.error(deleteErr))
+
+            } else {
+              res.json(results.insertId);
+            }
+          }
+        );
+      })
+      .catch(err => {
+        res.status(400).send(err);
+      });
   }
 );
+
 
 app.post(
   "/participate/:idActivity",
@@ -168,6 +173,14 @@ app.post(
         if (err) {
           res.status(500).send("Failed to participate to an activity");
           console.log(err);
+        } else {
+          console.log("test", req.body.idChat, req.user.username)
+          chatkit.addUsersToRoom({
+            roomId: req.body.idChat,
+            userIds: [req.user.username]
+          })
+            .then(() => console.log('added'))
+            .catch(error => console.error(error))
         }
       }
     );
@@ -182,7 +195,7 @@ app.get("/activity/:id", (req, res) => {
             (activities.description) AS descriptionActivity, id_place,
             activities.contact, date, id, country, city,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace 
+            (places.picture) AS picturePlace, idChat 
     FROM activities 
     JOIN places 
     ON activities.id_place = places.id
@@ -291,8 +304,8 @@ app.post("/profile/signup", (req, res) => {
 app.post("/users", (req, res) => {
   chatkit
     .createUser({
-      name: `${req.body.firstName} ${req.body.lastName.charAt(0)}`,
-      id: req.body.mail
+      name: req.body.username,
+      id: req.body.username
     })
     .then(() => res.sendStatus(201))
     .catch(error => {
