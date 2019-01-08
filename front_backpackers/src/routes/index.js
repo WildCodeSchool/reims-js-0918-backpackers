@@ -24,7 +24,6 @@ class Routes extends Component {
             <Route path="/activity/:id" component={ActivityContainer} />
             <Route path="/place/:id" component={PlaceContainer} />
             <Route path="/profil" component={ProfileContainer} />
-            <Route path="/upload" component={UploadFiles} />
             <Route path="/chatlist" component={ChatContainer} />
           </Switch>
         ) : (
@@ -36,7 +35,6 @@ class Routes extends Component {
             <Route path="/place/:id" component={PlaceContainer} />
             <Redirect from="/place/:id/newactivity" to="/login" />
             <Redirect from="/profil" to="/login" />
-            <Redirect from="/upload" to="/login" component={UploadFiles} />
             <Redirect from="/chatlist" to="/login" component={ChatContainer} />
           </Switch>
         )}
