@@ -244,7 +244,9 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      "SELECT id, username, birthDate, adress, mail, favorites, hobbies, historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, dateFROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+      "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, dateFROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+      "SELECT * FROM users WHERE id=?",
+
       req.user.id,
       (err, results) => {
         if (err) {
@@ -286,8 +288,8 @@ app.post("/profile/signup", (req, res) => {
 app.post("/users", (req, res) => {
   chatkit
     .createUser({
-      name: `${req.body.firstName} ${req.body.lastName.charAt(0)}`,
-      id: req.body.mail
+      name: req.body.username,
+      id: req.body.username
     })
     .then(() => res.sendStatus(201))
     .catch(error => {
@@ -304,20 +306,6 @@ app.post("/authenticate", (req, res) => {
     userId: req.query.user_id
   });
   res.status(authData.status).send(authData.body);
-});
-
-app.post("/newroom", (req, res) => {
-  chatkit
-    .createRoom({
-      creatorId: req.body.userId,
-      name: req.body.name
-    })
-    .then(response => {
-      res.status(200).send(response);
-    })
-    .catch(err => {
-      res.status(400).send(err);
-    });
 });
 
 app.listen(port, err => {

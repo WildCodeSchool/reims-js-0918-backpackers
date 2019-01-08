@@ -15,7 +15,9 @@ class Profile extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response => this.props.viewProfile(response.data));
+      .then(response =>
+        console.log("allo", this.props.viewProfile(response.data))
+      );
   }
 
   render() {
@@ -118,50 +120,15 @@ class Profile extends Component {
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
         </Row>
 
-        {/* {this.props. ? (
-          <Col xs="12">
-            <Media className="d-flex align-items-stretch">
-              <Media left href="#">
-                <Media
-                  object
-                  src="https://via.placeholder.com/150"
-                  alt="activity"
-                  className="activityPicture"
-                />
-              </Media>
-              <Media body className="d-flex flex-column">
-                <Media
-                  heading
-                  className="mb-1 mx-1 d-flex justify-content-between"
-                >
-                  <span>
-                    <i className="fas fa-location-arrow pr-1" />
-                    ATHENES
-                  </span>
-                  <span>
-                    <i className="fas fa-calendar pr-1" />
-                    Ferme dans 5 jours
-                  </span>
-                </Media>
-                Salut ! Je Cherche 5 rafteurs pour rafter le long du fleuve ! Va
-                va être CHANMAXX n'hésitez pas à vous inscrire!
-                <div className="d-flex align-items-end justify-content-between mt-auto">
-                  <Button className="seeItem">Voir</Button>
-                  <span className="itemListPrice pr-2">
-                    15€ /
-                    <i className="far fa-user" />
-                  </span>
-                </div>
-              </Media>
-            </Media>
-          </Col>
+        {this.props.id_creator ? (
+          <p>coucou</p>
         ) : (
           <Row className="activityCreated">
             <Col xs="12" className="text-center mt-2">
               <p>Vous n'avez proposé pour le moment aucune activité.</p>
             </Col>
           </Row>
-        )} */}
+        )}
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
