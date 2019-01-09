@@ -34,7 +34,7 @@ class ActivityDetails extends Component {
     axios
       .post(
         `/participate/${this.props.activity.idActivity}`,
-        {},
+        { idChat: this.props.activity.idChat },
         {
           headers: {
             accept: "application/json",

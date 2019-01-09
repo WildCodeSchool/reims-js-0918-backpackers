@@ -12,6 +12,7 @@ import {
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES,
   VIEW_PLACE,
+  GET_CHATS,
   FETCH_ID_ACTIVITY,
   VIEW_FORM,
   VIEW_UPLOAD
@@ -86,4 +87,10 @@ export const makeAViewUploadAction = () => ({
 export const makeGetGeolocationAction = coords => ({
   type: GET_GEOLOCATION,
   coords
+});
+
+export const makeGetChatsAction = (chat, messages) => ({
+  type: GET_CHATS,
+  chat,
+  messages
 });

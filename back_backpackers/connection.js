@@ -132,20 +132,35 @@ app.post(
   "/activities",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const id_creator = req.user.id;
-    const formData = { ...req.body, id_creator };
-    connection.query(
-      "INSERT INTO activities SET ? ",
-      formData,
-      (err, results) => {
-        if (err) {
-          res.status(500).send("Failed to add activity");
-          console.log(err);
-        } else {
-          res.json(results.insertId);
-        }
-      }
-    );
+    chatkit
+      .createRoom({
+        creatorId: req.user.username,
+        name: req.body.name
+      })
+      .then(response => {
+        const id_creator = req.user.id;
+        const idChat = response.id;
+        const formData = { ...req.body, id_creator, idChat: idChat };
+        connection.query(
+          "INSERT INTO activities SET ? ",
+          formData,
+          (error, results) => {
+            if (error) {
+              chatkit
+                .deleteRoom({
+                  id: idChat
+                })
+                .then(() => res.status(500).send("Failed to add activity"))
+                .catch(deleteErr => console.error(deleteErr));
+            } else {
+              res.json(results.insertId);
+            }
+          }
+        );
+      })
+      .catch(err => {
+        res.status(400).send(err);
+      });
   }
 );
 
@@ -160,6 +175,15 @@ app.post(
         if (err) {
           res.status(500).send("Failed to participate to an activity");
           console.log(err);
+        } else {
+          console.log("test", req.body.idChat, req.user.username);
+          chatkit
+            .addUsersToRoom({
+              roomId: req.body.idChat,
+              userIds: [req.user.username]
+            })
+            .then(() => console.log("added"))
+            .catch(error => console.error(error));
         }
       }
     );
@@ -174,7 +198,7 @@ app.get("/activity/:id", (req, res) => {
             (activities.description) AS descriptionActivity, id_place,
             activities.contact, date, users.id, country, city,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants, users.picture, users.username
+            (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username 
     FROM activities 
     INNER JOIN places 
     ON activities.id_place = places.id
@@ -291,8 +315,8 @@ app.post("/profile/signup", (req, res) => {
 app.post("/users", (req, res) => {
   chatkit
     .createUser({
-      name: `${req.body.firstName} ${req.body.lastName.charAt(0)}`,
-      id: req.body.mail
+      name: req.body.username,
+      id: req.body.username
     })
     .then(() => res.sendStatus(201))
     .catch(error => {
@@ -323,22 +347,6 @@ app.post("/newroom", (req, res) => {
     .catch(err => {
       res.status(400).send(err);
     });
-});
-
-app.get("/capacity/:id", (req, res) => {
-  const formData = req.params.id;
-  connection.query(
-    "SELECT COUNT(*) AS participants FROM participation JOIN activities ON participation.idActivity = activities.idActivity WHERE participation.idActivity = ?",
-    formData,
-    (err, results) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("Erreur lors de la récupération des personnes");
-      } else {
-        res.json(results);
-      }
-    }
-  );
 });
 
 app.listen(port, err => {

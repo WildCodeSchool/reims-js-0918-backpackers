@@ -35,6 +35,7 @@ exports.up = function(db, callback) {
       price: { type: "decimal", length: 50 },
       capacity: { type: "int", length: 50, notNull: true },
       picture: { type: "text" },
+      idChat: { type: "int", length: 20 },
       description: { type: "string", length: 255 },
       id_place: {
         type: "int",

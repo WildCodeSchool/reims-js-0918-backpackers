@@ -11,7 +11,8 @@ import {
   VIEW_PROFILE,
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES,
-  GET_CAPACITY
+  GET_CAPACITY,
+  GET_CHATS
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -26,7 +27,7 @@ import {
   makeViewActivityAction,
   makeDisplayPlacesAction,
   makeDisplayActivitiesAction,
-  makeGetCapacityAction
+  makeGetChatsAction
 } from "./actions";
 
 describe("makeDisplayActivitiesAction", () => {
@@ -173,18 +174,6 @@ describe("makeCloseMenuAction", () => {
   });
 });
 
-describe("makeGetCapacityAction", () => {
-  it("should return a GET_CAPACITY", () => {
-    const participants = 42;
-    const expected = {
-      type: GET_CAPACITY,
-      participants
-    };
-
-    expect(makeGetCapacityAction(participants)).toEqual(expected);
-  });
-});
-
 describe("makeGetGeoLocationAction", () => {
   it("should return a GET_GEOLOCATION", () => {
     const coords = [51.123, 0.431];
@@ -194,5 +183,19 @@ describe("makeGetGeoLocationAction", () => {
     };
 
     expect(makeGetGeolocationAction(coords)).toEqual(expected);
+  });
+});
+
+describe("makeGetChatsAction", () => {
+  it("should return a GET_CHATS", () => {
+    const messages = [{ message: 1 }, { message: 2 }];
+    const chat = 42;
+    const expected = {
+      type: GET_CHATS,
+      messages,
+      chat
+    };
+
+    expect(makeGetChatsAction(chat, messages)).toEqual(expected);
   });
 });
