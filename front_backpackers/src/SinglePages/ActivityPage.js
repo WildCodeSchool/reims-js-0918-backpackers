@@ -3,7 +3,7 @@ import axios from "axios";
 
 import Header from "./Header.js";
 import Caroussel from "./Caroussel";
-import ActivityDetailsContainer from "../containers/ActivityDetailsContainer";
+import ActivityDetails from "./ActivityDetails";
 
 class ActivityPage extends Component {
   componentDidMount() {
@@ -19,7 +19,7 @@ class ActivityPage extends Component {
           <Fragment>
             <Header place={this.props.activity.city} />
             <Caroussel activity={this.props.activity} />
-            <ActivityDetailsContainer activity={this.props.activity} />
+            <ActivityDetails activity={this.props.activity} />
           </Fragment>
         ) : (
           ""

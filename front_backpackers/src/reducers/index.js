@@ -12,8 +12,6 @@ import displayHomePageReducer from "./displayHomePageReducer";
 import placeReducer from "./placeReducer";
 import uploadReducer from "./uploadReducer";
 import viewReducer from "./viewReducer";
-import capacityReducer from "./capacityReducer";
-import activityCapacityReducer from "./activityCapacityReducer";
 
 const backpackersApp = history =>
   combineReducers({
@@ -29,9 +27,7 @@ const backpackersApp = history =>
     activity: activityReducer,
     place: placeReducer,
     idCurrent: uploadReducer,
-    viewForm: viewReducer,
-    participants: capacityReducer,
-    activityCapacity: activityCapacityReducer
+    viewForm: viewReducer
   });
 
 export default backpackersApp;

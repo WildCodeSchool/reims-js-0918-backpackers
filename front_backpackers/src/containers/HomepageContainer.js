@@ -12,8 +12,7 @@ import {
   makeViewProfileAction,
   makeDisplayActivitiesAction,
   makeDisplayPlacesAction,
-  makeViewPlaceAction,
-  makeGetActivityCapacityAction
+  makeViewPlaceAction
 } from "../actions/actions";
 
 const mapStateToProps = state => ({
@@ -40,9 +39,7 @@ const mapDispatchToProps = dispatch => ({
   getCoords: coords => dispatch(makeGetGeolocationAction(coords)),
   viewProfile: profile => dispatch(makeViewProfileAction(profile)),
   viewPlace: place => dispatch(makeViewPlaceAction(place)),
-  viewActivity: activity => dispatch(makeViewActivityAction(activity)),
-  getActivityCapacity: participants =>
-    dispatch(makeGetActivityCapacityAction(participants))
+  viewActivity: activity => dispatch(makeViewActivityAction(activity))
 });
 
 export default connect(

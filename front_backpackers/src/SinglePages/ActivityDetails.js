@@ -21,11 +21,6 @@ class ActivityDetails extends Component {
       activeTab: "1"
     };
   }
-  componentDidMount() {
-    axios
-      .get(`/capacity/${this.props.activity.idActivity}`)
-      .then(res => this.props.getCapacity(res.data[0].participants));
-  }
 
   toggle(tab) {
     if (this.state.activeTab !== tab) {
@@ -119,15 +114,16 @@ class ActivityDetails extends Component {
                       <p className="mb-0">
                         <i className="fas fa-user-alt" />
                       </p>
+
                       {this.props.activity.capacity -
-                        this.props.participants -
+                        this.props.activity.participants -
                         1 <
                       0 ? (
                         <p>0 Places Restantes</p>
                       ) : (
                         <p>
                           {this.props.activity.capacity -
-                            this.props.participants -
+                            this.props.activity.participants -
                             1}{" "}
                           Places Restantes
                         </p>

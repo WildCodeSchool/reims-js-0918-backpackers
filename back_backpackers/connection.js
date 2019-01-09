@@ -83,7 +83,10 @@ app.get("/activities", (req, res) => {
     (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
     FROM activities 
     INNER JOIN places 
-    ON activities.id_place = places.id INNER JOIN participation ON activities.idActivity = participation.idActivity GROUP BY activities.idActivity`,
+    ON activities.id_place = places.id 
+    LEFT JOIN participation 
+    ON activities.idActivity = participation.idActivity 
+    GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving activities");
@@ -166,16 +169,19 @@ app.post(
 app.get("/activity/:id", (req, res) => {
   const idActivity = req.params.id;
   connection.query(
-    `SELECT idActivity, activities.name, id_creator, activities.price,
+    `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
             activities.contact, date, id, country, city,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace 
+            (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
     FROM activities 
-    JOIN places 
+    INNER JOIN places 
     ON activities.id_place = places.id
-    WHERE idActivity =? `,
+    LEFT JOIN participation
+    ON activities.idActivity = participation.idActivity
+    WHERE activities.idActivity = ?
+    GROUP BY activities.idActivity `,
     idActivity,
     (err, results) => {
       if (err) {
@@ -204,16 +210,19 @@ app.get("/place/:id", (req, res) => {
       } else {
         // res.json(results);
         connection.query(
-          `SELECT idActivity, activities.name, id_creator, activities.price,
+          `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
             activities.contact, date, DATEDIFF(date, CURRENT_TIMESTAMP) as date_diff, id, country, city,
             address, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace 
-          FROM activities 
-          JOIN places 
+            (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
+          FROM activities
+          INNER JOIN places 
           ON activities.id_place = places.id
-          WHERE id_place = ? `,
+          LEFT JOIN participation
+          ON activities.idActivity = participation.idActivity
+          WHERE id_place = ? 
+          GROUP BY activities.idActivity`,
           idPlace,
           (err, actiResults) => {
             if (err) {
