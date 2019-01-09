@@ -13,6 +13,7 @@ import placeReducer from "./placeReducer";
 import chatsReducer from "./chatsReducer";
 import uploadReducer from "./uploadReducer";
 import viewReducer from "./viewReducer";
+import searchParticipantsReducer from "./searchParticipantsReducer";
 
 const backpackersApp = history =>
   combineReducers({
@@ -29,7 +30,8 @@ const backpackersApp = history =>
     place: placeReducer,
     chats: chatsReducer,
     idCurrent: uploadReducer,
-    viewForm: viewReducer
+    viewForm: viewReducer,
+    count: searchParticipantsReducer
   });
 
 export default backpackersApp;

@@ -14,15 +14,18 @@
   font-size: 0.9rem;
   padding: 0;
   margin-top: 10px;
+  margin-left: -20px;
+  margin-right: 8px;
 }
 
 .search-bar {
-  border-style: groove;
+  border-style: solid;
   border: 2px solid #c1c1c1;
-  border-radius: 5px;
-  width: 90px;
+  border-radius: 15px;
+  width: 250px;
   height: 30px;
   margin-top: 10px;
+  margin-left: 2px;
 }
 
 .activitiesTitleUnderline {
@@ -34,4 +37,18 @@
 
 input {
   text-align: center;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 800;
+  display: inline-block;
+  background-color: #fff;
+  z-index: 5;
+}
+
+.categoriesSearch {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
 }

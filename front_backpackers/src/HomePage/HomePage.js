@@ -188,7 +188,7 @@ class HomePage extends Component {
 
             <Row className="fixed-bottom listFooter">
               <Link
-                to="/activities"
+                to="/search"
                 className="w-50 listSearchBtn text-white text-center"
               >
                 Rechercher <i className="fas fa-search-location" />
