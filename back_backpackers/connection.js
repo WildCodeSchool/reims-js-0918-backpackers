@@ -75,31 +75,18 @@ app.get("/places/search", (req, res) => {
 
 app.get("/activities", (req, res) => {
   connection.query(
-    `SELECT idActivity, activities.name, id_creator, activities.price, 
+    `SELECT activities.idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
     (activities.description) AS descriptionActivity, id_place, 
     activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
-    (places.picture) AS picturePlace 
+    (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
     FROM activities 
-    JOIN places 
-    ON activities.id_place = places.id`,
+    INNER JOIN places 
+    ON activities.id_place = places.id INNER JOIN participation ON activities.idActivity = participation.idActivity GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving activities");
-      } else {
-        res.json(results);
-      }
-    }
-  );
-});
-
-app.get("/activities/capacity", (req, res) => {
-  connection.query(
-    "SELECT activities.idActivity, COUNT(participation.idParticipation) AS participants FROM activities JOIN participation ON activities.idActivity = participation.idActivity GROUP BY activities.idActivity",
-    (err, results) => {
-      if (err) {
-        res.status(500).send("Erreur lors de la récupération des participants");
       } else {
         res.json(results);
       }

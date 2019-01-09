@@ -38,10 +38,10 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchPlaces();
-    this.callApiPlaces();
     this.props.fetchActivities();
     this.callApiActivities();
+    this.props.fetchPlaces();
+    this.callApiPlaces();
     this.callApiProfile();
     this.callApiCapacity();
   }
@@ -167,10 +167,13 @@ class HomePage extends Component {
                 <PlaceThumbnail {...place} key={place.id} />
               ))}
             {this.props.displayHomePage === "activities" &&
-              this.props.activities.map(activity => (
-                <ActivityThumbnail {...activity} key={activity.idActivity} />
-              ))}
-
+              this.props.activities.map(activity =>
+                activity.capacity - 1 - activity.participants > 0 ? (
+                  <ActivityThumbnail {...activity} key={activity.idActivity} />
+                ) : (
+                  ""
+                )
+              )}
             <Row className="fixed-bottom listFooter">
               <Link
                 to="/activities"
