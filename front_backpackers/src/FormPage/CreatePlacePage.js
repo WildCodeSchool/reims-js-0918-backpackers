@@ -21,11 +21,6 @@ class CreatePlacePage extends Component {
       });
   };
   render() {
-    console.log(!this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled
-      ? []
-      : this.props.coords
-        ? [this.props.coords.latitude, this.props.coords.longitude]
-        : [])
     return <PlaceFormContainer onSubmit={this.submit} position={!this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled
       ? []
       : this.props.coords
