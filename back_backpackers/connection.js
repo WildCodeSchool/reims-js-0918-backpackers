@@ -94,6 +94,19 @@ app.get("/activities", (req, res) => {
   );
 });
 
+app.get("/activities/capacity", (req, res) => {
+  connection.query(
+    "SELECT activities.idActivity, COUNT(participation.idParticipation) AS participants FROM activities JOIN participation ON activities.idActivity = participation.idActivity GROUP BY activities.idActivity",
+    (err, results) => {
+      if (err) {
+        res.status(500).send("Erreur lors de la récupération des participants");
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
 app.get("/activities/search", (req, res) => {
   const name =
     req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
@@ -314,7 +327,7 @@ app.post("/newroom", (req, res) => {
     });
 });
 
-app.get("/participation/:id", (req, res) => {
+app.get("/capacity/:id", (req, res) => {
   const formData = req.params.id;
   connection.query(
     "SELECT COUNT(*) AS participants FROM participation JOIN activities ON participation.idActivity = activities.idActivity WHERE participation.idActivity = ?",

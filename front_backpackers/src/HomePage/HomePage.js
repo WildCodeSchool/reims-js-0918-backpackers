@@ -43,6 +43,7 @@ class HomePage extends Component {
     this.props.fetchActivities();
     this.callApiActivities();
     this.callApiProfile();
+    this.callApiCapacity();
   }
 
   callApiProfile() {
@@ -54,6 +55,12 @@ class HomePage extends Component {
         }
       })
       .then(response => this.props.viewProfile(response.data));
+  }
+
+  callApiCapacity() {
+    axios
+      .get("/activities/capacity")
+      .then(res => this.props.getActivityCapacity(res.data));
   }
 
   callApiPlaces() {

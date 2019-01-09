@@ -12,7 +12,8 @@ import {
   makeViewProfileAction,
   makeDisplayActivitiesAction,
   makeDisplayPlacesAction,
-  makeViewPlaceAction
+  makeViewPlaceAction,
+  makeGetActivityCapacityAction
 } from "../actions/actions";
 
 const mapStateToProps = state => ({
@@ -23,7 +24,8 @@ const mapStateToProps = state => ({
   map: state.map,
   activity: state.activity,
   profile: state.profile,
-  displayHomePage: state.displayHomePage
+  displayHomePage: state.displayHomePage,
+  activityCapacity: state.participants
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -39,6 +41,8 @@ const mapDispatchToProps = dispatch => ({
   viewProfile: profile => dispatch(makeViewProfileAction(profile)),
   viewPlace: place => dispatch(makeViewPlaceAction(place)),
   viewActivity: activity => dispatch(makeViewActivityAction(activity)),
+  getActivityCapacity: participants =>
+    dispatch(makeGetActivityCapacityAction(participants))
 });
 
 export default connect(

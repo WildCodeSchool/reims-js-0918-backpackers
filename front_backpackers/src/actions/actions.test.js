@@ -10,7 +10,8 @@ import {
   VIEW_ACTIVITY,
   VIEW_PROFILE,
   DISPLAY_PLACES,
-  DISPLAY_ACTIVITIES
+  DISPLAY_ACTIVITIES,
+  GET_CAPACITY
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -24,7 +25,8 @@ import {
   makeGetGeolocationAction,
   makeViewActivityAction,
   makeDisplayPlacesAction,
-  makeDisplayActivitiesAction
+  makeDisplayActivitiesAction,
+  makeGetCapacityAction
 } from "./actions";
 
 describe("makeDisplayActivitiesAction", () => {
@@ -154,7 +156,6 @@ describe("makeCloseMenuAction", () => {
     expect(makeCloseMenuAction()).toEqual(expected);
   });
 
-
   describe("makeViewProfileAction", () => {
     it("should return a VIEW_PROFILE action", () => {
       const profile = {
@@ -169,14 +170,24 @@ describe("makeCloseMenuAction", () => {
 
       expect(makeViewProfileAction(profile)).toEqual(expected);
     });
-  })
-
+  });
 });
 
+describe("makeGetCapacityAction", () => {
+  it("should return a GET_CAPACITY", () => {
+    const participants = 42;
+    const expected = {
+      type: GET_CAPACITY,
+      participants
+    };
+
+    expect(makeGetCapacityAction(participants)).toEqual(expected);
+  });
+});
 
 describe("makeGetGeoLocationAction", () => {
   it("should return a GET_GEOLOCATION", () => {
-    const coords = [51.123, 0.431]
+    const coords = [51.123, 0.431];
     const expected = {
       type: GET_GEOLOCATION,
       coords

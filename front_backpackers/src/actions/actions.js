@@ -14,7 +14,9 @@ import {
   VIEW_PLACE,
   FETCH_ID_ACTIVITY,
   VIEW_FORM,
-  VIEW_UPLOAD
+  VIEW_UPLOAD,
+  GET_CAPACITY,
+  GET_ACTIVITY_CAPACITY
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
@@ -86,4 +88,14 @@ export const makeAViewUploadAction = () => ({
 export const makeGetGeolocationAction = coords => ({
   type: GET_GEOLOCATION,
   coords
+});
+
+export const makeGetCapacityAction = participants => ({
+  type: GET_CAPACITY,
+  participants
+});
+
+export const makeGetActivityCapacityAction = participants => ({
+  type: GET_ACTIVITY_CAPACITY,
+  participants
 });

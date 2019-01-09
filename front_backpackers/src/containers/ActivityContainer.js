@@ -4,10 +4,13 @@ import ActivityPage from "../SinglePages/ActivityPage";
 
 const mapStateToProps = state => ({
   activity: state.activity
-})
+});
 
 const mapDispatchToProps = dispatch => ({
-  viewActivity: activity => dispatch(makeViewActivityAction(activity)),
-})
+  viewActivity: activity => dispatch(makeViewActivityAction(activity))
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActivityPage)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ActivityPage);
