@@ -15,14 +15,14 @@ const DropdownButton = ({
 }) => (
     <Fragment>
       <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle className="w-100" caret>{view === "PLACES" ? "Lieux" : "Activités"}</DropdownToggle>
+        <DropdownToggle className="w-100" caret>{view === "places" ? "Lieux" : "Activités"}</DropdownToggle>
         <DropdownMenu>
-          {view === "ACTIVITIES" && (
+          {view === "activities" && (
             <DropdownItem onClick={() => changeViewToPlaces()}>
               Lieux
               </DropdownItem>
           )}
-          {view === "PLACES" && (
+          {view === "places" && (
             <DropdownItem onClick={() => changeViewToActivities()}>
               Activités
               </DropdownItem>

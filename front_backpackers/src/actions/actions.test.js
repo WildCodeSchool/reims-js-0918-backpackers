@@ -6,8 +6,12 @@ import {
   OPEN_MENU,
   CLOSE_MENU,
   CREATE_ACTIVITY,
+  GET_GEOLOCATION,
   VIEW_ACTIVITY,
-  VIEW_PROFILE
+  VIEW_PROFILE,
+  DISPLAY_PLACES,
+  DISPLAY_ACTIVITIES,
+  GET_CHATS
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -18,8 +22,32 @@ import {
   makeCloseMenuAction,
   makeOpenMenuAction,
   makeCreateActivityAction,
-  makeViewActivityAction
+  makeGetGeolocationAction,
+  makeViewActivityAction,
+  makeDisplayPlacesAction,
+  makeDisplayActivitiesAction,
+  makeGetChatsAction
 } from "./actions";
+
+describe("makeDisplayActivitiesAction", () => {
+  it("should return a DISPLAY_PLACES action", () => {
+    const expected = {
+      type: DISPLAY_PLACES
+    };
+
+    expect(makeDisplayPlacesAction()).toEqual(expected);
+  });
+});
+
+describe("makeDisplayActivitiesAction", () => {
+  it("should return a DISPLAY_ACTIVITIES action", () => {
+    const expected = {
+      type: DISPLAY_ACTIVITIES
+    };
+
+    expect(makeDisplayActivitiesAction()).toEqual(expected);
+  });
+});
 
 describe("makeViewPlacesAction", () => {
   it("should return a VIEW_PLACES action", () => {
@@ -145,4 +173,32 @@ describe("makeCloseMenuAction", () => {
     });
   })
 
+});
+
+
+describe("makeGetGeoLocationAction", () => {
+  it("should return a GET_GEOLOCATION", () => {
+    const coords = [51.123, 0.431]
+    const expected = {
+      type: GET_GEOLOCATION,
+      coords
+    };
+
+    expect(makeGetGeolocationAction(coords)).toEqual(expected);
+  });
+});
+
+
+describe("makeGetChatsAction", () => {
+  it("should return a GET_CHATS", () => {
+    const messages = [{ message: 1 }, { message: 2 }]
+    const chat = 42
+    const expected = {
+      type: GET_CHATS,
+      messages,
+      chat
+    };
+
+    expect(makeGetChatsAction(chat, messages)).toEqual(expected);
+  });
 });

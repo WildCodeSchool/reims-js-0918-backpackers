@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { UncontrolledCarousel, Row, Col } from "reactstrap";
-import activityReducer from "../reducers/activityReducer";
 
 const items = [
   {
@@ -26,16 +25,37 @@ const items = [
   }
 ];
 
-const Caroussel = () => (
+const Caroussel = props => (
   <Fragment>
+    {/* {props.activity.pictureActivity ? (
+      <img
+        src={`http://localhost:3010/images/${props.activity.pictureActivity}`}
+        className="nocarousel"
+        alt="noslide"
+      />
+    ) : ( */}
     <UncontrolledCarousel items={items} />
-    <Row>
-      <Col xs="6" className="creatorFrame">
-        <img className="rounded-circle" src="https://via.placeholder.com/75" alt="Createur" />
-        <p className="frame-name pl-3 pr-1 d-inline-block  bg-white ">Paul.P</p>
-        <p className="d-inline-block text-white pr-1 pl-3">4.5<i className=" pl-1 fas fa-star"></i></p>
-      </Col>
-    </Row>
+    {/* )} */}
+    {props.activity ? (
+      <Row>
+        <Col xs="6" className="creatorFrame">
+          <img
+            className="rounded-circle"
+            src="https://via.placeholder.com/75"
+            alt="Createur"
+          />
+          <p className="frame-name pl-3 pr-1 d-inline-block  bg-white ">
+            Paul.P
+          </p>
+          <p className="d-inline-block text-white pr-1 pl-3">
+            4.5
+            <i className=" pl-1 fas fa-star" />
+          </p>
+        </Col>
+      </Row>
+    ) : (
+      ""
+    )}
   </Fragment>
 );
 

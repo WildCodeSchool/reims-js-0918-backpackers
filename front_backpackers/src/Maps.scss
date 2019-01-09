@@ -1,0 +1,16 @@
+.leaflet-container {
+  height: calc(100vh - 42px);
+  margin-bottom: -5px;
+  width: 100%;
+  z-index: 0;
+}
+
+.mapPopup{
+  display: block;
+  position: absolute;
+  bottom: 0;
+  z-index:100;
+  .media{
+    margin: 0px;
+  }
+}

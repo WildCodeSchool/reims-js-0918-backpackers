@@ -9,11 +9,31 @@
 ```javascript
   {
     type: VIEW_ACTIVITY
-    activity: [...]
+    activity: [}
+  }
+```
+- DISPLAY_ACTIVITIES
+```javascript
+  {
+    type: DISPLAY_ACTIVITIES
+  }
+```
+  
+- DISPLAY_PLACES
+```javascript
+  {
+    type: DISPLAY_PLACES
   }
 ```
 
+
 - VIEW_PLACE
+```javascript
+  {
+    type: VIEW_PLACE
+    place: {}
+  }
+```
 
 - FETCH_ACTIVITIES is dispatched when we call the api
 - VIEW_ACTIVITIES is dispatched when we receive the api response
@@ -37,7 +57,25 @@
 
 - VIEW_PROFIL
 
+- GET_GEOLOCATION is dispatched when we load the HomePage
+
+```javascript
+  {
+    type: GET_GEOLOCATION
+    coords: []
+  }
+```
+
 ## Reducers
+
+-homePageReducer
+
+```javascript
+  const initialState: "places"
+```
+
+When DISPLAY_PLACES is dispatched, state becomes places
+When DISPLAY_ACTIVITIES is dispatched, state becomes activities
 
 -placesReducer
 
@@ -58,12 +96,26 @@ When VIEW_PLACES is dispatched, state becomes action.places
   const initialState: {}
 ```
 
+-placeReducer
+```javascript
+  const initialState: {}
+```
+
 When VIEW_ACTIVITIES is dispatched, state becomes action.activities
 
 -loadingReducer
 
 ```javascript
   const initialState: false
+```
+
+When FETCH_PLACES is dispatched, state becomes true  
+When FETCH_ACTIVITIES is dispatched, state becomes true
+
+-mapReducer
+
+```javascript
+  const initialState: []
 ```
 
 When FETCH_PLACES is dispatched, state becomes true  

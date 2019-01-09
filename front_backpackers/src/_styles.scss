@@ -1,6 +1,7 @@
 $blueColor: #054762;
 $lightBlueColor: #00d3e5;
 $darkGrayColor: #8c8c8c;
+$blueGreycolor: #ededee;
 $grayColor: #e5e4e9;
 $greenColor: #03aa6f;
 $orangeColor: #ffb900;
@@ -16,6 +17,11 @@ $peachColor: #ff896d;
   margin-left: -15px;
   line-height: 45px;
   height: 45px;
+}
+
+.greenHeader {
+  @extend .blueHeader;
+  background-color: $greenColor;
 }
 
 h3 {

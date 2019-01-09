@@ -1,0 +1,14 @@
+@import "../_styles.scss";
+
+.postBtn {
+  background-color: $greenColor;
+  color: white;
+  line-height: 40px;
+  cursor: pointer;
+}
+
+.field {
+  border-style: groove;
+  border: 2px solid #c1c1c1;
+  border-radius: 5px;
+}
