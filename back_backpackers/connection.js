@@ -172,14 +172,16 @@ app.get("/activity/:id", (req, res) => {
     `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
-            activities.contact, date, id, country, city,
+            activities.contact, date, users.id, country, city,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
+            (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants, users.picture, users.username
     FROM activities 
     INNER JOIN places 
     ON activities.id_place = places.id
     LEFT JOIN participation
     ON activities.idActivity = participation.idActivity
+    LEFT JOIN users
+    ON activities.id_creator = users.id
     WHERE activities.idActivity = ?
     GROUP BY activities.idActivity `,
     idActivity,

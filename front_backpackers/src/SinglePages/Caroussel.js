@@ -41,16 +41,21 @@ const Caroussel = props => (
         <Col xs="6" className="creatorFrame">
           <img
             className="rounded-circle"
-            src="https://via.placeholder.com/75"
+            src={
+              props.activity.picture
+                ? props.activity.picture
+                : "https://via.placeholder.com/75"
+            }
             alt="Createur"
           />
           <p className="frame-name pl-3 pr-1 d-inline-block  bg-white ">
-            Paul.P
+            {props.activity.username}
           </p>
-          <p className="d-inline-block text-white pr-1 pl-3">
+          {/* <p className="d-inline-block text-white pr-1 pl-3">
             4.5
             <i className=" pl-1 fas fa-star" />
-          </p>
+          </p> */}{" "}
+          {/* Système de notation pas encore fait */}
         </Col>
       </Row>
     ) : (
