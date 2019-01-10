@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Input, Button, Collapse } from "reactstrap";
+import { Row, Col, Input, Button, Collapse, Badge } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./SearchPage.css";
 
@@ -45,14 +45,6 @@ class SearchActivity extends Component {
           </Col>
           <Col xs="8">
             <p className="text-center mb-0">Rechercher</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs="9">
-            <Input className="search-bar" placeholder="Rechercher" />
-          </Col>
-          <Col xs="3">
-            <Button className="search-btn">Rechercher</Button>
           </Col>
         </Row>
         <Row>
@@ -185,12 +177,24 @@ class SearchActivity extends Component {
             <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <input id="searchByDate" name="searchByDate" type="date" />
-          </Col>
-          <Col />
-        </Row>
+        <Collapse isOpen={this.state.collapseDates}>
+          <Row>
+            <Col>
+              <Badge className="badgeDate">Du...</Badge>
+            </Col>
+            <Col>
+              <input id="searchByDate" name="searchByDate" type="date" />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Badge className="badgeDate">Au...</Badge>
+            </Col>
+            <Col>
+              <input id="searchByDate" name="searchByDate" type="date" />
+            </Col>
+          </Row>
+        </Collapse>
         <Row>
           <Col>
             <h2 onClick={this.toggleSearchRefined} className="pr-3">
@@ -216,6 +220,11 @@ class SearchActivity extends Component {
             </Col>
           </Row>
         </Collapse>
+        <Row>
+          <Col>
+            <Button className="search-btn">Rechercher</Button>
+          </Col>
+        </Row>
       </Fragment>
     );
   }
