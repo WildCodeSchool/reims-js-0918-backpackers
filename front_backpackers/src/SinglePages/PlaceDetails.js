@@ -79,8 +79,8 @@ class PlaceDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                            "Gratuit"
-                          )}
+                          "Gratuit"
+                        )}
                       </p>
                     </div>
                   </Col>
@@ -107,10 +107,14 @@ class PlaceDetails extends Component {
           <TabPane tabId="2">
             <Row className="mapDetails">
               <Col xs="12">
-                {this.state.activeTab === "2" ?
-                  <MapPlace lat={this.props.place.latitude} long={this.props.place.longitude} />
-                  :
-                  ""}
+                {this.state.activeTab === "2" ? (
+                  <MapPlace
+                    lat={this.props.place.latitude}
+                    long={this.props.place.longitude}
+                  />
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
           </TabPane>
@@ -121,10 +125,14 @@ class PlaceDetails extends Component {
             <h3 className="text-center p-1 mt-1">Les activités</h3>
           </Col>
         </Row>
-        {console.log("place", this.props.place)}
-        {this.props.place.activities.map(activity => (
-          <ActivityThumbnail {...activity} key={activity.idActivity} />
-        ))}
+
+        {this.props.place.activities.map(activity =>
+          activity.capacity - 1 - activity.participants > 0 ? (
+            <ActivityThumbnail {...activity} key={activity.idActivity} />
+          ) : (
+            ""
+          )
+        )}
 
         <Row>
           <Col xs="12">

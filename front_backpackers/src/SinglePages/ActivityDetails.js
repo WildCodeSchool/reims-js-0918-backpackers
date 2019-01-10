@@ -33,7 +33,7 @@ class ActivityDetails extends Component {
   activeParticipation() {
     axios
       .post(
-        `/participate/${this.props.activity.id}`,
+        `/participate/${this.props.activity.idActivity}`,
         { idChat: this.props.activity.idChat },
         {
           headers: {
@@ -96,8 +96,8 @@ class ActivityDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                            "Gratuit"
-                          )}
+                          "Gratuit"
+                        )}
                       </p>
                     </div>
                   </Col>
@@ -114,7 +114,20 @@ class ActivityDetails extends Component {
                       <p className="mb-0">
                         <i className="fas fa-user-alt" />
                       </p>
-                      <p>{this.props.activity.capacity} Places Restantes</p>
+
+                      {this.props.activity.capacity -
+                        this.props.activity.participants -
+                        1 <
+                      0 ? (
+                        <p>0 Places Restantes</p>
+                      ) : (
+                        <p>
+                          {this.props.activity.capacity -
+                            this.props.activity.participants -
+                            1}{" "}
+                          Places Restantes
+                        </p>
+                      )}
                     </div>
                   </Col>
                 </Row>
@@ -132,10 +145,14 @@ class ActivityDetails extends Component {
           <TabPane tabId="2">
             <Row className="mapDetails">
               <Col xs="12">
-                {this.state.activeTab === "2" ?
-                  <MapPlace lat={this.props.activity.latitude} long={this.props.activity.longitude} />
-                  :
-                  ""}
+                {this.state.activeTab === "2" ? (
+                  <MapPlace
+                    lat={this.props.activity.latitude}
+                    long={this.props.activity.longitude}
+                  />
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
           </TabPane>
