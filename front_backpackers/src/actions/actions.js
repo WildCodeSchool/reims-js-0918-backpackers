@@ -15,7 +15,8 @@ import {
   GET_CHATS,
   FETCH_ID_ACTIVITY,
   VIEW_FORM,
-  VIEW_UPLOAD
+  VIEW_UPLOAD,
+  SELECT_PLACE_ADDRESS
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
@@ -93,4 +94,9 @@ export const makeGetChatsAction = (chat, messages) => ({
   type: GET_CHATS,
   chat,
   messages
+});
+
+export const makeSelectPlaceAddressAction = (address) => ({
+  type: SELECT_PLACE_ADDRESS,
+  address
 });

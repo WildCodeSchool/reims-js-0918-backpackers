@@ -5,11 +5,11 @@ import { geolocated } from "react-geolocated"
 
 
 class CreatePlacePage extends Component {
-
   submit = places => {
-    const place = { ...places };
-    console.log(place);
+    const place = { ...places, ...this.props.selectAddress };
     JSON.stringify(place);
+    console.log(places)
+    console.log("adress", this.props.selectAddress)
     axios
       .post("/places", place, {
         headers: {
@@ -21,11 +21,13 @@ class CreatePlacePage extends Component {
       });
   };
   render() {
-    return <PlaceFormContainer onSubmit={this.submit} position={!this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled
-      ? []
-      : this.props.coords
-        ? [this.props.coords.latitude, this.props.coords.longitude]
-        : []} />
+    return <PlaceFormContainer onSubmit={this.submit} getAddress={this.props.getAddress}
+      position={!this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled
+        ? []
+        : this.props.coords
+          ? [this.props.coords.latitude, this.props.coords.longitude]
+          : []}
+    />
 
   }
 }

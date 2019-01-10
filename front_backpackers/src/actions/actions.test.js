@@ -11,7 +11,8 @@ import {
   VIEW_PROFILE,
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES,
-  GET_CHATS
+  GET_CHATS,
+  SELECT_PLACE_ADDRESS
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -26,7 +27,8 @@ import {
   makeViewActivityAction,
   makeDisplayPlacesAction,
   makeDisplayActivitiesAction,
-  makeGetChatsAction
+  makeGetChatsAction,
+  makeSelectPlaceAddressAction
 } from "./actions";
 
 describe("makeDisplayActivitiesAction", () => {
@@ -202,3 +204,18 @@ describe("makeGetChatsAction", () => {
     expect(makeGetChatsAction(chat, messages)).toEqual(expected);
   });
 });
+
+
+describe("makeSelectPlaceAddressAction", () => {
+  it("should return a SELECT_PLACE_ADDRESS", () => {
+    const address = { country: "japan", city: "tokyo" }
+    const expected = {
+      type: SELECT_PLACE_ADDRESS,
+      address
+    };
+
+    expect(makeSelectPlaceAddressAction(address)).toEqual(expected);
+  });
+});
+
+

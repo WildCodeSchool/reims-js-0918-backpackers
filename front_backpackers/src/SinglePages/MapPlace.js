@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Map, TileLayer, Popup, Marker } from "react-leaflet";
-import { Row } from "reactstrap";
 
 import "./SinglePage.scss";
 

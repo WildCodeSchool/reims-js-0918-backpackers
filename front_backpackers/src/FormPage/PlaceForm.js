@@ -1,9 +1,7 @@
-import React, { Component, Fragment, createRef } from "react";
+import React, { Component, Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
-import { Map, TileLayer, Marker } from "react-leaflet";
-import { geolocated } from "react-geolocated"
 import "./FormPage.scss";
 import MapPlaceCreation from "./MapPlaceCreation";
 
@@ -29,30 +27,6 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 );
 
 class PlaceForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      marker: {
-        lat: this.props.position[0],
-        lng: this.props.position[1],
-      },
-      draggable: true,
-    }
-    this.refmarker = createRef()
-  }
-  toggleDraggable = () => {
-    this.setState({ draggable: !this.state.draggable })
-  }
-
-  updatePosition = () => {
-    const marker = this.refmarker.current
-    if (marker != null) {
-      this.setState({
-        marker: marker.leafletElement.getLatLng(),
-      })
-    }
-  }
-
   render() {
     return (
       <Fragment>
@@ -113,69 +87,13 @@ class PlaceForm extends Component {
               <h2 className="pt-3">Localisation</h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
 
-
               {this.props.position.length !== 2 ?
                 "" :
                 <div className="mapForm">
-                  <MapPlaceCreation center={this.props.position} />
-
-                  {/* <Row>
-                    <Map center={this.props.position} zoom="15">
-                      <TileLayer
-                        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                      />
-                      <Marker
-                        draggable={this.state.draggable}
-                        onDragend={this.updatePosition}
-                        position={this.state.marker.lat === undefined ? this.props.position : this.state.marker}
-                        ref={this.refmarker}>
-                      </Marker>
-                    </Map>
-                  </Row> */}
-
+                  <MapPlaceCreation center={this.props.position} getAddress={this.props.getAddress} />
                 </div>
               }
 
-              <Field
-                id="latitude"
-                type="number"
-                name="latitude"
-                component={renderField}
-                label="Latitude"
-                value={this.state.marker.lat}
-              /><Field
-                id="longitude"
-                type="number"
-                name="longitude"
-                component={renderField}
-                label="Longitude"
-              />
-
-              <Field type="text" id="coords" name="coords"
-                component={renderField} value={this.state.marker} />
-
-              < Field
-                id="country"
-                name="country"
-                component={renderField}
-                type="text"
-                label="Pays"
-              />
-              <Field
-                id="city"
-                name="city"
-                component={renderField}
-                type="text"
-                label="Ville"
-              />
-              <Field
-                id="address"
-                name="address"
-                component={renderField}
-                type="text"
-                label="Adresse"
-              />
             </div>
             <button type="submit" disabled={this.props.submitting} className="mt-3 postBtn">
               Etape 2
@@ -192,9 +110,4 @@ const PlaceFormContainer = reduxForm({
   validate
 })(PlaceForm);
 
-export default geolocated({
-  positionOptions: {
-    enableHighAccuracy: false
-  },
-  userDecisionTimeout: 5000
-})(PlaceFormContainer);
+export default PlaceFormContainer

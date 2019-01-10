@@ -1,13 +1,13 @@
 import { connect } from "react-redux"
-import { makeGetGeolocationAction } from "../actions/actions";
+import { makeSelectPlaceAddressAction } from "../actions/actions";
 import CreatePlacePage from "../FormPage/CreatePlacePage";
 
 const mapStateToProps = state => ({
-  map: state.map
+  selectAddress: state.selectAddress
 })
 
 const mapDispatchToProps = dispatch => ({
-  getCoords: coords => dispatch(makeGetGeolocationAction(coords))
+  getAddress: address => dispatch(makeSelectPlaceAddressAction(address))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePlacePage)
