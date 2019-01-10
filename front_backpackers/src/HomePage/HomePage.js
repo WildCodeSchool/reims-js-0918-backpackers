@@ -12,7 +12,7 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { geolocated } from "react-geolocated";
-import Chatkit from "@pusher/chatkit"
+import Chatkit from "@pusher/chatkit";
 
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
@@ -39,11 +39,12 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchPlaces();
-    this.callApiPlaces();
     this.props.fetchActivities();
     this.callApiActivities();
+    this.props.fetchPlaces();
+    this.callApiPlaces();
     this.callApiProfile();
+    this.callApiCapacity();
   }
 
   callApiProfile() {
@@ -54,14 +55,18 @@ class HomePage extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response => this.props.viewProfile(response.data))
-      .then(() => (
+      .then(response =>
+        this.props.viewProfile([{ ...response.data[0], activities: [] }])
+      )
+      .then(() =>
         axios
           .post("/users", {
             username: this.props.profile[0].username
           })
-          .catch(error => { console.log(error) })
-      ))
+          .catch(error => {
+            console.log(error);
+          })
+      )
       .then(() => {
         const chatManager = new Chatkit.ChatManager({
           instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
@@ -69,13 +74,17 @@ class HomePage extends Component {
           tokenProvider: new Chatkit.TokenProvider({
             url: "/authenticate"
           })
-        })
-        chatManager
-          .connect()
-          .then(currentUser => {
-            this.setState({ currentUser })
-          })
-      })
+        });
+        chatManager.connect().then(currentUser => {
+          this.setState({ currentUser });
+        });
+      });
+  }
+
+  callApiCapacity() {
+    axios
+      .get("/activities/capacity")
+      .then(res => this.props.getActivityCapacity(res.data));
   }
 
   callApiPlaces() {
@@ -187,13 +196,16 @@ class HomePage extends Component {
                 <PlaceThumbnail {...place} key={place.id} />
               ))}
             {this.props.displayHomePage === "activities" &&
-              this.props.activities.map(activity => (
-                <ActivityThumbnail {...activity} key={activity.idActivity} />
-              ))}
-
+              this.props.activities.map(activity =>
+                activity.capacity - 1 - activity.participants > 0 ? (
+                  <ActivityThumbnail {...activity} key={activity.idActivity} />
+                ) : (
+                  ""
+                )
+              )}
             <Row className="fixed-bottom listFooter">
               <Link
-                to="/activities"
+                to="/search"
                 className="w-50 listSearchBtn text-white text-center"
               >
                 Rechercher <i className="fas fa-search-location" />

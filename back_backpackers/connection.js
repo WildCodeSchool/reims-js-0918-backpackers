@@ -59,8 +59,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-        ? `SELECT * FROM places WHERE adress = "${adress}"`
-        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+      ? `SELECT * FROM places WHERE adress = "${adress}"`
+      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -75,15 +75,18 @@ app.get("/places/search", (req, res) => {
 
 app.get("/activities", (req, res) => {
   connection.query(
-    `SELECT idActivity, activities.name, id_creator, activities.price, 
+    `SELECT activities.idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
     (activities.description) AS descriptionActivity, id_place, 
     activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
-    (places.picture) AS picturePlace 
+    (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
     FROM activities 
-    JOIN places 
-    ON activities.id_place = places.id`,
+    INNER JOIN places 
+    ON activities.id_place = places.id 
+    LEFT JOIN participation 
+    ON activities.idActivity = participation.idActivity 
+    GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving activities");
@@ -102,8 +105,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-        ? `SELECT * FROM activities WHERE creator ="${creator}"`
-        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+      ? `SELECT * FROM activities WHERE creator ="${creator}"`
+      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -136,19 +139,19 @@ app.post(
       })
       .then(response => {
         const id_creator = req.user.id;
-        const idChat = response.id
+        const idChat = response.id;
         const formData = { ...req.body, id_creator, idChat: idChat };
         connection.query(
           "INSERT INTO activities SET ? ",
           formData,
           (error, results) => {
             if (error) {
-              chatkit.deleteRoom({
-                id: idChat
-              })
+              chatkit
+                .deleteRoom({
+                  id: idChat
+                })
                 .then(() => res.status(500).send("Failed to add activity"))
-                .catch(deleteErr => console.error(deleteErr))
-
+                .catch(deleteErr => console.error(deleteErr));
             } else {
               res.json(results.insertId);
             }
@@ -160,7 +163,6 @@ app.post(
       });
   }
 );
-
 
 app.post(
   "/participate/:idActivity",
@@ -174,13 +176,14 @@ app.post(
           res.status(500).send("Failed to participate to an activity");
           console.log(err);
         } else {
-          console.log("test", req.body.idChat, req.user.username)
-          chatkit.addUsersToRoom({
-            roomId: req.body.idChat,
-            userIds: [req.user.username]
-          })
-            .then(() => console.log('added'))
-            .catch(error => console.error(error))
+          console.log("test", req.body.idChat, req.user.username);
+          chatkit
+            .addUsersToRoom({
+              roomId: req.body.idChat,
+              userIds: [req.user.username]
+            })
+            .then(() => console.log("added"))
+            .catch(error => console.error(error));
         }
       }
     );
@@ -190,16 +193,21 @@ app.post(
 app.get("/activity/:id", (req, res) => {
   const idActivity = req.params.id;
   connection.query(
-    `SELECT idActivity, activities.name, id_creator, activities.price,
+    `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
-            activities.contact, date, id, country, city,
+            activities.contact, date, users.id, country, city,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace, idChat 
+            (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username 
     FROM activities 
-    JOIN places 
+    INNER JOIN places 
     ON activities.id_place = places.id
-    WHERE idActivity =? `,
+    LEFT JOIN participation
+    ON activities.idActivity = participation.idActivity
+    LEFT JOIN users
+    ON activities.id_creator = users.id
+    WHERE activities.idActivity = ?
+    GROUP BY activities.idActivity `,
     idActivity,
     (err, results) => {
       if (err) {
@@ -228,16 +236,19 @@ app.get("/place/:id", (req, res) => {
       } else {
         // res.json(results);
         connection.query(
-          `SELECT idActivity, activities.name, id_creator, activities.price,
+          `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
             activities.contact, date, DATEDIFF(date, CURRENT_TIMESTAMP) as date_diff, id, country, city,
             address, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace 
-          FROM activities 
-          JOIN places 
+            (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
+          FROM activities
+          INNER JOIN places 
           ON activities.id_place = places.id
-          WHERE id_place = ? `,
+          LEFT JOIN participation
+          ON activities.idActivity = participation.idActivity
+          WHERE id_place = ? 
+          GROUP BY activities.idActivity`,
           idPlace,
           (err, actiResults) => {
             if (err) {
@@ -258,13 +269,39 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      // `SELECT id, lastname, firstname, birthDate, adress, mail, favorites, hobbies,
-      // historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,
-      // id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date
-      // FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?`,
+      // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+
+      // "SELECT id, username, birthDate, mail, favorites, hobbies, historic, rights, picture, description, FROM users WHERE id = ?",
+
       "SELECT * FROM users WHERE id=?",
+
+      // "SELECT users.*, activities.* FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+
+      // console.log("route", req.user.id),
       req.user.id,
       (err, results) => {
+        if (err) {
+          res.status(500).send("Error retrieving profile");
+        } else {
+          res.json(results);
+        }
+      }
+    );
+  }
+);
+
+app.get(
+  "/profile/activities",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, dateFROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+      // "SELECT idActivity, name, id_creator, price, capacity, picture, description, id_place, contact, date FROM activities WHERE id_creator = ?",
+      "SELECT idActivity, name, id_creator, price, capacity,  (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE id=?",
+      // console.log("route", req.user.id),
+      req.user.id,
+      (err, results) => {
+        console.log("lol", err);
         if (err) {
           res.status(500).send("Error retrieving profile");
         } else {
@@ -322,20 +359,6 @@ app.post("/authenticate", (req, res) => {
     userId: req.query.user_id
   });
   res.status(authData.status).send(authData.body);
-});
-
-app.post("/newroom", (req, res) => {
-  chatkit
-    .createRoom({
-      creatorId: req.body.userId,
-      name: req.body.name
-    })
-    .then(response => {
-      res.status(200).send(response);
-    })
-    .catch(err => {
-      res.status(400).send(err);
-    });
 });
 
 app.listen(port, err => {

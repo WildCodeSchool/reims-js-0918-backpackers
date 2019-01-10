@@ -6,6 +6,7 @@ export const DISPLAY_ACTIVITIES = "DISPLAY_ACTIVITIES";
 export const VIEW_ACTIVITY = "VIEW_ACTIVITY";
 export const VIEW_PLACE = "VIEW_PLACE";
 export const VIEW_PROFILE = "VIEW_PROFILE";
+export const VIEW_PROFILE_ACTIVITY = "VIEW_PROFILE_ACTIVITY";
 export const FETCH_PLACES = "FETCH_PLACES";
 export const FETCH_ACTIVITIES = "FETCH_ACTIVITIES";
 export const OPEN_MENU = "OPEN_MENU";
@@ -19,3 +20,5 @@ export const GET_CHATS = "GET_CHATS";
 export const GET_GEOLOCATION = "GET_GEOLOCATION";
 
 export const SELECT_PLACE_ADDRESS = "SELECT_PLACE_ADDRESS";
+export const ADD1 = "ADD1";
+export const REMOVE1 = "REMOVE1";

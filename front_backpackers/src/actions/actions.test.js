@@ -12,7 +12,11 @@ import {
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES,
   GET_CHATS,
-  SELECT_PLACE_ADDRESS
+  SELECT_PLACE_ADDRESS,
+  ADD1,
+  REMOVE1,
+  VIEW_PROFILE_ACTIVITY,
+  GET_CHATS
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -28,8 +32,56 @@ import {
   makeDisplayPlacesAction,
   makeDisplayActivitiesAction,
   makeGetChatsAction,
-  makeSelectPlaceAddressAction
+  makeSelectPlaceAddressAction,
+  makeAddAction,
+  makeRemoveAction
 } from "./actions";
+
+describe("makeAddAction", () => {
+  it("should return a ADD1 action", () => {
+    const expected = {
+      type: ADD1
+    };
+
+    expect(makeAddAction()).toEqual(expected);
+  });
+});
+
+describe("makeRemoveAction", () => {
+  it("should return a REMOVE1 action", () => {
+    const expected = {
+      type: REMOVE1
+    };
+
+    expect(makeRemoveAction()).toEqual(expected);
+  });
+});
+
+describe("makeViewProfileActivityAction", () => {
+  it("should return a VIEW_PROFILE_ACTIVITY action", () => {
+    const profile = { username: "Teoxane" };
+    const profileActivities = [
+      {
+        name: "piscine",
+        description: "go piscine"
+      },
+      {
+        name: "foot",
+        description: "go foot"
+      }
+    ];
+
+    const expected = {
+      type: VIEW_PROFILE_ACTIVITY,
+      profile,
+      profileActivities
+    };
+
+    expect(makeViewProfileActivityAction(profileActivities, profile)).toEqual(
+      expected
+    );
+  });
+});
 
 describe("makeDisplayActivitiesAction", () => {
   it("should return a DISPLAY_PLACES action", () => {
@@ -158,7 +210,6 @@ describe("makeCloseMenuAction", () => {
     expect(makeCloseMenuAction()).toEqual(expected);
   });
 
-
   describe("makeViewProfileAction", () => {
     it("should return a VIEW_PROFILE action", () => {
       const profile = {
@@ -173,14 +224,12 @@ describe("makeCloseMenuAction", () => {
 
       expect(makeViewProfileAction(profile)).toEqual(expected);
     });
-  })
-
+  });
 });
-
 
 describe("makeGetGeoLocationAction", () => {
   it("should return a GET_GEOLOCATION", () => {
-    const coords = [51.123, 0.431]
+    const coords = [51.123, 0.431];
     const expected = {
       type: GET_GEOLOCATION,
       coords
@@ -190,11 +239,10 @@ describe("makeGetGeoLocationAction", () => {
   });
 });
 
-
 describe("makeGetChatsAction", () => {
   it("should return a GET_CHATS", () => {
-    const messages = [{ message: 1 }, { message: 2 }]
-    const chat = 42
+    const messages = [{ message: 1 }, { message: 2 }];
+    const chat = 42;
     const expected = {
       type: GET_CHATS,
       messages,

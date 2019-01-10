@@ -12,12 +12,23 @@ import {
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES,
   VIEW_PLACE,
+  VIEW_PROFILE_ACTIVITY,
   GET_CHATS,
   FETCH_ID_ACTIVITY,
   VIEW_FORM,
   VIEW_UPLOAD,
-  SELECT_PLACE_ADDRESS
+  SELECT_PLACE_ADDRESS,
+  ADD1,
+  REMOVE1
 } from "./actionTypes";
+
+export const makeAddAction = () => ({
+  type: ADD1
+});
+
+export const makeRemoveAction = () => ({
+  type: REMOVE1
+});
 
 export const makeDisplayPlacesAction = () => ({
   type: DISPLAY_PLACES
@@ -39,6 +50,12 @@ export const makeFetchPlacesAction = () => ({
 export const makeViewProfileAction = profile => ({
   type: VIEW_PROFILE,
   profile
+});
+
+export const makeViewProfileActivityAction = (profileActivities, profile) => ({
+  type: VIEW_PROFILE_ACTIVITY,
+  profile,
+  profileActivities
 });
 
 export const makeViewActivitiesAction = activities => ({

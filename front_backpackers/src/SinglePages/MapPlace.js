@@ -5,7 +5,7 @@ import "./SinglePage.scss";
 
 class MapPlace extends Component {
   render() {
-    const position = [this.props.lat, this.props.long]
+    const position = [this.props.lat, this.props.long];
     return (
       <Map center={position} zoom="17">
         <TileLayer
@@ -14,7 +14,7 @@ class MapPlace extends Component {
         />
         <Marker position={position} />
       </Map>
-    )
+    );
   }
 }
 
