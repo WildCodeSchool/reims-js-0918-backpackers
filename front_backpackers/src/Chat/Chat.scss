@@ -11,8 +11,7 @@
 }
 
 .chatPage{
-  height: 100vh;
-  padding-top:45px;
+  height: calc(100vh - 45px);
   .messageList{
     flex: 1;
     overflow: scroll; 

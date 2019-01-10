@@ -51,7 +51,7 @@ class PlaceDetails extends Component {
                 this.toggle("2");
               }}
             >
-              Map
+              MAP
             </NavLink>
           </NavItem>
         </Nav>
@@ -79,8 +79,8 @@ class PlaceDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                          "Gratuit"
-                        )}
+                            "Gratuit"
+                          )}
                       </p>
                     </div>
                   </Col>
@@ -113,8 +113,8 @@ class PlaceDetails extends Component {
                     long={this.props.place.longitude}
                   />
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </Col>
             </Row>
           </TabPane>
@@ -130,8 +130,8 @@ class PlaceDetails extends Component {
           activity.capacity - 1 - activity.participants > 0 ? (
             <ActivityThumbnail {...activity} key={activity.idActivity} />
           ) : (
-            ""
-          )
+              ""
+            )
         )}
 
         <Row>

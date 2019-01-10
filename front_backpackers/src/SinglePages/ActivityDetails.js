@@ -68,7 +68,7 @@ class ActivityDetails extends Component {
                 this.toggle("2");
               }}
             >
-              LE LIEU
+              MAP
             </NavLink>
           </NavItem>
         </Nav>
@@ -96,8 +96,8 @@ class ActivityDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                          "Gratuit"
-                        )}
+                            "Gratuit"
+                          )}
                       </p>
                     </div>
                   </Col>
@@ -118,16 +118,16 @@ class ActivityDetails extends Component {
                       {this.props.activity.capacity -
                         this.props.activity.participants -
                         1 <
-                      0 ? (
-                        <p>0 Places Restantes</p>
-                      ) : (
-                        <p>
-                          {this.props.activity.capacity -
-                            this.props.activity.participants -
-                            1}{" "}
-                          Places Restantes
+                        0 ? (
+                          <p>0 Places Restantes</p>
+                        ) : (
+                          <p>
+                            {this.props.activity.capacity -
+                              this.props.activity.participants -
+                              1}{" "}
+                            Places Restantes
                         </p>
-                      )}
+                        )}
                     </div>
                   </Col>
                 </Row>
@@ -151,8 +151,8 @@ class ActivityDetails extends Component {
                     long={this.props.activity.longitude}
                   />
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </Col>
             </Row>
           </TabPane>
