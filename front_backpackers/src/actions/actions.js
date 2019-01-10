@@ -16,8 +16,18 @@ import {
   GET_CHATS,
   FETCH_ID_ACTIVITY,
   VIEW_FORM,
-  VIEW_UPLOAD
+  VIEW_UPLOAD,
+  ADD1,
+  REMOVE1
 } from "./actionTypes";
+
+export const makeAddAction = () => ({
+  type: ADD1
+});
+
+export const makeRemoveAction = () => ({
+  type: REMOVE1
+});
 
 export const makeDisplayPlacesAction = () => ({
   type: DISPLAY_PLACES
