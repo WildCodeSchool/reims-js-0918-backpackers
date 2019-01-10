@@ -6,7 +6,6 @@ const app = express();
 const port = 3010;
 const cors = require("cors");
 const passport = require("passport");
-const index = require("./auth/index");
 require("./passport/passport-strategy");
 
 app.use(express.static(__dirname + "/public"));
@@ -16,7 +15,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/auth", auth);
-app.use("/", index);
 
 const multer = require("multer");
 const upload = multer({
@@ -77,7 +75,6 @@ app.post("/places", (req, res) => {
 )
 
 app.post("/places/upload", upload.single("monfichier"), (req, res) => {
-  console.log(req.file)
   fs.rename(
     req.file.path,
     "public/images/" + req.file.originalname,
@@ -101,15 +98,6 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
       }
     }
   )
-
-  // connection.query("INSERT INTO places SET ?", formData, (err, results) => {
-  //   if (err) {
-  //     console.log(err);
-  //     res.status(500).send("Failed to add place");
-  //   } else {
-  //     res.sendStatus(200);
-  //   }
-  // });
 });
 
 app.get("/places/search", (req, res) => {
@@ -226,6 +214,31 @@ app.post(
       });
   }
 );
+
+app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
+  fs.rename(
+    req.file.path,
+    "public/images/" + req.file.originalname,
+    (err, results) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        connection.query(
+          `UPDATE activities SET picture = "${
+          req.file.originalname
+          }" WHERE idActivity= (SELECT LAST_INSERT_ID())`,
+          err => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.sendStatus(200);
+            }
+          }
+        );
+      }
+    }
+  )
+});
 
 app.post(
   "/participate/:idActivity",

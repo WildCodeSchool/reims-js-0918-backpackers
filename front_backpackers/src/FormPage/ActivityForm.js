@@ -28,7 +28,7 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 );
 
 const ActivityForm = props => {
-  const { handleSubmit, submitting } = props;
+  const { handleSubmit, submitting, uploadFile } = props;
   return (
     <Fragment>
       <Row className="greenHeader text-white">
@@ -90,8 +90,11 @@ const ActivityForm = props => {
               label="Prix"
             />
           </div>
+          <h5 className="text-center pt-3 homeUnderline">Votre photo</h5>
+          <input className="mt-3" type="file" onChange={e => uploadFile(e)} />
+
           <button type="submit" disabled={submitting} className="mt-3 postBtn">
-            Etape 2
+            Créer l'activité
           </button>
         </form>
       </div>
