@@ -1,9 +1,14 @@
-
 @import "../_styles.scss";
 
 .postBtn {
   background-color: $greenColor;
   color: white;
+  line-height: 40px;
+  cursor: pointer;
+}
+
+.backBtn {
+  background-color: $blueColor;
   line-height: 40px;
   cursor: pointer;
 }

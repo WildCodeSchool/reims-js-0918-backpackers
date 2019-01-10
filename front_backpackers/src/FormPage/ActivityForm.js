@@ -9,6 +9,9 @@ const validate = values => {
   if (!values.name) {
     errors.name = "Required";
   }
+  if (!values.capacity) {
+    errors.capacity = "Required";
+  }
   return errors;
 };
 
