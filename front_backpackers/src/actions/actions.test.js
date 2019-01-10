@@ -13,7 +13,9 @@ import {
   DISPLAY_ACTIVITIES,
   GET_CHATS,
   ADD1,
-  REMOVE1
+  REMOVE1,
+  VIEW_PROFILE_ACTIVITY,
+  GET_CHATS
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -50,6 +52,32 @@ describe("makeRemoveAction", () => {
     };
 
     expect(makeRemoveAction()).toEqual(expected);
+  });
+});
+
+describe("makeViewProfileActivityAction", () => {
+  it("should return a VIEW_PROFILE_ACTIVITY action", () => {
+    const profile = { username: "Teoxane" };
+    const profileActivities = [
+      {
+        name: "piscine",
+        description: "go piscine"
+      },
+      {
+        name: "foot",
+        description: "go foot"
+      }
+    ];
+
+    const expected = {
+      type: VIEW_PROFILE_ACTIVITY,
+      profile,
+      profileActivities
+    };
+
+    expect(makeViewProfileActivityAction(profileActivities, profile)).toEqual(
+      expected
+    );
   });
 });
 

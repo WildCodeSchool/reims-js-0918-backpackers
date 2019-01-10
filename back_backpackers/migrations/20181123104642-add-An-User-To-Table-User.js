@@ -37,7 +37,7 @@ exports.up = function(db, callback) {
       "foot, jeux vidéos",
       0,
       "user",
-      "google.com",
+      "http://deveniracteur.fr/wp-content/uploads/2015/09/Jouer-un-personnage-ou-rester-soi-m%C3%AAme-300x300.jpg",
       "Je m'appelle Jean Dupont, j'aime le foot et les jeux vidéos dont surtout FIFA 2019. J'aime aussi la randonnée mais seulement en voiture.",
       "$2a$10$YA2MQTmaXkzm.Sze9BZaPubnW8F8dytRq6gyGQtGWR3pji3gCQcnK"
     ],
