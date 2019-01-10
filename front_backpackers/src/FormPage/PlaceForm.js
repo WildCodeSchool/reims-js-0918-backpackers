@@ -104,8 +104,12 @@ class PlaceForm extends Component {
               }
 
             </div>
+
+            <h5 className="text-center pt-3 homeUnderline">Votre photo</h5>
+            <input className="mt-3" type="file" onChange={e => this.props.uploadFile(e)} />
+
             <button type="submit" disabled={this.props.submitting} className="mt-3 postBtn">
-              Etape 2
+              Créer le lieu
           </button>
           </form>
         </div>

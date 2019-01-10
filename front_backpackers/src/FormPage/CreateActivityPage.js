@@ -27,6 +27,7 @@ class CreateActivityPage extends Component {
     const idActivity = this.props.id;
     const formData = new FormData();
     formData.append("monfichier", file);
+    { console.log(file) }
     const config = {
       headers: {
         "content-type": "multipart/form-data"
