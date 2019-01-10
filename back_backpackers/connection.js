@@ -38,7 +38,18 @@ app.get("/places", (req, res) => {
 });
 
 app.post("/places", (req, res) => {
-  const formData = req.body;
+  const formData = {
+    name: req.body.name,
+    country: req.body.country,
+    city: req.body.city,
+    postCode: req.body.postcode,
+    address: req.body.address,
+    latitude: req.body.lat,
+    longitude: req.body.lng,
+    price: req.body.price,
+    type: req.body.type,
+    description: req.body.description
+  };
   connection.query("INSERT INTO places SET ?", formData, (err, results) => {
     if (err) {
       console.log(err);
@@ -59,8 +70,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-      ? `SELECT * FROM places WHERE adress = "${adress}"`
-      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+        ? `SELECT * FROM places WHERE adress = "${adress}"`
+        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -105,8 +116,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-      ? `SELECT * FROM activities WHERE creator ="${creator}"`
-      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+        ? `SELECT * FROM activities WHERE creator ="${creator}"`
+        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -301,7 +312,6 @@ app.get(
       // console.log("route", req.user.id),
       req.user.id,
       (err, results) => {
-        console.log("lol", err);
         if (err) {
           res.status(500).send("Error retrieving profile");
         } else {

@@ -10,6 +10,15 @@ const validate = values => {
   if (!values.name) {
     errors.name = "Required";
   }
+  if (!values.type) {
+    errors.type = "Required";
+  }
+  if (!values.description) {
+    errors.description = "Required";
+  }
+  if (!values.price) {
+    errors.price = "Required";
+  }
   console.log(errors);
   return errors;
 };

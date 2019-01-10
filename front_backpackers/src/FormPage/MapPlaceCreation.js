@@ -34,7 +34,7 @@ class MapPlaceCreation extends Component {
     geocoder.reverse(this.state.marker, map.options.crs.scale(20), results => {
       const r = results[0];
       if (r) {
-        this.props.getAddress(r.properties.address)
+        this.props.getAddress({ ...r.properties.address, ...this.state.marker })
         if (marker) {
           marker
             .setLatLng(r.center)
@@ -55,7 +55,7 @@ class MapPlaceCreation extends Component {
           this.setState({
             address: r.name
           })
-          this.props.getAddress(r.properties.address)
+          this.props.getAddress({ ...r.properties.address, ...e.latlng })
           if (marker) {
             marker
               .setLatLng(r.center)
@@ -84,7 +84,7 @@ class MapPlaceCreation extends Component {
     geocoder.reverse({ lat: address.y, lng: address.x }, map.options.crs.scale(20), results => {
       const r = results[0];
       if (r) {
-        this.props.getAddress(r.properties.address)
+        this.props.getAddress({ ...r.properties.address, lat: address.y, lng: address.x })
         if (marker) {
           marker
             .setLatLng(r.center)
@@ -130,7 +130,7 @@ class MapPlaceCreation extends Component {
         <Row>
           <Input
             id="PopoverFocus"
-            className="Form-Input"
+            className="Form-Input text-left"
             onChange={event => this.handleSearchInput(event)}
             placeholder="Ou tapez une adresse"
             type="search"
