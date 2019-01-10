@@ -28,24 +28,17 @@ class MapPlaceCreation extends Component {
   }
 
   componentDidMount() {
-
     const map = this.leafletMap.leafletElement;
     const geocoder = LCG.L.Control.Geocoder.nominatim();
     geocoder.reverse(this.state.marker, map.options.crs.scale(20), results => {
       const r = results[0];
       if (r) {
         this.props.getAddress({ ...r.properties.address, ...this.state.marker })
-        if (marker) {
-          marker
-            .setLatLng(r.center)
-            .setPopupContent(r.html || r.name)
-            .openPopup();
-        } else {
-          marker = L.marker(r.center)
-            .bindPopup(r.name)
-            .addTo(map)
-            .openPopup();
-        }
+        marker = L.marker(r.center)
+          .bindPopup(r.name)
+          .addTo(map)
+          .openPopup();
+        // }
       }
     })
     map.on('click', e => {
@@ -90,7 +83,8 @@ class MapPlaceCreation extends Component {
             .setLatLng(r.center)
             .setPopupContent(r.html || r.name)
             .openPopup();
-        } else {
+        }
+        else {
           marker = L.marker(r.center)
             .bindPopup(r.name)
             .addTo(map)
