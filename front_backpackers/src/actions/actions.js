@@ -17,6 +17,7 @@ import {
   FETCH_ID_ACTIVITY,
   VIEW_FORM,
   VIEW_UPLOAD,
+  SELECT_PLACE_ADDRESS,
   ADD1,
   REMOVE1
 } from "./actionTypes";
@@ -110,4 +111,9 @@ export const makeGetChatsAction = (chat, messages) => ({
   type: GET_CHATS,
   chat,
   messages
+});
+
+export const makeSelectPlaceAddressAction = (address) => ({
+  type: SELECT_PLACE_ADDRESS,
+  address
 });
