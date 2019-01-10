@@ -9,8 +9,8 @@ const MyPopupMarker = ({ content, position, getMarkerInfos }) =>
   content ? (
     <Marker onClick={() => getMarkerInfos(content)} position={position} />
   ) : (
-    <Marker position={position} />
-  );
+      <Marker position={position} />
+    );
 
 const MyMarkersList = ({ markers, getMarkerInfos }) => {
   const items = markers.map(({ key, ...props }) => (
@@ -48,6 +48,7 @@ class Maps extends Component {
     return (
       <Row>
         <Map
+          maxBounds={[[-90, -180], [90, 180]]}
           center={this.props.map}
           zoom="15"
           onClick={() => this.resetMarkerInfos()}
@@ -69,8 +70,8 @@ class Maps extends Component {
             <PlaceThumbnail {...this.state.markerInfos} />
           </div>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </Row>
     );
   }

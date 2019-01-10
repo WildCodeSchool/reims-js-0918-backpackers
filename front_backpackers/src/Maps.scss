@@ -8,8 +8,9 @@
 .mapPopup{
   display: block;
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   z-index:100;
+  width:100%;
   .media{
     margin: 0px;
   }
