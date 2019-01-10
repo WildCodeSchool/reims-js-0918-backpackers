@@ -11,7 +11,7 @@ import {
   VIEW_PROFILE,
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES,
-  GET_CAPACITY,
+  VIEW_PROFILE_ACTIVITY,
   GET_CHATS
 } from "./actionTypes";
 import {
@@ -27,8 +27,35 @@ import {
   makeViewActivityAction,
   makeDisplayPlacesAction,
   makeDisplayActivitiesAction,
+  makeViewProfileActivityAction,
   makeGetChatsAction
 } from "./actions";
+
+describe("makeViewProfileActivityAction", () => {
+  it("should return a VIEW_PROFILE_ACTIVITY action", () => {
+    const profile = { username: "Teoxane" };
+    const profileActivities = [
+      {
+        name: "piscine",
+        description: "go piscine"
+      },
+      {
+        name: "foot",
+        description: "go foot"
+      }
+    ];
+
+    const expected = {
+      type: VIEW_PROFILE_ACTIVITY,
+      profile,
+      profileActivities
+    };
+
+    expect(makeViewProfileActivityAction(profileActivities, profile)).toEqual(
+      expected
+    );
+  });
+});
 
 describe("makeDisplayActivitiesAction", () => {
   it("should return a DISPLAY_PLACES action", () => {

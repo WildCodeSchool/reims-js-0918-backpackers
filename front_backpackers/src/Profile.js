@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Row, Col, Button, Media, Badge } from "reactstrap";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+
+import ActivityThumbnail from "./HomePage/ActivityThumbnail";
 
 import axios from "axios";
 
@@ -15,20 +17,36 @@ class Profile extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response => this.props.viewProfile(response.data));
+      .then(response =>
+        this.props.viewProfile([{ ...response.data[0], activities: [] }])
+      );
+    axios
+      .get("/profile/activities", {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response =>
+        this.props.viewProfileActivity(response.data, this.props.profile[0])
+      );
   }
 
   render() {
     return (
       <Fragment>
         <Row>
-          <Col xs="4" className="mt-4" >
-            <Link to="/" className="previousPage py-0 px-3 d-inline-block text-white">
+          <Col xs="4" className="mt-4">
+            <Link
+              to="/"
+              className="previousPage py-0 px-3 d-inline-block text-white"
+            >
               <i className="fas pr-2 fa-angle-left" />
               Retour
             </Link>
           </Col>
         </Row>
+        {console.log("props", this.props.profile)}
         {this.props.profile[0] ? (
           <Fragment>
             <Row>
@@ -48,7 +66,9 @@ class Profile extends Component {
             <div className="userInfos">
               <Row>
                 <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
-                  <h4 className="mb-0">{`${this.props.profile[0].firstName} ${this.props.profile[0].lastName}`}</h4>
+                  <h4 className="mb-0">
+                    {`${this.props.profile[0].username} `}
+                  </h4>
                   <span>{this.props.profile[0].mail}</span>
                 </Col>
                 <Col xs="2">
@@ -66,8 +86,8 @@ class Profile extends Component {
             </div>
           </Fragment>
         ) : (
-            ""
-          )}
+          ""
+        )}
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="text-center mt-3">
@@ -112,12 +132,23 @@ class Profile extends Component {
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
         </Row>
-
-        <Row className="activityCreated">
-          <Col xs="12" className="text-center mt-2">
-            <p>Vous n'avez proposé pour le moment aucune activité.</p>
+        <Row>
+          <Col xs="12">
+            <h2 className="pr-3">Vos activités créée</h2>
+            <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
         </Row>
+        {this.props.profile[0] ? (
+          this.props.profile[0].activities.map(activity => (
+            <ActivityThumbnail {...activity} key={activity.idActivity} />
+          ))
+        ) : (
+          <Row className="activityCreated">
+            <Col xs="12" className="text-center mt-2">
+              <p>Vous n'avez proposé pour le moment aucune activité.</p>
+            </Col>
+          </Row>
+        )}
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
