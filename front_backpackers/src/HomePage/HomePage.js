@@ -12,7 +12,7 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { geolocated } from "react-geolocated";
-import Chatkit from "@pusher/chatkit"
+import Chatkit from "@pusher/chatkit";
 
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
@@ -54,14 +54,18 @@ class HomePage extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response => this.props.viewProfile(response.data))
-      .then(() => (
+      .then(response =>
+        this.props.viewProfile([{ ...response.data[0], activities: [] }])
+      )
+      .then(() =>
         axios
           .post("/users", {
             username: this.props.profile[0].username
           })
-          .catch(error => { console.log(error) })
-      ))
+          .catch(error => {
+            console.log(error);
+          })
+      )
       .then(() => {
         const chatManager = new Chatkit.ChatManager({
           instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
@@ -69,13 +73,11 @@ class HomePage extends Component {
           tokenProvider: new Chatkit.TokenProvider({
             url: "/authenticate"
           })
-        })
-        chatManager
-          .connect()
-          .then(currentUser => {
-            this.setState({ currentUser })
-          })
-      })
+        });
+        chatManager.connect().then(currentUser => {
+          this.setState({ currentUser });
+        });
+      });
   }
 
   callApiPlaces() {

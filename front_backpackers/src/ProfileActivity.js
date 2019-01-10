@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Row, Col, Media, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const ActivityThumbnail = ({
+const ProfileActivity = ({
   idActivity,
   city,
   name,
@@ -77,11 +77,11 @@ const ActivityThumbnail = ({
   </Row>
 );
 
-ActivityThumbnail.propTypes = {
+ProfileActivity.propTypes = {
   city: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   // description: PropTypes.string.isRequired,
   price: PropTypes.number
 };
 
-export default ActivityThumbnail;
+export default ProfileActivity;

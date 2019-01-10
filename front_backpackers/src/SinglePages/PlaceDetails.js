@@ -121,7 +121,7 @@ class PlaceDetails extends Component {
             <h3 className="text-center p-1 mt-1">Les activités</h3>
           </Col>
         </Row>
-
+        {console.log("place", this.props.place)}
         {this.props.place.activities.map(activity => (
           <ActivityThumbnail {...activity} key={activity.idActivity} />
         ))}
