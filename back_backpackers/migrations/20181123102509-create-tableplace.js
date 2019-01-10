@@ -22,6 +22,7 @@ exports.up = function (db, callback) {
       name: { type: "string", length: 255, notNull: true },
       country: { type: "string", length: 100, notNull: true },
       city: { type: "string", length: 100, notNull: true },
+      postCode: { type: "string", length: 20, notNull: true },
       address: { type: "text", notNull: true },
       latitude: { type: "decimal", length: "10,6", notNull: true },
       longitude: { type: "decimal", length: "10,6", notNull: true },
