@@ -18,3 +18,16 @@
   border: 2px solid #c1c1c1;
   border-radius: 5px;
 }
+
+input{
+  text-align:left;
+}
+
+.mapForm{
+  .leaflet-container {
+    height: 250px;
+    margin-bottom: 30px;
+    width: 100%;
+    z-index: 0;
+  }
+}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Map, TileLayer, Marker } from "react-leaflet";
+import { Map, TileLayer, Popup, Marker } from "react-leaflet";
 
 import "./SinglePage.scss";
 
