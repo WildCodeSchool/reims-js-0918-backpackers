@@ -18,7 +18,8 @@ class ActivityDetails extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: "1"
+      activeTab: "1",
+      idParticipation: []
     };
   }
 
@@ -42,9 +43,25 @@ class ActivityDetails extends Component {
           }
         }
       )
-      .then(response => {
-        this.props.history.push("/");
-      });
+      .then(
+        //(console.log("ok"));
+        this.props.history.push(`/`)
+      );
+  }
+
+  componentDidMount() {
+    const participations = [];
+    axios
+      .get("/profile/activities", {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response =>
+        response.data.map(id => participations.push(id.idActivity))
+      )
+      .then(res => this.setState({ idParticipation: participations }));
   }
 
   render() {
@@ -157,18 +174,22 @@ class ActivityDetails extends Component {
             </Row>
           </TabPane>
         </TabContent>
-
-        <div className="participate">
-          <Link to="/">
+        {this.state.idParticipation &&
+        this.state.idParticipation.includes(this.props.activity.idActivity) ? (
+          <div className="validate">
+            <p>Validé</p>
+          </div>
+        ) : (
+          <div className="participate">
             <button
-              onClick={this.activeParticipation.bind(this)}
+              onClick={() => this.activeParticipation()}
               type="button"
               className="btn"
             >
               Participer
             </button>
-          </Link>
-        </div>
+          </div>
+        )}
       </Fragment>
     );
   }
