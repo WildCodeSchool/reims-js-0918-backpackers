@@ -7,7 +7,9 @@ const selectAddressReducer = (previousState = {}, action) => {
         country: action.address.country,
         city: action.address.town ? action.address.town : action.address.city ? action.address.city : action.address.village,
         postcode: action.address.postcode,
-        address: `${action.address.building ? `${action.address.building} ` : action.address.house_number ? `${action.address.house_number} ` : ""}${action.address.road}`
+        address: `${action.address.building ? `${action.address.building} ` : action.address.house_number ? `${action.address.house_number} ` : ""}${action.address.road}`,
+        lat: action.address.lat,
+        long: action.address.lng
       }
     default:
       return previousState

@@ -18,6 +18,20 @@ app.use(express.static("public"));
 app.use("/auth", auth);
 app.use("/", index);
 
+const multer = require("multer");
+const upload = multer({
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype !== "image/png" && file.mimetype !== "image/jpg" && file.mimetype !== "image/jpeg") {
+      return cb(null, false);
+    } else {
+      cb(null, true);
+    }
+  },
+  limits: { fileSize: 3 * 1024 * 1024 },
+  dest: "tmp/"
+});
+const fs = require("fs");
+
 const chatkit = new Chatkit.default({
   instanceLocator: process.env.CHAT_INSTANCE_LOCATOR,
   key: process.env.CHAT_SECRET_KEY
@@ -38,15 +52,64 @@ app.get("/places", (req, res) => {
 });
 
 app.post("/places", (req, res) => {
-  const formData = req.body;
+  const formData = {
+    name: req.body.name,
+    country: req.body.country,
+    city: req.body.city,
+    postCode: req.body.postcode,
+    address: req.body.address,
+    latitude: req.body.lat,
+    longitude: req.body.lng,
+    price: req.body.price,
+    type: req.body.type,
+    description: req.body.description
+  };
   connection.query("INSERT INTO places SET ?", formData, (err, results) => {
     if (err) {
       console.log(err);
       res.status(500).send("Failed to add place");
     } else {
-      res.sendStatus(200);
+      console.log(results)
+      res.json(results.insertId);
     }
   });
+}
+)
+
+app.post("/places/upload", upload.single("monfichier"), (req, res) => {
+  console.log(req.file)
+  fs.rename(
+    req.file.path,
+    "public/images/" + req.file.originalname,
+    (err, results) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        connection.query(
+          `UPDATE places SET picture = "${
+          req.file.originalname
+          }" WHERE id= (SELECT LAST_INSERT_ID())`,
+          err => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.sendStatus(200);
+            }
+          }
+        );
+
+      }
+    }
+  )
+
+  // connection.query("INSERT INTO places SET ?", formData, (err, results) => {
+  //   if (err) {
+  //     console.log(err);
+  //     res.status(500).send("Failed to add place");
+  //   } else {
+  //     res.sendStatus(200);
+  //   }
+  // });
 });
 
 app.get("/places/search", (req, res) => {
@@ -59,8 +122,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-      ? `SELECT * FROM places WHERE adress = "${adress}"`
-      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+        ? `SELECT * FROM places WHERE adress = "${adress}"`
+        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -105,8 +168,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-      ? `SELECT * FROM activities WHERE creator ="${creator}"`
-      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+        ? `SELECT * FROM activities WHERE creator ="${creator}"`
+        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -301,7 +364,6 @@ app.get(
       // console.log("route", req.user.id),
       req.user.id,
       (err, results) => {
-        console.log("lol", err);
         if (err) {
           res.status(500).send("Error retrieving profile");
         } else {

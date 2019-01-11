@@ -5,11 +5,18 @@ import { geolocated } from "react-geolocated"
 
 
 class CreatePlacePage extends Component {
+  constructor(props) {
+    super(props);
+    this.file = null;
+    this.onChange = this.onChange.bind(this);
+  }
+
+
   submit = places => {
     const place = { ...places, ...this.props.selectAddress };
     JSON.stringify(place);
-    console.log(places)
-    console.log("adress", this.props.selectAddress)
+    const formData = new FormData();
+    formData.append("monfichier", this.file);
     axios
       .post("/places", place, {
         headers: {
@@ -17,17 +24,34 @@ class CreatePlacePage extends Component {
         }
       })
       .then(response => {
-        this.props.history.push("/upload");
+        axios
+          .post("/places/upload", formData, {
+            headers: {
+              "content-type": "multipart/form-data"
+            }
+          })
+          .then(upResponse => this.props.history.push(`/place/${response.data}`))
+
       });
   };
+
+  onChange(e) {
+    this.file = e.target.files[0];
+    console.log("e", e.target.files)
+    console.log("file", this.file)
+  }
+
   render() {
-    return <PlaceFormContainer onSubmit={this.submit} getAddress={this.props.getAddress}
-      position={!this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled
-        ? []
-        : this.props.coords
-          ? [this.props.coords.latitude, this.props.coords.longitude]
-          : []}
-    />
+
+    return (
+      <PlaceFormContainer uploadFile={this.onChange} onSubmit={this.submit} getAddress={this.props.getAddress}
+        position={!this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled
+          ? []
+          : this.props.coords
+            ? [this.props.coords.latitude, this.props.coords.longitude]
+            : []}
+      />
+    )
 
   }
 }
