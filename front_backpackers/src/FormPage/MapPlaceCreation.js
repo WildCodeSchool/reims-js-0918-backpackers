@@ -123,6 +123,7 @@ class MapPlaceCreation extends Component {
         </Row>
         <Row>
           <Input
+            autoComplete="off"
             id="PopoverFocus"
             className="Form-Input text-left"
             onChange={event => this.handleSearchInput(event)}

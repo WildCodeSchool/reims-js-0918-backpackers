@@ -89,7 +89,7 @@ class PlaceDetails extends Component {
                       <p className="mb-0">
                         <i className="fas fa-swimmer" />
                       </p>
-                      <p className="">Activité {this.props.place.type}</p>
+                      <p className="">{this.props.place.type}</p>
                     </div>
                   </Col>
                 </Row>

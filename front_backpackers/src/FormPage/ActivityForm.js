@@ -83,6 +83,13 @@ const ActivityForm = props => {
               label="participants"
             />
             <Field
+              id="date"
+              name="date"
+              component={renderField}
+              type="date"
+              label="date"
+            />
+            <Field
               id="price"
               type="number"
               name="price"

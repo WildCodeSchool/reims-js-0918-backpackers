@@ -106,7 +106,7 @@ class ActivityDetails extends Component {
                       <p className="mb-0">
                         <i className="fas fa-swimmer" />
                       </p>
-                      <p className="">Activité {this.props.activity.type}</p>
+                      <p className="">{this.props.activity.type}</p>
                     </div>
                   </Col>
                   <Col xs="4">

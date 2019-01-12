@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Map, TileLayer, Marker } from "react-leaflet";
-import { Row } from "reactstrap";
+import { Row, Col } from "reactstrap";
 
 import "./Maps.scss";
 import PlaceThumbnail from "./HomePage/PlaceThumbnail";
