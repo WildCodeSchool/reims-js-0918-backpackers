@@ -48,6 +48,17 @@ class ActivityDetails extends Component {
   }
 
   render() {
+
+    const typePicture = `/images/${this.props.activity.type === "Apéritifs" ? "aperitif"
+      : this.props.activity.type === "Aquatique" ? "aquatic"
+        : this.props.activity.type === "Aventure" ? "aventure"
+          : this.props.activity.type === "Bien-être" ? "bien-etre"
+            : this.props.activity.type === "Culturel" ? "culturel"
+              : this.props.activity.type === "Déplacements" ? "deplacement"
+                : this.props.activity.type === "Enfants" ? "enfants"
+                  : this.props.activity.type === "Nocturne" ? "nocturne"
+                    : "restauration"}.png`
+
     return (
       <Fragment>
         <Nav tabs className="mb-2">
@@ -87,7 +98,7 @@ class ActivityDetails extends Component {
                   <Col xs="4">
                     <div className="price characteristic text-center">
                       <p className="mb-0">
-                        <i className="fas fa-coins" />
+                        <i className="fas fa-coins" style={{ fontSize: "30px" }} />
                       </p>
                       <p>
                         {this.props.activity.price > 0 ? (
@@ -104,7 +115,7 @@ class ActivityDetails extends Component {
                   <Col xs="4">
                     <div className="characteristic text-center">
                       <p className="mb-0">
-                        <i className="fas fa-swimmer" />
+                        <img style={{ width: "30px" }} src={typePicture} alt={this.props.activity.type} />
                       </p>
                       <p className="">{this.props.activity.type}</p>
                     </div>
@@ -134,7 +145,7 @@ class ActivityDetails extends Component {
 
                 <Row>
                   <Col xs="12">
-                    <p className="text-justify activityDescr mb-3 p-2">
+                    <p className="text-justify singleDescr mb-3 p-2">
                       {this.props.activity.descriptionActivity}
                     </p>
                   </Col>

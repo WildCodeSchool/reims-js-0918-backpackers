@@ -31,6 +31,15 @@ class PlaceDetails extends Component {
   }
 
   render() {
+    const typePicture = `/images/${this.props.place.type === "Apéritifs" ? "aperitif"
+      : this.props.place.type === "Aquatique" ? "aquatic"
+        : this.props.place.type === "Aventure" ? "aventure"
+          : this.props.place.type === "Bien-être" ? "bien-etre"
+            : this.props.place.type === "Culturel" ? "culturel"
+              : this.props.place.type === "Déplacements" ? "deplacement"
+                : this.props.place.type === "Enfants" ? "enfants"
+                  : this.props.place.type === "Nocturne" ? "nocturne"
+                    : "restauration"}.png`
     return (
       <Fragment>
         <Nav tabs className="mb-2">
@@ -70,7 +79,7 @@ class PlaceDetails extends Component {
                   <Col xs="6">
                     <div className="price characteristic text-center">
                       <p className="mb-0">
-                        <i className="fas fa-coins" />
+                        <i className="fas fa-coins" style={{ fontSize: "30px" }} />
                       </p>
                       <p>
                         {this.props.place.price > 0 ? (
@@ -87,7 +96,7 @@ class PlaceDetails extends Component {
                   <Col xs="6">
                     <div className="characteristic text-center">
                       <p className="mb-0">
-                        <i className="fas fa-swimmer" />
+                        <img style={{ width: "30px" }} src={typePicture} alt={this.props.place.type} />
                       </p>
                       <p className="">{this.props.place.type}</p>
                     </div>
