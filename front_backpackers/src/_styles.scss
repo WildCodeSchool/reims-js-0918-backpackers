@@ -21,6 +21,10 @@ $peachColor: #ff896d;
   margin-left: -15px;
   line-height: 45px;
   height: 45px;
+  p{
+    overflow: hidden;
+    height: 100%;
+  }
 }
 
 .greenHeader {
