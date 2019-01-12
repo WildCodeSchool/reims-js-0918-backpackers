@@ -105,7 +105,6 @@ app.get("/places/search", (req, res) => {
     req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
   const adress =
     req.query.adress === undefined ? "" : req.query.adress.split("_").join(" ");
-  console.log(adress);
   connection.query(
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
@@ -169,15 +168,6 @@ app.get("/activities/search", (req, res) => {
     }
   );
 });
-
-app.get(
-  "/test",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log("connected user", req.user);
-    res.send(`authorized for user ${req.user.mail} with an id ${req.user.id}`);
-  }
-);
 
 app.post(
   "/activities",
@@ -252,7 +242,6 @@ app.post(
           res.status(500).send("Failed to participate to an activity");
           console.log(err);
         } else {
-          console.log("test", req.body.idChat, req.user.username);
           chatkit
             .addUsersToRoom({
               roomId: req.body.idChat,
