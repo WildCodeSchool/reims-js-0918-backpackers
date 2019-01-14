@@ -30,15 +30,13 @@ class CreatePlacePage extends Component {
               "content-type": "multipart/form-data"
             }
           })
-          .then(upResponse => this.props.history.push(`/place/${response.data}`))
+          .then(() => this.props.history.push(`/place/${response.data}`))
 
       });
   };
 
   onChange(e) {
     this.file = e.target.files[0];
-    console.log("e", e.target.files)
-    console.log("file", this.file)
   }
 
   render() {

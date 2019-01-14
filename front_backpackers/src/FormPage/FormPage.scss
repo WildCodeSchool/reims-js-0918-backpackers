@@ -23,6 +23,29 @@ input{
   text-align:left;
 }
 
+.placeForm{
+  select{
+    width:100%;
+    background-color: white;
+    border-top: 1px solid $darkGrayColor;
+    border-bottom: 1px solid $darkGrayColor;
+    border-left:0px;
+    border-right:0px;
+    height: 45px;
+    padding: 0 10px;
+    &:focus{
+      outline: 0px;
+      
+    }
+    option{
+      outline:none;
+      width:100%;
+      height: 50px;
+      border-top: 1px solid $darkGrayColor;
+    }
+  }
+}
+
 .mapForm{
   .leaflet-container {
     height: 250px;

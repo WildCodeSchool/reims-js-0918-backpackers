@@ -2,8 +2,8 @@ import React, { Component, Fragment } from "react";
 import axios from "axios";
 
 import Header from "./Header.js";
-import Caroussel from "./Caroussel";
 import PlaceDetails from "./PlaceDetails.js";
+import PlaceCaroussel from "./PlaceCaroussel";
 
 class PlacePage extends Component {
   componentDidMount() {
@@ -21,12 +21,12 @@ class PlacePage extends Component {
         {this.props.place.name ? (
           <Fragment>
             <Header place={this.props.place.name} />
-            <Caroussel place={this.props.place} />
+            <PlaceCaroussel place={this.props.place} />
             <PlaceDetails place={this.props.place} />
           </Fragment>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </Fragment>
     );
   }

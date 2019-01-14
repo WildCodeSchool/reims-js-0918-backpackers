@@ -46,7 +46,6 @@ class Profile extends Component {
             </Link>
           </Col>
         </Row>
-        {console.log("props", this.props.profile)}
         {this.props.profile[0] ? (
           <Fragment>
             <Row>
@@ -57,7 +56,8 @@ class Profile extends Component {
                 <Button className="bg-transparent border-0 mb-3 rounded-circle">
                   <img
                     className="rounded-circle"
-                    src={this.props.profile[0].picture}
+                    src={this.props.profile[0].picture ? `http://localhost:3010/images/${this.props.profile[0].picture}`
+                      : `http://localhost:3010/images/default.png`}
                     alt="Profile"
                   />
                 </Button>
@@ -86,10 +86,10 @@ class Profile extends Component {
             </div>
           </Fragment>
         ) : (
-          ""
-        )}
+            ""
+          )}
 
-        <Row>
+        {/* <Row>
           <Col xs={{ size: 8, offset: 2 }} className="text-center mt-3">
             <div className="achievements d-inline-block p-1">
               <img
@@ -114,7 +114,7 @@ class Profile extends Component {
               />
             </div>
           </Col>
-        </Row>
+        </Row> */}
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
@@ -134,7 +134,7 @@ class Profile extends Component {
         </Row>
         <Row>
           <Col xs="12">
-            <h2 className="pr-3">Vos activités créée</h2>
+            <h2 className="pr-3">Vos activités créées</h2>
             <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
         </Row>
@@ -143,12 +143,12 @@ class Profile extends Component {
             <ActivityThumbnail {...activity} key={activity.idActivity} />
           ))
         ) : (
-          <Row className="activityCreated">
-            <Col xs="12" className="text-center mt-2">
-              <p>Vous n'avez proposé pour le moment aucune activité.</p>
-            </Col>
-          </Row>
-        )}
+            <Row className="activityCreated">
+              <Col xs="12" className="text-center mt-2">
+                <p>Vous n'avez proposé pour le moment aucune activité.</p>
+              </Col>
+            </Row>
+          )}
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
