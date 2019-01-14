@@ -14,12 +14,17 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.use("/auth", auth);
+app.use("/api/auth", auth);
+app.use("/", index);
 
 const multer = require("multer");
 const upload = multer({
   fileFilter: (req, file, cb) => {
-    if (file.mimetype !== "image/png" && file.mimetype !== "image/jpg" && file.mimetype !== "image/jpeg") {
+    if (
+      file.mimetype !== "image/png" &&
+      file.mimetype !== "image/jpg" &&
+      file.mimetype !== "image/jpeg"
+    ) {
       return cb(null, false);
     } else {
       cb(null, true);
@@ -39,7 +44,7 @@ const currentUserId = 1;
 
 app.use(cors());
 
-app.get("/places", (req, res) => {
+app.get("/api/places", (req, res) => {
   connection.query("SELECT * FROM places", (err, results) => {
     if (err) {
       res.status(500).send("Error retrieving places");
@@ -49,7 +54,7 @@ app.get("/places", (req, res) => {
   });
 });
 
-app.post("/places", (req, res) => {
+app.post("/api/places", (req, res) => {
   const formData = {
     name: req.body.name,
     country: req.body.country,
@@ -67,14 +72,14 @@ app.post("/places", (req, res) => {
       console.log(err);
       res.status(500).send("Failed to add place");
     } else {
-      console.log(results)
+      console.log(results);
       res.json(results.insertId);
     }
   });
-}
-)
+});
 
-app.post("/places/upload", upload.single("monfichier"), (req, res) => {
+app.post("/api/places/upload", upload.single("monfichier"), (req, res) => {
+  console.log(req.file);
   fs.rename(
     req.file.path,
     "public/images/" + req.file.originalname,
@@ -84,7 +89,7 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
       } else {
         connection.query(
           `UPDATE places SET picture = "${
-          req.file.originalname
+            req.file.originalname
           }" WHERE id= (SELECT LAST_INSERT_ID())`,
           err => {
             if (err) {
@@ -94,13 +99,13 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
             }
           }
         );
-
       }
     }
   )
+  );
 });
 
-app.get("/places/search", (req, res) => {
+app.get("/api/places/search", (req, res) => {
   const name =
     req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
   const adress =
@@ -109,8 +114,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-        ? `SELECT * FROM places WHERE adress = "${adress}"`
-        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+      ? `SELECT * FROM places WHERE adress = "${adress}"`
+      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -123,7 +128,7 @@ app.get("/places/search", (req, res) => {
   );
 });
 
-app.get("/activities", (req, res) => {
+app.get("/api/activities", (req, res) => {
   connection.query(
     `SELECT activities.idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
@@ -147,7 +152,7 @@ app.get("/activities", (req, res) => {
   );
 });
 
-app.get("/activities/search", (req, res) => {
+app.get("/api/activities/search", (req, res) => {
   const name =
     req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
   const creator = req.query.creator === undefined ? "" : req.query.creator;
@@ -155,8 +160,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-        ? `SELECT * FROM activities WHERE creator ="${creator}"`
-        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+      ? `SELECT * FROM activities WHERE creator ="${creator}"`
+      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -169,8 +174,17 @@ app.get("/activities/search", (req, res) => {
   );
 });
 
+app.get(
+  "/api/test",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("connected user", req.user);
+    res.send(`authorized for user ${req.user.mail} with an id ${req.user.id}`);
+  }
+);
+
 app.post(
-  "/activities",
+  "/api/activities",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     chatkit
@@ -231,7 +245,7 @@ app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
 });
 
 app.post(
-  "/participate/:idActivity",
+  "/api/participate/:idActivity",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -255,7 +269,7 @@ app.post(
   }
 );
 
-app.get("/activity/:id", (req, res) => {
+app.get("/api/activity/:id", (req, res) => {
   const idActivity = req.params.id;
   connection.query(
     `SELECT activities.idActivity, activities.name, id_creator, activities.price,
@@ -287,7 +301,7 @@ app.get("/activity/:id", (req, res) => {
   );
 });
 
-app.get("/place/:id", (req, res) => {
+app.get("/api/place/:id", (req, res) => {
   const idPlace = req.params.id;
   connection.query(
     `SELECT * FROM places WHERE id =? `,
@@ -330,7 +344,7 @@ app.get("/place/:id", (req, res) => {
 });
 
 app.get(
-  "/profile",
+  "/api/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -356,7 +370,7 @@ app.get(
 );
 
 app.get(
-  "/profile/activities",
+  "/api/profile/activities",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -376,7 +390,7 @@ app.get(
   }
 );
 
-app.get("/profile/favorite", (req, res) => {
+app.get("/api/profile/favorite", (req, res) => {
   connection.query(
     "SELECT favorite FROM users WHERE idUser = ?",
     currentUserId,
@@ -390,7 +404,7 @@ app.get("/profile/favorite", (req, res) => {
   );
 });
 
-app.post("/profile/signup", (req, res) => {
+app.post("/api/profile/signup", (req, res) => {
   const formData = req.body;
   connection.query("INSERT INTO users SET ?", formData, (err, results) => {
     if (err) {
@@ -402,7 +416,7 @@ app.post("/profile/signup", (req, res) => {
   });
 });
 
-app.post("/users", (req, res) => {
+app.post("/api/users", (req, res) => {
   chatkit
     .createUser({
       name: req.body.username,
@@ -418,7 +432,7 @@ app.post("/users", (req, res) => {
     });
 });
 
-app.post("/authenticate", (req, res) => {
+app.post("/api/authenticate", (req, res) => {
   const authData = chatkit.authenticate({
     userId: req.query.user_id
   });

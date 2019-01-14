@@ -5,7 +5,7 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const connection = require("../conf");
 
-router.post("/login", function(req, res, next) {
+router.post("/api/login", function(req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({
@@ -22,7 +22,7 @@ router.post("/login", function(req, res, next) {
   })(req, res);
 });
 
-router.post("/signup", (req, res) => {
+router.post("/api/signup", (req, res) => {
   let hash = bcrypt.hashSync(req.body.password, 10);
   const formData = {
     ...req.body,
