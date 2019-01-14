@@ -95,11 +95,11 @@ class HomePage extends Component {
     axios
       .get("/activities")
       .then(response => this.props.viewActivities(response.data))
-      // .then(() =>
-      //   console.log(
-      //     this.props.coords.latitude,
-      //     this.props.coords.longitude
-      //   ))
+    // .then(() =>
+    //   console.log(
+    //     this.props.coords.latitude,
+    //     this.props.coords.longitude
+    //   ))
   }
 
   toggle() {
@@ -196,12 +196,12 @@ class HomePage extends Component {
                 <PlaceThumbnail {...place} key={place.id} />
               ))}
             {this.props.displayHomePage === "activities" &&
-              this.props.activities.map(activity =>
+              this.props.activities.sort((a, b) => a.date_diff - b.date_diff).map(activity =>
                 activity.capacity - 1 - activity.participants > 0 ? (
                   <ActivityThumbnail {...activity} key={activity.idActivity} />
                 ) : (
-                  ""
-                )
+                    ""
+                  )
               )}
             <Row className="fixed-bottom listFooter">
               <Link

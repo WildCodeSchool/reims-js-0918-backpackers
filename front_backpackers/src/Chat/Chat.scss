@@ -20,11 +20,11 @@
       padding-left: 0px;
       .myMessage{
         background-color: $grayColor;
-        border-radius: 20px 20px 20px 0;
+        border-radius: 20px 20px 0 20px;
       }
       .messageReceived{
         background-color: $greenColor;
-        border-radius: 20px 20px 0 20px;
+        border-radius: 20px 20px 20px 0;
         p{
           word-break: break-all;
         }
@@ -69,10 +69,31 @@
     transform: translateX(0%);
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
     }
-    a {
-    color: $darkGrayColor;
-    text-decoration: none;
-    }
+    ul{
+      list-style: none;
+      &.offline li::before {
+        content:"";
+        background-color: rgb(172, 33, 33);
+        border-radius: 1rem;
+        font-weight: bold;
+        display: inline-block; 
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-left: -1rem;
+        margin-right: 0.5rem;
+      }
+      &.online li::before {
+        content:"";
+        background-color: green;
+        border-radius: 1rem;
+        font-weight: bold;
+        display: inline-block; 
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-left: -1rem;
+        margin-right: 0.5rem;
+     }    
+   }
   }
 
   .backdrop {

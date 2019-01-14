@@ -131,11 +131,12 @@ app.get("/activities", (req, res) => {
     activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
-    FROM activities 
+    FROM activities
     INNER JOIN places 
     ON activities.id_place = places.id 
     LEFT JOIN participation 
-    ON activities.idActivity = participation.idActivity 
+    ON activities.idActivity = participation.idActivity
+    WHERE DATEDIFF(date,CURRENT_TIMESTAMP)>=0
     GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
