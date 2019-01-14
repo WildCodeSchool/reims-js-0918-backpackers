@@ -54,8 +54,8 @@ class PlaceForm extends Component {
 
         <div className="mb-5">
 
-          <form onSubmit={this.props.handleSubmit}>
-            <div>
+          <form onSubmit={this.props.handleSubmit} className="placeForm">
+            <Row>
               <Field type="select" name="type" id="type" component="select" label="Type">
                 <option>Catégorie</option>
                 <option value="Apéritifs">Apéritifs</option>
@@ -68,7 +68,14 @@ class PlaceForm extends Component {
                 <option value="Nocturne">Nocturne</option>
                 <option value="Restauration">Restauration</option>
               </Field>
-            </div>
+            </Row>
+            <Row>
+              <Col
+                xs={{ size: 8, offset: 2 }}
+                className="homeUnderline mt-3 mb-4"
+              />
+            </Row>
+
             <div>
               <Field
                 id="name"
@@ -93,6 +100,11 @@ class PlaceForm extends Component {
                 label="Prix"
               />
 
+              <h2 className="pt-3">Ajouter une image</h2>
+              <div className="activitiesTitleUnderline mb-3 w-100" />
+              <input className="mt-3" type="file" onChange={e => this.props.uploadFile(e)} />
+
+
               <h2 className="pt-3">Localisation</h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
 
@@ -104,9 +116,6 @@ class PlaceForm extends Component {
               }
 
             </div>
-
-            <h5 className="text-center pt-3 homeUnderline">Votre photo</h5>
-            <input className="mt-3" type="file" onChange={e => this.props.uploadFile(e)} />
 
             <button type="submit" disabled={this.props.submitting} className="mt-3 postBtn">
               Créer le lieu

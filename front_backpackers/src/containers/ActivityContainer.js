@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   viewActivity: activity => dispatch(makeViewActivityAction(activity)),
-  viewProfile: profile => dispatch(makeViewProfileAction(profile))
+  viewProfile: profil => dispatch(makeViewProfileAction(profil))
 });
 
 export default connect(

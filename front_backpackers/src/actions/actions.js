@@ -113,7 +113,7 @@ export const makeGetChatsAction = (chat, messages) => ({
   messages
 });
 
-export const makeSelectPlaceAddressAction = (address) => ({
+export const makeSelectPlaceAddressAction = address => ({
   type: SELECT_PLACE_ADDRESS,
   address
 });

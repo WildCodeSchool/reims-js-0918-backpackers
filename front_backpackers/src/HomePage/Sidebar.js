@@ -24,16 +24,17 @@ class Sidebar extends Component {
           {this.props.username ? (
             <div className="profil d-flex flex-column align-items-center mt-3">
               <img
-                src={this.props.picture}
                 className="rounded-circle"
-                alt="profil"
+                src={this.props.picture ? `http://localhost:3010/images/${this.props.picture}`
+                  : `http://localhost:3010/images/default.png`}
+                alt="Profile"
               />
               <h4>{`${this.props.username} `}</h4>
               <p>{this.props.mail}</p>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
           <div className="menu d-flex flex-column align-items-baseline align-self-baseline pt-3">
             <NavItem>
               <NavLink
@@ -64,10 +65,10 @@ class Sidebar extends Component {
               >
                 {" "}
                 <i className="mr-2 far fa-calendar-alt" />
-                Calendrier
+                Activités inscrites
               </NavLink>
             </NavItem>
-            <NavItem>
+            {/* <NavItem>
               <NavLink
                 onClick={() => this.props.backdropClickHandler()}
                 to="/"
@@ -77,7 +78,7 @@ class Sidebar extends Component {
                 <i className="mr-2 far fa-heart" />
                 Coups de coeur
               </NavLink>
-            </NavItem>
+            </NavItem> */}
             <NavItem>
               <NavLink
                 onClick={() => this.props.backdropClickHandler()}
@@ -88,7 +89,7 @@ class Sidebar extends Component {
                 Paramètres
               </NavLink>
             </NavItem>
-            <NavItem>
+            {/* <NavItem>
               <NavLink
                 onClick={() => this.props.backdropClickHandler()}
                 to="/"
@@ -97,7 +98,7 @@ class Sidebar extends Component {
                 <i className="mr-2 fas fa-comment-alt" />
                 Demandes
               </NavLink>
-            </NavItem>
+            </NavItem> */}
             <NavItem>
               <NavLink
                 onClick={this.logOut.bind(this)}

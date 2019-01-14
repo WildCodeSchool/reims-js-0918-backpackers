@@ -60,7 +60,7 @@ class SearchActivity extends Component {
             <Col xs="4">
               <img
                 className="categoriesSearch"
-                src="https://zupimages.net/up/18/43/4usz.png"
+                src="images/aventure.png"
                 alt="categoriesIMG"
               />
               <p>Aventure</p>
@@ -68,7 +68,7 @@ class SearchActivity extends Component {
             <Col xs="4">
               <img
                 className="categoriesSearch"
-                src="https://zupimages.net/up/19/02/zxur.png"
+                src="images/aquatic.png"
                 alt="categoriesIMG"
               />
               <p>Aquatique</p>
@@ -76,7 +76,7 @@ class SearchActivity extends Component {
             <Col xs="4">
               <img
                 className="categoriesSearch"
-                src="https://zupimages.net/up/19/02/4spl.png"
+                src="/images/culturel.png"
                 alt="categoriesIMG"
               />
               <p>Culturel</p>
@@ -86,7 +86,7 @@ class SearchActivity extends Component {
             <Col xs="4">
               <img
                 className="categoriesSearch"
-                src="https://zupimages.net/up/19/02/fsb2.png"
+                src="/images/deplacement.png"
                 alt="categoriesIMG"
               />
               <p>Déplacements</p>
@@ -94,7 +94,7 @@ class SearchActivity extends Component {
             <Col xs="4">
               <img
                 className="categoriesSearch"
-                src="https://zupimages.net/up/19/02/4rfb.png"
+                src="/images/restauration.png"
                 alt="categoriesIMG"
               />
               <p>Restauration</p>
@@ -102,7 +102,7 @@ class SearchActivity extends Component {
             <Col xs="4">
               <img
                 className="categoriesSearch"
-                src="https://zupimages.net/up/19/02/puak.png"
+                src="/images/aperitif.png"
                 alt="categoriesIMG"
               />
               <p>Apéritifs</p>
@@ -112,7 +112,7 @@ class SearchActivity extends Component {
             <Col xs="4">
               <img
                 className="categoriesSearch"
-                src="https://zupimages.net/up/19/02/rp99.png"
+                src="/images/nocturne.png"
                 alt="categoriesIMG"
               />
               <p>Nocturne</p>
@@ -120,7 +120,7 @@ class SearchActivity extends Component {
             <Col xs="4">
               <img
                 className="categoriesSearch"
-                src="https://zupimages.net/up/19/02/nmmj.png"
+                src="/images/bien-etre.png"
                 alt="categoriesIMG"
               />
               <p>Bien-être</p>
@@ -128,7 +128,7 @@ class SearchActivity extends Component {
             <Col xs="4">
               <img
                 className="categoriesSearch"
-                src="https://zupimages.net/up/19/02/8qfx.png"
+                src="/images/enfants.png"
                 alt="categoriesIMG"
               />
               <p>Enfants</p>

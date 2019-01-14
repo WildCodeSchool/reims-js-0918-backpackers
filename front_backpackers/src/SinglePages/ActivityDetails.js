@@ -94,6 +94,17 @@ class ActivityDetails extends Component {
   }
 
   render() {
+
+    const typePicture = `/images/${this.props.activity.type === "Apéritifs" ? "aperitif"
+      : this.props.activity.type === "Aquatique" ? "aquatic"
+        : this.props.activity.type === "Aventure" ? "aventure"
+          : this.props.activity.type === "Bien-être" ? "bien-etre"
+            : this.props.activity.type === "Culturel" ? "culturel"
+              : this.props.activity.type === "Déplacements" ? "deplacement"
+                : this.props.activity.type === "Enfants" ? "enfants"
+                  : this.props.activity.type === "Nocturne" ? "nocturne"
+                    : "restauration"}.png`
+
     return (
       <Fragment>
         <Nav tabs className="mb-2">
@@ -114,7 +125,7 @@ class ActivityDetails extends Component {
                 this.toggle("2");
               }}
             >
-              LE LIEU
+              MAP
             </NavLink>
           </NavItem>
         </Nav>
@@ -133,7 +144,7 @@ class ActivityDetails extends Component {
                   <Col xs="4">
                     <div className="price characteristic text-center">
                       <p className="mb-0">
-                        <i className="fas fa-coins" />
+                        <i className="fas fa-coins" style={{ fontSize: "30px" }} />
                       </p>
                       <p>
                         {this.props.activity.price > 0 ? (
@@ -142,17 +153,17 @@ class ActivityDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                          "Gratuit"
-                        )}
+                            "Gratuit"
+                          )}
                       </p>
                     </div>
                   </Col>
                   <Col xs="4">
                     <div className="characteristic text-center">
                       <p className="mb-0">
-                        <i className="fas fa-swimmer" />
+                        <img style={{ width: "30px" }} src={typePicture} alt={this.props.activity.type} />
                       </p>
-                      <p className="">Activité {this.props.activity.type}</p>
+                      <p className="">{this.props.activity.type}</p>
                     </div>
                   </Col>
                   <Col xs="4">
@@ -164,23 +175,23 @@ class ActivityDetails extends Component {
                       {this.props.activity.capacity -
                         this.props.activity.participants -
                         1 <
-                      0 ? (
-                        <p>0 Places Restantes</p>
-                      ) : (
-                        <p>
-                          {this.props.activity.capacity -
-                            this.props.activity.participants -
-                            1}{" "}
-                          Places Restantes
+                        0 ? (
+                          <p>0 Places Restantes</p>
+                        ) : (
+                          <p>
+                            {this.props.activity.capacity -
+                              this.props.activity.participants -
+                              1}{" "}
+                            Places Restantes
                         </p>
-                      )}
+                        )}
                     </div>
                   </Col>
                 </Row>
 
                 <Row>
                   <Col xs="12">
-                    <p className="text-justify activityDescr mb-3 p-2">
+                    <p className="text-justify singleDescr mb-3 p-2">
                       {this.props.activity.descriptionActivity}
                     </p>
                   </Col>
@@ -197,8 +208,8 @@ class ActivityDetails extends Component {
                     long={this.props.activity.longitude}
                   />
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </Col>
             </Row>
           </TabPane>
