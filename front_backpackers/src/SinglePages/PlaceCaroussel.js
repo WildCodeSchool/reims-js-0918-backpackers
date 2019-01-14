@@ -10,7 +10,7 @@ const PlaceCaroussel = props => (
           items={[{ src: `http://localhost:3010/images/${props.place.picture}` }]}
         /> */}
         <img
-          src={props.place.picture}
+          src={`http://localhost:3010/images/${props.place.picture}`}
           alt={props.place.name}
           className="singlePageImg"
         />

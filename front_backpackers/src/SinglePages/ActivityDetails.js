@@ -94,16 +94,25 @@ class ActivityDetails extends Component {
   }
 
   render() {
-
-    const typePicture = `/images/${this.props.activity.type === "Apéritifs" ? "aperitif"
-      : this.props.activity.type === "Aquatique" ? "aquatic"
-        : this.props.activity.type === "Aventure" ? "aventure"
-          : this.props.activity.type === "Bien-être" ? "bien-etre"
-            : this.props.activity.type === "Culturel" ? "culturel"
-              : this.props.activity.type === "Déplacements" ? "deplacement"
-                : this.props.activity.type === "Enfants" ? "enfants"
-                  : this.props.activity.type === "Nocturne" ? "nocturne"
-                    : "restauration"}.png`
+    const typePicture = `/images/${
+      this.props.activity.type === "Apéritifs"
+        ? "aperitif"
+        : this.props.activity.type === "Aquatique"
+        ? "aquatic"
+        : this.props.activity.type === "Aventure"
+        ? "aventure"
+        : this.props.activity.type === "Bien-être"
+        ? "bien-etre"
+        : this.props.activity.type === "Culturel"
+        ? "culturel"
+        : this.props.activity.type === "Déplacements"
+        ? "deplacement"
+        : this.props.activity.type === "Enfants"
+        ? "enfants"
+        : this.props.activity.type === "Nocturne"
+        ? "nocturne"
+        : "restauration"
+    }.png`;
 
     return (
       <Fragment>
@@ -144,7 +153,10 @@ class ActivityDetails extends Component {
                   <Col xs="4">
                     <div className="price characteristic text-center">
                       <p className="mb-0">
-                        <i className="fas fa-coins" style={{ fontSize: "30px" }} />
+                        <i
+                          className="fas fa-coins"
+                          style={{ fontSize: "30px" }}
+                        />
                       </p>
                       <p>
                         {this.props.activity.price > 0 ? (
@@ -153,15 +165,19 @@ class ActivityDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                            "Gratuit"
-                          )}
+                          "Gratuit"
+                        )}
                       </p>
                     </div>
                   </Col>
                   <Col xs="4">
                     <div className="characteristic text-center">
                       <p className="mb-0">
-                        <img style={{ width: "30px" }} src={typePicture} alt={this.props.activity.type} />
+                        <img
+                          style={{ width: "30px" }}
+                          src={typePicture}
+                          alt={this.props.activity.type}
+                        />
                       </p>
                       <p className="">{this.props.activity.type}</p>
                     </div>
@@ -175,16 +191,16 @@ class ActivityDetails extends Component {
                       {this.props.activity.capacity -
                         this.props.activity.participants -
                         1 <
-                        0 ? (
-                          <p>0 Places Restantes</p>
-                        ) : (
-                          <p>
-                            {this.props.activity.capacity -
-                              this.props.activity.participants -
-                              1}{" "}
-                            Places Restantes
+                      0 ? (
+                        <p>0 Places Restantes</p>
+                      ) : (
+                        <p>
+                          {this.props.activity.capacity -
+                            this.props.activity.participants -
+                            1}{" "}
+                          Places Restantes
                         </p>
-                        )}
+                      )}
                     </div>
                   </Col>
                 </Row>
@@ -208,8 +224,8 @@ class ActivityDetails extends Component {
                     long={this.props.activity.longitude}
                   />
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </Col>
             </Row>
           </TabPane>
@@ -243,10 +259,10 @@ class ActivityDetails extends Component {
                 <button type="button">Chat</button>
               </Link>
             </div>
-            <h3>Liste des participants</h3>
-            <ul>
+            <h3 className="text-center">Liste des participants</h3>
+            <ul className="text-center listParticipants mr-5">
               <li>
-                {this.props.activity.username} <span>Créateur</span>
+                {this.props.activity.username} <span>[Créateur]</span>
               </li>
               {this.state.participants.map(user => (
                 <li key={user.id}>{user.username}</li>
@@ -255,7 +271,7 @@ class ActivityDetails extends Component {
             <div>
               <button
                 type="button"
-                className="chat"
+                className="desinscription"
                 onClick={() => this.desinscriptionParticipation()}
               >
                 Se désinscrire
