@@ -36,7 +36,7 @@ class Routes extends Component {
               component={ActivitesListContainer}
             />
             <Route path="/newplace" component={CreatePlacePageContainer} />
-            <Route path="/profil" component={ProfileContainer} />
+            <Route path="/profil/:username" component={ProfileContainer} />
             <Route path="/chatlist" component={ChatContainer} />
             <Route path="/search" component={searchParticipantsContainer} />
           </Switch>

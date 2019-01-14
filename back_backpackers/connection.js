@@ -375,6 +375,7 @@ app.get("/place/:id", (req, res) => {
   );
 });
 
+
 app.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
@@ -401,11 +402,35 @@ app.get(
   }
 );
 
+
 app.get(
-  "/profile/activities",
+  "/profile/:username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
+
+      "SELECT picture, username, mail, hobbies, description, birthDate FROM users WHERE username=?",
+
+      req.params.username,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Error retrieving profile");
+        } else {
+          res.json(results);
+        }
+      }
+    );
+  }
+);
+
+
+app.get(
+  "/profile/:username/activities",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      // THIS WAS NOT COMMENTED"SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
+      
       `SELECT participation.idActivity
     FROM participation 
     INNER JOIN activities

@@ -9,26 +9,42 @@ import axios from "axios";
 import "./Profile.scss";
 
 class Profile extends Component {
+  state = {
+    profile: {}
+  }
   componentDidMount() {
+    if (!this.props.profile[0]) {
+      axios
+        .get(`/profile`, {
+          headers: {
+            accept: "application/json",
+            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+          }
+        })
+        .then(response =>
+          this.props.viewProfile([{ ...response.data[0], activities: [] }])
+        );
+    }
     axios
-      .get("/profile", {
+      .get(`/profile/${this.props.match.params.username}`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
       .then(response =>
-        this.props.viewProfile([{ ...response.data[0], activities: [] }])
+        this.setState({ profile: { ...response.data[0], activities: [] } })
       );
+
     axios
-      .get("/profile/activities", {
+      .get(`/profile/${this.props.match.params.username}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
       .then(response =>
-        this.props.viewProfileActivity(response.data, this.props.profile[0])
+        this.setState({ profile: { ...this.state.profile, activities: response.data } })
       );
   }
 
@@ -46,7 +62,7 @@ class Profile extends Component {
             </Link>
           </Col>
         </Row>
-        {this.props.profile[0] ? (
+        {this.state.profile ? (
           <Fragment>
             <Row>
               <Col
@@ -56,7 +72,7 @@ class Profile extends Component {
                 <Button className="bg-transparent border-0 mb-3 rounded-circle">
                   <img
                     className="rounded-circle"
-                    src={this.props.profile[0].picture ? `http://localhost:3010/images/${this.props.profile[0].picture}`
+                    src={this.state.profile.picture ? `http://localhost:3010/images/${this.state.profile.picture}`
                       : `http://localhost:3010/images/default.png`}
                     alt="Profile"
                   />
@@ -67,9 +83,9 @@ class Profile extends Component {
               <Row>
                 <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
                   <h4 className="mb-0">
-                    {`${this.props.profile[0].username} `}
+                    {`${this.state.profile.username} `}
                   </h4>
-                  <span>{this.props.profile[0].mail}</span>
+                  <span>{this.state.profile.mail}</span>
                 </Col>
                 <Col xs="2">
                   <Button className="bg-transparent border-0 text-secondary p-0">
@@ -80,7 +96,7 @@ class Profile extends Component {
 
               <Row>
                 <Col xs={{ size: 8, offset: 2 }} className="text-center">
-                  <p className="mb-0">{this.props.profile[0].description}</p>
+                  <p className="mb-0">{this.state.profile.description}</p>
                 </Col>
               </Row>
             </div>
@@ -138,17 +154,21 @@ class Profile extends Component {
             <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
         </Row>
-        {this.props.profile[0] ? (
-          this.props.profile[0].activities.map(activity => (
-            <ActivityThumbnail {...activity} key={activity.idActivity} />
-          ))
-        ) : (
-            <Row className="activityCreated">
-              <Col xs="12" className="text-center mt-2">
-                <p>Vous n'avez proposé pour le moment aucune activité.</p>
-              </Col>
-            </Row>
-          )}
+        {!this.state.profile.activities ?
+          <p className="text-center"><i className="fas fa-spinner fa-spin" /></p>
+          :
+          this.state.profile.activities[0] ? (
+            this.state.profile.activities.map(activity => (
+              <ActivityThumbnail {...activity} key={activity.idActivity} />
+            ))
+          ) : (
+              <Row className="activityCreated">
+                <Col xs="12" className="text-center mt-2">
+                  <p>Vous n'avez proposé pour le moment aucune activité.</p>
+                </Col>
+              </Row >
+            )
+        }
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
@@ -197,7 +217,7 @@ class Profile extends Component {
             </Media>
           </Col>
         </Row>
-      </Fragment>
+      </Fragment >
     );
   }
 }
