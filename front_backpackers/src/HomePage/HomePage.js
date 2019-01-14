@@ -100,7 +100,12 @@ class HomePage extends Component {
   callApiActivities() {
     axios
       .get("/activities")
-      .then(response => this.props.viewActivities(response.data));
+      .then(response => this.props.viewActivities(response.data))
+      // .then(() =>
+      //   console.log(
+      //     this.props.coords.latitude,
+      //     this.props.coords.longitude
+      //   ))
   }
 
   toggle() {
@@ -210,7 +215,10 @@ class HomePage extends Component {
               >
                 Rechercher <i className="fas fa-search-location" />
               </Link>
-              <Link to="/" className="w-50 listPostBtn text-white text-center">
+              <Link to="/newplace" onClick={() => this.props.getCoords([
+                1,
+                1
+              ])} className="w-50 listPostBtn text-white text-center">
                 <i className="fas fa-pencil-alt" /> Publier{" "}
               </Link>
             </Row>

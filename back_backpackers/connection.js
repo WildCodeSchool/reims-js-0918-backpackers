@@ -6,7 +6,6 @@ const app = express();
 const port = 3010;
 const cors = require("cors");
 const passport = require("passport");
-const index = require("./auth/index");
 require("./passport/passport-strategy");
 
 app.use(express.static(__dirname + "/public"));
@@ -16,7 +15,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/auth", auth);
-app.use("/", index);
+
+const multer = require("multer");
+const upload = multer({
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype !== "image/png" &&
+      file.mimetype !== "image/jpg" &&
+      file.mimetype !== "image/jpeg"
+    ) {
+      return cb(null, false);
+    } else {
+      cb(null, true);
+    }
+  },
+  limits: { fileSize: 3 * 1024 * 1024 },
+  dest: "tmp/"
+});
+const fs = require("fs");
 
 const chatkit = new Chatkit.default({
   instanceLocator: process.env.CHAT_INSTANCE_LOCATOR,
@@ -38,15 +54,52 @@ app.get("/places", (req, res) => {
 });
 
 app.post("/places", (req, res) => {
-  const formData = req.body;
+  const formData = {
+    name: req.body.name,
+    country: req.body.country,
+    city: req.body.city,
+    postCode: req.body.postcode,
+    address: req.body.address,
+    latitude: req.body.lat,
+    longitude: req.body.lng,
+    price: req.body.price,
+    type: req.body.type,
+    description: req.body.description
+  };
   connection.query("INSERT INTO places SET ?", formData, (err, results) => {
     if (err) {
       console.log(err);
       res.status(500).send("Failed to add place");
     } else {
-      res.sendStatus(200);
+      console.log(results);
+      res.json(results.insertId);
     }
   });
+});
+
+app.post("/places/upload", upload.single("monfichier"), (req, res) => {
+  fs.rename(
+    req.file.path,
+    "public/images/" + req.file.originalname,
+    (err, results) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        connection.query(
+          `UPDATE places SET picture = "${
+            req.file.originalname
+          }" WHERE id= (SELECT LAST_INSERT_ID())`,
+          err => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.sendStatus(200);
+            }
+          }
+        );
+      }
+    }
+  );
 });
 
 app.get("/places/search", (req, res) => {
@@ -54,7 +107,6 @@ app.get("/places/search", (req, res) => {
     req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
   const adress =
     req.query.adress === undefined ? "" : req.query.adress.split("_").join(" ");
-  console.log(adress);
   connection.query(
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
@@ -119,15 +171,6 @@ app.get("/activities/search", (req, res) => {
   );
 });
 
-app.get(
-  "/test",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log("connected user", req.user);
-    res.send(`authorized for user ${req.user.mail} with an id ${req.user.id}`);
-  }
-);
-
 app.post(
   "/activities",
   passport.authenticate("jwt", { session: false }),
@@ -164,6 +207,31 @@ app.post(
   }
 );
 
+app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
+  fs.rename(
+    req.file.path,
+    "public/images/" + req.file.originalname,
+    (err, results) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        connection.query(
+          `UPDATE activities SET picture = "${
+            req.file.originalname
+          }" WHERE idActivity= (SELECT LAST_INSERT_ID())`,
+          err => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.sendStatus(200);
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
 app.post(
   "/participate/:idActivity",
   passport.authenticate("jwt", { session: false }),
@@ -176,7 +244,6 @@ app.post(
           res.status(500).send("Failed to participate to an activity");
           console.log(err);
         } else {
-          console.log("test", req.body.idChat, req.user.username);
           chatkit
             .addUsersToRoom({
               roomId: req.body.idChat,

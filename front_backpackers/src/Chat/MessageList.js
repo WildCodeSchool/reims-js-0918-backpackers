@@ -3,12 +3,12 @@ import { Col } from "reactstrap"
 
 class MessageList extends Component {
   componentDidUpdate() {
-    const chatScroll = document.getElementById('test');
+    const chatScroll = document.getElementById('messagesBox');
     chatScroll.scrollTop = chatScroll.scrollHeight;
   }
   render() {
     return (
-      <div id="test" className="messageList">
+      <div id="messagesBox" className="messageList">
         <ul>
           {!this.props.messages ?
             <i className="fas fa-spinner fa-spin" />

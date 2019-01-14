@@ -13,6 +13,8 @@ import placeReducer from "./placeReducer";
 import chatsReducer from "./chatsReducer";
 import uploadReducer from "./uploadReducer";
 import viewReducer from "./viewReducer";
+import { SELECT_PLACE_ADDRESS } from "../actions/actionTypes";
+import selectAddressReducer from "./selectAddressReducer";
 import searchParticipantsReducer from "./searchParticipantsReducer";
 
 const backpackersApp = history =>
@@ -22,7 +24,22 @@ const backpackersApp = history =>
     loading: loadingReducer,
     places: placesReducer,
     activities: activitiesReducer,
-    form: formReducer,
+    form: formReducer.plugin({
+      createPlace: (state, action) => {
+        switch (action.type) {
+          case SELECT_PLACE_ADDRESS:
+            return {
+              ...state,
+              values: {
+                ...state.values,
+                ...action.address
+              }
+            }
+          default:
+            return state
+        }
+      }
+    }),
     profile: profileReducer,
     menu: menuReducer,
     map: mapReducer,
@@ -31,6 +48,7 @@ const backpackersApp = history =>
     chats: chatsReducer,
     idCurrent: uploadReducer,
     viewForm: viewReducer,
+    selectAddress: selectAddressReducer,
     count: searchParticipantsReducer
   });
 

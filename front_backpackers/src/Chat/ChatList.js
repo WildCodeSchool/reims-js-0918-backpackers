@@ -83,24 +83,24 @@ class ChatList extends Component {
               </Col>
               <Col xs="3" />
             </Row>
-            <div className="chatList pt-5">
+            <div className="chatList">
               {this.state.currentUser.rooms ? (
                 this.state.currentUser.rooms.length === 0 ? (
                   <p>vous n'êtes inscrit à aucune activité</p>
                 ) : (
-                  this.state.currentUser.rooms.map((room, index) => (
-                    <button
-                      onClick={() => this.viewChat(room)}
-                      key={index}
-                      className="my-2"
-                    >
-                      {room.name}
-                    </button>
-                  ))
-                )
+                    this.state.currentUser.rooms.map((room, index) => (
+                      <button
+                        onClick={() => this.viewChat(room)}
+                        key={index}
+                        className="my-2"
+                      >
+                        {room.name}
+                      </button>
+                    ))
+                  )
               ) : (
-                <i className="fas fa-spinner fa-spin" />
-              )}
+                  <i className="fas fa-spinner fa-spin" />
+                )}
               <div className="homeUnderline" />
             </div>
           </Fragment>
@@ -113,8 +113,8 @@ class ChatList extends Component {
             changeView={this.viewChatList}
           />
         ) : (
-          ""
-        )}
+              ""
+            )}
       </Fragment>
     );
   }
