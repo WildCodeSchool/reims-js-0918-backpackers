@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom"
 
 import "./Chat.scss";
 
@@ -23,7 +24,7 @@ class UsersList extends Component {
               <h2>En ligne :</h2>
               <ul>
                 {this.props.users.filter(user => user.presence.state === "online").map((user, index) => (
-                  <li key={index}>{user.name}</li>
+                  <li key={index}><Link to={`/profil/${user.name}`}>{user.name}</Link></li>
                 ))}
               </ul>
               {this.props.users.filter(user => user.presence.state === "offline").length < 1 ?
@@ -32,8 +33,8 @@ class UsersList extends Component {
                   <h2>Hors-ligne :</h2>
                   <ul>
                     {this.props.users.filter(user => user.presence.state === "offline").map((user, index) => (
-                      <li key={index}>{user.name}</li>
-                    ))}
+                      <li key={index}><Link to={`/profil/${user.name}`}>{user.name}</Link></li>
+                  ))}
                   </ul>
                 </Fragment>
               }

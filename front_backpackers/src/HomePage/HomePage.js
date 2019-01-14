@@ -49,7 +49,7 @@ class HomePage extends Component {
 
   callApiProfile() {
     axios
-      .get("/profile", {
+      .get(`/profile`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -95,11 +95,11 @@ class HomePage extends Component {
     axios
       .get("/activities")
       .then(response => this.props.viewActivities(response.data))
-      // .then(() =>
-      //   console.log(
-      //     this.props.coords.latitude,
-      //     this.props.coords.longitude
-      //   ))
+    // .then(() =>
+    //   console.log(
+    //     this.props.coords.latitude,
+    //     this.props.coords.longitude
+    //   ))
   }
 
   toggle() {
@@ -200,8 +200,8 @@ class HomePage extends Component {
                 activity.capacity - 1 - activity.participants > 0 ? (
                   <ActivityThumbnail {...activity} key={activity.idActivity} />
                 ) : (
-                  ""
-                )
+                    ""
+                  )
               )}
             <Row className="fixed-bottom listFooter">
               <Link

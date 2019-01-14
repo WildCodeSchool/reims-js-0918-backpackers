@@ -131,11 +131,12 @@ app.get("/activities", (req, res) => {
     activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
-    FROM activities 
+    FROM activities
     INNER JOIN places 
     ON activities.id_place = places.id 
     LEFT JOIN participation 
-    ON activities.idActivity = participation.idActivity 
+    ON activities.idActivity = participation.idActivity
+    WHERE DATEDIFF(date,CURRENT_TIMESTAMP)>=0
     GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
@@ -329,6 +330,7 @@ app.get("/place/:id", (req, res) => {
   );
 });
 
+
 app.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
@@ -355,16 +357,38 @@ app.get(
   }
 );
 
+
 app.get(
-  "/profile/activities",
+  "/profile/:username",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+
+      "SELECT picture, username, mail, hobbies, description, birthDate FROM users WHERE username=?",
+
+      req.params.username,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Error retrieving profile");
+        } else {
+          res.json(results);
+        }
+      }
+    );
+  }
+);
+
+
+app.get(
+  "/profile/:username/activities",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
       // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, dateFROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
       // "SELECT idActivity, name, id_creator, price, capacity, picture, description, id_place, contact, date FROM activities WHERE id_creator = ?",
-      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE id=?",
+      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
       // console.log("route", req.user.id),
-      req.user.id,
+      req.params.username,
       (err, results) => {
         if (err) {
           res.status(500).send("Error retrieving profile");
