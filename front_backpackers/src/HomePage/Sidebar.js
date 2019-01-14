@@ -7,8 +7,8 @@ import "./Sidebar.scss";
 class Sidebar extends Component {
   logOut() {
     this.props.backdropClickHandler();
-    localStorage.removeItem("BackpackersToken")
-    this.props.history.push("/")
+    localStorage.removeItem("BackpackersToken");
+    this.props.history.push("/");
   }
 
   render() {
@@ -25,16 +25,19 @@ class Sidebar extends Component {
             <div className="profil d-flex flex-column align-items-center mt-3">
               <img
                 className="rounded-circle"
-                src={this.props.picture ? `http://localhost:3010/images/${this.props.picture}`
-                  : `http://localhost:3010/images/default.png`}
+                src={
+                  this.props.picture
+                    ? `http://localhost:3010/images/${this.props.picture}`
+                    : `http://localhost:3010/images/default.png`
+                }
                 alt="Profile"
               />
               <h4>{`${this.props.username} `}</h4>
               <p>{this.props.mail}</p>
             </div>
           ) : (
-              ""
-            )}
+            ""
+          )}
           <div className="menu d-flex flex-column align-items-baseline align-self-baseline pt-3">
             <NavItem>
               <NavLink
@@ -60,7 +63,7 @@ class Sidebar extends Component {
             <NavItem>
               <NavLink
                 onClick={() => this.props.backdropClickHandler()}
-                to="/"
+                to={`/profil/${this.props.id}/activities`}
                 className="pl-0 my-1"
               >
                 {" "}
@@ -99,16 +102,29 @@ class Sidebar extends Component {
                 Demandes
               </NavLink>
             </NavItem> */}
-            <NavItem>
-              <NavLink
-                onClick={this.logOut.bind(this)}
-                to="/login"
-                className="pl-0 my-1"
-              >
-                <i className="mr-2 fas fa-sign-out-alt" />
-                Se déconnecter
-              </NavLink>
-            </NavItem>
+            {localStorage.getItem("BackpackersToken") ? (
+              <NavItem>
+                <NavLink
+                  onClick={this.logOut.bind(this)}
+                  to="/login"
+                  className="pl-0 my-1"
+                >
+                  <i className="mr-2 fas fa-sign-out-alt" />
+                  Se déconnecter
+                </NavLink>
+              </NavItem>
+            ) : (
+              <NavItem>
+                <NavLink
+                  onClick={this.logOut.bind(this)}
+                  to="/login"
+                  className="pl-0 my-1"
+                >
+                  <i class="mr-2 fas fa-sign-in-alt" />
+                  Se connecter
+                </NavLink>
+              </NavItem>
+            )}
           </div>
           <div className="d-flex mb-2 flex-column mt-auto align-items-center">
             <NavItem>
