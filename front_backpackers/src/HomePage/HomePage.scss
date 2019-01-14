@@ -20,25 +20,24 @@
   transition: all 0.2s;
 }
 
-.homePage .nav-tabs{
+.homePage .nav-tabs {
   position: relative;
   border: 0px;
-  .nav-item{
+  .nav-item {
     position: absolute;
-    top:0;
+    top: 0;
     z-index: 0;
-    right:10;
-    .nav-link{
-      border:0px;
+    right: 10;
+    .nav-link {
+      border: 0px;
       z-index: 20;
       font-size: 1.7rem;
-      padding:0;
-      &.active{
+      padding: 0;
+      &.active {
         display: none;
         background-color: inherit;
       }
     }
-    
   }
 }
 
@@ -130,28 +129,28 @@
     font-size: 1.1rem;
     color: #054762;
     margin: 0 15px;
-  }  
+  }
 }
 
 .listFooter {
-    z-index: 5;
-    div {
-      padding-left: 0;
-      padding-right: 0;
-      z-index: 10;
-    }
-    a {
-      line-height: 40px;
-    }
-    .listSearchBtn {
-      background-color: $blueColor;
-      padding-left: 30px;
-    }    
-    .listPostBtn {
-      background-color: $greenColor;
-      padding-right: 30px;
-    }
+  z-index: 5;
+  div {
+    padding-left: 0;
+    padding-right: 0;
+    z-index: 10;
   }
+  a {
+    line-height: 40px;
+  }
+  .listSearchBtn {
+    background-color: $blueColor;
+    padding-left: 30px;
+  }
+  .listPostBtn {
+    background-color: $greenColor;
+    padding-right: 30px;
+  }
+}
 
 .loading {
   display: flex;
@@ -162,4 +161,10 @@
 .gif {
   width: 110px;
   height: 150px;
+}
+
+.creator {
+  width: 50px;
+  height: 50px;
+  box-shadow: none;
 }

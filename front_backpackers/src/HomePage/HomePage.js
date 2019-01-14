@@ -40,11 +40,11 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
+    this.callApiProfile();
     this.props.fetchActivities();
     this.callApiActivities();
     this.props.fetchPlaces();
     this.callApiPlaces();
-    this.callApiProfile();
     this.callApiParticipation();
   }
 
@@ -100,12 +100,12 @@ class HomePage extends Component {
   callApiActivities() {
     axios
       .get("/activities")
-      .then(response => this.props.viewActivities(response.data))
-      // .then(() =>
-      //   console.log(
-      //     this.props.coords.latitude,
-      //     this.props.coords.longitude
-      //   ))
+      .then(response => this.props.viewActivities(response.data));
+    // .then(() =>
+    //   console.log(
+    //     this.props.coords.latitude,
+    //     this.props.coords.longitude
+    //   ))
   }
 
   toggle() {
@@ -203,7 +203,11 @@ class HomePage extends Component {
             {this.props.displayHomePage === "activities" &&
               this.props.activities.map(activity =>
                 activity.capacity - 1 - activity.participants > 0 ? (
-                  <ActivityThumbnail {...activity} key={activity.idActivity} />
+                  <ActivityThumbnail
+                    {...activity}
+                    profil={this.props.profile[0]}
+                    key={activity.idActivity}
+                  />
                 ) : (
                   ""
                 )
@@ -215,10 +219,11 @@ class HomePage extends Component {
               >
                 Rechercher <i className="fas fa-search-location" />
               </Link>
-              <Link to="/newplace" onClick={() => this.props.getCoords([
-                1,
-                1
-              ])} className="w-50 listPostBtn text-white text-center">
+              <Link
+                to="/newplace"
+                onClick={() => this.props.getCoords([1, 1])}
+                className="w-50 listPostBtn text-white text-center"
+              >
                 <i className="fas fa-pencil-alt" /> Publier{" "}
               </Link>
             </Row>
