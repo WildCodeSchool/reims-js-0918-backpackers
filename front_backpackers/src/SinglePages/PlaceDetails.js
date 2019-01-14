@@ -12,13 +12,15 @@ import classnames from "classnames";
 import ActivityThumbnail from "../HomePage/ActivityThumbnail";
 import { Link } from "react-router-dom";
 import MapPlace from "./MapPlace";
+import axios from "axios";
 
 class PlaceDetails extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: "1"
+      activeTab: "1",
+      profil: {}
     };
   }
 
@@ -28,6 +30,17 @@ class PlaceDetails extends Component {
         activeTab: tab
       });
     }
+  }
+
+  componentDidMount() {
+    axios
+      .get("/profile", {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response => this.setState({ profil: response.data[0] }));
   }
 
   render() {
@@ -151,10 +164,13 @@ class PlaceDetails extends Component {
             <h3 className="text-center p-1 mt-1">Les activités</h3>
           </Col>
         </Row>
-
         {this.props.place.activities.map(activity =>
           activity.capacity - 1 - activity.participants > 0 ? (
-            <ActivityThumbnail {...activity} key={activity.idActivity} />
+            <ActivityThumbnail
+              profil={this.state.profil}
+              {...activity}
+              key={activity.idActivity}
+            />
           ) : (
             ""
           )
