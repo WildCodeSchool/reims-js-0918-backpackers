@@ -22,7 +22,7 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.post("/upload", upload.array("monfichier"), (req, res, next) => {
+router.post("/api/upload", upload.array("monfichier"), (req, res, next) => {
   req.files.map(file =>
     fs.rename(
       file.path,
