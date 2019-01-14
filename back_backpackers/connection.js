@@ -246,8 +246,8 @@ app.post(
   }
 );
 
-app.delete(
-  "/participate/:idActivity",
+app.post(
+  "/participate/remove/:idActivity",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(

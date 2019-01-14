@@ -50,7 +50,7 @@ class ActivityDetails extends Component {
           }
         }
       )
-      .then(res => this.setState({ participate: true }))
+      .then(() => this.setState({ participate: true }))
       .then(this.componentDidMount());
   }
 
@@ -66,7 +66,7 @@ class ActivityDetails extends Component {
       .then(response =>
         response.data.map(id => participations.push(id.idActivity))
       )
-      .then(res => this.setState({ idParticipation: participations }));
+      .then(() => this.setState({ idParticipation: participations }));
   }
 
   callApiParticipants() {
@@ -74,13 +74,13 @@ class ActivityDetails extends Component {
     axios
       .get(`/activity/${this.props.activity.idActivity}/participants`)
       .then(response => response.data.map(user => participant.push(user)))
-      .then(res => this.setState({ participants: participant }));
+      .then(() => this.setState({ participants: participant }));
   }
 
   desinscriptionParticipation() {
     axios
-      .delete(
-        `/participate/${this.props.activity.idActivity}`,
+      .post(
+        `/participate/remove/${this.props.activity.idActivity}`,
         { idChat: this.props.activity.idChat },
         {
           headers: {
@@ -89,7 +89,7 @@ class ActivityDetails extends Component {
           }
         }
       )
-      .then(res => this.setState({ participate: false }))
+      .then(() => this.setState({ participate: false }))
       .then(this.componentDidMount());
   }
 
