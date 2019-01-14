@@ -29,7 +29,8 @@ class HomePage extends Component {
     this.state = {
       dropdownOpen: false,
       collapsed: true,
-      activeTab: "1"
+      activeTab: "1",
+      idParticipation: []
     };
     this.toggle = this.toggle.bind(this);
     this.toggleMap = this.toggleMap.bind(this);
@@ -44,7 +45,7 @@ class HomePage extends Component {
     this.props.fetchPlaces();
     this.callApiPlaces();
     this.callApiProfile();
-    this.callApiCapacity();
+    this.callApiParticipation();
   }
 
   callApiProfile() {
@@ -81,14 +82,19 @@ class HomePage extends Component {
       });
   }
 
-  callApiCapacity() {
-    axios
-      .get("/activities/capacity")
-      .then(res => this.props.getActivityCapacity(res.data));
-  }
-
   callApiPlaces() {
     axios.get("/places").then(response => this.props.viewPlaces(response.data));
+  }
+
+  callApiParticipation() {
+    axios
+      .get("/profile/activities", {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response => this.setState({ idParticipation: response.data }));
   }
 
   callApiActivities() {
@@ -138,7 +144,6 @@ class HomePage extends Component {
             <BurgerButton
               drawerToggleClickHandler={this.drawerToggleClickHandler}
             />
-
             <Sidebar
               {...this.props.profile[0]}
               show={this.props.menu}
