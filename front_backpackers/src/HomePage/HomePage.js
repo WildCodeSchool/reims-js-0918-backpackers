@@ -197,9 +197,18 @@ class HomePage extends Component {
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             {this.props.displayHomePage === "places" &&
-              this.props.places.map(place => (
-                <PlaceThumbnail {...place} key={place.id} />
-              ))}
+              (this.props.isGeolocationAvailable && this.props.isGeolocationEnabled && this.props.coords ?
+                this.props.places
+                  .filter(place => (Math.abs(place.latitude - this.props.coords.latitude) < 0.02) && (Math.abs(place.longitude - this.props.coords.longitude) < 0.02))
+                  .sort((a, b) => a.latitude - b.latitude && a.longitude - b.longitude)
+                  .map(place => (
+                    <PlaceThumbnail {...place} key={place.id} />
+                  ))
+                :
+                this.props.places.filter(place => place.country === "France").map(place => (
+                  <PlaceThumbnail {...place} key={place.id} />
+                )))
+            }
             {this.props.displayHomePage === "activities" &&
               this.props.activities.sort((a, b) => a.date_diff - b.date_diff).map(activity =>
                 activity.capacity - 1 - activity.participants > 0 ? (

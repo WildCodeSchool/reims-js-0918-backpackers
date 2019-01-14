@@ -3,7 +3,8 @@ import Maps from "../Maps";
 
 const mapStateToProps = state => ({
   places: state.places,
-  map: state.map
+  map: state.map,
+  profile: state.profile
 })
 
 const mapDispatchToProps = dispatch => ({
