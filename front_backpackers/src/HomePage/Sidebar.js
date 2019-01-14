@@ -7,8 +7,8 @@ import "./Sidebar.scss";
 class Sidebar extends Component {
   logOut() {
     this.props.backdropClickHandler();
-    localStorage.removeItem("BackpackersToken")
-    this.props.history.push("/")
+    localStorage.removeItem("BackpackersToken");
+    this.props.history.push("/");
   }
 
   render() {
@@ -59,7 +59,7 @@ class Sidebar extends Component {
             <NavItem>
               <NavLink
                 onClick={() => this.props.backdropClickHandler()}
-                to="/"
+                to={`/profil/${this.props.id}/activities`}
                 className="pl-0 my-1"
               >
                 {" "}

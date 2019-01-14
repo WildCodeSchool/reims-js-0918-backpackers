@@ -21,7 +21,11 @@ app.use("/", index);
 const multer = require("multer");
 const upload = multer({
   fileFilter: (req, file, cb) => {
-    if (file.mimetype !== "image/png" && file.mimetype !== "image/jpg" && file.mimetype !== "image/jpeg") {
+    if (
+      file.mimetype !== "image/png" &&
+      file.mimetype !== "image/jpg" &&
+      file.mimetype !== "image/jpeg"
+    ) {
       return cb(null, false);
     } else {
       cb(null, true);
@@ -69,15 +73,14 @@ app.post("/places", (req, res) => {
       console.log(err);
       res.status(500).send("Failed to add place");
     } else {
-      console.log(results)
+      console.log(results);
       res.json(results.insertId);
     }
   });
-}
-)
+});
 
 app.post("/places/upload", upload.single("monfichier"), (req, res) => {
-  console.log(req.file)
+  console.log(req.file);
   fs.rename(
     req.file.path,
     "public/images/" + req.file.originalname,
@@ -87,7 +90,7 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
       } else {
         connection.query(
           `UPDATE places SET picture = "${
-          req.file.originalname
+            req.file.originalname
           }" WHERE id= (SELECT LAST_INSERT_ID())`,
           err => {
             if (err) {
@@ -97,19 +100,9 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
             }
           }
         );
-
       }
     }
-  )
-
-  // connection.query("INSERT INTO places SET ?", formData, (err, results) => {
-  //   if (err) {
-  //     console.log(err);
-  //     res.status(500).send("Failed to add place");
-  //   } else {
-  //     res.sendStatus(200);
-  //   }
-  // });
+  );
 });
 
 app.get("/places/search", (req, res) => {
@@ -122,8 +115,8 @@ app.get("/places/search", (req, res) => {
     adress === ""
       ? `SELECT * FROM places WHERE name = "${name}"`
       : name === ""
-        ? `SELECT * FROM places WHERE adress = "${adress}"`
-        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+      ? `SELECT * FROM places WHERE adress = "${adress}"`
+      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -168,8 +161,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-        ? `SELECT * FROM activities WHERE creator ="${creator}"`
-        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+      ? `SELECT * FROM activities WHERE creator ="${creator}"`
+      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -253,6 +246,33 @@ app.post(
   }
 );
 
+app.delete(
+  "/participate/:idActivity",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      `DELETE FROM participation WHERE idActivity=${
+        req.params.idActivity
+      } AND idUser=${req.user.id}`,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Failed to unparticipate to an activity");
+          console.log(err);
+        } else {
+          chatkit
+            .removeUsersFromRoom({
+              roomId: req.body.idChat,
+              userIds: [req.user.id]
+            })
+            .then(() => console.log("removed"))
+            .catch(err => console.error(err));
+          res.sendStatus(200);
+        }
+      }
+    );
+  }
+);
+
 app.get("/activity/:id", (req, res) => {
   const idActivity = req.params.id;
   connection.query(
@@ -261,7 +281,7 @@ app.get("/activity/:id", (req, res) => {
             (activities.description) AS descriptionActivity, id_place,
             activities.contact, date, users.id, country, city,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username 
+            (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username
     FROM activities 
     INNER JOIN places 
     ON activities.id_place = places.id
@@ -279,6 +299,22 @@ app.get("/activity/:id", (req, res) => {
       if (results.length < 1) {
         res.status(404).send("This activity doesn't exist");
       } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
+app.get("/activity/:id/participants", (req, res) => {
+  const idActivity = req.params.id;
+  connection.query(
+    `SELECT username, id FROM users JOIN participation ON users.id = participation.idUser WHERE participation.idActivity = ?`,
+    idActivity,
+    (err, results) => {
+      if (err) {
+        res.status(500).send("Erreur lors de la récupération des pseudos");
+      } else {
+        console.log(results);
         res.json(results);
       }
     }
@@ -365,6 +401,38 @@ app.get(
     LEFT JOIN users
     ON participation.idUser = users.id
     WHERE participation.idUser = ?`,
+      req.user.id,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Error retrieving profile");
+        } else {
+          res.json(results);
+        }
+      }
+    );
+  }
+);
+
+app.get(
+  "/profile/:id/activities",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      `SELECT participation.idActivity, activities.idActivity, activities.name, id_creator, activities.price, 
+    activities.capacity, (activities.picture) AS pictureActivity, 
+    (activities.description) AS descriptionActivity, id_place, 
+    activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, places.id, country, city, 
+    address, type, (places.description) AS descriptionPlace, 
+    (places.picture) AS picturePlace
+    FROM participation 
+    INNER JOIN activities
+    ON participation.idActivity = activities.idActivity
+    LEFT JOIN users
+    ON participation.idUser = users.id
+    LEFT JOIN places
+    ON activities.id_place = places.id
+    WHERE participation.idUser = ?
+    GROUP BY activities.idActivity`,
       req.user.id,
       (err, results) => {
         if (err) {

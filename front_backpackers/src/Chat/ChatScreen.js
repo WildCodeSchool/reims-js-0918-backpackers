@@ -1,25 +1,25 @@
-import React, { Component } from "react"
-import Chatkit from "@pusher/chatkit"
+import React, { Component } from "react";
+import Chatkit from "@pusher/chatkit";
 import MessageList from "./MessageList";
 import SendMessageForm from "./SendMessageForm";
-import { Row, Col } from "reactstrap"
-import "./Chat.scss"
+import { Row, Col } from "reactstrap";
+import "./Chat.scss";
 import TypingIndicator from "./UserWhoAreTyping";
 import UsersList from "./UsersList";
 
 class ChatScreen extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       messages: [],
       currentRoom: {},
       currentUser: {},
       userWhoAreTyping: [],
       collapsed: false
-    }
-    this.sendMessage = this.sendMessage.bind(this)
-    this.sendTypingEvent = this.sendTypingEvent.bind(this)
-    this.toggleNavbar = this.toggleNavbar.bind(this)
+    };
+    this.sendMessage = this.sendMessage.bind(this);
+    this.sendTypingEvent = this.sendTypingEvent.bind(this);
+    this.toggleNavbar = this.toggleNavbar.bind(this);
   }
 
   componentDidMount() {
@@ -29,11 +29,11 @@ class ChatScreen extends Component {
       tokenProvider: new Chatkit.TokenProvider({
         url: "/authenticate"
       })
-    })
+    });
     chatManager
       .connect()
       .then(currentUser => {
-        this.setState({ currentUser })
+        this.setState({ currentUser });
         return currentUser.subscribeToRoom({
           roomId: this.props.currentChat.id,
           messageLimit: 100,
@@ -41,43 +41,44 @@ class ChatScreen extends Component {
             onNewMessage: message => {
               this.setState({
                 messages: [...this.state.messages, message]
-              })
+              });
             },
             onUserStartedTyping: user => {
               this.setState({
                 userWhoAreTyping: [...this.state.userWhoAreTyping, user.name]
-              })
+              });
             },
             onUserStoppedTyping: user => {
               this.setState({
-                userWhoAreTyping: this.state.userWhoAreTyping.fiUltimalter(username => username !== user.name)
-              })
+                userWhoAreTyping: this.state.userWhoAreTyping.filter(
+                  username => username !== user.name
+                )
+              });
             },
             onUserCameOnline: () => this.forceUpdate(),
             onUserWentOffline: () => this.forceUpdate(),
             onUserJoined: () => this.forceUpdate()
-
           }
-        })
+        });
       })
       //  .then(() => this.props.getChat(this.props.currentChat.id, this.state.messages))
       .then(currentRoom => {
-        this.setState({ currentRoom })
+        this.setState({ currentRoom });
       })
-      .catch(error => console.error("error", error))
+      .catch(error => console.error("error", error));
   }
 
   sendMessage(text) {
     this.state.currentUser.sendMessage({
       roomId: this.state.currentRoom.id,
       text
-    })
+    });
   }
 
   sendTypingEvent() {
     this.state.currentUser
       .isTypingIn({ roomId: this.state.currentRoom.id })
-      .catch(error => console.error("error", error))
+      .catch(error => console.error("error", error));
   }
 
   toggleNavbar() {
@@ -85,7 +86,6 @@ class ChatScreen extends Component {
       collapsed: !this.state.collapsed
     });
   }
-
 
   render() {
     return (
@@ -97,29 +97,37 @@ class ChatScreen extends Component {
             </button>
           </Col>
           <Col xs="6">
-            <p className="text-white text-center mb-0">{this.props.currentChat.name}</p>
+            <p className="text-white text-center mb-0">
+              {this.props.currentChat.name}
+            </p>
           </Col>
           <Col xs="3">
             <button onClick={() => this.toggleNavbar()}>
-              <i className="fas fa-users"></i>
+              <i className="fas fa-users" />
             </button>
           </Col>
-        </Row >
+        </Row>
         <Row>
           <Col xs="12" className="d-flex flex-column chatPage">
             <UsersList
               users={this.state.currentRoom.users}
               show={this.state.collapsed}
-              backdropClickHandler={this.toggleNavbar} />
-            <MessageList messages={this.state.messages} currentUser={this.state.currentUser} />
+              backdropClickHandler={this.toggleNavbar}
+            />
+            <MessageList
+              messages={this.state.messages}
+              currentUser={this.state.currentUser}
+            />
             <TypingIndicator userWhoAreTyping={this.state.userWhoAreTyping} />
-            <SendMessageForm onSubmit={this.sendMessage} onChange={this.sendTypingEvent} />
+            <SendMessageForm
+              onSubmit={this.sendMessage}
+              onChange={this.sendTypingEvent}
+            />
           </Col>
         </Row>
-
       </div>
-    )
+    );
   }
 }
 
-export default ChatScreen
+export default ChatScreen;

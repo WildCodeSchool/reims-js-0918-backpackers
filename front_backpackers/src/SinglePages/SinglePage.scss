@@ -110,10 +110,16 @@
   line-height: 50px;
 }
 
+.chat {
+  background-color: $blueColor;
+  line-height: 40px;
+}
+
 .validate {
   background-color: $greenColor;
   line-height: 50px;
   color: white;
+  text-align: center;
 }
 
 .new_activity {

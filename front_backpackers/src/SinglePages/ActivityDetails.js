@@ -9,8 +9,8 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
-import { Link } from "react-router-dom";
 import classnames from "classnames";
+import { Link } from "react-router-dom";
 import MapPlace from "./MapPlace";
 
 class ActivityDetails extends Component {
@@ -19,8 +19,15 @@ class ActivityDetails extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: "1",
-      idParticipation: []
+      idParticipation: [],
+      participate: false,
+      participants: []
     };
+  }
+
+  componentDidMount() {
+    this.callApiIdActivity();
+    this.callApiParticipants();
   }
 
   toggle(tab) {
@@ -43,13 +50,11 @@ class ActivityDetails extends Component {
           }
         }
       )
-      .then(
-        //(console.log("ok"));
-        this.props.history.push(`/`)
-      );
+      .then(res => this.setState({ participate: true }))
+      .then(this.componentDidMount());
   }
 
-  componentDidMount() {
+  callApiIdActivity() {
     const participations = [];
     axios
       .get("/profile/activities", {
@@ -62,6 +67,30 @@ class ActivityDetails extends Component {
         response.data.map(id => participations.push(id.idActivity))
       )
       .then(res => this.setState({ idParticipation: participations }));
+  }
+
+  callApiParticipants() {
+    const participant = [];
+    axios
+      .get(`/activity/${this.props.activity.idActivity}/participants`)
+      .then(response => response.data.map(user => participant.push(user)))
+      .then(res => this.setState({ participants: participant }));
+  }
+
+  desinscriptionParticipation() {
+    axios
+      .delete(
+        `/participate/${this.props.activity.idActivity}`,
+        { idChat: this.props.activity.idChat },
+        {
+          headers: {
+            accept: "application/json",
+            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+          }
+        }
+      )
+      .then(res => this.setState({ participate: false }))
+      .then(this.componentDidMount());
   }
 
   render() {
@@ -174,21 +203,56 @@ class ActivityDetails extends Component {
             </Row>
           </TabPane>
         </TabContent>
-        {this.state.idParticipation &&
-        this.state.idParticipation.includes(this.props.activity.idActivity) ? (
-          <div className="validate">
-            <p>Validé</p>
-          </div>
+        {this.props.activity.id_creator !== this.props.profile ? (
+          this.state.idParticipation.includes(
+            this.props.activity.idActivity
+          ) ? (
+            <div className="validate">
+              <p>Validé</p>
+            </div>
+          ) : (
+            <div className="participate">
+              <button
+                onClick={() => this.activeParticipation()}
+                type="button"
+                className="btn"
+              >
+                Participer
+              </button>
+            </div>
+          )
         ) : (
-          <div className="participate">
-            <button
-              onClick={() => this.activeParticipation()}
-              type="button"
-              className="btn"
-            >
-              Participer
-            </button>
-          </div>
+          ""
+        )}
+        {this.state.idParticipation.includes(this.props.activity.idActivity) ||
+        this.props.activity.id_creator === this.props.profile ? (
+          <Fragment>
+            <div className="chat mb-2">
+              <Link to="/chatlist">
+                <button type="button">Chat</button>
+              </Link>
+            </div>
+            <h3>Liste des participants</h3>
+            <ul>
+              <li>
+                {this.props.activity.username} <span>Créateur</span>
+              </li>
+              {this.state.participants.map(user => (
+                <li key={user.id}>{user.username}</li>
+              ))}
+            </ul>
+            <div>
+              <button
+                type="button"
+                className="chat"
+                onClick={() => this.desinscriptionParticipation()}
+              >
+                Se désinscrire
+              </button>
+            </div>
+          </Fragment>
+        ) : (
+          ""
         )}
       </Fragment>
     );
