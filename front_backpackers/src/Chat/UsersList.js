@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Row, Col } from "reactstrap"
 
 import "./Chat.scss";
 
@@ -20,22 +21,28 @@ class UsersList extends Component {
           {this.props.users
             ?
             <Fragment>
-              <h2>En ligne :</h2>
-              <ul>
-                {this.props.users.filter(user => user.presence.state === "online").map((user, index) => (
-                  <li key={index}>{user.name}</li>
-                ))}
-              </ul>
-              {this.props.users.filter(user => user.presence.state === "offline").length < 1 ?
-                "" :
-                <Fragment>
-                  <h2>Hors-ligne :</h2>
-                  <ul>
-                    {this.props.users.filter(user => user.presence.state === "offline").map((user, index) => (
+              <Row>
+                <Col xs="12">
+                  <h3 className="px-3">En ligne :</h3>
+                  <ul className="online">
+                    {this.props.users.filter(user => user.presence.state === "online").map((user, index) => (
                       <li key={index}>{user.name}</li>
                     ))}
                   </ul>
-                </Fragment>
+                </Col>
+              </Row>
+              {this.props.users.filter(user => user.presence.state === "offline").length < 1 ?
+                "" :
+                <Row>
+                  <Col xs="12">
+                    <h3 className="px-3">Hors-ligne :</h3>
+                    <ul className="offline">
+                      {this.props.users.filter(user => user.presence.state === "offline").map((user, index) => (
+                        <li key={index}>{user.name}</li>
+                      ))}
+                    </ul>
+                  </Col>
+                </Row>
               }
 
             </Fragment>
