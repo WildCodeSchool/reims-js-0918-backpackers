@@ -214,7 +214,7 @@ class HomePage extends Component {
                 1,
                 1
               ])} className="w-50 listPostBtn text-white text-center">
-                <i className="fas fa-pencil-alt" /> Publier{" "}
+                <i className="fas fa-pencil-alt" /> Publier un lieu{" "}
               </Link>
             </Row>
             <Row>
