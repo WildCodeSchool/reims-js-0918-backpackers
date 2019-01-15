@@ -278,6 +278,7 @@ class Profile extends Component {
           {this.state.modify ? (
             <Col xs="12" className="text-center">
               <TagsInput
+                maxTags="4"
                 value={this.state.tags}
                 onChange={tags => this.handleTags(tags)}
               />
