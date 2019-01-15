@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
-import { Row, Col } from "reactstrap";
+import { Link } from "react-router-dom"
+import { Row, Col } from "reactstrap"
 
 import "./Chat.scss";
 

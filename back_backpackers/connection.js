@@ -115,8 +115,10 @@ app.get("/places/search", (req, res) => {
       : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
     (err, results) => {
       if (err) {
+        console.log(err);
         res.status(500).send("Error retrieving place search");
       } else {
+        console.log(results);
         res.json(results);
       }
     }
@@ -393,7 +395,6 @@ app.get(
           if (err) {
             res.status(500).send("Error retrieving profile");
           } else {
-            console.log(results);
             res.json(results);
           }
         }

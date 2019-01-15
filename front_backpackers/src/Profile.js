@@ -11,7 +11,7 @@ import "./Profile.scss";
 class Profile extends Component {
   state = {
     profile: {}
-  };
+  }
   componentDidMount() {
     if (!this.props.profile[0]) {
       axios
