@@ -57,7 +57,7 @@ class ActivityDetails extends Component {
   callApiIdActivity() {
     const participations = [];
     axios
-      .get("/profile/activities", {
+      .get(`/profile/${this.props.profile}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -262,7 +262,7 @@ class ActivityDetails extends Component {
             <h3 className="text-center">Liste des participants</h3>
             <ul className="text-center listParticipants mr-5">
               <li>
-                {this.props.activity.username} <span>[Créateur]</span>
+                {this.props.activity.username} <span>(Créateur)</span>
               </li>
               {this.state.participants.map(user => (
                 <li key={user.id}>{user.username}</li>

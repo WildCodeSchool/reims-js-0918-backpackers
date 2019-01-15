@@ -379,25 +379,26 @@ app.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    connection.query(
-      // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+    console.log(req.user.id),
+      connection.query(
+        // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
 
-      // "SELECT id, username, birthDate, mail, favorites, hobbies, historic, rights, picture, description, FROM users WHERE id = ?",
+        // "SELECT id, username, birthDate, mail, favorites, hobbies, historic, rights, picture, description, FROM users WHERE id = ?",
 
-      "SELECT * FROM users WHERE id=?",
+        "SELECT * FROM users WHERE id=?",
 
-      // "SELECT users.*, activities.* FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+        // "SELECT users.*, activities.* FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
 
-      // console.log("route", req.user.id),
-      req.user.id,
-      (err, results) => {
-        if (err) {
-          res.status(500).send("Error retrieving profile");
-        } else {
-          res.json(results);
+        // console.log("route", req.user.id),
+        req.user.id,
+        (err, results) => {
+          if (err) {
+            res.status(500).send("Error retrieving profile");
+          } else {
+            res.json(results);
+          }
         }
-      }
-    );
+      );
   }
 );
 
@@ -421,20 +422,12 @@ app.get(
 );
 
 app.get(
-  "/profile/:username/activities",
+  "/profile/:username/activitiescreated",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      // THIS WAS NOT COMMENTED"SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
-
-      `SELECT participation.idActivity
-    FROM participation 
-    INNER JOIN activities
-    ON participation.idActivity = activities.idActivity
-    LEFT JOIN users
-    ON participation.idUser = users.id
-    WHERE participation.idUser = ?`,
-      req.user.id,
+      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
+      req.params.username,
       (err, results) => {
         if (err) {
           res.status(500).send("Error retrieving profile");
