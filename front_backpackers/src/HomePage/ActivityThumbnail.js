@@ -15,7 +15,8 @@ const ActivityThumbnail = ({
   price,
   profil,
   viewActivity,
-  date_diff
+  date_diff,
+  date
 }) => (
   <Row>
     <Col xs="12">
@@ -40,19 +41,23 @@ const ActivityThumbnail = ({
             </span>
             <span>
               <i className="fas fa-calendar pr-1" />
-              <span
-                className={
-                  "timeLeft" +
-                  (date_diff <= 2
-                    ? " text-danger"
-                    : date_diff < 7
-                    ? " text-warning"
-                    : " text-success")
-                }
-              >
-                {date_diff}
-              </span>{" "}
-              jours restants
+              {date_diff < 0 ? (
+                <span>{date.split("T")[0]}</span>
+              ) : (
+                <span
+                  className={
+                    "timeLeft" +
+                    (date_diff <= 2
+                      ? " text-danger"
+                      : date_diff < 7
+                      ? " text-warning"
+                      : " text-success")
+                  }
+                >
+                  {date_diff}
+                  jours restants
+                </span>
+              )}
             </span>
           </Media>
           {descriptionActivity ? descriptionActivity : descriptionPlace}
