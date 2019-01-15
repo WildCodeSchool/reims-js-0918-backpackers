@@ -21,17 +21,6 @@ const ActivityThumbnail = ({
     <Col xs="12">
       <Media className="d-flex align-items-stretch">
         <Media left href="#">
-          <Media className="creator">
-            <img
-              className="rounded-circle"
-              src={
-                profil.picture
-                  ? profil.picture
-                  : "https://via.placeholder.com/75"
-              }
-              alt="Createur"
-            />
-          </Media>
           <Media
             object
             src={

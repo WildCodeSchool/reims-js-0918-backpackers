@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Map, TileLayer, Marker } from "react-leaflet";
-import { Row, Col } from "reactstrap";
+import { Row } from "reactstrap";
+
+import L from "leaflet"
 
 import "./Maps.scss";
 import PlaceThumbnail from "./HomePage/PlaceThumbnail";
@@ -30,6 +32,19 @@ class Maps extends Component {
     this.resetMarkerInfos = this.resetMarkerInfos.bind(this);
   }
 
+  componentDidMount() {
+    const map = this.leafletMap.leafletElement;
+
+    var myIcon = L.icon({
+      className: "myMarker",
+      iconUrl: `http://localhost:3010/images/${this.props.profile[0].picture ? this.props.profile[0].picture : "default.png"}`,
+      iconSize: [30, 30],
+      shadowUrl: '/images/marker_shadow.png',
+      shadowSize: [60, 50]
+    });
+    L.marker(this.props.map, { icon: myIcon }).addTo(map);
+  }
+
   getMarkerInfos(content) {
     this.setState({ markerInfos: content });
   }
@@ -45,9 +60,11 @@ class Maps extends Component {
       content: place
     }));
 
+
     return (
       <Row>
         <Map
+          ref={m => { this.leafletMap = m; }}
           maxBounds={[[-90, -180], [90, 180]]}
           center={this.props.map}
           zoom="15"
@@ -58,10 +75,7 @@ class Maps extends Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <MyMarkersList
-            markers={[
-              { key: "myPosition", position: this.props.map },
-              ...markers
-            ]}
+            markers={markers}
             getMarkerInfos={this.getMarkerInfos}
           />
         </Map>

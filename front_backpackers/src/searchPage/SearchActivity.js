@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Row, Col, Input, Button, Collapse, Badge } from "reactstrap";
 import { Link } from "react-router-dom";
-import "./SearchPage.css";
+import "./SearchPage.scss";
 
 class SearchActivity extends Component {
   constructor(props) {

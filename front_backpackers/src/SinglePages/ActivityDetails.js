@@ -57,7 +57,7 @@ class ActivityDetails extends Component {
   callApiIdActivity() {
     const participations = [];
     axios
-      .get("/profile/activities", {
+      .get(`/profile/${this.props.profile}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")

@@ -148,8 +148,7 @@ class PlaceDetails extends Component {
               <Col xs="12">
                 {this.state.activeTab === "2" ? (
                   <MapPlace
-                    lat={this.props.place.latitude}
-                    long={this.props.place.longitude}
+                    informations={this.props.place}
                   />
                 ) : (
                   ""

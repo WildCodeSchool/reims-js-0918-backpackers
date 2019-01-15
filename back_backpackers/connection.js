@@ -131,11 +131,12 @@ app.get("/activities", (req, res) => {
     activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
-    FROM activities 
+    FROM activities
     INNER JOIN places 
     ON activities.id_place = places.id 
     LEFT JOIN participation 
-    ON activities.idActivity = participation.idActivity 
+    ON activities.idActivity = participation.idActivity
+    WHERE DATEDIFF(date,CURRENT_TIMESTAMP)>=0
     GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
@@ -401,18 +402,31 @@ app.get(
 );
 
 app.get(
-  "/profile/activities",
+  "/profile/:username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      `SELECT participation.idActivity
-    FROM participation 
-    INNER JOIN activities
-    ON participation.idActivity = activities.idActivity
-    LEFT JOIN users
-    ON participation.idUser = users.id
-    WHERE participation.idUser = ?`,
-      req.user.id,
+      "SELECT picture, username, mail, hobbies, description, birthDate FROM users WHERE username=?",
+
+      req.params.username,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Error retrieving profile");
+        } else {
+          res.json(results);
+        }
+      }
+    );
+  }
+);
+
+app.get(
+  "/profile/:username/activitiescreated",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
+      req.params.username,
       (err, results) => {
         if (err) {
           res.status(500).send("Error retrieving profile");

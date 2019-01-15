@@ -14,8 +14,8 @@ class ActivityPage extends Component {
   }
 
   componentDidMount() {
-    this.callApiActivity();
     this.callApiProfile();
+    this.callApiActivity();
   }
 
   callApiActivity() {
