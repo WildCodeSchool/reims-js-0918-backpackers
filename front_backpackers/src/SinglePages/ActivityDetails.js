@@ -9,8 +9,8 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
-import { Link } from "react-router-dom";
 import classnames from "classnames";
+import { Link } from "react-router-dom";
 import MapPlace from "./MapPlace";
 
 class ActivityDetails extends Component {
@@ -18,8 +18,16 @@ class ActivityDetails extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: "1"
+      activeTab: "1",
+      idParticipation: [],
+      participate: false,
+      participants: []
     };
+  }
+
+  componentDidMount() {
+    this.callApiIdActivity();
+    this.callApiParticipants();
   }
 
   toggle(tab) {
@@ -42,22 +50,69 @@ class ActivityDetails extends Component {
           }
         }
       )
-      .then(response => {
-        this.props.history.push("/");
-      });
+      .then(() => this.setState({ participate: true }))
+      .then(this.componentDidMount());
+  }
+
+  callApiIdActivity() {
+    const participations = [];
+    axios
+      .get(`/profile/${this.props.profile}/activities`, {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response =>
+        response.data.map(id => participations.push(id.idActivity))
+      )
+      .then(() => this.setState({ idParticipation: participations }));
+  }
+
+  callApiParticipants() {
+    const participant = [];
+    axios
+      .get(`/activity/${this.props.activity.idActivity}/participants`)
+      .then(response => response.data.map(user => participant.push(user)))
+      .then(() => this.setState({ participants: participant }));
+  }
+
+  desinscriptionParticipation() {
+    axios
+      .post(
+        `/participate/remove/${this.props.activity.idActivity}`,
+        { idChat: this.props.activity.idChat },
+        {
+          headers: {
+            accept: "application/json",
+            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+          }
+        }
+      )
+      .then(() => this.setState({ participate: false }))
+      .then(this.componentDidMount());
   }
 
   render() {
-
-    const typePicture = `/images/${this.props.activity.type === "Apéritifs" ? "aperitif"
-      : this.props.activity.type === "Aquatique" ? "aquatic"
-        : this.props.activity.type === "Aventure" ? "aventure"
-          : this.props.activity.type === "Bien-être" ? "bien-etre"
-            : this.props.activity.type === "Culturel" ? "culturel"
-              : this.props.activity.type === "Déplacements" ? "deplacement"
-                : this.props.activity.type === "Enfants" ? "enfants"
-                  : this.props.activity.type === "Nocturne" ? "nocturne"
-                    : "restauration"}.png`
+    const typePicture = `/images/${
+      this.props.activity.type === "Apéritifs"
+        ? "aperitif"
+        : this.props.activity.type === "Aquatique"
+        ? "aquatic"
+        : this.props.activity.type === "Aventure"
+        ? "aventure"
+        : this.props.activity.type === "Bien-être"
+        ? "bien-etre"
+        : this.props.activity.type === "Culturel"
+        ? "culturel"
+        : this.props.activity.type === "Déplacements"
+        ? "deplacement"
+        : this.props.activity.type === "Enfants"
+        ? "enfants"
+        : this.props.activity.type === "Nocturne"
+        ? "nocturne"
+        : "restauration"
+    }.png`;
 
     return (
       <Fragment>
@@ -98,7 +153,10 @@ class ActivityDetails extends Component {
                   <Col xs="4">
                     <div className="price characteristic text-center">
                       <p className="mb-0">
-                        <i className="fas fa-coins" style={{ fontSize: "30px" }} />
+                        <i
+                          className="fas fa-coins"
+                          style={{ fontSize: "30px" }}
+                        />
                       </p>
                       <p>
                         {this.props.activity.price > 0 ? (
@@ -107,15 +165,19 @@ class ActivityDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                            "Gratuit"
-                          )}
+                          "Gratuit"
+                        )}
                       </p>
                     </div>
                   </Col>
                   <Col xs="4">
                     <div className="characteristic text-center">
                       <p className="mb-0">
-                        <img style={{ width: "30px" }} src={typePicture} alt={this.props.activity.type} />
+                        <img
+                          style={{ width: "30px" }}
+                          src={typePicture}
+                          alt={this.props.activity.type}
+                        />
                       </p>
                       <p className="">{this.props.activity.type}</p>
                     </div>
@@ -129,16 +191,16 @@ class ActivityDetails extends Component {
                       {this.props.activity.capacity -
                         this.props.activity.participants -
                         1 <
-                        0 ? (
-                          <p>0 Places Restantes</p>
-                        ) : (
-                          <p>
-                            {this.props.activity.capacity -
-                              this.props.activity.participants -
-                              1}{" "}
-                            Places Restantes
+                      0 ? (
+                        <p>0 Places Restantes</p>
+                      ) : (
+                        <p>
+                          {this.props.activity.capacity -
+                            this.props.activity.participants -
+                            1}{" "}
+                          Places Restantes
                         </p>
-                        )}
+                      )}
                     </div>
                   </Col>
                 </Row>
@@ -162,24 +224,63 @@ class ActivityDetails extends Component {
                     long={this.props.activity.longitude}
                   />
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </Col>
             </Row>
           </TabPane>
         </TabContent>
-
-        <div className="participate">
-          <Link to="/">
-            <button
-              onClick={this.activeParticipation.bind(this)}
-              type="button"
-              className="btn"
-            >
-              Participer
-            </button>
-          </Link>
-        </div>
+        {this.props.activity.id_creator !== this.props.profile ? (
+          this.state.idParticipation.includes(
+            this.props.activity.idActivity
+          ) ? (
+            <div className="validate">
+              <p>Validé</p>
+            </div>
+          ) : (
+            <div className="participate">
+              <button
+                onClick={() => this.activeParticipation()}
+                type="button"
+                className="btn"
+              >
+                Participer
+              </button>
+            </div>
+          )
+        ) : (
+          ""
+        )}
+        {this.state.idParticipation.includes(this.props.activity.idActivity) ||
+        this.props.activity.id_creator === this.props.profile ? (
+          <Fragment>
+            <div className="chat mb-2">
+              <Link to="/chatlist">
+                <button type="button">Chat</button>
+              </Link>
+            </div>
+            <h3 className="text-center">Liste des participants</h3>
+            <ul className="text-center listParticipants mr-5">
+              <li>
+                {this.props.activity.username} <span>(Créateur)</span>
+              </li>
+              {this.state.participants.map(user => (
+                <li key={user.id}>{user.username}</li>
+              ))}
+            </ul>
+            <div>
+              <button
+                type="button"
+                className="desinscription"
+                onClick={() => this.desinscriptionParticipation()}
+              >
+                Se désinscrire
+              </button>
+            </div>
+          </Fragment>
+        ) : (
+          ""
+        )}
       </Fragment>
     );
   }

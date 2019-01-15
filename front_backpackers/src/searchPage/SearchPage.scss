@@ -1,8 +1,4 @@
-.search-header {
-  background-color: #054762;
-  color: white;
-  line-height: 40px;
-}
+@import "../_styles.scss";
 
 .search-btn {
   background-color: #054762;
@@ -26,21 +22,6 @@
   height: 30px;
   margin-top: 10px;
   margin-left: 2px;
-}
-
-.activitiesTitleUnderline {
-  z-index: 0;
-  margin-top: -15px;
-  height: 1px;
-  border-bottom: 1px solid #000;
-}
-
-h2 {
-  font-size: 1rem;
-  font-weight: 800;
-  display: inline-block;
-  background-color: #fff;
-  z-index: 5;
 }
 
 .categoriesSearch {
