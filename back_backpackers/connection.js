@@ -100,17 +100,15 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
   )
 });
 
-app.get("/places/search", (req, res) => {
-  const name =
-    req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
-  const adress =
-    req.query.adress === undefined ? "" : req.query.adress.split("_").join(" ");
+app.get("/search", (req, res) => {
+  const type = req.query.type
+  const searchArray = []
+
+  type ? searchArray.push(`type=${type}`) : ""
+  const searchQuery = searchArray.join(' and ')
+
   connection.query(
-    adress === ""
-      ? `SELECT * FROM places WHERE name = "${name}"`
-      : name === ""
-        ? `SELECT * FROM places WHERE adress = "${adress}"`
-        : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+    "SELECT * FROM activities WHERE " + searchQuery,
     (err, results) => {
       if (err) {
         console.log(err);
