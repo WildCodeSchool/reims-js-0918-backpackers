@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
-const connection = require("../conf");
+const connection = require("../conf")
 
 router.post("/login", function(req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
