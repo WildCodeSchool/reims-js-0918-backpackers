@@ -11,9 +11,8 @@ import PlaceContainer from "../containers/PlaceContainer";
 import ChatContainer from "../containers/ChatContainer";
 import CreateActivityPage from "../FormPage/CreateActivityPage";
 import CreatePlacePageContainer from "../containers/CreatePlacePageContainer";
-import SearchActivity from "../searchPage/SearchActivity";
-import searchParticipantsContainer from "../containers/searchParticipantsContainer";
 import ActivitesListContainer from "../containers/ActivitiesListContainer";
+import SearchPage from "../searchPage/SearchPage";
 
 class Routes extends Component {
   render() {
@@ -38,22 +37,22 @@ class Routes extends Component {
             <Route path="/newplace" component={CreatePlacePageContainer} />
             <Route path="/profil/:username" component={ProfileContainer} />
             <Route path="/chatlist" component={ChatContainer} />
-            <Route path="/search" component={searchParticipantsContainer} />
+            <Route path="/search" component={SearchPage} />
           </Switch>
         ) : (
-          <Switch>
-            <Route path="/login" component={LoginPage} />
-            <Route path="/signup" component={SignUpPage} />
-            <Route exact path="/" component={HomePageContainer} />
-            <Route path="/activity/:id" component={ActivityContainer} />
-            <Route path="/place/:id" component={PlaceContainer} />
-            <Route path="/search" component={SearchActivity} />
-            <Redirect from="/place/:id/newactivity" to="/login" />
-            <Redirect from="/newplace" to="/login" />
-            <Redirect from="/profil" to="/login" />
-            <Redirect from="/chatlist" to="/login" component={ChatContainer} />
-          </Switch>
-        )}
+            <Switch>
+              <Route path="/login" component={LoginPage} />
+              <Route path="/signup" component={SignUpPage} />
+              <Route exact path="/" component={HomePageContainer} />
+              <Route path="/activity/:id" component={ActivityContainer} />
+              <Route path="/place/:id" component={PlaceContainer} />
+              <Route path="/search" component={SearchPage} />
+              <Redirect from="/place/:id/newactivity" to="/login" />
+              <Redirect from="/newplace" to="/login" />
+              <Redirect from="/profil" to="/login" />
+              <Redirect from="/chatlist" to="/login" component={ChatContainer} />
+            </Switch>
+          )}
       </Container>
     );
   }

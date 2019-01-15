@@ -103,14 +103,31 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-  const type = req.query.type
+  console.log(req.query)
+  const type = req.query.typeChoice
+  const participation = req.query.participation
+  const keywords = req.query.keywords
+  const city = req.query.city
+  const country = req.query.country
+  const dateStart = req.query.dateStart
+  const dateEnd = req.query.dateEnd
   const searchArray = []
 
-  type ? searchArray.push(`type=${type}`) : ""
-  const searchQuery = searchArray.join(' and ')
+  type ? searchArray.push(`type="${type}"`) : ""
+  city ? searchArray.push(`city="${city}"`) : ""
+  keywords > 0 ? searchArray.push(keywords.split(" ").map(word => `activities.description LIKE "%${word}%"`).join(' AND ') + " OR " + keywords.split(" ").map(word => `activities.name LIKE "%${word}%"`).join(' AND ')) : ""
+  country ? searchArray.push(`country="${country}"`) : ""
+  dateStart ? searchArray.push(`date>"${dateStart}"`) : ""
+  dateEnd ? searchArray.push(`date<="${dateEnd}"`) : ""
+
+  const searchQuery = searchArray.join(' AND ')
+  console.log("query", searchQuery)
 
   connection.query(
-    "SELECT * FROM activities WHERE " + searchQuery,
+    `SELECT * FROM activities
+    INNER JOIN places 
+    ON activities.id_place = places.id
+    WHERE ${searchQuery}`,
     (err, results) => {
       if (err) {
         console.log(err);

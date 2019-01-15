@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import { Field, reduxForm } from 'redux-form'
 import "./SearchPage.scss";
 
-const renderField = ({ input, type, meta: { touched, error, warning } }) => (
+const renderField = ({ input, placeholder, name, className, id, type, meta: { touched, error, warning } }) => (
   <Fragment>
-    <input {...input} type={type} />
+    <Input placeholder={placeholder} id={id} name={name} className={className} {...input} type={type} />
     {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
   </Fragment>
 )
 
-class SearchActivity extends Component {
+class SearchActivityForm extends Component {
   constructor(props) {
     super(props);
     this.toggleCategories = this.toggleCategories.bind(this);
@@ -24,13 +24,6 @@ class SearchActivity extends Component {
       collapseDates: false,
       collapseSearchRefined: true
     };
-  }
-
-  startSearch(values) {
-
-    console.log(values)
-    // axios
-    // .get('/search',  )
   }
 
   toggleCategories() {
@@ -49,10 +42,14 @@ class SearchActivity extends Component {
     this.setState({ collapseSearchRefined: !this.state.collapseSearchRefined });
   }
 
+  clickSubmit(e) {
+    e.preventDefault()
+  }
+
   render() {
     return (
       <Fragment>
-        <form onSubmit={() => this.handleSubmit()}>
+        <form onSubmit={this.props.handleSubmit}>
           {/* HEADER OF SEARCH FORM */}
           <Row className="blueHeader">
             <Col xs="2">
@@ -74,9 +71,9 @@ class SearchActivity extends Component {
             </Col>
           </Row>
           <Collapse isOpen={this.state.collapseCategories}>
-            <Row className="text-center typeList">
+            {/* <Row className="text-center typeList">
               <Col xs="4">
-                <Field component={renderField} type="radio" id="aventure" name="typeChoice" />
+                <Field component={renderField} type="radio" id="aventure" name="typeChoice" value="aventure" />
                 <Label className="typeChoice" for="aventure">
                   <img
                     className="categoriesSearch"
@@ -87,7 +84,7 @@ class SearchActivity extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="aquatic" name="typeChoice" />
+                <Field component={renderField} type="radio" id="aquatic" name="typeChoice" value="aquatique" />
                 <Label className="typeChoice" for="aquatic">
                   <img
                     className="categoriesSearch"
@@ -98,7 +95,7 @@ class SearchActivity extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="culturel" name="typeChoice" />
+                <Field component={renderField} type="radio" id="culturel" name="typeChoice" value="culturel" />
                 <Label className="typeChoice" for="culturel">
                   <img
                     className="categoriesSearch"
@@ -109,7 +106,7 @@ class SearchActivity extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="deplacement" name="typeChoice" />
+                <Field component={renderField} type="radio" id="deplacement" name="typeChoice" value="deplacement" />
                 <Label className="typeChoice" for="deplacement">
                   <img
                     className="categoriesSearch"
@@ -120,7 +117,7 @@ class SearchActivity extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="restauration" name="typeChoice" />
+                <Field component={renderField} type="radio" id="restauration" name="typeChoice" value="restauration" />
                 <Label className="typeChoice" for="restauration">
                   <img
                     className="categoriesSearch"
@@ -131,7 +128,7 @@ class SearchActivity extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="aperitif" name="typeChoice" />
+                <Field component={renderField} type="radio" id="aperitif" name="typeChoice" value="aperitif" />
                 <Label className="typeChoice" for="aperitif">
                   <img
                     className="categoriesSearch"
@@ -142,7 +139,7 @@ class SearchActivity extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="nocturne" name="typeChoice" />
+                <Field component={renderField} type="radio" id="nocturne" name="typeChoice" value="nocturne" />
                 <Label className="typeChoice" for="nocturne">
                   <img
                     className="categoriesSearch"
@@ -153,7 +150,7 @@ class SearchActivity extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="bien-etre" name="typeChoice" />
+                <Field component={renderField} type="radio" id="bien-etre" name="typeChoice" value="bien-etre" />
                 <Label className="typeChoice" for="bien-etre">
                   <img
                     className="categoriesSearch"
@@ -164,7 +161,7 @@ class SearchActivity extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="enfants" name="typeChoice" />
+                <Field component={renderField} type="radio" id="enfants" name="typeChoice" value="enfants" />
                 <Label className="typeChoice" for="enfants">
                   <img
                     className="categoriesSearch"
@@ -174,7 +171,7 @@ class SearchActivity extends Component {
                   <p>Enfants</p>
                 </Label>
               </Col>
-            </Row>
+            </Row> */}
           </Collapse>
           <Row>
             <Col>
@@ -198,7 +195,6 @@ class SearchActivity extends Component {
               </Col>
               <Col xs="4">
                 <p className="text-center mb-0">{this.props.count}</p>
-                {console.log("message", this.props.count)}
               </Col>
               <Col xs="4">
                 <Button
@@ -224,7 +220,7 @@ class SearchActivity extends Component {
                 <Badge className="badgeDate">Du...</Badge>
               </Col>
               <Col>
-                <input id="searchByDate" name="searchByDate" type="date" />
+                <Field component={renderField} name="dateStart" type="date" />
               </Col>
             </Row>
             <Row>
@@ -232,11 +228,11 @@ class SearchActivity extends Component {
                 <Badge className="badgeDate">Au...</Badge>
               </Col>
               <Col>
-                <input id="searchByDate" name="searchByDate" type="date" />
+                <Field component={renderField} name="dateEnd" type="date" />
               </Col>
             </Row>
           </Collapse>
-          <Row>
+          {/*  <Row>
             <Col>
               <h2 onClick={() => this.toggleSearchRefined()} className="pr-3">
                 Affiner la recherche
@@ -263,9 +259,9 @@ class SearchActivity extends Component {
           </Collapse>
           <Row>
             <Col>
-              <Button type="submit" disabled={this.props.pristine || this.props.submitting} className="search-btn">Rechercher</Button>
+              <button type="submit" disabled={this.props.submitting} className="search-btn">Rechercher</button>
             </Col>
-          </Row>
+          </Row> */}
         </form>
       </Fragment >
     );
@@ -274,4 +270,4 @@ class SearchActivity extends Component {
 
 export default reduxForm({
   form: 'searchActivities'
-})(SearchActivity);
+})(SearchActivityForm);
