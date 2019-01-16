@@ -81,10 +81,10 @@ class SearchPage extends Component {
       delete searchData.country;
       delete searchData.city;
     }
+    this.setState({ searchData: { ...searchData } });
     const searchQuery = Object.keys(searchData)
       .map(data => data + "=" + searchData[data])
       .join("&");
-    console.log(searchQuery);
     axios
       .get(`/search?` + searchQuery)
       .then(response => this.setState({ searchResults: response.data }));

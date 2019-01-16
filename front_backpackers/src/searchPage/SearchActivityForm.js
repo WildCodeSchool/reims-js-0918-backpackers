@@ -342,6 +342,7 @@ class SearchActivityForm extends Component {
                   name="city"
                   className="search-bar"
                   placeholder="Ville"
+                  value={this.props.initialValues.city}
                 />
               </Col>
             </Row>
