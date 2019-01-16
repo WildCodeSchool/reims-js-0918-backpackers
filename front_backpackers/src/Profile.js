@@ -17,7 +17,7 @@ class Profile extends Component {
     file: "",
     imagePreviewUrl: "",
     description: "",
-    tags: []
+    tags: [],
     historic: {}
   };
   componentDidMount() {
