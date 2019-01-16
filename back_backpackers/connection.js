@@ -101,7 +101,6 @@ app.post("/api/places/upload", upload.single("monfichier"), (req, res) => {
         );
       }
     }
-  )
   );
 });
 
