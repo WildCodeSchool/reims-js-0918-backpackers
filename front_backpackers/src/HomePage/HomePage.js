@@ -29,7 +29,8 @@ class HomePage extends Component {
     this.state = {
       dropdownOpen: false,
       collapsed: true,
-      activeTab: "1"
+      activeTab: "1",
+      idParticipation: []
     };
     this.toggle = this.toggle.bind(this);
     this.toggleMap = this.toggleMap.bind(this);
@@ -39,17 +40,17 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
+    this.callApiProfile();
     this.props.fetchActivities();
     this.callApiActivities();
     this.props.fetchPlaces();
     this.callApiPlaces();
-    this.callApiProfile();
-    this.callApiCapacity();
+    this.callApiParticipation();
   }
 
   callApiProfile() {
     axios
-      .get("/profile", {
+      .get(`/profile`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -81,25 +82,30 @@ class HomePage extends Component {
       });
   }
 
-  callApiCapacity() {
-    axios
-      .get("/activities/capacity")
-      .then(res => this.props.getActivityCapacity(res.data));
-  }
-
   callApiPlaces() {
     axios.get("/places").then(response => this.props.viewPlaces(response.data));
+  }
+
+  callApiParticipation() {
+    axios
+      .get(`/profile/${this.props.profile.id}/activities`, {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response => this.setState({ idParticipation: response.data }));
   }
 
   callApiActivities() {
     axios
       .get("/activities")
-      .then(response => this.props.viewActivities(response.data))
-      // .then(() =>
-      //   console.log(
-      //     this.props.coords.latitude,
-      //     this.props.coords.longitude
-      //   ))
+      .then(response => this.props.viewActivities(response.data));
+    // .then(() =>
+    //   console.log(
+    //     this.props.coords.latitude,
+    //     this.props.coords.longitude
+    //   ))
   }
 
   toggle() {
@@ -138,7 +144,6 @@ class HomePage extends Component {
             <BurgerButton
               drawerToggleClickHandler={this.drawerToggleClickHandler}
             />
-
             <Sidebar
               {...this.props.profile[0]}
               show={this.props.menu}
@@ -192,17 +197,42 @@ class HomePage extends Component {
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             {this.props.displayHomePage === "places" &&
-              this.props.places.map(place => (
-                <PlaceThumbnail {...place} key={place.id} />
-              ))}
+              (this.props.isGeolocationAvailable &&
+              this.props.isGeolocationEnabled &&
+              this.props.coords
+                ? this.props.places
+                    .filter(
+                      place =>
+                        Math.abs(place.latitude - this.props.coords.latitude) <
+                          0.02 &&
+                        Math.abs(
+                          place.longitude - this.props.coords.longitude
+                        ) < 0.02
+                    )
+                    .sort(
+                      (a, b) =>
+                        a.latitude - b.latitude && a.longitude - b.longitude
+                    )
+                    .map(place => <PlaceThumbnail {...place} key={place.id} />)
+                : this.props.places
+                    .filter(place => place.country === "France")
+                    .map(place => (
+                      <PlaceThumbnail {...place} key={place.id} />
+                    )))}
             {this.props.displayHomePage === "activities" &&
-              this.props.activities.map(activity =>
-                activity.capacity - 1 - activity.participants > 0 ? (
-                  <ActivityThumbnail {...activity} key={activity.idActivity} />
-                ) : (
-                  ""
-                )
-              )}
+              this.props.activities
+                .sort((a, b) => a.date_diff - b.date_diff)
+                .map(activity =>
+                  activity.capacity - 1 - activity.participants > 0 ? (
+                    <ActivityThumbnail
+                      {...activity}
+                      profil={this.props.profile[0]}
+                      key={activity.idActivity}
+                    />
+                  ) : (
+                    ""
+                  )
+                )}
             <Row className="fixed-bottom listFooter">
               <Link
                 to="/search"
@@ -210,10 +240,11 @@ class HomePage extends Component {
               >
                 Rechercher <i className="fas fa-search-location" />
               </Link>
-              <Link to="/newplace" onClick={() => this.props.getCoords([
-                1,
-                1
-              ])} className="w-50 listPostBtn text-white text-center">
+              <Link
+                to="/newplace"
+                onClick={() => this.props.getCoords([1, 1])}
+                className="w-50 listPostBtn text-white text-center"
+              >
                 <i className="fas fa-pencil-alt" /> Publier{" "}
               </Link>
             </Row>

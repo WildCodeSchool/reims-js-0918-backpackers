@@ -15,7 +15,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/api/auth", auth);
-app.use("/", index);
 
 const multer = require("multer");
 const upload = multer({
@@ -135,11 +134,12 @@ app.get("/api/activities", (req, res) => {
     activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
-    FROM activities 
+    FROM activities
     INNER JOIN places 
     ON activities.id_place = places.id 
     LEFT JOIN participation 
-    ON activities.idActivity = participation.idActivity 
+    ON activities.idActivity = participation.idActivity
+    WHERE DATEDIFF(date,CURRENT_TIMESTAMP)>=0
     GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
@@ -218,7 +218,7 @@ app.post(
   }
 );
 
-app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
+app.post("/api/activities/upload", upload.single("monfichier"), (req, res) => {
   fs.rename(
     req.file.path,
     "public/images/" + req.file.originalname,
@@ -228,7 +228,7 @@ app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
       } else {
         connection.query(
           `UPDATE activities SET picture = "${
-          req.file.originalname
+            req.file.originalname
           }" WHERE idActivity= (SELECT LAST_INSERT_ID())`,
           err => {
             if (err) {
@@ -240,7 +240,7 @@ app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
         );
       }
     }
-  )
+  );
 });
 
 app.post(
@@ -268,6 +268,33 @@ app.post(
   }
 );
 
+app.post(
+  "/participate/remove/:idActivity",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      `DELETE FROM participation WHERE idActivity=${
+        req.params.idActivity
+      } AND idUser=${req.user.id}`,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Failed to unparticipate to an activity");
+          console.log(err);
+        } else {
+          chatkit
+            .removeUsersFromRoom({
+              roomId: req.body.idChat,
+              userIds: [req.user.id]
+            })
+            .then(() => console.log("removed"))
+            .catch(err => console.error(err));
+          res.sendStatus(200);
+        }
+      }
+    );
+  }
+);
+
 app.get("/api/activity/:id", (req, res) => {
   const idActivity = req.params.id;
   connection.query(
@@ -276,7 +303,7 @@ app.get("/api/activity/:id", (req, res) => {
             (activities.description) AS descriptionActivity, id_place,
             activities.contact, date, users.id, country, city,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username 
+            (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username
     FROM activities 
     INNER JOIN places 
     ON activities.id_place = places.id
@@ -294,6 +321,22 @@ app.get("/api/activity/:id", (req, res) => {
       if (results.length < 1) {
         res.status(404).send("This activity doesn't exist");
       } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
+app.get("/activity/:id/participants", (req, res) => {
+  const idActivity = req.params.id;
+  connection.query(
+    `SELECT username, id FROM users JOIN participation ON users.id = participation.idUser WHERE participation.idActivity = ?`,
+    idActivity,
+    (err, results) => {
+      if (err) {
+        res.status(500).send("Erreur lors de la récupération des pseudos");
+      } else {
+        console.log(results);
         res.json(results);
       }
     }
@@ -346,6 +389,7 @@ app.get(
   "/api/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    console.log(req.user.id);
     connection.query(
       // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
 
@@ -369,14 +413,62 @@ app.get(
 );
 
 app.get(
-  "/api/profile/activities",
+  "/profile/:username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, dateFROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
-      // "SELECT idActivity, name, id_creator, price, capacity, picture, description, id_place, contact, date FROM activities WHERE id_creator = ?",
-      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE id=?",
-      // console.log("route", req.user.id),
+      "SELECT picture, username, mail, hobbies, description, birthDate FROM users WHERE username=?",
+
+      req.params.username,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Error retrieving profile");
+        } else {
+          res.json(results);
+        }
+      }
+    );
+  }
+);
+
+app.get(
+  "/api/profile/:username/activitiescreated",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
+      req.params.username,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Error retrieving profile");
+        } else {
+          res.json(results);
+        }
+      }
+    );
+  }
+);
+
+app.get(
+  "/api/profile/:id/activities",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    connection.query(
+      `SELECT participation.idActivity, activities.idActivity, activities.name, id_creator, activities.price, 
+    activities.capacity, (activities.picture) AS pictureActivity, 
+    (activities.description) AS descriptionActivity, id_place, 
+    activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, places.id, country, city, 
+    address, type, (places.description) AS descriptionPlace, 
+    (places.picture) AS picturePlace
+    FROM participation 
+    INNER JOIN activities
+    ON participation.idActivity = activities.idActivity
+    LEFT JOIN users
+    ON participation.idUser = users.id
+    LEFT JOIN places
+    ON activities.id_place = places.id
+    WHERE participation.idUser = ?
+    GROUP BY activities.idActivity`,
       req.user.id,
       (err, results) => {
         if (err) {

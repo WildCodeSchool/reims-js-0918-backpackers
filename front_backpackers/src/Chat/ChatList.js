@@ -99,7 +99,9 @@ class ChatList extends Component {
                     ))
                   )
               ) : (
-                  <i className="fas fa-spinner fa-spin" />
+                  <p className="text-center my-3">
+                    <i className="fas fa-spinner fa-spin" />
+                  </p>
                 )}
               <div className="homeUnderline" />
             </div>

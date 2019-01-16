@@ -32,6 +32,21 @@ $peachColor: #ff896d;
   background-color: $greenColor;
 }
 
+h2{
+  font-size: 1rem;
+  font-weight: 800;
+  display: inline-block;
+  background-color: #FFF;
+  z-index: 10;
+}
+
+.activitiesTitleUnderline{  
+  z-index: 9;
+  margin-top: -15px;
+  height:1px;
+  border-bottom: 1px solid #000;
+}
+
 h3 {
   background-color: $grayColor;
   font-size: 1.1rem;
