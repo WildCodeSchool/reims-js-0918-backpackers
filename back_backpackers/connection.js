@@ -416,26 +416,26 @@ app.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user.id),
-      connection.query(
-        // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+    console.log(req.user.id);
+    connection.query(
+      // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
 
-        // "SELECT id, username, birthDate, mail, favorites, hobbies, historic, rights, picture, description, FROM users WHERE id = ?",
+      // "SELECT id, username, birthDate, mail, favorites, hobbies, historic, rights, picture, description, FROM users WHERE id = ?",
 
-        "SELECT * FROM users WHERE id=?",
+      "SELECT * FROM users WHERE id=?",
 
-        // "SELECT users.*, activities.* FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+      // "SELECT users.*, activities.* FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
 
-        // console.log("route", req.user.id),
-        req.user.id,
-        (err, results) => {
-          if (err) {
-            res.status(500).send("Error retrieving profile");
-          } else {
-            res.json(results);
-          }
+      // console.log("route", req.user.id),
+      req.user.id,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Error retrieving profile");
+        } else {
+          res.json(results);
         }
-      );
+      }
+    );
   }
 );
 
@@ -532,6 +532,44 @@ app.post("/profile/signup", (req, res) => {
       res.sendStatus(200);
     }
   });
+});
+
+app.post("/profile/:username",
+  passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+  connection.query(`UPDATE users SET description = "${req.body.description}", hobbies = "${req.body.hobbies}" WHERE username = "${req.params.username}"`, (err, results)=>{
+    if(err) {
+      console.log(err);
+      res.status(500).send("Failed to modify profile")
+    } else {
+      res.sendStatus(200)
+    }
+  })
+})
+
+app.post("/profile/:username/upload", upload.single("monfichier"), (req, res) => {
+  fs.rename(
+    req.file.path,
+    "public/images/" + req.file.originalname,
+    (err, results) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        connection.query(
+          `UPDATE users SET picture = "${
+            req.file.originalname
+          }" WHERE username = "${req.params.username}"`,
+          err => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.sendStatus(200);
+            }
+          }
+        );
+      }
+    }
+  );
 });
 
 app.post("/users", (req, res) => {

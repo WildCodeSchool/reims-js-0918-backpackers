@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Row, Col, Button, Media, Badge } from "reactstrap";
 import { Link } from "react-router-dom";
+import TagsInput from "react-tagsinput";
+import "react-tagsinput/react-tagsinput.css";
 
 import ActivityThumbnail from "./HomePage/ActivityThumbnail";
 
@@ -10,8 +12,14 @@ import "./Profile.scss";
 
 class Profile extends Component {
   state = {
-    profile: {}
-  }
+    profile: {},
+    modify: false,
+    file: "",
+    imagePreviewUrl: "",
+    description: "",
+    tags: [],
+    historic: {}
+  };
   componentDidMount() {
     if (!this.props.profile[0]) {
       axios
@@ -33,7 +41,11 @@ class Profile extends Component {
         }
       })
       .then(response =>
-        this.setState({ profile: { ...response.data[0], activities: [] } })
+        this.setState({
+          profile: { ...response.data[0], activities: [] },
+          tags: response.data[0].hobbies.split(","),
+          description: response.data[0].description
+        })
       );
 
     axios
@@ -48,9 +60,77 @@ class Profile extends Component {
           profile: { ...this.state.profile, activities: response.data }
         })
       );
+    axios
+      .get(`/profile/${this.props.match.params.username}/activities`, {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response =>
+        this.setState({
+          historic: {
+            activities: response.data
+          }
+        })
+      );
+  }
+
+  handleDescription(e) {
+    this.setState({ description: e.target.value });
+  }
+
+  handleTags(tags) {
+    this.setState({ tags });
+  }
+
+  handleModify() {
+    this.setState({ modify: true });
+  }
+
+  readUrl(e) {
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({ file: file, imagePreviewUrl: reader.result });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  uploadModify() {
+    const hobby = this.state.tags.join();
+    const formData = new FormData();
+    formData.append("monfichier", this.state.file);
+    axios
+      .post(
+        `/profile/${this.state.profile.username}`,
+        { description: this.state.description, hobbies: hobby },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+          }
+        }
+      )
+      .then(response =>
+        this.state.file
+          ? axios.post(
+              `/profile/${this.state.profile.username}/upload`,
+              formData,
+              {
+                headers: {
+                  "content-type": "multipart/form-data"
+                }
+              }
+            )
+          : ""
+      )
+      .then(this.setState({ modify: false }))
+      .then(this.componentDidMount());
   }
 
   render() {
+    let { imagePreviewUrl } = this.state;
     return (
       <Fragment>
         <Row>
@@ -71,19 +151,56 @@ class Profile extends Component {
                 xs={{ size: 6, offset: 3 }}
                 className="profilePicture justify-content-center d-flex"
               >
-                <Button className="bg-transparent border-0 mb-3 rounded-circle">
-                  <img
-                    className="rounded-circle"
-                    src={
-                      this.state.profile.picture
-                        ? `http://localhost:3010/images/${
+                {this.state.modify ? (
+                  <div className="mb-3">
+                    <div className="file-upload">
+                      <i className="fas fa-cloud-upload-alt inputImage" />
+                      <input
+                        onChange={e => this.readUrl(e)}
+                        type="file"
+                        className="inputFile"
+                      />
+                    </div>
+
+                    {imagePreviewUrl ? (
+                      <Button className="bg-transparent border-0 mb-3 rounded-circle">
+                        <img
+                          className="rounded-circle preview "
+                          src={imagePreviewUrl}
+                          alt="preview"
+                        />
+                      </Button>
+                    ) : (
+                      <Button className="bg-transparent border-0 mb-3 rounded-circle">
+                        <img
+                          className="rounded-circle preview"
+                          src={
                             this.state.profile.picture
-                          }`
-                        : `http://localhost:3010/images/default.png`
-                    }
-                    alt="Profile"
-                  />
-                </Button>
+                              ? `http://localhost:3010/images/${
+                                  this.state.profile.picture
+                                }`
+                              : `http://localhost:3010/images/default.png`
+                          }
+                          alt="Profile"
+                        />
+                      </Button>
+                    )}
+                  </div>
+                ) : (
+                  <Button className="bg-transparent border-0 mb-3 rounded-circle">
+                    <img
+                      className="rounded-circle preview"
+                      src={
+                        this.state.profile.picture
+                          ? `http://localhost:3010/images/${
+                              this.state.profile.picture
+                            }`
+                          : `http://localhost:3010/images/default.png`
+                      }
+                      alt="Profile"
+                    />
+                  </Button>
+                )}
               </Col>
             </Row>
             <div className="userInfos">
@@ -93,16 +210,47 @@ class Profile extends Component {
                   <span>{this.state.profile.mail}</span>
                 </Col>
                 <Col xs="2">
-                  <Button className="bg-transparent border-0 text-secondary p-0">
-                    <i className="fas fa-pencil-alt" alt="Photo de profil" />
-                  </Button>
+                  {this.state.modify ? (
+                    <Button
+                      onClick={() => this.uploadModify()}
+                      className="bg-transparent border-0 text-secondary p-0"
+                    >
+                      <i
+                        className="fas fa-check-circle"
+                        alt="Photo de profil"
+                      />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => this.handleModify()}
+                      className="bg-transparent border-0 text-secondary p-0"
+                    >
+                      <i className="fas fa-pencil-alt" alt="Photo de profil" />
+                    </Button>
+                  )}
                 </Col>
               </Row>
 
               <Row>
-                <Col xs={{ size: 8, offset: 2 }} className="text-center">
-                  <p className="mb-0">{this.state.profile.description}</p>
-                </Col>
+                {this.state.modify ? (
+                  <Col xs={{ size: 8, offset: 2 }}>
+                    <div className="align-center">
+                      <input
+                        value={this.state.description}
+                        type="text"
+                        onChange={e => this.handleDescription(e)}
+                      />
+                    </div>
+                  </Col>
+                ) : this.state.profile.description ? (
+                  <Col xs={{ size: 8, offset: 2 }} className="text-center">
+                    <p className="mb-0">{this.state.profile.description}</p>
+                  </Col>
+                ) : (
+                  <Col xs={{ size: 8, offset: 2 }} className="text-center">
+                    <p className="mb-0">Aucune description renseignée.</p>
+                  </Col>
+                )}
               </Row>
             </div>
           </Fragment>
@@ -142,12 +290,27 @@ class Profile extends Component {
         </Row>
 
         <Row>
-          <Col xs="12" className="text-center">
-            <Badge className="py-1 px-2 mx-1">AquaPoney</Badge>
-            <Badge className="py-1 px-2 mx-1">Cinéma</Badge>
-            <Badge className="py-1 px-2 mx-1">Japon</Badge>
-            <Badge className="py-1 px-2 mx-1">Jeux Vidéo</Badge>
-          </Col>
+          {this.state.modify ? (
+            <Col xs="12" className="text-center">
+              <TagsInput
+                maxTags="4"
+                value={this.state.tags}
+                onChange={tags => this.handleTags(tags)}
+              />
+            </Col>
+          ) : this.state.tags.length < 1 ? (
+            <Col xs="12" className="text-center">
+              <Badge className="py-1 px-2 mx-1">Utilisateur</Badge>
+            </Col>
+          ) : (
+            <Col xs="12" className="text-center">
+              {this.state.tags.map((tag, index) => (
+                <Badge key={index} className="py-1 px-2 mx-1">
+                  {tag}
+                </Badge>
+              ))}
+            </Col>
+          )}
         </Row>
 
         <Row>
@@ -184,44 +347,26 @@ class Profile extends Component {
             <h2 className="pr-3">Historique des anciennes activitées</h2>
             <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
-
-          <Col xs="12">
-            <Media className="d-flex align-items-stretch">
-              <Media left href="#">
-                <Media
-                  object
-                  src="https://via.placeholder.com/150"
-                  alt="activity"
-                  className="activityPicture"
-                />
-              </Media>
-              <Media body className="d-flex flex-column">
-                <Media
-                  heading
-                  className="mb-1 mx-1 d-flex justify-content-between"
-                >
-                  <span>
-                    <i className="fas fa-location-arrow pr-1" />
-                    ATHENES
-                  </span>
-                  <span>
-                    <i className="fas fa-calendar pr-1" />
-                    Ferme dans 5 jours
-                  </span>
-                </Media>
-                Salut ! Je Cherche 5 rafteurs pour rafter le long du fleuve ! Va
-                va être CHANMAXX n'hésitez pas à vous inscrire!
-                <div className="d-flex align-items-end justify-content-between mt-auto">
-                  <Button className="seeItem">Voir</Button>
-                  <span className="itemListPrice pr-2">
-                    15€ /
-                    <i className="far fa-user" />
-                  </span>
-                </div>
-              </Media>
-            </Media>
-          </Col>
         </Row>
+        {console.log("date", this.state.historic.activities)}
+        {!this.state.historic.activities ? (
+          <p className="text-center">
+            <i className="fas fa-spinner fa-spin" />
+          </p>
+        ) : this.state.historic.activities[0] ? (
+          this.state.historic.activities
+            .filter(activity => activity.date_diff < 0)
+            .sort(activity => !activity.date_diff)
+            .map(activity => (
+              <ActivityThumbnail {...activity} key={activity.idActivity} />
+            ))
+        ) : (
+          <Row className="activityCreated">
+            <Col xs="12" className="text-center mt-2">
+              <p>Vous n'avez participé pour le moment à aucune activité.</p>
+            </Col>
+          </Row>
+        )}
       </Fragment>
     );
   }
