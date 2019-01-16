@@ -147,9 +147,7 @@ class PlaceDetails extends Component {
             <Row className="mapDetails">
               <Col xs="12">
                 {this.state.activeTab === "2" ? (
-                  <MapPlace
-                    informations={this.props.place}
-                  />
+                  <MapPlace informations={this.props.place} />
                 ) : (
                   ""
                 )}
@@ -163,17 +161,19 @@ class PlaceDetails extends Component {
             <h3 className="text-center p-1 mt-1">Les activités</h3>
           </Col>
         </Row>
-        {this.props.place.activities.map(activity =>
-          activity.capacity - 1 - activity.participants > 0 ? (
-            <ActivityThumbnail
-              profil={this.state.profil}
-              {...activity}
-              key={activity.idActivity}
-            />
-          ) : (
-            ""
-          )
-        )}
+        {this.props.place.activities
+          .sort((a, b) => a.date_diff - b.date_diff)
+          .map(activity =>
+            activity.capacity - 1 - activity.participants > 0 ? (
+              <ActivityThumbnail
+                profil={this.state.profil}
+                {...activity}
+                key={activity.idActivity}
+              />
+            ) : (
+              ""
+            )
+          )}
 
         <Row>
           <Col xs="12">
