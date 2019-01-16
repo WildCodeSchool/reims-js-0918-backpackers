@@ -18,14 +18,14 @@ class CreatePlacePage extends Component {
     const formData = new FormData();
     formData.append("monfichier", this.file);
     axios
-      .post("/places", place, {
+      .post("/api/places", place, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
       .then(response => {
         axios
-          .post("/places/upload", formData, {
+          .post("/api/places/upload", formData, {
             headers: {
               "content-type": "multipart/form-data"
             }

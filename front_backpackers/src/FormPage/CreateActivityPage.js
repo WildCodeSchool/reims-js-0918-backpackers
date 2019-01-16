@@ -14,7 +14,7 @@ class CreateActivityPage extends Component {
   }
 
   fileUpload(file) {
-    const url = "/upload";
+    const url = "/api/upload";
     const idActivity = this.props.id;
     const formData = new FormData();
     formData.append("monfichier", file);
@@ -34,7 +34,7 @@ class CreateActivityPage extends Component {
     const formData = new FormData();
     formData.append("monfichier", this.file);
     axios
-      .post("/activities", activity, {
+      .post("/api/activities", activity, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
@@ -43,7 +43,7 @@ class CreateActivityPage extends Component {
         // this.props.idCurrent(response.data);
         // this.props.viewUpload();
         axios
-          .post("/activities/upload", formData, {
+          .post("/api/activities/upload", formData, {
             headers: {
               "content-type": "multipart/form-data"
             }

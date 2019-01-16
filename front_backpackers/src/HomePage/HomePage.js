@@ -50,7 +50,7 @@ class HomePage extends Component {
 
   callApiProfile() {
     axios
-      .get(`/profile`, {
+      .get(`/api/profile`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -83,12 +83,12 @@ class HomePage extends Component {
   }
 
   callApiPlaces() {
-    axios.get("/places").then(response => this.props.viewPlaces(response.data));
+    axios.get("/api/places").then(response => this.props.viewPlaces(response.data));
   }
 
   callApiParticipation() {
     axios
-      .get(`/profile/${this.props.profile.id}/activities`, {
+      .get(`/api/profile/${this.props.profile.id}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -99,7 +99,7 @@ class HomePage extends Component {
 
   callApiActivities() {
     axios
-      .get("/activities")
+      .get("/api/activities")
       .then(response => this.props.viewActivities(response.data));
     // .then(() =>
     //   console.log(

@@ -7,7 +7,7 @@ import PlaceCaroussel from "./PlaceCaroussel";
 
 class PlacePage extends Component {
   componentDidMount() {
-    axios.get(`/place/${this.props.match.params.id}`).then(response =>
+    axios.get(`/api/place/${this.props.match.params.id}`).then(response =>
       this.props.viewPlace({
         ...response.data[0],
         activities: response.data.activities

@@ -16,7 +16,7 @@ class Profile extends Component {
   componentDidMount() {
     if (!this.props.profile[0]) {
       axios
-        .get(`/profile`, {
+        .get(`/api/profile`, {
           headers: {
             accept: "application/json",
             authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -27,7 +27,7 @@ class Profile extends Component {
         );
     }
     axios
-      .get(`/profile/${this.props.match.params.username}`, {
+      .get(`/api/profile/${this.props.match.params.username}`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -38,7 +38,7 @@ class Profile extends Component {
       );
 
     axios
-      .get(`/profile/${this.props.match.params.username}/activitiescreated`, {
+      .get(`/api/profile/${this.props.match.params.username}/activitiescreated`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -50,7 +50,7 @@ class Profile extends Component {
         })
       );
     axios
-      .get(`/profile/${this.props.match.params.username}/activities`, {
+      .get(`/api/profile/${this.props.match.params.username}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
