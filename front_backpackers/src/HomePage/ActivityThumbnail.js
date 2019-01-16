@@ -7,11 +7,13 @@ const ActivityThumbnail = ({
   idActivity,
   city,
   name,
+  id_creator,
   descriptionActivity,
   descriptionPlace,
   pictureActivity,
   picturePlace,
   price,
+  profil,
   viewActivity,
   date_diff
 }) => (

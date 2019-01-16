@@ -37,14 +37,16 @@ class Profile extends Component {
       );
 
     axios
-      .get(`/profile/${this.props.match.params.username}/activities`, {
+      .get(`/profile/${this.props.match.params.username}/activitiescreated`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
       .then(response =>
-        this.setState({ profile: { ...this.state.profile, activities: response.data } })
+        this.setState({
+          profile: { ...this.state.profile, activities: response.data }
+        })
       );
   }
 
@@ -72,8 +74,13 @@ class Profile extends Component {
                 <Button className="bg-transparent border-0 mb-3 rounded-circle">
                   <img
                     className="rounded-circle"
-                    src={this.state.profile.picture ? `http://localhost:3010/images/${this.state.profile.picture}`
-                      : `http://localhost:3010/images/default.png`}
+                    src={
+                      this.state.profile.picture
+                        ? `http://localhost:3010/images/${
+                            this.state.profile.picture
+                          }`
+                        : `http://localhost:3010/images/default.png`
+                    }
                     alt="Profile"
                   />
                 </Button>
@@ -82,9 +89,7 @@ class Profile extends Component {
             <div className="userInfos">
               <Row>
                 <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
-                  <h4 className="mb-0">
-                    {`${this.state.profile.username} `}
-                  </h4>
+                  <h4 className="mb-0">{`${this.state.profile.username} `}</h4>
                   <span>{this.state.profile.mail}</span>
                 </Col>
                 <Col xs="2">
@@ -102,8 +107,8 @@ class Profile extends Component {
             </div>
           </Fragment>
         ) : (
-            ""
-          )}
+          ""
+        )}
 
         {/* <Row>
           <Col xs={{ size: 8, offset: 2 }} className="text-center mt-3">
@@ -154,21 +159,21 @@ class Profile extends Component {
             <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
         </Row>
-        {!this.state.profile.activities ?
-          <p className="text-center"><i className="fas fa-spinner fa-spin" /></p>
-          :
-          this.state.profile.activities[0] ? (
-            this.state.profile.activities.map(activity => (
-              <ActivityThumbnail {...activity} key={activity.idActivity} />
-            ))
-          ) : (
-              <Row className="activityCreated">
-                <Col xs="12" className="text-center mt-2">
-                  <p>Vous n'avez proposé pour le moment aucune activité.</p>
-                </Col>
-              </Row >
-            )
-        }
+        {!this.state.profile.activities ? (
+          <p className="text-center">
+            <i className="fas fa-spinner fa-spin" />
+          </p>
+        ) : this.state.profile.activities[0] ? (
+          this.state.profile.activities.map(activity => (
+            <ActivityThumbnail {...activity} key={activity.idActivity} />
+          ))
+        ) : (
+          <Row className="activityCreated">
+            <Col xs="12" className="text-center mt-2">
+              <p>Vous n'avez proposé pour le moment aucune activité.</p>
+            </Col>
+          </Row>
+        )}
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
@@ -217,7 +222,7 @@ class Profile extends Component {
             </Media>
           </Col>
         </Row>
-      </Fragment >
+      </Fragment>
     );
   }
 }

@@ -24,7 +24,6 @@ class ActivitiesList extends Component {
   render() {
     return (
       <Fragment>
-        {console.log(this.props.activities)}
         <Row className="blueHeader mb-2 px-4">
           <Col xs="3">
             <Link to="/">
@@ -36,9 +35,11 @@ class ActivitiesList extends Component {
           </Col>
         </Row>
         <Row>
-          {this.props.activities.map(activity => (
-            <ActivityThumbnail {...activity} key={activity.idActivity} />
-          ))}
+          <Col>
+            {this.props.activities.map(activity => (
+              <ActivityThumbnail {...activity} key={activity.idActivity} />
+            ))}
+          </Col>
         </Row>
       </Fragment>
     );
