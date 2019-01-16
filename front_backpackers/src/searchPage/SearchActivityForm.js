@@ -1,79 +1,95 @@
 import React, { Component, Fragment } from "react";
 import { Row, Col, Input, Button, Collapse, Badge, Label } from "reactstrap";
-import { Link } from "react-router-dom";
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm } from "redux-form";
 import "./SearchPage.scss";
 
-const renderField = ({ input, placeholder, name, className, id, type, meta: { touched, error, warning } }) => (
+const renderField = ({
+  input,
+  placeholder,
+  name,
+  className,
+  id,
+  value,
+  type,
+  meta: { touched, error, warning }
+}) => (
   <Fragment>
-    <Input placeholder={placeholder} id={id} name={name} className={className} {...input} type={type} />
-    {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+    <Input
+      value={value}
+      placeholder={placeholder}
+      id={id}
+      name={name}
+      className={className}
+      {...input}
+      type={type}
+    />
+    {touched &&
+      ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
   </Fragment>
-)
+);
 
 class SearchActivityForm extends Component {
   constructor(props) {
     super(props);
-    this.toggleCategories = this.toggleCategories.bind(this);
-    this.toggleParticipants = this.toggleParticipants.bind(this);
-    this.toggleDates = this.toggleDates.bind(this);
-    this.toggleSearchRefined = this.toggleSearchRefined.bind(this);
+    this.addCount = this.addCount.bind(this);
+    this.removeCount = this.removeCount.bind(this);
     this.state = {
-      collapseCategories: true,
-      collapseParticipants: false,
-      collapseDates: false,
-      collapseSearchRefined: true
+      count: 1,
+      searchCollapse: {
+        collapseCategories: true,
+        collapseParticipants: false,
+        collapseDates: false,
+        collapsedAdvanced: true
+      }
     };
   }
 
-  toggleCategories() {
-    this.setState({ collapseCategories: !this.state.collapseCategories });
+  componentDidUpdate(prevState) {
+    if (prevState.count !== this.state.count) {
+      this.props.change("placeNumber", this.state.count);
+    }
   }
 
-  toggleParticipants() {
-    this.setState({ collapseParticipants: !this.state.collapseParticipants });
+  addCount() {
+    this.setState({ count: this.state.count + 1 });
   }
 
-  toggleDates() {
-    this.setState({ collapseDates: !this.state.collapseDates });
-  }
-
-  toggleSearchRefined() {
-    this.setState({ collapseSearchRefined: !this.state.collapseSearchRefined });
+  removeCount() {
+    if (this.state.count > 1) {
+      this.setState({ count: this.state.count - 1 });
+    }
   }
 
   clickSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
   }
 
   render() {
     return (
       <Fragment>
         <form onSubmit={this.props.handleSubmit}>
-          {/* HEADER OF SEARCH FORM */}
-          <Row className="blueHeader">
-            <Col xs="2">
-              <Link to="/" className="price text-primary">
-                <i className="fas fa-chevron-left text-white" />
-              </Link>
-            </Col>
-            <Col xs="8">
-              <p className="text-white text-center mb-0">Rechercher</p>
-            </Col>
-          </Row>
           {/* TYPE SELECTION */}
           <Row>
             <Col>
-              <h2 onClick={() => this.toggleCategories()} className="pr-3">
+              <h2
+                onClick={() => this.props.toggleCategories()}
+                className="pr-3"
+              >
                 Catégories
-            </h2>
+              </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
-          <Collapse isOpen={this.state.collapseCategories}>
-            {/* <Row className="text-center typeList">
+          <Collapse isOpen={this.props.collapseCategories}>
+            <Row className="text-center typeList">
               <Col xs="4">
-                <Field component={renderField} type="radio" id="aventure" name="typeChoice" value="aventure" />
+                <Field
+                  component={renderField}
+                  type="radio"
+                  id="aventure"
+                  name="typeChoice"
+                  value="aventure"
+                />
                 <Label className="typeChoice" for="aventure">
                   <img
                     className="categoriesSearch"
@@ -84,7 +100,13 @@ class SearchActivityForm extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="aquatic" name="typeChoice" value="aquatique" />
+                <Field
+                  component={renderField}
+                  type="radio"
+                  id="aquatic"
+                  name="typeChoice"
+                  value="aquatique"
+                />
                 <Label className="typeChoice" for="aquatic">
                   <img
                     className="categoriesSearch"
@@ -95,7 +117,13 @@ class SearchActivityForm extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="culturel" name="typeChoice" value="culturel" />
+                <Field
+                  component={renderField}
+                  type="radio"
+                  id="culturel"
+                  name="typeChoice"
+                  value="culturel"
+                />
                 <Label className="typeChoice" for="culturel">
                   <img
                     className="categoriesSearch"
@@ -106,7 +134,13 @@ class SearchActivityForm extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="deplacement" name="typeChoice" value="deplacement" />
+                <Field
+                  component={renderField}
+                  type="radio"
+                  id="deplacement"
+                  name="typeChoice"
+                  value="deplacement"
+                />
                 <Label className="typeChoice" for="deplacement">
                   <img
                     className="categoriesSearch"
@@ -117,7 +151,13 @@ class SearchActivityForm extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="restauration" name="typeChoice" value="restauration" />
+                <Field
+                  component={renderField}
+                  type="radio"
+                  id="restauration"
+                  name="typeChoice"
+                  value="restauration"
+                />
                 <Label className="typeChoice" for="restauration">
                   <img
                     className="categoriesSearch"
@@ -128,7 +168,13 @@ class SearchActivityForm extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="aperitif" name="typeChoice" value="aperitif" />
+                <Field
+                  component={renderField}
+                  type="radio"
+                  id="aperitif"
+                  name="typeChoice"
+                  value="aperitif"
+                />
                 <Label className="typeChoice" for="aperitif">
                   <img
                     className="categoriesSearch"
@@ -139,7 +185,13 @@ class SearchActivityForm extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="nocturne" name="typeChoice" value="nocturne" />
+                <Field
+                  component={renderField}
+                  type="radio"
+                  id="nocturne"
+                  name="typeChoice"
+                  value="nocturne"
+                />
                 <Label className="typeChoice" for="nocturne">
                   <img
                     className="categoriesSearch"
@@ -150,7 +202,13 @@ class SearchActivityForm extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="bien-etre" name="typeChoice" value="bien-etre" />
+                <Field
+                  component={renderField}
+                  type="radio"
+                  id="bien-etre"
+                  name="typeChoice"
+                  value="bien-etre"
+                />
                 <Label className="typeChoice" for="bien-etre">
                   <img
                     className="categoriesSearch"
@@ -161,7 +219,13 @@ class SearchActivityForm extends Component {
                 </Label>
               </Col>
               <Col xs="4">
-                <Field component={renderField} type="radio" id="enfants" name="typeChoice" value="enfants" />
+                <Field
+                  component={renderField}
+                  type="radio"
+                  id="enfants"
+                  name="typeChoice"
+                  value="enfants"
+                />
                 <Label className="typeChoice" for="enfants">
                   <img
                     className="categoriesSearch"
@@ -171,50 +235,57 @@ class SearchActivityForm extends Component {
                   <p>Enfants</p>
                 </Label>
               </Col>
-            </Row> */}
+            </Row>
           </Collapse>
           <Row>
             <Col>
-              <h2 onClick={() => this.toggleParticipants()} className="pr-3">
+              <h2
+                onClick={() => this.props.toggleParticipants()}
+                className="pr-3"
+              >
                 Participants
-            </h2>
+              </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
-          <Collapse isOpen={this.state.collapseParticipants}>
+          <Collapse isOpen={this.props.collapseParticipants}>
             <Row>
               <Col xs="4">
                 <Button
-                  onClick={
-                    this.props.count > 1 ? () => this.props.removeOne() : ""
-                  }
+                  onClick={() => this.removeCount()}
                   className="text-center mb-0"
                 >
                   -
-              </Button>
+                </Button>
               </Col>
               <Col xs="4">
-                <p className="text-center mb-0">{this.props.count}</p>
+                <Field
+                  component={renderField}
+                  name="placeNumber"
+                  type="number"
+                  id="placeNumber"
+                  input={{ value: this.state.count }}
+                />
               </Col>
               <Col xs="4">
                 <Button
-                  onClick={() => this.props.addOne()}
+                  onClick={() => this.addCount()}
                   className="text-center mb-0"
                 >
                   +
-              </Button>
+                </Button>
               </Col>
             </Row>
           </Collapse>
           <Row>
             <Col>
-              <h2 onClick={() => this.toggleDates()} className="pr-3">
+              <h2 onClick={() => this.props.toggleDates()} className="pr-3">
                 Dates
-            </h2>
+              </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
-          <Collapse isOpen={this.state.collapseDates}>
+          <Collapse isOpen={this.props.collapseDates}>
             <Row>
               <Col>
                 <Badge className="badgeDate">Du...</Badge>
@@ -232,42 +303,67 @@ class SearchActivityForm extends Component {
               </Col>
             </Row>
           </Collapse>
-          {/*  <Row>
+          <Row>
             <Col>
-              <h2 onClick={() => this.toggleSearchRefined()} className="pr-3">
+              <h2 onClick={() => this.props.toggleAdvanced()} className="pr-3">
                 Affiner la recherche
-            </h2>
+              </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
-          <Collapse isOpen={this.state.collapseSearchRefined}>
+          <Collapse isOpen={this.props.collapseAdvanced}>
             <Row>
               <Col>
-                <Field type="text" component={renderField} name="keywords" className="search-bar" placeholder="Mot-clé" />
+                <Field
+                  type="text"
+                  component={renderField}
+                  name="keywords"
+                  className="search-bar"
+                  placeholder="Mot-clé"
+                />
               </Col>
             </Row>
             <Row>
               <Col>
-                <Field type="text" component={renderField} name="country" className="search-bar" placeholder="Pays" />
+                <Field
+                  type="text"
+                  component={renderField}
+                  name="country"
+                  className="search-bar"
+                  placeholder="Pays"
+                />
               </Col>
             </Row>
             <Row>
               <Col>
-                <Field type="text" component={renderField} name="city" className="search-bar" placeholder="Ville" />
+                <Field
+                  type="text"
+                  component={renderField}
+                  name="city"
+                  className="search-bar"
+                  placeholder="Ville"
+                />
               </Col>
             </Row>
           </Collapse>
           <Row>
             <Col>
-              <button type="submit" disabled={this.props.submitting} className="search-btn">Rechercher</button>
+              <button
+                type="submit"
+                disabled={this.props.submitting}
+                className="search-btn mt-4"
+              >
+                Rechercher
+              </button>
             </Col>
-          </Row> */}
+          </Row>
         </form>
-      </Fragment >
+      </Fragment>
     );
   }
 }
 
 export default reduxForm({
-  form: 'searchActivities'
+  form: "searchActivities",
+  initialValues: { placeNumber: 1 }
 })(SearchActivityForm);

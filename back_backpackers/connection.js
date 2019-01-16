@@ -87,7 +87,7 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
       } else {
         connection.query(
           `UPDATE places SET picture = "${
-          req.file.originalname
+            req.file.originalname
           }" WHERE id= (SELECT LAST_INSERT_ID())`,
           err => {
             if (err) {
@@ -103,31 +103,53 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-  console.log(req.query)
-  const type = req.query.typeChoice
-  const participation = req.query.participation
-  const keywords = req.query.keywords
-  const city = req.query.city
-  const country = req.query.country
-  const dateStart = req.query.dateStart
-  const dateEnd = req.query.dateEnd
-  const searchArray = []
+  console.log(req.query);
+  const type = req.query.typeChoice;
+  const participation = req.query.placeNumber;
+  const keywords = req.query.keywords;
+  const city = req.query.city;
+  const country = req.query.country;
+  const dateStart = req.query.dateStart;
+  const dateEnd = req.query.dateEnd;
+  const searchArray = [];
 
-  type ? searchArray.push(`type="${type}"`) : ""
-  city ? searchArray.push(`city="${city}"`) : ""
-  keywords > 0 ? searchArray.push(keywords.split(" ").map(word => `activities.description LIKE "%${word}%"`).join(' AND ') + " OR " + keywords.split(" ").map(word => `activities.name LIKE "%${word}%"`).join(' AND ')) : ""
-  country ? searchArray.push(`country="${country}"`) : ""
-  dateStart ? searchArray.push(`date>"${dateStart}"`) : ""
-  dateEnd ? searchArray.push(`date<="${dateEnd}"`) : ""
+  type ? searchArray.push(`type="${type}"`) : "";
+  participation ? searchArray.push(`capacityLeft>=${participation}`) : "";
+  city ? searchArray.push(`city="${city}"`) : "";
+  keywords > 0
+    ? searchArray.push(
+        keywords
+          .split(" ")
+          .map(word => `description LIKE "%${word}%"`)
+          .join(" AND ") +
+          " OR " +
+          keywords
+            .split(" ")
+            .map(word => `name LIKE "%${word}%"`)
+            .join(" AND ")
+      )
+    : "";
+  country ? searchArray.push(`country="${country}"`) : "";
+  dateStart ? searchArray.push(`date>"${dateStart}"`) : "";
+  dateEnd ? searchArray.push(`date<="${dateEnd}"`) : "";
 
-  const searchQuery = searchArray.join(' AND ')
-  console.log("query", searchQuery)
+  const searchQuery = searchArray.join(" AND ");
+  console.log("query", searchQuery);
 
   connection.query(
-    `SELECT * FROM activities
-    INNER JOIN places 
-    ON activities.id_place = places.id
-    WHERE ${searchQuery}`,
+    `SELECT *
+    FROM(
+    SELECT activities.idActivity, activities.name, activities.capacity, activities.picture as pictureActivity,
+        (activities.description) AS description, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
+        type, (activities.capacity - COUNT(participation.idParticipation)) AS capacityLeft
+        FROM activities    
+        INNER JOIN places 
+        ON activities.id_place = places.id 
+        LEFT JOIN participation 
+        ON activities.idActivity = participation.idActivity
+        GROUP BY activities.idActivity
+    ) AS searchQuery
+    WHERE date_diff>0 AND ${searchQuery}`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -173,8 +195,8 @@ app.get("/activities/search", (req, res) => {
     creator === ""
       ? `SELECT * FROM activities WHERE name ="${name}"`
       : name === ""
-        ? `SELECT * FROM activities WHERE creator ="${creator}"`
-        : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
+      ? `SELECT * FROM activities WHERE creator ="${creator}"`
+      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -233,7 +255,7 @@ app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
       } else {
         connection.query(
           `UPDATE activities SET picture = "${
-          req.file.originalname
+            req.file.originalname
           }" WHERE idActivity= (SELECT LAST_INSERT_ID())`,
           err => {
             if (err) {
@@ -279,7 +301,7 @@ app.post(
   (req, res) => {
     connection.query(
       `DELETE FROM participation WHERE idActivity=${
-      req.params.idActivity
+        req.params.idActivity
       } AND idUser=${req.user.id}`,
       (err, results) => {
         if (err) {
