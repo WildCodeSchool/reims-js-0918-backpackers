@@ -18,6 +18,7 @@ class Profile extends Component {
     imagePreviewUrl: "",
     description: "",
     tags: []
+    historic: {}
   };
   componentDidMount() {
     if (!this.props.profile[0]) {
@@ -57,6 +58,20 @@ class Profile extends Component {
       .then(response =>
         this.setState({
           profile: { ...this.state.profile, activities: response.data }
+        })
+      );
+    axios
+      .get(`/profile/${this.props.match.params.username}/activities`, {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response =>
+        this.setState({
+          historic: {
+            activities: response.data
+          }
         })
       );
   }
@@ -332,44 +347,26 @@ class Profile extends Component {
             <h2 className="pr-3">Historique des anciennes activitées</h2>
             <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
-
-          <Col xs="12">
-            <Media className="d-flex align-items-stretch">
-              <Media left href="#">
-                <Media
-                  object
-                  src="https://via.placeholder.com/150"
-                  alt="activity"
-                  className="activityPicture"
-                />
-              </Media>
-              <Media body className="d-flex flex-column">
-                <Media
-                  heading
-                  className="mb-1 mx-1 d-flex justify-content-between"
-                >
-                  <span>
-                    <i className="fas fa-location-arrow pr-1" />
-                    ATHENES
-                  </span>
-                  <span>
-                    <i className="fas fa-calendar pr-1" />
-                    Ferme dans 5 jours
-                  </span>
-                </Media>
-                Salut ! Je Cherche 5 rafteurs pour rafter le long du fleuve ! Va
-                va être CHANMAXX n'hésitez pas à vous inscrire!
-                <div className="d-flex align-items-end justify-content-between mt-auto">
-                  <Button className="seeItem">Voir</Button>
-                  <span className="itemListPrice pr-2">
-                    15€ /
-                    <i className="far fa-user" />
-                  </span>
-                </div>
-              </Media>
-            </Media>
-          </Col>
         </Row>
+        {console.log("date", this.state.historic.activities)}
+        {!this.state.historic.activities ? (
+          <p className="text-center">
+            <i className="fas fa-spinner fa-spin" />
+          </p>
+        ) : this.state.historic.activities[0] ? (
+          this.state.historic.activities
+            .filter(activity => activity.date_diff < 0)
+            .sort(activity => !activity.date_diff)
+            .map(activity => (
+              <ActivityThumbnail {...activity} key={activity.idActivity} />
+            ))
+        ) : (
+          <Row className="activityCreated">
+            <Col xs="12" className="text-center mt-2">
+              <p>Vous n'avez participé pour le moment à aucune activité.</p>
+            </Col>
+          </Row>
+        )}
       </Fragment>
     );
   }

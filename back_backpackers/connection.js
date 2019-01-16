@@ -379,26 +379,26 @@ app.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user.id),
-      connection.query(
-        // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+    console.log(req.user.id);
+    connection.query(
+      // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
 
-        // "SELECT id, username, birthDate, mail, favorites, hobbies, historic, rights, picture, description, FROM users WHERE id = ?",
+      // "SELECT id, username, birthDate, mail, favorites, hobbies, historic, rights, picture, description, FROM users WHERE id = ?",
 
-        "SELECT * FROM users WHERE id=?",
+      "SELECT * FROM users WHERE id=?",
 
-        // "SELECT users.*, activities.* FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
+      // "SELECT users.*, activities.* FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
 
-        // console.log("route", req.user.id),
-        req.user.id,
-        (err, results) => {
-          if (err) {
-            res.status(500).send("Error retrieving profile");
-          } else {
-            res.json(results);
-          }
+      // console.log("route", req.user.id),
+      req.user.id,
+      (err, results) => {
+        if (err) {
+          res.status(500).send("Error retrieving profile");
+        } else {
+          res.json(results);
         }
-      );
+      }
+    );
   }
 );
 
