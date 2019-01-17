@@ -61,7 +61,7 @@ class HomePage extends Component {
       )
       .then(() =>
         axios
-          .post("/users", {
+          .post("/api/users", {
             username: this.props.profile[0].username
           })
           .catch(error => {
@@ -73,7 +73,7 @@ class HomePage extends Component {
           instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
           userId: this.props.profile[0].username,
           tokenProvider: new Chatkit.TokenProvider({
-            url: "/authenticate"
+            url: "/api/authenticate"
           })
         });
         chatManager.connect().then(currentUser => {
