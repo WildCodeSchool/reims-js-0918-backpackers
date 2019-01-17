@@ -507,6 +507,44 @@ app.post("/api/profile/signup", (req, res) => {
   });
 });
 
+app.post("/api/profile/:username",
+  passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+  connection.query(`UPDATE users SET description = "${req.body.description}", hobbies = "${req.body.hobbies}" WHERE username = "${req.params.username}"`, (err, results)=>{
+    if(err) {
+      console.log(err);
+      res.status(500).send("Failed to modify profile")
+    } else {
+      res.sendStatus(200)
+    }
+  })
+})
+
+app.post("/api/profile/:username/upload", upload.single("monfichier"), (req, res) => {
+  fs.rename(
+    req.file.path,
+    "public/images/" + req.file.originalname,
+    (err, results) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        connection.query(
+          `UPDATE users SET picture = "${
+            req.file.originalname
+          }" WHERE username = "${req.params.username}"`,
+          err => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.sendStatus(200);
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
 app.post("/api/users", (req, res) => {
   chatkit
     .createUser({
