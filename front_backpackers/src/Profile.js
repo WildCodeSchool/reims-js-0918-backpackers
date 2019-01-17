@@ -176,10 +176,10 @@ class Profile extends Component {
                           className="rounded-circle preview"
                           src={
                             this.state.profile.picture
-                              ? `http://localhost:3010/images/${
+                              ? `http://178.170.56.29:5080/api/images/${
                                   this.state.profile.picture
                                 }`
-                              : `http://localhost:3010/images/default.png`
+                              : `http://178.170.56.29:5080/api/images/default.png`
                           }
                           alt="Profile"
                         />
@@ -192,10 +192,10 @@ class Profile extends Component {
                       className="rounded-circle preview"
                       src={
                         this.state.profile.picture
-                          ? `http://localhost:3010/images/${
+                          ? `http://178.170.56.29:5080/api/images/${
                               this.state.profile.picture
                             }`
-                          : `http://localhost:3010/images/default.png`
+                          : `http://178.170.56.29:5080/api/images/default.png`
                       }
                       alt="Profile"
                     />

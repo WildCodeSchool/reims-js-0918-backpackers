@@ -81,7 +81,7 @@ app.post("/api/places/upload", upload.single("monfichier"), (req, res) => {
   console.log(req.file);
   fs.rename(
     req.file.path,
-    "public/images/" + req.file.originalname,
+    "public/api/images/" + req.file.originalname,
     (err, results) => {
       if (err) {
         res.status(500).send(err);
@@ -221,7 +221,7 @@ app.post(
 app.post("/api/activities/upload", upload.single("monfichier"), (req, res) => {
   fs.rename(
     req.file.path,
-    "public/images/" + req.file.originalname,
+    "public/api/images/" + req.file.originalname,
     (err, results) => {
       if (err) {
         res.status(500).send(err);
@@ -269,7 +269,7 @@ app.post(
 );
 
 app.post(
-  "/participate/remove/:idActivity",
+  "/api/participate/remove/:idActivity",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -327,7 +327,7 @@ app.get("/api/activity/:id", (req, res) => {
   );
 });
 
-app.get("/activity/:id/participants", (req, res) => {
+app.get("/api/activity/:id/participants", (req, res) => {
   const idActivity = req.params.id;
   connection.query(
     `SELECT username, id FROM users JOIN participation ON users.id = participation.idUser WHERE participation.idActivity = ?`,
@@ -413,7 +413,7 @@ app.get(
 );
 
 app.get(
-  "/profile/:username",
+  "/api/profile/:username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -523,7 +523,7 @@ app.post("/api/profile/:username",
 app.post("/api/profile/:username/upload", upload.single("monfichier"), (req, res) => {
   fs.rename(
     req.file.path,
-    "public/images/" + req.file.originalname,
+    "public/api/images/" + req.file.originalname,
     (err, results) => {
       if (err) {
         res.status(500).send(err);
