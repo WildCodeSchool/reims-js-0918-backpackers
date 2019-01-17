@@ -41,16 +41,11 @@ class Profile extends Component {
         }
       })
       .then(response =>
-        response.data[0].hobbies === null
-          ? this.setState({
-              profile: { ...response.data[0], activities: [] },
-              description: response.data[0].description
-            })
-          : this.setState({
-              profile: { ...response.data[0], activities: [] },
-              tags: response.data[0].hobbies.split(","),
-              description: response.data[0].description
-            })
+        this.setState({
+          profile: { ...response.data[0], activities: [] },
+          tags: response.data[0].hobbies.split(","),
+          description: response.data[0].description
+        })
       );
 
     axios
@@ -250,6 +245,10 @@ class Profile extends Component {
                 ) : this.state.profile.description ? (
                   <Col xs={{ size: 8, offset: 2 }} className="text-center">
                     <p className="mb-0">{this.state.profile.description}</p>
+                  </Col>
+                ) : this.state.profile.description === null ? (
+                  <Col xs={{ size: 8, offset: 2 }} className="text-center">
+                    <p className="mb-0">Aucune description renseignée.</p>
                   </Col>
                 ) : (
                   <Col xs={{ size: 8, offset: 2 }} className="text-center">
