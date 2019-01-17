@@ -18,7 +18,7 @@ const PlaceThumbnail = ({
         <Media left href="#">
           <Media
             object
-            src={`http://localhost:3010/images/${picture}`}
+            src={`http://178.170.56.29:5080/api/images/${picture}`}
             alt="picture of place"
             className="placePicture"
           />

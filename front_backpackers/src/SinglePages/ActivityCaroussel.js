@@ -16,7 +16,7 @@ const ActivityCaroussel = props => (
           ]}
         /> */}
 
-        <img src={`http://localhost:3010/images/${props.activity.pictureActivity
+        <img src={`http://178.170.56.29:5080/api/images/${props.activity.pictureActivity
           ? props.activity.pictureActivity
           : props.activity.picturePlace}`} alt={props.activity.name} className="singlePageImg" />
 
