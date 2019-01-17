@@ -73,11 +73,20 @@ class SearchActivityForm extends Component {
         <form onSubmit={this.props.handleSubmit}>
           {/* TYPE SELECTION */}
           <Row className="my-2">
-            <Col>
+            <Col
+              className={`${!this.props.collapseCategories ? "selected" : ""}`}
+            >
               <h2
                 onClick={() => this.props.toggleCategories()}
-                className="pr-3"
+                className={`pr-3 ${
+                  !this.props.collapseCategories ? "selected" : ""
+                }`}
               >
+                {!this.props.collapseCategories ? (
+                  <i className="pr-2 far fa-circle" />
+                ) : (
+                  <i className="pr-2 far fa-check-circle" />
+                )}
                 Catégories
               </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
@@ -241,11 +250,22 @@ class SearchActivityForm extends Component {
             </Row>
           </Collapse>
           <Row>
-            <Col>
+            <Col
+              className={`${
+                !this.props.collapseParticipants ? "selected" : ""
+              }`}
+            >
               <h2
                 onClick={() => this.props.toggleParticipants()}
-                className="pr-3"
+                className={`pr-3 ${
+                  !this.props.collapseParticipants ? "selected" : ""
+                }`}
               >
+                {!this.props.collapseParticipants ? (
+                  <i className="pr-2 far fa-circle" />
+                ) : (
+                  <i className="pr-2 far fa-check-circle" />
+                )}
                 Participants
               </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
@@ -281,8 +301,18 @@ class SearchActivityForm extends Component {
             </Row>
           </Collapse>
           <Row>
-            <Col>
-              <h2 onClick={() => this.props.toggleDates()} className="pr-3">
+            <Col className={`${!this.props.collapseDates ? "selected" : ""}`}>
+              <h2
+                onClick={() => this.props.toggleDates()}
+                className={`pr-3 ${
+                  !this.props.collapseDates ? "selected" : ""
+                }`}
+              >
+                {!this.props.collapseDates ? (
+                  <i className="pr-2 far fa-circle" />
+                ) : (
+                  <i className="pr-2 far fa-check-circle" />
+                )}
                 Dates
               </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
@@ -317,8 +347,20 @@ class SearchActivityForm extends Component {
             </Row>
           </Collapse>
           <Row>
-            <Col>
-              <h2 onClick={() => this.props.toggleAdvanced()} className="pr-3">
+            <Col
+              className={`${!this.props.collapseAdvanced ? "selected" : ""}`}
+            >
+              <h2
+                onClick={() => this.props.toggleAdvanced()}
+                className={`pr-3 ${
+                  !this.props.collapseAdvanced ? "selected" : ""
+                }`}
+              >
+                {!this.props.collapseAdvanced ? (
+                  <i className="pr-2 far fa-circle" />
+                ) : (
+                  <i className="pr-2 far fa-check-circle" />
+                )}
                 Affiner la recherche
               </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />

@@ -1,5 +1,9 @@
 @import "../_styles.scss";
 
+h2.selected {
+  color: $darkGrayColor;
+}
+
 .search-btn {
   background-color: $blueColor;
   color: white;
