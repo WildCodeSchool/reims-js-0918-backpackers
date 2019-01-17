@@ -13,8 +13,6 @@ import {
   DISPLAY_ACTIVITIES,
   GET_CHATS,
   SELECT_PLACE_ADDRESS,
-  ADD1,
-  REMOVE1,
   VIEW_PROFILE_ACTIVITY,
   GET_CHATS
 } from "./actionTypes";
@@ -32,30 +30,8 @@ import {
   makeDisplayPlacesAction,
   makeDisplayActivitiesAction,
   makeGetChatsAction,
-  makeSelectPlaceAddressAction,
-  makeAddAction,
-  makeRemoveAction
+  makeSelectPlaceAddressAction
 } from "./actions";
-
-describe("makeAddAction", () => {
-  it("should return a ADD1 action", () => {
-    const expected = {
-      type: ADD1
-    };
-
-    expect(makeAddAction()).toEqual(expected);
-  });
-});
-
-describe("makeRemoveAction", () => {
-  it("should return a REMOVE1 action", () => {
-    const expected = {
-      type: REMOVE1
-    };
-
-    expect(makeRemoveAction()).toEqual(expected);
-  });
-});
 
 describe("makeViewProfileActivityAction", () => {
   it("should return a VIEW_PROFILE_ACTIVITY action", () => {
@@ -253,10 +229,9 @@ describe("makeGetChatsAction", () => {
   });
 });
 
-
 describe("makeSelectPlaceAddressAction", () => {
   it("should return a SELECT_PLACE_ADDRESS", () => {
-    const address = { country: "japan", city: "tokyo" }
+    const address = { country: "japan", city: "tokyo" };
     const expected = {
       type: SELECT_PLACE_ADDRESS,
       address
@@ -265,5 +240,3 @@ describe("makeSelectPlaceAddressAction", () => {
     expect(makeSelectPlaceAddressAction(address)).toEqual(expected);
   });
 });
-
-

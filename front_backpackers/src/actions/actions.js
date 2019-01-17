@@ -17,18 +17,8 @@ import {
   FETCH_ID_ACTIVITY,
   VIEW_FORM,
   VIEW_UPLOAD,
-  SELECT_PLACE_ADDRESS,
-  ADD1,
-  REMOVE1
+  SELECT_PLACE_ADDRESS
 } from "./actionTypes";
-
-export const makeAddAction = () => ({
-  type: ADD1
-});
-
-export const makeRemoveAction = () => ({
-  type: REMOVE1
-});
 
 export const makeDisplayPlacesAction = () => ({
   type: DISPLAY_PLACES
