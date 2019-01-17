@@ -1,5 +1,8 @@
 import { connect } from "react-redux";
-import { makeGetSearchDataAction } from "../actions/actions";
+import {
+  makeGetSearchDataAction,
+  makeGetSearchResultsAction
+} from "../actions/actions";
 import SearchPage from "../searchPage/SearchPage";
 
 const mapStateToProps = state => ({
