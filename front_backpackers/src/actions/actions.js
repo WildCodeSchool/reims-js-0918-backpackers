@@ -17,7 +17,9 @@ import {
   FETCH_ID_ACTIVITY,
   VIEW_FORM,
   VIEW_UPLOAD,
-  SELECT_PLACE_ADDRESS
+  SELECT_PLACE_ADDRESS,
+  GET_SEARCH_DATA,
+  GET_SEARCH_RESULTS
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
@@ -106,4 +108,14 @@ export const makeGetChatsAction = (chat, messages) => ({
 export const makeSelectPlaceAddressAction = address => ({
   type: SELECT_PLACE_ADDRESS,
   address
+});
+
+export const makeGetSearchDataAction = searchData => ({
+  type: GET_SEARCH_DATA,
+  searchData
+});
+
+export const makeGetSearchResultsAction = searchResults => ({
+  type: GET_SEARCH_RESULTS,
+  searchResults
 });

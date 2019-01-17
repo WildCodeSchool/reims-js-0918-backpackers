@@ -15,6 +15,7 @@ import uploadReducer from "./uploadReducer";
 import viewReducer from "./viewReducer";
 import { SELECT_PLACE_ADDRESS } from "../actions/actionTypes";
 import selectAddressReducer from "./selectAddressReducer";
+import searchReducer from "./searchReducer";
 
 const backpackersApp = history =>
   combineReducers({
@@ -47,7 +48,8 @@ const backpackersApp = history =>
     chats: chatsReducer,
     idCurrent: uploadReducer,
     viewForm: viewReducer,
-    selectAddress: selectAddressReducer
+    selectAddress: selectAddressReducer,
+    search: searchReducer
   });
 
 export default backpackersApp;

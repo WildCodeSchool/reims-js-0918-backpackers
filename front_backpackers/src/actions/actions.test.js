@@ -14,7 +14,8 @@ import {
   GET_CHATS,
   SELECT_PLACE_ADDRESS,
   VIEW_PROFILE_ACTIVITY,
-  GET_CHATS
+  GET_SEARCH_DATA,
+  GET_SEARCH_RESULTS
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -30,7 +31,10 @@ import {
   makeDisplayPlacesAction,
   makeDisplayActivitiesAction,
   makeGetChatsAction,
-  makeSelectPlaceAddressAction
+  makeSelectPlaceAddressAction,
+  makeViewProfileActivityAction,
+  makeGetSearchDataAction,
+  makeGetSearchResultsAction
 } from "./actions";
 
 describe("makeViewProfileActivityAction", () => {
@@ -231,12 +235,46 @@ describe("makeGetChatsAction", () => {
 
 describe("makeSelectPlaceAddressAction", () => {
   it("should return a SELECT_PLACE_ADDRESS", () => {
-    const address = { country: "japan", city: "tokyo" };
+    const address = {
+      country: "japan",
+      city: "tokyo",
+      adress: "test",
+      lat: 12,
+      long: 12,
+      postcode: 51100
+    };
     const expected = {
       type: SELECT_PLACE_ADDRESS,
       address
     };
 
     expect(makeSelectPlaceAddressAction(address)).toEqual(expected);
+  });
+});
+
+describe("makeGetSearchDataAction", () => {
+  it("should return a GET_SEARCH_DATA", () => {
+    const searchData = { country: "japan", city: "tokyo" };
+    const expected = {
+      type: GET_SEARCH_DATA,
+      searchData
+    };
+
+    expect(makeGetSearchDataAction(searchData)).toEqual(expected);
+  });
+});
+
+describe("makeGetSearchResultsAction", () => {
+  it("should return a GET_SEARCH_RESULTS", () => {
+    const searchResults = [
+      { name: "Party", country: "japan", city: "tokyo" },
+      { name: "Party2", country: "France", city: "Reims" }
+    ];
+    const expected = {
+      type: GET_SEARCH_RESULTS,
+      searchResults
+    };
+
+    expect(makeGetSearchResultsAction(searchResults)).toEqual(expected);
   });
 });
