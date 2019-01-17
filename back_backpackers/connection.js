@@ -293,7 +293,7 @@ app.get("/activity/:id", (req, res) => {
     `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
-            activities.contact, date, users.id, country, city,
+            activities.contact, date, users.id, country, city,DATEDIFF(date, CURRENT_TIMESTAMP) as date_diff,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
             (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username
     FROM activities 

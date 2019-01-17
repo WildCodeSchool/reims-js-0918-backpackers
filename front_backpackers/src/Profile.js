@@ -126,7 +126,7 @@ class Profile extends Component {
           : ""
       )
       .then(this.setState({ modify: false }))
-      .then(this.componentDidMount());
+      .then(() => this.componentDidMount());
   }
 
   render() {
