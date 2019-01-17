@@ -103,7 +103,6 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-  console.log(req.query);
   const type = req.query.typeChoice;
   const participation = req.query.placeNumber;
   const keywords = req.query.keywords;
@@ -116,25 +115,28 @@ app.get("/search", (req, res) => {
   type ? searchArray.push(`type="${type}"`) : "";
   participation ? searchArray.push(`capacityLeft>=${participation}`) : "";
   city ? searchArray.push(`city="${city}"`) : "";
-  keywords > 0
+  keywords && keywords.length > 0
     ? searchArray.push(
-        keywords
-          .split(" ")
-          .map(word => `description LIKE "%${word}%"`)
-          .join(" AND ") +
-          " OR " +
+        "((" +
+          keywords
+            .split(" ")
+            .map(word => `description LIKE "%${word}%"`)
+            .join(" AND ") +
+          ") OR (" +
           keywords
             .split(" ")
             .map(word => `name LIKE "%${word}%"`)
-            .join(" AND ")
+            .join(" AND ") +
+          "))"
       )
     : "";
+  // keywords && keywords.length > 0 ? (const wordsQuoted = keyword.map(word => `"${word}"`)) : "";
   country ? searchArray.push(`country="${country}"`) : "";
   dateStart ? searchArray.push(`date>"${dateStart}"`) : "";
   dateEnd ? searchArray.push(`date<="${dateEnd}"`) : "";
 
   const searchQuery = searchArray.join(" AND ");
-  console.log("query", searchQuery);
+  console.log(searchQuery);
 
   connection.query(
     `SELECT *
@@ -155,7 +157,6 @@ app.get("/search", (req, res) => {
         console.log(err);
         res.status(500).send("Error retrieving place search");
       } else {
-        console.log(results);
         res.json(results);
       }
     }
@@ -534,43 +535,54 @@ app.post("/profile/signup", (req, res) => {
   });
 });
 
-app.post("/profile/:username",
+app.post(
+  "/profile/:username",
   passport.authenticate("jwt", { session: false }),
-    (req, res) => {
-  connection.query(`UPDATE users SET description = "${req.body.description}", hobbies = "${req.body.hobbies}" WHERE username = "${req.params.username}"`, (err, results)=>{
-    if(err) {
-      console.log(err);
-      res.status(500).send("Failed to modify profile")
-    } else {
-      res.sendStatus(200)
-    }
-  })
-})
-
-app.post("/profile/:username/upload", upload.single("monfichier"), (req, res) => {
-  fs.rename(
-    req.file.path,
-    "public/images/" + req.file.originalname,
-    (err, results) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        connection.query(
-          `UPDATE users SET picture = "${
-            req.file.originalname
-          }" WHERE username = "${req.params.username}"`,
-          err => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.sendStatus(200);
-            }
-          }
-        );
+  (req, res) => {
+    connection.query(
+      `UPDATE users SET description = "${req.body.description}", hobbies = "${
+        req.body.hobbies
+      }" WHERE username = "${req.params.username}"`,
+      (err, results) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Failed to modify profile");
+        } else {
+          res.sendStatus(200);
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
+
+app.post(
+  "/profile/:username/upload",
+  upload.single("monfichier"),
+  (req, res) => {
+    fs.rename(
+      req.file.path,
+      "public/images/" + req.file.originalname,
+      (err, results) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          connection.query(
+            `UPDATE users SET picture = "${
+              req.file.originalname
+            }" WHERE username = "${req.params.username}"`,
+            err => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.sendStatus(200);
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+);
 
 app.post("/users", (req, res) => {
   chatkit

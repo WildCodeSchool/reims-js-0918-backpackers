@@ -1,21 +1,24 @@
 @import "../_styles.scss";
 
 .search-btn {
-  background-color: #054762;
+  background-color: $blueColor;
   color: white;
   border-radius: 10px;
   border: none;
-  height: 30px;
+  line-height: 30px;
   font-size: 0.9rem;
+}
+
+.resetBtn {
+  @extend .search-btn;
+  background-color: $darkGrayColor;
 }
 
 .search-bar {
   border-style: solid;
-  border: 2px solid #c1c1c1;
+  border: 2px solid $darkGrayColor;
   border-radius: 15px;
-  width: 250px;
   height: 30px;
-  margin-top: 10px;
   margin-left: 2px;
 }
 
@@ -26,10 +29,9 @@
 }
 
 .badgeDate {
-  background-color: #bac1c4;
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
+  background-color: $blueColor;
+  width: 100%;
+  line-height: 20px;
 }
 
 .typeList input {

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Row, Col, Input, Button, Collapse, Badge, Label } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
 import "./SearchPage.scss";
 
 const renderField = ({
@@ -9,6 +10,7 @@ const renderField = ({
   name,
   className,
   id,
+  ref,
   value,
   type,
   meta: { touched, error, warning }
@@ -20,6 +22,7 @@ const renderField = ({
       id={id}
       name={name}
       className={className}
+      ref={ref}
       {...input}
       type={type}
     />
@@ -69,7 +72,7 @@ class SearchActivityForm extends Component {
       <Fragment>
         <form onSubmit={this.props.handleSubmit}>
           {/* TYPE SELECTION */}
-          <Row>
+          <Row className="my-2">
             <Col>
               <h2
                 onClick={() => this.props.toggleCategories()}
@@ -249,7 +252,7 @@ class SearchActivityForm extends Component {
             </Col>
           </Row>
           <Collapse isOpen={this.props.collapseParticipants}>
-            <Row>
+            <Row className="my-2">
               <Col xs="4">
                 <Button
                   onClick={() => this.removeCount()}
@@ -286,20 +289,30 @@ class SearchActivityForm extends Component {
             </Col>
           </Row>
           <Collapse isOpen={this.props.collapseDates}>
-            <Row>
-              <Col>
-                <Badge className="badgeDate">Du...</Badge>
+            <Row className="my-2">
+              <Col xs={{ size: 5, offset: 1 }}>
+                <Badge className="badgeDate">A partir du ...</Badge>
               </Col>
-              <Col>
-                <Field component={renderField} name="dateStart" type="date" />
+              <Col xs="5">
+                <Field
+                  component={renderField}
+                  className="search-bar"
+                  name="dateStart"
+                  type="date"
+                />
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <Badge className="badgeDate">Au...</Badge>
+            <Row className="my-2">
+              <Col xs={{ size: 5, offset: 1 }}>
+                <Badge className="badgeDate">Jusqu'au</Badge>
               </Col>
-              <Col>
-                <Field component={renderField} name="dateEnd" type="date" />
+              <Col xs="5">
+                <Field
+                  component={renderField}
+                  className="search-bar"
+                  name="dateEnd"
+                  type="date"
+                />
               </Col>
             </Row>
           </Collapse>
@@ -312,7 +325,7 @@ class SearchActivityForm extends Component {
             </Col>
           </Row>
           <Collapse isOpen={this.props.collapseAdvanced}>
-            <Row>
+            <Row className="my-2">
               <Col>
                 <Field
                   type="text"
@@ -323,7 +336,7 @@ class SearchActivityForm extends Component {
                 />
               </Col>
             </Row>
-            <Row>
+            <Row className="my-2">
               <Col>
                 <Field
                   type="text"
@@ -334,7 +347,7 @@ class SearchActivityForm extends Component {
                 />
               </Col>
             </Row>
-            <Row>
+            <Row className="my-2">
               <Col>
                 <Field
                   type="text"
@@ -347,13 +360,23 @@ class SearchActivityForm extends Component {
             </Row>
           </Collapse>
           <Row>
-            <Col>
+            <Col xs="8">
               <button
                 type="submit"
                 disabled={this.props.submitting}
                 className="search-btn mt-4"
               >
-                Rechercher
+                Rechercher <i className="fas fa-search" />
+              </button>
+            </Col>
+            <Col xs="4">
+              <button
+                type="button"
+                onClick={() => (this.props.emptyForm(), this.props.reset())}
+                disabled={this.props.submitting}
+                className="resetBtn mt-4"
+              >
+                <i className="fas fa-eraser" />
               </button>
             </Col>
           </Row>
@@ -363,7 +386,13 @@ class SearchActivityForm extends Component {
   }
 }
 
-export default reduxForm({
-  form: "searchActivities",
-  initialValues: { placeNumber: 1 }
+SearchActivityForm = reduxForm({
+  form: "searchActivities"
 })(SearchActivityForm);
+
+SearchActivityForm = connect(state => ({
+  initialValues: state.search.searchData ? state.search.searchData : {},
+  enableReinitialize: true
+}))(SearchActivityForm);
+
+export default SearchActivityForm;
