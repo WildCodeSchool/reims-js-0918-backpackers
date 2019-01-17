@@ -5,7 +5,6 @@ const ActivityCaroussel = props => (
   <Fragment>
     {props.activity ? (
       <Fragment>
-        {console.log(props)}
         {/* <UncontrolledCarousel
           items={[
             {

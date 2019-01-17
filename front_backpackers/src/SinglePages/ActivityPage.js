@@ -44,6 +44,8 @@ class ActivityPage extends Component {
               <Header place={this.props.activity.city} />
               <ActivityCaroussel activity={this.props.activity} />
               <ActivityDetails
+                callApiActivity={() => this.callApiActivity()}
+                callApiProfile={() => this.callApiProfile()}
                 activity={this.props.activity}
                 profile={this.props.profile.id}
               />

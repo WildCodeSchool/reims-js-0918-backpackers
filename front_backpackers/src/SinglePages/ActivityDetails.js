@@ -50,6 +50,7 @@ class ActivityDetails extends Component {
           }
         }
       )
+      .then(() => this.props.callApiActivity())
       .then(this.setState({ participate: true }))
       .then(this.componentDidMount());
   }
@@ -89,7 +90,8 @@ class ActivityDetails extends Component {
           }
         }
       )
-      .then(this.setState({ participate: false }))
+      .then(() => this.props.callApiActivity())
+      .then(() => this.setState({ participate: false }))
       .then(this.componentDidMount());
   }
 
