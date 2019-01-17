@@ -298,7 +298,7 @@ class Profile extends Component {
             <Col xs="12" className="text-center">
               <TagsInput
                 maxTags="4"
-                value={this.state.tags}
+                value={this.state.tags[0] === "" ? [] : this.state.tags}
                 onChange={tags => this.handleTags(tags)}
               />
             </Col>
