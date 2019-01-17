@@ -1,8 +1,5 @@
 import { connect } from "react-redux";
-import {
-  makeGetSearchDataAction,
-  makeGetSearchResultsAction
-} from "../actions/actions";
+import { makeGetSearchDataAction } from "../actions/actions";
 import SearchPage from "../searchPage/SearchPage";
 
 const mapStateToProps = state => ({
@@ -10,9 +7,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getSearchData: searchData => dispatch(makeGetSearchDataAction(searchData)),
-  getSearchResults: searchResults =>
-    dispatch(makeGetSearchResultsAction(searchResults))
+  getSearchData: (searchData, searchResults) =>
+    dispatch(makeGetSearchDataAction(searchData, searchResults))
 });
 
 export default connect(

@@ -81,7 +81,6 @@ class SearchPage extends Component {
       delete searchData.country;
       delete searchData.city;
     }
-    this.props.getSearchData(searchData);
     const searchQuery = Object.keys(searchData)
       .map(data => data + "=" + searchData[data])
       .join("&");
@@ -89,7 +88,7 @@ class SearchPage extends Component {
       .get(`/search?` + searchQuery)
       .then(
         response => (
-          this.props.getSearchResults(response.data),
+          this.props.getSearchData(searchData, response.data),
           this.setState({ searchResults: response.data })
         )
       );

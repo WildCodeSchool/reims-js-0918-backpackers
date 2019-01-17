@@ -1,4 +1,4 @@
-import { GET_SEARCH_DATA, GET_SEARCH_RESULTS } from "../actions/actionTypes";
+import { GET_SEARCH_DATA } from "../actions/actionTypes";
 
 const searchReducer = (
   prevState = { searchData: {}, searchResults: [] },
@@ -6,9 +6,10 @@ const searchReducer = (
 ) => {
   switch (action.type) {
     case GET_SEARCH_DATA:
-      return { ...prevState, searchData: action.searchData };
-    case GET_SEARCH_RESULTS:
-      return { ...prevState, searchResults: action.searchResults };
+      return {
+        searchResults: action.searchResults,
+        searchData: action.searchData
+      };
     default:
       return prevState;
   }

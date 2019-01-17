@@ -18,8 +18,7 @@ import {
   VIEW_FORM,
   VIEW_UPLOAD,
   SELECT_PLACE_ADDRESS,
-  GET_SEARCH_DATA,
-  GET_SEARCH_RESULTS
+  GET_SEARCH_DATA
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
@@ -110,12 +109,8 @@ export const makeSelectPlaceAddressAction = address => ({
   address
 });
 
-export const makeGetSearchDataAction = searchData => ({
+export const makeGetSearchDataAction = (searchData, searchResults) => ({
   type: GET_SEARCH_DATA,
-  searchData
-});
-
-export const makeGetSearchResultsAction = searchResults => ({
-  type: GET_SEARCH_RESULTS,
+  searchData,
   searchResults
 });
