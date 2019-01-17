@@ -1,17 +1,17 @@
-import { connect } from "react-redux";
-import SearchActivity from "../searchPage/SearchActivity";
-import { makeAddAction, makeRemoveAction } from "../actions/actions";
+// import { connect } from "react-redux";
+// import SearchActivity from "../searchPage/SearchActivity";
+// import { makeAddAction, makeRemoveAction } from "../actions/actions";
 
-const mapStateToProps = state => ({
-  count: state.count
-});
+// const mapStateToProps = state => ({
+//   count: state.count
+// });
 
-const mapDispatchToProps = dispatch => ({
-  addOne: () => dispatch(makeAddAction()),
-  removeOne: () => dispatch(makeRemoveAction())
-});
+// const mapDispatchToProps = dispatch => ({
+//   addOne: () => dispatch(makeAddAction()),
+//   removeOne: () => dispatch(makeRemoveAction())
+// });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SearchActivity);
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(SearchActivity);

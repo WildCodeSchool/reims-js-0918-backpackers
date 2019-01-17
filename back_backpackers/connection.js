@@ -103,17 +103,54 @@ app.post("/api/places/upload", upload.single("monfichier"), (req, res) => {
   );
 });
 
-app.get("/api/places/search", (req, res) => {
-  const name =
-    req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
-  const adress =
-    req.query.adress === undefined ? "" : req.query.adress.split("_").join(" ");
+app.get("/api/search", (req, res) => {
+  console.log(req.query);
+  const type = req.query.typeChoice;
+  const participation = req.query.placeNumber;
+  const keywords = req.query.keywords;
+  const city = req.query.city;
+  const country = req.query.country;
+  const dateStart = req.query.dateStart;
+  const dateEnd = req.query.dateEnd;
+  const searchArray = [];
+
+  type ? searchArray.push(`type="${type}"`) : "";
+  participation ? searchArray.push(`capacityLeft>=${participation}`) : "";
+  city ? searchArray.push(`city="${city}"`) : "";
+  keywords > 0
+    ? searchArray.push(
+        keywords
+          .split(" ")
+          .map(word => `description LIKE "%${word}%"`)
+          .join(" AND ") +
+          " OR " +
+          keywords
+            .split(" ")
+            .map(word => `name LIKE "%${word}%"`)
+            .join(" AND ")
+      )
+    : "";
+  country ? searchArray.push(`country="${country}"`) : "";
+  dateStart ? searchArray.push(`date>"${dateStart}"`) : "";
+  dateEnd ? searchArray.push(`date<="${dateEnd}"`) : "";
+
+  const searchQuery = searchArray.join(" AND ");
+  console.log("query", searchQuery);
+
   connection.query(
-    adress === ""
-      ? `SELECT * FROM places WHERE name = "${name}"`
-      : name === ""
-      ? `SELECT * FROM places WHERE adress = "${adress}"`
-      : `SELECT * FROM places WHERE name ="${name}" AND adress = "${adress}"`,
+    `SELECT *
+    FROM(
+    SELECT activities.idActivity, activities.name, activities.capacity, activities.picture as pictureActivity,
+        (activities.description) AS description, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
+        type, (activities.capacity - COUNT(participation.idParticipation)) AS capacityLeft
+        FROM activities    
+        INNER JOIN places 
+        ON activities.id_place = places.id 
+        LEFT JOIN participation 
+        ON activities.idActivity = participation.idActivity
+        GROUP BY activities.idActivity
+    ) AS searchQuery
+    WHERE date_diff>0 AND ${searchQuery}`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -145,28 +182,6 @@ app.get("/api/activities", (req, res) => {
       if (err) {
         res.status(500).send("Error retrieving activities");
       } else {
-        res.json(results);
-      }
-    }
-  );
-});
-
-app.get("/api/activities/search", (req, res) => {
-  const name =
-    req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
-  const creator = req.query.creator === undefined ? "" : req.query.creator;
-  connection.query(
-    creator === ""
-      ? `SELECT * FROM activities WHERE name ="${name}"`
-      : name === ""
-      ? `SELECT * FROM activities WHERE creator ="${creator}"`
-      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
-    (err, results) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("Error retrieving activities searched");
-      } else {
-        console.log(results);
         res.json(results);
       }
     }
