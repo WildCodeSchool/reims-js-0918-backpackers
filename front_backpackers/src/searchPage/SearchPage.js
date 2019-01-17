@@ -81,7 +81,6 @@ class SearchPage extends Component {
       delete searchData.country;
       delete searchData.city;
     }
-    this.setState({ searchData: { ...searchData } });
     const searchQuery = Object.keys(searchData)
       .map(data => data + "=" + searchData[data])
       .join("&");
@@ -124,7 +123,7 @@ class SearchPage extends Component {
           />
         ) : this.state.searchResults.length > 0 ? (
           this.state.searchResults.map(activity => (
-            <ActivityThumbnail {...activity} />
+            <ActivityThumbnail key={activity.id} {...activity} />
           ))
         ) : (
           <p className="text-center">Aucun résultats</p>

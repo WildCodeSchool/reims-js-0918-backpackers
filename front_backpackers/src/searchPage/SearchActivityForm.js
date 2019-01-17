@@ -264,7 +264,7 @@ class SearchActivityForm extends Component {
                   name="placeNumber"
                   type="number"
                   id="placeNumber"
-                  input={{ value: this.state.count }}
+                  input={{ readOnly: true, value: this.state.count }}
                 />
               </Col>
               <Col xs="4">
@@ -342,7 +342,6 @@ class SearchActivityForm extends Component {
                   name="city"
                   className="search-bar"
                   placeholder="Ville"
-                  value={this.props.initialValues.city}
                 />
               </Col>
             </Row>
