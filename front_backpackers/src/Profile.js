@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Button, Media, Badge } from "reactstrap";
+import { Row, Col, Button, Badge } from "reactstrap";
 import { Link } from "react-router-dom";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
@@ -41,11 +41,16 @@ class Profile extends Component {
         }
       })
       .then(response =>
-        this.setState({
-          profile: { ...response.data[0], activities: [] },
-          tags: response.data[0].hobbies.split(","),
-          description: response.data[0].description
-        })
+        response.data[0].hobbies === null
+          ? this.setState({
+              profile: { ...response.data[0], activities: [] },
+              description: response.data[0].description
+            })
+          : this.setState({
+              profile: { ...response.data[0], activities: [] },
+              tags: response.data[0].hobbies.split(","),
+              description: response.data[0].description
+            })
       );
 
     axios
@@ -299,9 +304,7 @@ class Profile extends Component {
               />
             </Col>
           ) : this.state.tags.length < 1 ? (
-            <Col xs="12" className="text-center">
-              <Badge className="py-1 px-2 mx-1">Utilisateur</Badge>
-            </Col>
+            ""
           ) : (
             <Col xs="12" className="text-center">
               {this.state.tags.map((tag, index) => (
@@ -348,7 +351,6 @@ class Profile extends Component {
             <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
         </Row>
-        {console.log("date", this.state.historic.activities)}
         {!this.state.historic.activities ? (
           <p className="text-center">
             <i className="fas fa-spinner fa-spin" />
