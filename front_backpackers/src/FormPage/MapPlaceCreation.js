@@ -44,6 +44,7 @@ class MapPlaceCreation extends Component {
     map.on('click', e => {
       geocoder.reverse(e.latlng, map.options.crs.scale(20), results => {
         const r = results[0];
+        console.log(r)
         if (r) {
           this.setState({
             address: r.name

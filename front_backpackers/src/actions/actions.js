@@ -15,20 +15,9 @@ import {
   VIEW_PROFILE_ACTIVITY,
   GET_CHATS,
   FETCH_ID_ACTIVITY,
-  VIEW_FORM,
-  VIEW_UPLOAD,
   SELECT_PLACE_ADDRESS,
-  ADD1,
-  REMOVE1
+  GET_SEARCH_DATA
 } from "./actionTypes";
-
-export const makeAddAction = () => ({
-  type: ADD1
-});
-
-export const makeRemoveAction = () => ({
-  type: REMOVE1
-});
 
 export const makeDisplayPlacesAction = () => ({
   type: DISPLAY_PLACES
@@ -94,14 +83,6 @@ export const makeAFetchIdActivityAction = idCurrent => ({
   idCurrent
 });
 
-export const makeAViewFormAction = () => ({
-  type: VIEW_FORM
-});
-
-export const makeAViewUploadAction = () => ({
-  type: VIEW_UPLOAD
-});
-
 export const makeGetGeolocationAction = coords => ({
   type: GET_GEOLOCATION,
   coords
@@ -113,7 +94,13 @@ export const makeGetChatsAction = (chat, messages) => ({
   messages
 });
 
-export const makeSelectPlaceAddressAction = (address) => ({
+export const makeSelectPlaceAddressAction = address => ({
   type: SELECT_PLACE_ADDRESS,
   address
+});
+
+export const makeGetSearchDataAction = (searchData, searchResults) => ({
+  type: GET_SEARCH_DATA,
+  searchData,
+  searchResults
 });

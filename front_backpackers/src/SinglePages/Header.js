@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import { Row, Col } from "reactstrap";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-import "./SinglePage.scss"
+import "./SinglePage.scss";
 
-const Header = (props) => (
+const Header = props => (
   <Fragment>
     <Row className="blueHeader mb-2 fixed-top px-4">
       <Col xs="1">
@@ -21,7 +21,7 @@ const Header = (props) => (
           <i className="far fa-heart text-white" />
         </p> */}
       </Col>
-    </Row >
-  </Fragment >
+    </Row>
+  </Fragment>
 );
 export default Header;

@@ -5,7 +5,6 @@ const ActivityCaroussel = props => (
   <Fragment>
     {props.activity ? (
       <Fragment>
-        {console.log(props)}
         {/* <UncontrolledCarousel
           items={[
             {
@@ -16,19 +15,23 @@ const ActivityCaroussel = props => (
           ]}
         /> */}
 
-        <img src={`http://localhost:3010/images/${props.activity.pictureActivity
-          ? props.activity.pictureActivity
-          : props.activity.picturePlace}`} alt={props.activity.name} className="singlePageImg" />
+        <img
+          src={`http://localhost:3010/images/${
+            props.activity.pictureActivity
+              ? props.activity.pictureActivity
+              : props.activity.picturePlace
+          }`}
+          alt={props.activity.name}
+          className="singlePageImg"
+        />
 
         <Row>
           <Col xs="6" className="creatorFrame">
             <img
               className="rounded-circle"
-              src={
-                props.activity.picture
-                  ? props.activity.picture
-                  : "https://via.placeholder.com/75"
-              }
+              src={`http://localhost:3010/images/${
+                props.profile.picture ? props.profile.picture : "default.png"
+              }`}
               alt="Createur"
             />
             <p className="frame-name pl-3 pr-1 d-inline-block  bg-white ">
@@ -43,8 +46,8 @@ const ActivityCaroussel = props => (
         </Row>
       </Fragment>
     ) : (
-        ""
-      )}
+      ""
+    )}
   </Fragment>
 );
 

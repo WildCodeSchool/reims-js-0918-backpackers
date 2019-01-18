@@ -12,13 +12,15 @@ import classnames from "classnames";
 import ActivityThumbnail from "../HomePage/ActivityThumbnail";
 import { Link } from "react-router-dom";
 import MapPlace from "./MapPlace";
+import axios from "axios";
 
 class PlaceDetails extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: "1"
+      activeTab: "1",
+      profil: {}
     };
   }
 
@@ -30,16 +32,37 @@ class PlaceDetails extends Component {
     }
   }
 
+  componentDidMount() {
+    axios
+      .get("/profile", {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response => this.setState({ profil: response.data[0] }));
+  }
+
   render() {
-    const typePicture = `/images/${this.props.place.type === "Apéritifs" ? "aperitif"
-      : this.props.place.type === "Aquatique" ? "aquatic"
-        : this.props.place.type === "Aventure" ? "aventure"
-          : this.props.place.type === "Bien-être" ? "bien-etre"
-            : this.props.place.type === "Culturel" ? "culturel"
-              : this.props.place.type === "Déplacements" ? "deplacement"
-                : this.props.place.type === "Enfants" ? "enfants"
-                  : this.props.place.type === "Nocturne" ? "nocturne"
-                    : "restauration"}.png`
+    const typePicture = `/images/${
+      this.props.place.type === "Apéritifs"
+        ? "aperitif"
+        : this.props.place.type === "Aquatique"
+        ? "aquatic"
+        : this.props.place.type === "Aventure"
+        ? "aventure"
+        : this.props.place.type === "Bien-être"
+        ? "bien-etre"
+        : this.props.place.type === "Culturel"
+        ? "culturel"
+        : this.props.place.type === "Déplacements"
+        ? "deplacement"
+        : this.props.place.type === "Enfants"
+        ? "enfants"
+        : this.props.place.type === "Nocturne"
+        ? "nocturne"
+        : "restauration"
+    }.png`;
     return (
       <Fragment>
         <Nav tabs className="mb-2">
@@ -79,7 +102,10 @@ class PlaceDetails extends Component {
                   <Col xs="6">
                     <div className="price characteristic text-center">
                       <p className="mb-0">
-                        <i className="fas fa-coins" style={{ fontSize: "30px" }} />
+                        <i
+                          className="fas fa-coins"
+                          style={{ fontSize: "30px" }}
+                        />
                       </p>
                       <p>
                         {this.props.place.price > 0 ? (
@@ -88,15 +114,19 @@ class PlaceDetails extends Component {
                             <i className="fas fa-euro-sign pl-1" />
                           </Fragment>
                         ) : (
-                            "Gratuit"
-                          )}
+                          "Gratuit"
+                        )}
                       </p>
                     </div>
                   </Col>
                   <Col xs="6">
                     <div className="characteristic text-center">
                       <p className="mb-0">
-                        <img style={{ width: "30px" }} src={typePicture} alt={this.props.place.type} />
+                        <img
+                          style={{ width: "30px" }}
+                          src={typePicture}
+                          alt={this.props.place.type}
+                        />
                       </p>
                       <p className="">{this.props.place.type}</p>
                     </div>
@@ -117,13 +147,10 @@ class PlaceDetails extends Component {
             <Row className="mapDetails">
               <Col xs="12">
                 {this.state.activeTab === "2" ? (
-                  <MapPlace
-                    lat={this.props.place.latitude}
-                    long={this.props.place.longitude}
-                  />
+                  <MapPlace informations={this.props.place} />
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </Col>
             </Row>
           </TabPane>
@@ -134,14 +161,19 @@ class PlaceDetails extends Component {
             <h3 className="text-center p-1 mt-1">Les activités</h3>
           </Col>
         </Row>
-
-        {this.props.place.activities.map(activity =>
-          activity.capacity - 1 - activity.participants > 0 ? (
-            <ActivityThumbnail {...activity} key={activity.idActivity} />
-          ) : (
+        {this.props.place.activities
+          .sort((a, b) => a.date_diff - b.date_diff)
+          .map(activity =>
+            activity.capacity - 1 - activity.participants > 0 ? (
+              <ActivityThumbnail
+                profil={this.state.profil}
+                {...activity}
+                key={activity.idActivity}
+              />
+            ) : (
               ""
             )
-        )}
+          )}
 
         <Row>
           <Col xs="12">
