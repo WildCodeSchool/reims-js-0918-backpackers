@@ -77,7 +77,7 @@ app.post("/places", (req, res) => {
   });
 });
 
-app.post("/places/upload", upload.single("monfichier"), (req, res) => {
+app.post("/places/upload/:id", upload.single("monfichier"), (req, res) => {
   fs.rename(
     req.file.path,
     "public/images/" + req.file.originalname,
@@ -86,9 +86,8 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
         res.status(500).send(err);
       } else {
         connection.query(
-          `UPDATE places SET picture = "${
-            req.file.originalname
-          }" WHERE id= (SELECT LAST_INSERT_ID())`,
+          `UPDATE places SET picture = "${req.file.originalname}" WHERE id=?`,
+          req.params.id,
           err => {
             if (err) {
               console.log(err);
@@ -246,7 +245,7 @@ app.post(
   }
 );
 
-app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
+app.post("/activities/upload/:id", upload.single("monfichier"), (req, res) => {
   fs.rename(
     req.file.path,
     "public/images/" + req.file.originalname,
@@ -257,11 +256,13 @@ app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
         connection.query(
           `UPDATE activities SET picture = "${
             req.file.originalname
-          }" WHERE idActivity= (SELECT LAST_INSERT_ID())`,
+          }" WHERE idActivity= ?`,
+          req.params.id,
           err => {
             if (err) {
-              console.log(err);
+              console.log("err", err);
             } else {
+              console.log(req.file.originalname);
               res.json(results);
             }
           }
@@ -406,6 +407,7 @@ app.get("/place/:id", (req, res) => {
               res.status(500).send("Error retrieving activities of this place");
             } else {
               const place = { ...results, activities: actiResults };
+              console.log("test");
               res.json(place);
             }
           }
