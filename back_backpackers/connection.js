@@ -395,7 +395,7 @@ app.get("/place/:id", (req, res) => {
           ON activities.id_place = places.id
           LEFT JOIN participation
           ON activities.idActivity = participation.idActivity
-          WHERE id_place = ? 
+          WHERE id_place = ? AND date >= CURRENT_TIMESTAMP
           GROUP BY activities.idActivity`,
           idPlace,
           (err, actiResults) => {
