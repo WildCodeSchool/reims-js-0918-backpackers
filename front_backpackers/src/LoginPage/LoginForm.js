@@ -1,10 +1,13 @@
 import React from "react";
+import { ToastContainer, toast } from "react-toastify";
 import { Field, reduxForm } from "redux-form";
 import { Row, Col, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./Login.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 const validate = values => {
+  notify = () => toast("Wow so easy !");
   const errors = {};
   if (!values.mail) {
     errors.mail = "Required";
@@ -66,6 +69,7 @@ const LoginForm = props => {
                 className="login d-block text-white text-center"
                 type="submit"
                 disabled={submitting}
+                onClick={this.notify}
               >
                 Se connecter
               </button>
