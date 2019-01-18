@@ -74,15 +74,19 @@ class SearchActivityForm extends Component {
           {/* TYPE SELECTION */}
           <Row className="my-2">
             <Col
-              onClick={() => this.props.toggleCategories()}
-              className={`${!this.props.collapseCategories ? "selected" : ""}`}
+              onClick={() => this.props.toggleCollapse("collapseCategories")}
+              className={`${
+                !this.props.searchCollapse.collapseCategories ? "selected" : ""
+              }`}
             >
               <h2
                 className={`pr-3 ${
-                  !this.props.collapseCategories ? "selected" : ""
+                  !this.props.searchCollapse.collapseCategories
+                    ? "selected"
+                    : ""
                 }`}
               >
-                {!this.props.collapseCategories ? (
+                {!this.props.searchCollapse.collapseCategories ? (
                   <i className="pr-2 far fa-circle" />
                 ) : (
                   <i className="pr-2 far fa-check-circle" />
@@ -92,7 +96,7 @@ class SearchActivityForm extends Component {
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
-          <Collapse isOpen={this.props.collapseCategories}>
+          <Collapse isOpen={this.props.searchCollapse.collapseCategories}>
             <Row className="text-center typeList">
               <Col xs="4">
                 <Field
@@ -251,17 +255,21 @@ class SearchActivityForm extends Component {
           </Collapse>
           <Row>
             <Col
-              onClick={() => this.props.toggleParticipants()}
+              onClick={() => this.props.toggleCollapse("collapseParticipants")}
               className={`${
-                !this.props.collapseParticipants ? "selected" : ""
+                !this.props.searchCollapse.collapseParticipants
+                  ? "selected"
+                  : ""
               }`}
             >
               <h2
                 className={`pr-3 ${
-                  !this.props.collapseParticipants ? "selected" : ""
+                  !this.props.searchCollapse.collapseParticipants
+                    ? "selected"
+                    : ""
                 }`}
               >
-                {!this.props.collapseParticipants ? (
+                {!this.props.searchCollapse.collapseParticipants ? (
                   <i className="pr-2 far fa-circle" />
                 ) : (
                   <i className="pr-2 far fa-check-circle" />
@@ -271,7 +279,7 @@ class SearchActivityForm extends Component {
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
-          <Collapse isOpen={this.props.collapseParticipants}>
+          <Collapse isOpen={this.props.searchCollapse.collapseParticipants}>
             <Row className="my-2">
               <Col xs="4">
                 <Button
@@ -302,15 +310,17 @@ class SearchActivityForm extends Component {
           </Collapse>
           <Row>
             <Col
-              onClick={() => this.props.toggleDates()}
-              className={`${!this.props.collapseDates ? "selected" : ""}`}
+              onClick={() => this.props.toggleCollapse("collapseDates")}
+              className={`${
+                !this.props.searchCollapse.collapseDates ? "selected" : ""
+              }`}
             >
               <h2
                 className={`pr-3 ${
-                  !this.props.collapseDates ? "selected" : ""
+                  !this.props.searchCollapse.collapseDates ? "selected" : ""
                 }`}
               >
-                {!this.props.collapseDates ? (
+                {!this.props.searchCollapse.collapseDates ? (
                   <i className="pr-2 far fa-circle" />
                 ) : (
                   <i className="pr-2 far fa-check-circle" />
@@ -320,7 +330,7 @@ class SearchActivityForm extends Component {
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
-          <Collapse isOpen={this.props.collapseDates}>
+          <Collapse isOpen={this.props.searchCollapse.collapseDates}>
             <Row className="my-2">
               <Col xs={{ size: 5, offset: 1 }}>
                 <Badge className="badgeDate">A partir du ...</Badge>
@@ -350,15 +360,17 @@ class SearchActivityForm extends Component {
           </Collapse>
           <Row>
             <Col
-              onClick={() => this.props.toggleAdvanced()}
-              className={`${!this.props.collapseAdvanced ? "selected" : ""}`}
+              onClick={() => this.props.toggleCollapse("collapseAdvanced")}
+              className={`${
+                !this.props.searchCollapse.collapseAdvanced ? "selected" : ""
+              }`}
             >
               <h2
                 className={`pr-3 ${
-                  !this.props.collapseAdvanced ? "selected" : ""
+                  !this.props.searchCollapse.collapseAdvanced ? "selected" : ""
                 }`}
               >
-                {!this.props.collapseAdvanced ? (
+                {!this.props.searchCollapse.collapseAdvanced ? (
                   <i className="pr-2 far fa-circle" />
                 ) : (
                   <i className="pr-2 far fa-check-circle" />
@@ -368,7 +380,7 @@ class SearchActivityForm extends Component {
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
-          <Collapse isOpen={this.props.collapseAdvanced}>
+          <Collapse isOpen={this.props.searchCollapse.collapseAdvanced}>
             <Row className="my-2">
               <Col>
                 <Field
