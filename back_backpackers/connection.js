@@ -234,7 +234,7 @@ app.post(
                 .then(() => res.status(500).send("Failed to add activity"))
                 .catch(deleteErr => console.error(deleteErr));
             } else {
-              res.json(results.insertId);
+              res.json({ insertId: results.insertId, id: idChat });
             }
           }
         );
@@ -261,7 +261,7 @@ app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
             if (err) {
               console.log(err);
             } else {
-              res.sendStatus(200);
+              res.json(results);
             }
           }
         );
@@ -274,6 +274,7 @@ app.post(
   "/participate/:idActivity",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const idActivity = req.params.idActivity;
     connection.query(
       "INSERT INTO participation SET ?",
       { idActivity: req.params.idActivity, idUser: req.user.id },
@@ -289,6 +290,7 @@ app.post(
             })
             .then(() => console.log("added"))
             .catch(error => console.error(error));
+          res.json(idActivity);
         }
       }
     );
@@ -328,7 +330,7 @@ app.get("/activity/:id", (req, res) => {
     `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
-            activities.contact, date, users.id, country, city,
+            activities.contact, date, users.id, country, city,DATEDIFF(date, CURRENT_TIMESTAMP) as date_diff,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
             (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username
     FROM activities 
@@ -534,43 +536,54 @@ app.post("/profile/signup", (req, res) => {
   });
 });
 
-app.post("/profile/:username",
+app.post(
+  "/profile/:username",
   passport.authenticate("jwt", { session: false }),
-    (req, res) => {
-  connection.query(`UPDATE users SET description = "${req.body.description}", hobbies = "${req.body.hobbies}" WHERE username = "${req.params.username}"`, (err, results)=>{
-    if(err) {
-      console.log(err);
-      res.status(500).send("Failed to modify profile")
-    } else {
-      res.sendStatus(200)
-    }
-  })
-})
-
-app.post("/profile/:username/upload", upload.single("monfichier"), (req, res) => {
-  fs.rename(
-    req.file.path,
-    "public/images/" + req.file.originalname,
-    (err, results) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        connection.query(
-          `UPDATE users SET picture = "${
-            req.file.originalname
-          }" WHERE username = "${req.params.username}"`,
-          err => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.sendStatus(200);
-            }
-          }
-        );
+  (req, res) => {
+    connection.query(
+      `UPDATE users SET description = "${req.body.description}", hobbies = "${
+        req.body.hobbies
+      }" WHERE username = "${req.params.username}"`,
+      (err, results) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Failed to modify profile");
+        } else {
+          res.sendStatus(200);
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
+
+app.post(
+  "/profile/:username/upload",
+  upload.single("monfichier"),
+  (req, res) => {
+    fs.rename(
+      req.file.path,
+      "public/images/" + req.file.originalname,
+      (err, results) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          connection.query(
+            `UPDATE users SET picture = "${
+              req.file.originalname
+            }" WHERE username = "${req.params.username}"`,
+            err => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.sendStatus(200);
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+);
 
 app.post("/users", (req, res) => {
   chatkit
