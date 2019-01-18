@@ -10,7 +10,6 @@ class SearchPage extends Component {
     super(props);
     this.state = {
       searchView: "searchForm",
-      searchResults: [],
       searchCollapse: {
         collapseCategories: true,
         collapseParticipants: false,
@@ -23,6 +22,7 @@ class SearchPage extends Component {
     this.toggleDates = this.toggleDates.bind(this);
     this.toggleAdvanced = this.toggleAdvanced.bind(this);
     this.getSearchView = this.getSearchView.bind(this);
+    this.emptyForm = this.emptyForm.bind(this);
   }
   getSearchView() {
     this.setState({ searchView: "searchForm" });
@@ -64,6 +64,21 @@ class SearchPage extends Component {
     });
   }
 
+  emptyForm() {
+    const resetData = {};
+    const resetResults = [];
+    this.setState({
+      searchCollapse: {
+        collapseCategories: true,
+        collapseParticipants: false,
+        collapseDates: false,
+        collapseAdvanced: true
+      }
+    });
+    this.props.getSearchData(resetData, resetResults);
+    this.forceUpdate();
+  }
+
   submit = searchData => {
     this.setState({ searchView: "searchResults" });
     if (!this.state.searchCollapse.collapseCategories) {
@@ -81,21 +96,26 @@ class SearchPage extends Component {
       delete searchData.country;
       delete searchData.city;
     }
-    this.setState({ searchData: { ...searchData } });
     const searchQuery = Object.keys(searchData)
       .map(data => data + "=" + searchData[data])
       .join("&");
+    console.log(searchQuery);
     axios
       .get(`/search?` + searchQuery)
-      .then(response => this.setState({ searchResults: response.data }));
+      .then(response => this.props.getSearchData(searchData, response.data));
   };
+
   render() {
     return (
       <Fragment>
         <Row className="blueHeader">
           <Col xs="2">
             {this.state.searchView === "searchForm" ? (
-              <Link to="/" className="price text-primary">
+              <Link
+                to="/"
+                onClick={this.emptyForm}
+                className="price text-primary"
+              >
                 <i className="fas fa-chevron-left text-white" />
               </Link>
             ) : (
@@ -110,6 +130,7 @@ class SearchPage extends Component {
         </Row>
         {this.state.searchView === "searchForm" ? (
           <SearchActivityForm
+            emptyForm={this.emptyForm}
             onSubmit={this.submit}
             collapseCategories={this.state.searchCollapse.collapseCategories}
             collapseDates={this.state.searchCollapse.collapseDates}
@@ -122,12 +143,12 @@ class SearchPage extends Component {
             toggleParticipants={this.toggleParticipants}
             toggleAdvanced={this.toggleAdvanced}
           />
-        ) : this.state.searchResults.length > 0 ? (
-          this.state.searchResults.map(activity => (
-            <ActivityThumbnail {...activity} />
+        ) : this.props.search.searchResults.length > 0 ? (
+          this.props.search.searchResults.map(activity => (
+            <ActivityThumbnail key={activity.id} {...activity} />
           ))
         ) : (
-          <p className="text-center">Aucun résultats</p>
+          <p className="text-center">Aucun résultat</p>
         )}
       </Fragment>
     );

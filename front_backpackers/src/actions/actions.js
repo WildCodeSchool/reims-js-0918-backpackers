@@ -18,17 +18,8 @@ import {
   VIEW_FORM,
   VIEW_UPLOAD,
   SELECT_PLACE_ADDRESS,
-  ADD1,
-  REMOVE1
+  GET_SEARCH_DATA
 } from "./actionTypes";
-
-export const makeAddAction = () => ({
-  type: ADD1
-});
-
-export const makeRemoveAction = () => ({
-  type: REMOVE1
-});
 
 export const makeDisplayPlacesAction = () => ({
   type: DISPLAY_PLACES
@@ -116,4 +107,10 @@ export const makeGetChatsAction = (chat, messages) => ({
 export const makeSelectPlaceAddressAction = address => ({
   type: SELECT_PLACE_ADDRESS,
   address
+});
+
+export const makeGetSearchDataAction = (searchData, searchResults) => ({
+  type: GET_SEARCH_DATA,
+  searchData,
+  searchResults
 });

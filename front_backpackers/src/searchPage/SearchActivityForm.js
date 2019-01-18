@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Row, Col, Input, Button, Collapse, Badge, Label } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
 import "./SearchPage.scss";
 
 const renderField = ({
@@ -9,6 +10,7 @@ const renderField = ({
   name,
   className,
   id,
+  ref,
   value,
   type,
   meta: { touched, error, warning }
@@ -20,6 +22,7 @@ const renderField = ({
       id={id}
       name={name}
       className={className}
+      ref={ref}
       {...input}
       type={type}
     />
@@ -69,12 +72,21 @@ class SearchActivityForm extends Component {
       <Fragment>
         <form onSubmit={this.props.handleSubmit}>
           {/* TYPE SELECTION */}
-          <Row>
-            <Col>
+          <Row className="my-2">
+            <Col
+              onClick={() => this.props.toggleCategories()}
+              className={`${!this.props.collapseCategories ? "selected" : ""}`}
+            >
               <h2
-                onClick={() => this.props.toggleCategories()}
-                className="pr-3"
+                className={`pr-3 ${
+                  !this.props.collapseCategories ? "selected" : ""
+                }`}
               >
+                {!this.props.collapseCategories ? (
+                  <i className="pr-2 far fa-circle" />
+                ) : (
+                  <i className="pr-2 far fa-check-circle" />
+                )}
                 Catégories
               </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
@@ -238,18 +250,29 @@ class SearchActivityForm extends Component {
             </Row>
           </Collapse>
           <Row>
-            <Col>
+            <Col
+              onClick={() => this.props.toggleParticipants()}
+              className={`${
+                !this.props.collapseParticipants ? "selected" : ""
+              }`}
+            >
               <h2
-                onClick={() => this.props.toggleParticipants()}
-                className="pr-3"
+                className={`pr-3 ${
+                  !this.props.collapseParticipants ? "selected" : ""
+                }`}
               >
+                {!this.props.collapseParticipants ? (
+                  <i className="pr-2 far fa-circle" />
+                ) : (
+                  <i className="pr-2 far fa-check-circle" />
+                )}
                 Participants
               </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
           <Collapse isOpen={this.props.collapseParticipants}>
-            <Row>
+            <Row className="my-2">
               <Col xs="4">
                 <Button
                   onClick={() => this.removeCount()}
@@ -264,7 +287,7 @@ class SearchActivityForm extends Component {
                   name="placeNumber"
                   type="number"
                   id="placeNumber"
-                  input={{ value: this.state.count }}
+                  input={{ readOnly: true, value: this.state.count }}
                 />
               </Col>
               <Col xs="4">
@@ -278,41 +301,75 @@ class SearchActivityForm extends Component {
             </Row>
           </Collapse>
           <Row>
-            <Col>
-              <h2 onClick={() => this.props.toggleDates()} className="pr-3">
+            <Col
+              onClick={() => this.props.toggleDates()}
+              className={`${!this.props.collapseDates ? "selected" : ""}`}
+            >
+              <h2
+                className={`pr-3 ${
+                  !this.props.collapseDates ? "selected" : ""
+                }`}
+              >
+                {!this.props.collapseDates ? (
+                  <i className="pr-2 far fa-circle" />
+                ) : (
+                  <i className="pr-2 far fa-check-circle" />
+                )}
                 Dates
               </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
           <Collapse isOpen={this.props.collapseDates}>
-            <Row>
-              <Col>
-                <Badge className="badgeDate">Du...</Badge>
+            <Row className="my-2">
+              <Col xs={{ size: 5, offset: 1 }}>
+                <Badge className="badgeDate">A partir du ...</Badge>
               </Col>
-              <Col>
-                <Field component={renderField} name="dateStart" type="date" />
+              <Col xs="5">
+                <Field
+                  component={renderField}
+                  className="search-bar"
+                  name="dateStart"
+                  type="date"
+                />
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <Badge className="badgeDate">Au...</Badge>
+            <Row className="my-2">
+              <Col xs={{ size: 5, offset: 1 }}>
+                <Badge className="badgeDate">Jusqu'au</Badge>
               </Col>
-              <Col>
-                <Field component={renderField} name="dateEnd" type="date" />
+              <Col xs="5">
+                <Field
+                  component={renderField}
+                  className="search-bar"
+                  name="dateEnd"
+                  type="date"
+                />
               </Col>
             </Row>
           </Collapse>
           <Row>
-            <Col>
-              <h2 onClick={() => this.props.toggleAdvanced()} className="pr-3">
+            <Col
+              onClick={() => this.props.toggleAdvanced()}
+              className={`${!this.props.collapseAdvanced ? "selected" : ""}`}
+            >
+              <h2
+                className={`pr-3 ${
+                  !this.props.collapseAdvanced ? "selected" : ""
+                }`}
+              >
+                {!this.props.collapseAdvanced ? (
+                  <i className="pr-2 far fa-circle" />
+                ) : (
+                  <i className="pr-2 far fa-check-circle" />
+                )}
                 Affiner la recherche
               </h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
             </Col>
           </Row>
           <Collapse isOpen={this.props.collapseAdvanced}>
-            <Row>
+            <Row className="my-2">
               <Col>
                 <Field
                   type="text"
@@ -323,7 +380,7 @@ class SearchActivityForm extends Component {
                 />
               </Col>
             </Row>
-            <Row>
+            <Row className="my-2">
               <Col>
                 <Field
                   type="text"
@@ -334,7 +391,7 @@ class SearchActivityForm extends Component {
                 />
               </Col>
             </Row>
-            <Row>
+            <Row className="my-2">
               <Col>
                 <Field
                   type="text"
@@ -342,19 +399,28 @@ class SearchActivityForm extends Component {
                   name="city"
                   className="search-bar"
                   placeholder="Ville"
-                  value={this.props.initialValues.city}
                 />
               </Col>
             </Row>
           </Collapse>
           <Row>
-            <Col>
+            <Col xs="8">
               <button
                 type="submit"
                 disabled={this.props.submitting}
                 className="search-btn mt-4"
               >
-                Rechercher
+                Rechercher <i className="fas fa-search" />
+              </button>
+            </Col>
+            <Col xs="4">
+              <button
+                type="button"
+                onClick={() => (this.props.emptyForm(), this.props.reset())}
+                disabled={this.props.submitting}
+                className="resetBtn mt-4"
+              >
+                <i className="fas fa-eraser" />
               </button>
             </Col>
           </Row>
@@ -364,7 +430,13 @@ class SearchActivityForm extends Component {
   }
 }
 
-export default reduxForm({
-  form: "searchActivities",
-  initialValues: { placeNumber: 1 }
+SearchActivityForm = reduxForm({
+  form: "searchActivities"
 })(SearchActivityForm);
+
+SearchActivityForm = connect(state => ({
+  initialValues: state.search.searchData ? state.search.searchData : {},
+  enableReinitialize: true
+}))(SearchActivityForm);
+
+export default SearchActivityForm;

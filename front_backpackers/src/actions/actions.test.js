@@ -13,10 +13,8 @@ import {
   DISPLAY_ACTIVITIES,
   GET_CHATS,
   SELECT_PLACE_ADDRESS,
-  ADD1,
-  REMOVE1,
   VIEW_PROFILE_ACTIVITY,
-  GET_CHATS
+  GET_SEARCH_DATA
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -33,29 +31,9 @@ import {
   makeDisplayActivitiesAction,
   makeGetChatsAction,
   makeSelectPlaceAddressAction,
-  makeAddAction,
-  makeRemoveAction
+  makeViewProfileActivityAction,
+  makeGetSearchDataAction
 } from "./actions";
-
-describe("makeAddAction", () => {
-  it("should return a ADD1 action", () => {
-    const expected = {
-      type: ADD1
-    };
-
-    expect(makeAddAction()).toEqual(expected);
-  });
-});
-
-describe("makeRemoveAction", () => {
-  it("should return a REMOVE1 action", () => {
-    const expected = {
-      type: REMOVE1
-    };
-
-    expect(makeRemoveAction()).toEqual(expected);
-  });
-});
 
 describe("makeViewProfileActivityAction", () => {
   it("should return a VIEW_PROFILE_ACTIVITY action", () => {
@@ -253,10 +231,16 @@ describe("makeGetChatsAction", () => {
   });
 });
 
-
 describe("makeSelectPlaceAddressAction", () => {
   it("should return a SELECT_PLACE_ADDRESS", () => {
-    const address = { country: "japan", city: "tokyo" }
+    const address = {
+      country: "japan",
+      city: "tokyo",
+      adress: "test",
+      lat: 12,
+      long: 12,
+      postcode: 51100
+    };
     const expected = {
       type: SELECT_PLACE_ADDRESS,
       address
@@ -266,4 +250,21 @@ describe("makeSelectPlaceAddressAction", () => {
   });
 });
 
+describe("makeGetSearchDataAction", () => {
+  it("should return a GET_SEARCH_DATA", () => {
+    const searchData = { country: "japan", city: "tokyo" };
+    const searchResults = [
+      { name: "Party", country: "japan", city: "tokyo" },
+      { name: "Party2", country: "France", city: "Reims" }
+    ];
+    const expected = {
+      type: GET_SEARCH_DATA,
+      searchData,
+      searchResults
+    };
 
+    expect(makeGetSearchDataAction(searchData, searchResults)).toEqual(
+      expected
+    );
+  });
+});
