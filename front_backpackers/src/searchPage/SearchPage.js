@@ -67,6 +67,14 @@ class SearchPage extends Component {
   emptyForm() {
     const resetData = {};
     const resetResults = [];
+    this.setState({
+      searchCollapse: {
+        collapseCategories: true,
+        collapseParticipants: false,
+        collapseDates: false,
+        collapseAdvanced: true
+      }
+    });
     this.props.getSearchData(resetData, resetResults);
     this.forceUpdate();
   }

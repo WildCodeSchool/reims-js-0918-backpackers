@@ -74,10 +74,10 @@ class SearchActivityForm extends Component {
           {/* TYPE SELECTION */}
           <Row className="my-2">
             <Col
+              onClick={() => this.props.toggleCategories()}
               className={`${!this.props.collapseCategories ? "selected" : ""}`}
             >
               <h2
-                onClick={() => this.props.toggleCategories()}
                 className={`pr-3 ${
                   !this.props.collapseCategories ? "selected" : ""
                 }`}
@@ -251,12 +251,12 @@ class SearchActivityForm extends Component {
           </Collapse>
           <Row>
             <Col
+              onClick={() => this.props.toggleParticipants()}
               className={`${
                 !this.props.collapseParticipants ? "selected" : ""
               }`}
             >
               <h2
-                onClick={() => this.props.toggleParticipants()}
                 className={`pr-3 ${
                   !this.props.collapseParticipants ? "selected" : ""
                 }`}
@@ -301,9 +301,11 @@ class SearchActivityForm extends Component {
             </Row>
           </Collapse>
           <Row>
-            <Col className={`${!this.props.collapseDates ? "selected" : ""}`}>
+            <Col
+              onClick={() => this.props.toggleDates()}
+              className={`${!this.props.collapseDates ? "selected" : ""}`}
+            >
               <h2
-                onClick={() => this.props.toggleDates()}
                 className={`pr-3 ${
                   !this.props.collapseDates ? "selected" : ""
                 }`}
@@ -348,10 +350,10 @@ class SearchActivityForm extends Component {
           </Collapse>
           <Row>
             <Col
+              onClick={() => this.props.toggleAdvanced()}
               className={`${!this.props.collapseAdvanced ? "selected" : ""}`}
             >
               <h2
-                onClick={() => this.props.toggleAdvanced()}
                 className={`pr-3 ${
                   !this.props.collapseAdvanced ? "selected" : ""
                 }`}
