@@ -37,7 +37,7 @@ class Maps extends Component {
   }
 
   componentDidMount() {
-    if (this.props.isGeolocationEnabled) {
+    if (this.props.isGeolocated && localStorage.getItem("BackpackersToken")) {
       const map = this.leafletMap.leafletElement;
 
       var myIcon = L.icon({

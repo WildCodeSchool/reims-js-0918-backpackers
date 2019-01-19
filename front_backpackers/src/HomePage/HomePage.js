@@ -184,10 +184,12 @@ class HomePage extends Component {
 
                     this.props.getCoords(
                       this.props.isGeolocationEnabled
-                        ? [
-                            this.props.coords.latitude,
-                            this.props.coords.longitude
-                          ]
+                        ? this.props.coords
+                          ? [
+                              this.props.coords.latitude,
+                              this.props.coords.longitude
+                            ]
+                          : [48.861633, 2.332856]
                         : [48.861633, 2.332856]
                     );
                   }}
@@ -261,7 +263,15 @@ class HomePage extends Component {
             </Row>
           </TabPane>
           <TabPane tabId="2">
-            {this.state.activeTab === "2" ? <MapsContainer /> : ""}
+            {this.state.activeTab === "2" ? (
+              <MapsContainer
+                isGeolocated={
+                  this.props.isGeolocationEnabled && this.props.coords
+                }
+              />
+            ) : (
+              ""
+            )}
           </TabPane>
         </TabContent>
       </div>
