@@ -12,6 +12,7 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { geolocated } from "react-geolocated";
+import Chatkit from "@pusher/chatkit";
 
 import ActivityThumbnail from "./ActivityThumbnail";
 import PlaceThumbnail from "./PlaceThumbnail";
@@ -28,7 +29,8 @@ class HomePage extends Component {
     this.state = {
       dropdownOpen: false,
       collapsed: true,
-      activeTab: "1"
+      activeTab: "1",
+      idParticipation: []
     };
     this.toggle = this.toggle.bind(this);
     this.toggleMap = this.toggleMap.bind(this);
@@ -38,32 +40,72 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchPlaces();
-    this.callApiPlaces();
+    this.callApiProfile();
     this.props.fetchActivities();
     this.callApiActivities();
-    this.callApiProfile();
+    this.props.fetchPlaces();
+    this.callApiPlaces();
+    this.callApiParticipation();
   }
 
   callApiProfile() {
     axios
-      .get("/profile", {
+      .get(`/profile`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response => this.props.viewProfile(response.data));
+      .then(response =>
+        this.props.viewProfile([{ ...response.data[0], activities: [] }])
+      )
+      .then(() =>
+        axios
+          .post("/users", {
+            username: this.props.profile[0].username
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      )
+      .then(() => {
+        const chatManager = new Chatkit.ChatManager({
+          instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
+          userId: this.props.profile[0].username,
+          tokenProvider: new Chatkit.TokenProvider({
+            url: "/authenticate"
+          })
+        });
+        chatManager.connect().then(currentUser => {
+          this.setState({ currentUser });
+        });
+      });
   }
 
   callApiPlaces() {
     axios.get("/places").then(response => this.props.viewPlaces(response.data));
   }
 
+  callApiParticipation() {
+    axios
+      .get(`/profile/${this.props.profile.id}/activities`, {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response => this.setState({ idParticipation: response.data }));
+  }
+
   callApiActivities() {
     axios
       .get("/activities")
       .then(response => this.props.viewActivities(response.data));
+    // .then(() =>
+    //   console.log(
+    //     this.props.coords.latitude,
+    //     this.props.coords.longitude
+    //   ))
   }
 
   toggle() {
@@ -102,7 +144,6 @@ class HomePage extends Component {
             <BurgerButton
               drawerToggleClickHandler={this.drawerToggleClickHandler}
             />
-
             <Sidebar
               {...this.props.profile[0]}
               show={this.props.menu}
@@ -156,22 +197,54 @@ class HomePage extends Component {
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             {this.props.displayHomePage === "places" &&
-              this.props.places.map(place => (
-                <PlaceThumbnail {...place} key={place.id} />
-              ))}
+              (this.props.isGeolocationAvailable &&
+              this.props.isGeolocationEnabled &&
+              this.props.coords
+                ? this.props.places
+                    .filter(
+                      place =>
+                        Math.abs(place.latitude - this.props.coords.latitude) <
+                          0.02 &&
+                        Math.abs(
+                          place.longitude - this.props.coords.longitude
+                        ) < 0.02
+                    )
+                    .sort(
+                      (a, b) =>
+                        a.latitude - b.latitude && a.longitude - b.longitude
+                    )
+                    .map(place => <PlaceThumbnail {...place} key={place.id} />)
+                : this.props.places
+                    .filter(place => place.country === "France")
+                    .map(place => (
+                      <PlaceThumbnail {...place} key={place.id} />
+                    )))}
             {this.props.displayHomePage === "activities" &&
-              this.props.activities.map(activity => (
-                <ActivityThumbnail {...activity} key={activity.idActivity} />
-              ))}
-
+              this.props.activities
+                .sort((a, b) => a.date_diff - b.date_diff)
+                .map(activity =>
+                  activity.capacity - 1 - activity.participants > 0 ? (
+                    <ActivityThumbnail
+                      {...activity}
+                      profil={this.props.profile[0]}
+                      key={activity.idActivity}
+                    />
+                  ) : (
+                    ""
+                  )
+                )}
             <Row className="fixed-bottom listFooter">
               <Link
-                to="/activities"
+                to="/search"
                 className="w-50 listSearchBtn text-white text-center"
               >
                 Rechercher <i className="fas fa-search-location" />
               </Link>
-              <Link to="/" className="w-50 listPostBtn text-white text-center">
+              <Link
+                to="/newplace"
+                onClick={() => this.props.getCoords([1, 1])}
+                className="w-50 listPostBtn text-white text-center"
+              >
                 <i className="fas fa-pencil-alt" /> Publier{" "}
               </Link>
             </Row>

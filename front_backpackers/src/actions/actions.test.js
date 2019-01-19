@@ -10,7 +10,11 @@ import {
   VIEW_ACTIVITY,
   VIEW_PROFILE,
   DISPLAY_PLACES,
-  DISPLAY_ACTIVITIES
+  DISPLAY_ACTIVITIES,
+  GET_CHATS,
+  SELECT_PLACE_ADDRESS,
+  VIEW_PROFILE_ACTIVITY,
+  GET_SEARCH_DATA
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -24,8 +28,38 @@ import {
   makeGetGeolocationAction,
   makeViewActivityAction,
   makeDisplayPlacesAction,
-  makeDisplayActivitiesAction
+  makeDisplayActivitiesAction,
+  makeGetChatsAction,
+  makeSelectPlaceAddressAction,
+  makeViewProfileActivityAction,
+  makeGetSearchDataAction
 } from "./actions";
+
+describe("makeViewProfileActivityAction", () => {
+  it("should return a VIEW_PROFILE_ACTIVITY action", () => {
+    const profile = { username: "Teoxane" };
+    const profileActivities = [
+      {
+        name: "piscine",
+        description: "go piscine"
+      },
+      {
+        name: "foot",
+        description: "go foot"
+      }
+    ];
+
+    const expected = {
+      type: VIEW_PROFILE_ACTIVITY,
+      profile,
+      profileActivities
+    };
+
+    expect(makeViewProfileActivityAction(profileActivities, profile)).toEqual(
+      expected
+    );
+  });
+});
 
 describe("makeDisplayActivitiesAction", () => {
   it("should return a DISPLAY_PLACES action", () => {
@@ -154,7 +188,6 @@ describe("makeCloseMenuAction", () => {
     expect(makeCloseMenuAction()).toEqual(expected);
   });
 
-
   describe("makeViewProfileAction", () => {
     it("should return a VIEW_PROFILE action", () => {
       const profile = {
@@ -169,19 +202,69 @@ describe("makeCloseMenuAction", () => {
 
       expect(makeViewProfileAction(profile)).toEqual(expected);
     });
-  })
-
+  });
 });
-
 
 describe("makeGetGeoLocationAction", () => {
   it("should return a GET_GEOLOCATION", () => {
-    const coords = [51.123, 0.431]
+    const coords = [51.123, 0.431];
     const expected = {
       type: GET_GEOLOCATION,
       coords
     };
 
     expect(makeGetGeolocationAction(coords)).toEqual(expected);
+  });
+});
+
+describe("makeGetChatsAction", () => {
+  it("should return a GET_CHATS", () => {
+    const messages = [{ message: 1 }, { message: 2 }];
+    const chat = 42;
+    const expected = {
+      type: GET_CHATS,
+      messages,
+      chat
+    };
+
+    expect(makeGetChatsAction(chat, messages)).toEqual(expected);
+  });
+});
+
+describe("makeSelectPlaceAddressAction", () => {
+  it("should return a SELECT_PLACE_ADDRESS", () => {
+    const address = {
+      country: "japan",
+      city: "tokyo",
+      adress: "test",
+      lat: 12,
+      long: 12,
+      postcode: 51100
+    };
+    const expected = {
+      type: SELECT_PLACE_ADDRESS,
+      address
+    };
+
+    expect(makeSelectPlaceAddressAction(address)).toEqual(expected);
+  });
+});
+
+describe("makeGetSearchDataAction", () => {
+  it("should return a GET_SEARCH_DATA", () => {
+    const searchData = { country: "japan", city: "tokyo" };
+    const searchResults = [
+      { name: "Party", country: "japan", city: "tokyo" },
+      { name: "Party2", country: "France", city: "Reims" }
+    ];
+    const expected = {
+      type: GET_SEARCH_DATA,
+      searchData,
+      searchResults
+    };
+
+    expect(makeGetSearchDataAction(searchData, searchResults)).toEqual(
+      expected
+    );
   });
 });

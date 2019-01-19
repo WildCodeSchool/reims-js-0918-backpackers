@@ -12,9 +12,13 @@ import {
   DISPLAY_PLACES,
   DISPLAY_ACTIVITIES,
   VIEW_PLACE,
+  VIEW_PROFILE_ACTIVITY,
+  GET_CHATS,
   FETCH_ID_ACTIVITY,
   VIEW_FORM,
-  VIEW_UPLOAD
+  VIEW_UPLOAD,
+  SELECT_PLACE_ADDRESS,
+  GET_SEARCH_DATA
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
@@ -37,6 +41,12 @@ export const makeFetchPlacesAction = () => ({
 export const makeViewProfileAction = profile => ({
   type: VIEW_PROFILE,
   profile
+});
+
+export const makeViewProfileActivityAction = (profileActivities, profile) => ({
+  type: VIEW_PROFILE_ACTIVITY,
+  profile,
+  profileActivities
 });
 
 export const makeViewActivitiesAction = activities => ({
@@ -86,4 +96,21 @@ export const makeAViewUploadAction = () => ({
 export const makeGetGeolocationAction = coords => ({
   type: GET_GEOLOCATION,
   coords
+});
+
+export const makeGetChatsAction = (chat, messages) => ({
+  type: GET_CHATS,
+  chat,
+  messages
+});
+
+export const makeSelectPlaceAddressAction = address => ({
+  type: SELECT_PLACE_ADDRESS,
+  address
+});
+
+export const makeGetSearchDataAction = (searchData, searchResults) => ({
+  type: GET_SEARCH_DATA,
+  searchData,
+  searchResults
 });

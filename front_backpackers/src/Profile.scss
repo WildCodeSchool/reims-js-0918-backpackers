@@ -1,61 +1,71 @@
 @import "_styles.scss";
 
-a.previousPage{
+a.previousPage {
   background-color: $blueColor;
   border-radius: 10px;
   line-height: 25px;
 }
 
-.profilePicture button{
+.file-upload {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  .inputImage {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    font-size: 20px;
+  }
+  .inputFile {
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    z-index: 0;
+  }
+}
+
+.preview {
+  min-height: 100px;
+  max-height: 100px;
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.profilePicture button {
   width: 100px;
   height: 100px;
   padding: 0;
-  img{
-    width:100%;
+  img {
+    width: 100%;
     object-fit: cover;
   }
 }
 
-.userInfos{
-  h4{
+.userInfos {
+  h4 {
     color: $lightBlueColor;
   }
-  span{
+  span {
     font-weight: 100;
   }
-  p{
+  p {
     font-size: 0.7rem;
     font-weight: 400;
   }
 }
 
-.achievements{
-  background-color: $grayColor
+.achievements {
+  background-color: $grayColor;
 }
 
-.activityCreated p{
+.activityCreated p {
   font-style: italic;
   font-weight: 100;
   font-size: 0.8rem;
 }
 
-.badge{
+.badge {
   border-radius: 10px;
-  font-size: 0.9rem;  
+  font-size: 0.9rem;
   font-weight: 100;
-}
-
-h2{
-  font-size: 1rem;
-  font-weight: 800;
-  display: inline-block;
-  background-color: #FFF;
-  z-index: 5;
-}
-
-.activitiesTitleUnderline{  
-  z-index: 0;
-  margin-top: -15px;
-  height:1px;
-  border-bottom: 1px solid #000;
 }

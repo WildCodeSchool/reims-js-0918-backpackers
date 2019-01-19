@@ -7,13 +7,16 @@ const ActivityThumbnail = ({
   idActivity,
   city,
   name,
+  id_creator,
   descriptionActivity,
   descriptionPlace,
   pictureActivity,
   picturePlace,
   price,
+  profil,
   viewActivity,
-  date_diff
+  date_diff,
+  date
 }) => (
   <Row>
     <Col xs="12">
@@ -24,7 +27,7 @@ const ActivityThumbnail = ({
             src={
               pictureActivity
                 ? `http://localhost:3010/images/${pictureActivity}`
-                : picturePlace
+                : `http://localhost:3010/images/${picturePlace}`
             }
             alt="picture of activity"
             className="activityPicture"
@@ -34,23 +37,27 @@ const ActivityThumbnail = ({
           <Media heading className="mb-1 mx-1 d-flex justify-content-between">
             <span>
               <i className="fas fa-location-arrow pr-1" />
-              {city}
+              {name}
             </span>
             <span>
               <i className="fas fa-calendar pr-1" />
-              <span
-                className={
-                  "timeLeft" +
-                  (date_diff <= 2
-                    ? " text-danger"
-                    : date_diff < 7
-                    ? " text-warning"
-                    : " text-success")
-                }
-              >
-                {date_diff}
-              </span>{" "}
-              jours restants
+              {date_diff < 0 ? (
+                <span>{date.split("T")[0]}</span>
+              ) : (
+                <span
+                  className={
+                    "timeLeft" +
+                    (date_diff <= 2
+                      ? " text-danger"
+                      : date_diff < 7
+                      ? " text-warning"
+                      : " text-success")
+                  }
+                >
+                  {date_diff}
+                  jours restants
+                </span>
+              )}
             </span>
           </Media>
           {descriptionActivity ? descriptionActivity : descriptionPlace}

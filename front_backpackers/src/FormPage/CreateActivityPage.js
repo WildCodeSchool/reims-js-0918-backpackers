@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Button } from "reactstrap";
 import axios, { post } from "axios";
 import ActivityFormContainer from "./ActivityForm";
 
@@ -10,13 +9,6 @@ class CreateActivityPage extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  onFormSubmit(e) {
-    e.preventDefault(); // Stop form submit
-
-    this.fileUpload(this.file).then(res => {
-      this.props.history.push("/");
-    });
-  }
   onChange(e) {
     this.file = e.target.files[0];
   }
@@ -37,32 +29,46 @@ class CreateActivityPage extends Component {
   }
 
   submit = activities => {
-    const activity = { ...activities, id_place: this.props.match.params.id };
-    console.log(activity);
+    const activity = {
+      ...activities,
+      date: activities.date.split("T")[0],
+      id_place: this.props.match.params.id
+    };
     JSON.stringify(activity);
+    const formData = new FormData();
+    formData.append("monfichier", this.file);
     axios
-      .post("http://localhost:3010/activities", activity, {
+      .post("/activities", activity, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
       .then(response => {
-        this.props.idCurrent(response.data);
-        this.props.viewUpload();
+        axios.post("/activities/upload", formData, {
+          headers: {
+            "content-type": "multipart/form-data"
+          }
+        });
+        axios.post(
+          `/participate/${response.data.insertId}`,
+          { idChat: response.data.id },
+          {
+            headers: {
+              accept: "application/json",
+              authorization:
+                "Bearer " + localStorage.getItem("BackpackersToken")
+            }
+          }
+        );
+        this.props.history.push(`/activity/${response.data.insertId}`);
       });
   };
   render() {
     return (
-      <div>
-        {!this.props.view && <ActivityFormContainer onSubmit={this.submit} />}
-        {this.props.view && (
-          <form onSubmit={e => this.onFormSubmit(e)}>
-            <h3>File Upload</h3>
-            <input type="file" onChange={this.onChange} />
-            <Button type="submit">Upload</Button>
-          </form>
-        )}
-      </div>
+      <ActivityFormContainer
+        uploadFile={this.onChange}
+        onSubmit={this.submit}
+      />
     );
   }
 }

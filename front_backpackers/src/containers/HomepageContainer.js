@@ -23,7 +23,8 @@ const mapStateToProps = state => ({
   map: state.map,
   activity: state.activity,
   profile: state.profile,
-  displayHomePage: state.displayHomePage
+  displayHomePage: state.displayHomePage,
+  activityCapacity: state.participants
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -38,7 +39,7 @@ const mapDispatchToProps = dispatch => ({
   getCoords: coords => dispatch(makeGetGeolocationAction(coords)),
   viewProfile: profile => dispatch(makeViewProfileAction(profile)),
   viewPlace: place => dispatch(makeViewPlaceAction(place)),
-  viewActivity: activity => dispatch(makeViewActivityAction(activity)),
+  viewActivity: activity => dispatch(makeViewActivityAction(activity))
 });
 
 export default connect(
