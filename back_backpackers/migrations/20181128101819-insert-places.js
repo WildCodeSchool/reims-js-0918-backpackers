@@ -39,7 +39,7 @@ exports.up = function(db, callback) {
       "35.658611",
       "139.745556",
       "Culturel",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/TaroTokyo20110213-TokyoTower-01.jpg/270px-TaroTokyo20110213-TokyoTower-01.jpg",
+      "default.png",
       "La tour Eiffel Japonaise ! Une géante structure rouge et blanche. Endroit incontournable à visiter à Tokyo!",
       "tél : +81 3-3433-5111"
     ],

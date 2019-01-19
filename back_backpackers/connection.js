@@ -71,7 +71,6 @@ app.post("/places", (req, res) => {
       console.log(err);
       res.status(500).send("Failed to add place");
     } else {
-      console.log(results);
       res.json(results.insertId);
     }
   });
@@ -135,7 +134,6 @@ app.get("/search", (req, res) => {
   dateEnd ? searchArray.push(`eventDate<="${dateEnd}"`) : "";
 
   const searchQuery = searchArray.join(" AND ");
-  console.log(searchQuery);
 
   connection.query(
     `SELECT *
@@ -240,7 +238,6 @@ app.post("/activities/upload/:id", upload.single("monfichier"), (req, res) => {
             if (err) {
               console.log("err", err);
             } else {
-              console.log(req.file.originalname);
               res.json(results);
             }
           }
@@ -268,7 +265,6 @@ app.post(
               roomId: req.body.idChat,
               userIds: [req.user.username]
             })
-            .then(() => console.log("added"))
             .catch(error => console.error(error));
           res.json(idActivity);
         }
@@ -295,7 +291,6 @@ app.post(
               roomId: req.body.idChat,
               userIds: [req.user.id]
             })
-            .then(() => console.log("removed"))
             .catch(err => console.error(err));
           res.sendStatus(200);
         }
@@ -345,7 +340,6 @@ app.get("/activity/:id/participants", (req, res) => {
       if (err) {
         res.status(500).send("Erreur lors de la récupération des pseudos");
       } else {
-        console.log(results);
         res.json(results);
       }
     }
@@ -385,7 +379,6 @@ app.get("/place/:id", (req, res) => {
               res.status(500).send("Error retrieving activities of this place");
             } else {
               const place = { ...results, activities: actiResults };
-              console.log("test");
               res.json(place);
             }
           }
@@ -399,7 +392,6 @@ app.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user.id);
     connection.query(
       // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
 
