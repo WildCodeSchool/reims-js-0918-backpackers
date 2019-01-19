@@ -37,7 +37,7 @@ class SearchActivityForm extends Component {
     this.addCount = this.addCount.bind(this);
     this.removeCount = this.removeCount.bind(this);
     this.state = {
-      count: 1,
+      count: this.props.placeNumberValue ? this.props.placeNumberValue : 1,
       searchCollapse: {
         collapseCategories: true,
         collapseParticipants: false,
@@ -322,10 +322,10 @@ class SearchActivityForm extends Component {
           </Row>
           <Collapse isOpen={this.props.collapseDates}>
             <Row className="my-2">
-              <Col xs={{ size: 5, offset: 1 }}>
+              <Col xs="5">
                 <Badge className="badgeDate">A partir du ...</Badge>
               </Col>
-              <Col xs="5">
+              <Col xs="7">
                 <Field
                   component={renderField}
                   className="search-bar"
@@ -335,10 +335,10 @@ class SearchActivityForm extends Component {
               </Col>
             </Row>
             <Row className="my-2">
-              <Col xs={{ size: 5, offset: 1 }}>
+              <Col xs="5">
                 <Badge className="badgeDate">Jusqu'au</Badge>
               </Col>
-              <Col xs="5">
+              <Col xs="7">
                 <Field
                   component={renderField}
                   className="search-bar"
@@ -435,7 +435,16 @@ SearchActivityForm = reduxForm({
 })(SearchActivityForm);
 
 SearchActivityForm = connect(state => ({
-  initialValues: state.search.searchData ? state.search.searchData : {},
+  initialValues: state.search.searchData.placeNumber
+    ? state.search.searchData
+    : {
+        dateStart: new Date()
+          .toLocaleDateString()
+          .split("/")
+          .reverse()
+          .join("-"),
+        placeNumber: 1
+      },
   enableReinitialize: true
 }))(SearchActivityForm);
 
