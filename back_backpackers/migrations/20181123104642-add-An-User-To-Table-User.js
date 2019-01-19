@@ -46,7 +46,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.removeIndex("users", 1, callback);
+  return null;
 };
 
 exports._meta = {
