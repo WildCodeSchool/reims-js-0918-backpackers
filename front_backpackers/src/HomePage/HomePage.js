@@ -181,10 +181,15 @@ class HomePage extends Component {
                   })}
                   onClick={() => {
                     this.toggleMap("2");
-                    this.props.getCoords([
-                      this.props.coords.latitude,
-                      this.props.coords.longitude
-                    ]);
+
+                    this.props.getCoords(
+                      this.props.isGeolocationEnabled
+                        ? [
+                            this.props.coords.latitude,
+                            this.props.coords.longitude
+                          ]
+                        : [48.861633, 2.332856]
+                    );
                   }}
                 >
                   <i className="text-white fas fa-map-marked-alt" />

@@ -28,27 +28,31 @@ class Maps extends Component {
     super(props);
     this.state = {
       markerInfos: {},
-      markers: [{ key: "myPosition", position: this.props.map }]
+      markers: [
+        { key: "myPosition", position: this.props.map ? this.props.maps : "" }
+      ]
     };
     this.getMarkerInfos = this.getMarkerInfos.bind(this);
     this.resetMarkerInfos = this.resetMarkerInfos.bind(this);
   }
 
   componentDidMount() {
-    const map = this.leafletMap.leafletElement;
+    if (this.props.isGeolocationEnabled) {
+      const map = this.leafletMap.leafletElement;
 
-    var myIcon = L.icon({
-      className: "myMarker",
-      iconUrl: `http://localhost:3010/images/${
-        this.props.profile[0].picture
-          ? this.props.profile[0].picture
-          : "default.png"
-      }`,
-      iconSize: [30, 30],
-      shadowUrl: "/images/marker_shadow.png",
-      shadowSize: [60, 50]
-    });
-    L.marker(this.props.map, { icon: myIcon }).addTo(map);
+      var myIcon = L.icon({
+        className: "myMarker",
+        iconUrl: `http://localhost:3010/images/${
+          this.props.profile[0].picture
+            ? this.props.profile[0].picture
+            : "default.png"
+        }`,
+        iconSize: [30, 30],
+        shadowUrl: "/images/marker_shadow.png",
+        shadowSize: [60, 50]
+      });
+      L.marker(this.props.map, { icon: myIcon }).addTo(map);
+    }
   }
 
   getMarkerInfos(content) {
