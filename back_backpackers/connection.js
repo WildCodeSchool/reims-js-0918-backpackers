@@ -77,15 +77,22 @@ app.post("/places", (req, res) => {
 });
 
 app.post("/places/upload/:id", upload.single("monfichier"), (req, res) => {
+  currentDate = new Date()
+    .toLocaleString()
+    .split(":")
+    .join("")
+    .split(" ")
+    .join("-");
   fs.rename(
     req.file.path,
-    "public/images/" + req.file.originalname,
+    "public/images/" + currentDate + req.file.originalname,
     (err, results) => {
       if (err) {
         res.status(500).send(err);
       } else {
         connection.query(
-          `UPDATE places SET picture = "${req.file.originalname}" WHERE id=?`,
+          `UPDATE places SET picture = "${currentDate +
+            req.file.originalname}" WHERE id=?`,
           req.params.id,
           err => {
             if (err) {
@@ -222,17 +229,22 @@ app.post(
 );
 
 app.post("/activities/upload/:id", upload.single("monfichier"), (req, res) => {
+  currentDate = new Date()
+    .toLocaleString()
+    .split(":")
+    .join("")
+    .split(" ")
+    .join("-");
   fs.rename(
     req.file.path,
-    "public/images/" + req.file.originalname,
+    "public/images/" + currentDate + req.file.originalname,
     (err, results) => {
       if (err) {
         res.status(500).send(err);
       } else {
         connection.query(
-          `UPDATE activities SET picture = "${
-            req.file.originalname
-          }" WHERE idActivity= ?`,
+          `UPDATE activities SET picture = "${currentDate +
+            req.file.originalname}" WHERE idActivity= ?`,
           req.params.id,
           err => {
             if (err) {
@@ -533,17 +545,24 @@ app.post(
   "/profile/:username/upload",
   upload.single("monfichier"),
   (req, res) => {
+    currentDate = new Date()
+      .toLocaleString()
+      .split(":")
+      .join("")
+      .split(" ")
+      .join("-");
     fs.rename(
       req.file.path,
-      "public/images/" + req.file.originalname,
+      "public/images/" + currentDate + req.file.originalname,
       (err, results) => {
         if (err) {
           res.status(500).send(err);
         } else {
           connection.query(
-            `UPDATE users SET picture = "${
-              req.file.originalname
-            }" WHERE username = "${req.params.username}"`,
+            `UPDATE users SET picture = "${currentDate +
+              req.file.originalname}" WHERE username = "${
+              req.params.username
+            }"`,
             err => {
               if (err) {
                 console.log(err);
