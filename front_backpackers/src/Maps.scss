@@ -1,3 +1,6 @@
+@import "~react-leaflet-markercluster/dist/styles.min.css";
+@import url("~react-leaflet-markercluster/dist/styles.min.css");
+
 .leaflet-container {
   height: calc(100vh - 45px);
   margin-bottom: -5px;
@@ -5,17 +8,21 @@
   z-index: 0;
 }
 
-.myMarker{
+.myMarker {
   z-index: 1000 !important;
 }
 
-.mapPopup{
+.marker-cluster div {
+  z-index: 1100;
+}
+
+.mapPopup {
   display: block;
   position: fixed;
   bottom: 0px;
-  z-index:100;
-  width:100%;
-  .media{
+  z-index: 100;
+  width: 100%;
+  .media {
     margin: 0px;
   }
 }
