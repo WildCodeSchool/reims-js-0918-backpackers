@@ -16,7 +16,7 @@ class CreateActivityPage extends Component {
   submit = activities => {
     const activity = {
       ...activities,
-      date: activities.date.split("T")[0],
+      eventDate: activities.eventDate.split("T")[0],
       id_place: this.props.match.params.id
     };
     JSON.stringify(activity);
