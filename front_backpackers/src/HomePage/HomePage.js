@@ -204,10 +204,10 @@ class HomePage extends Component {
                     .filter(
                       place =>
                         Math.abs(place.latitude - this.props.coords.latitude) <
-                          0.02 &&
+                          0.1 &&
                         Math.abs(
                           place.longitude - this.props.coords.longitude
-                        ) < 0.02
+                        ) < 0.1
                     )
                     .sort(
                       (a, b) =>
@@ -245,7 +245,7 @@ class HomePage extends Component {
                 onClick={() => this.props.getCoords([1, 1])}
                 className="w-50 listPostBtn text-white text-center"
               >
-                <i className="fas fa-pencil-alt" /> Publier{" "}
+                <i className="fas fa-pencil-alt" /> Publier un lieu
               </Link>
             </Row>
             <Row>

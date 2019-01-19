@@ -14,33 +14,38 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function(db, calback) {
-  db.createTable("participation", {
-    idParticipation: { type: "int", primaryKey: true, autoIncrement: true },
-    idActivity: {
-      type: "int",
-      notNull: true,
-      foreignKey: {
-        name: "activity_id_fk",
-        table: "activities",
-        rules: {
-          onDelete: "CASCADE"
-        },
-        mapping: "id"
-      }
-    },
-    idUser: {
-      type: "int",
-      notNull: true,
-      foreignKey: {
-        name: "user_id_fk",
-        table: "users",
-        rules: {
-          onDelete: "CASCADE"
+exports.up = function(db, callback) {
+  db.createTable(
+    "participation",
+    {
+      idParticipation: { type: "int", primaryKey: true, autoIncrement: true },
+      idActivity: {
+        type: "int",
+        notNull: true,
+        foreignKey: {
+          name: "activity_id_fk",
+          table: "activities",
+          rules: {
+            onDelete: "CASCADE"
+          },
+          mapping: "idActivity"
+        }
+      },
+      idUser: {
+        type: "int",
+        notNull: true,
+        foreignKey: {
+          name: "user_id_fk",
+          table: "users",
+          rules: {
+            onDelete: "CASCADE"
+          },
+          mapping: "id"
         }
       }
-    }
-  });
+    },
+    callback
+  );
 };
 
 exports.down = function(db, callback) {

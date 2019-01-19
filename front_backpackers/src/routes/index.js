@@ -3,7 +3,6 @@ import { Route, Switch, Redirect } from "react-router";
 import { Container } from "reactstrap";
 import HomePageContainer from "../containers/HomepageContainer";
 import LoginPage from "../LoginPage/LoginPage";
-import UploadContainer from "../containers/UploadContainer";
 import ProfileContainer from "../containers/ProfileContainer";
 import ActivityContainer from "../containers/ActivityContainer";
 import SignUpPage from "../SignUpPage/SignUpPage";
@@ -21,7 +20,10 @@ class Routes extends Component {
         {localStorage.getItem("BackpackersToken") ? (
           <Switch>
             <Route path="/login" component={LoginPage} />
-            <Route path="/place/:id/newactivity" component={UploadContainer} />
+            <Route
+              path="/place/:id/newactivity"
+              component={CreateActivityPage}
+            />
             <Route path="/signup" component={SignUpPage} />
             <Route exact path="/" component={HomePageContainer} />
             <Route path="/activity/:id" component={ActivityContainer} />

@@ -30,9 +30,7 @@ const ActivityCaroussel = props => (
             <img
               className="rounded-circle"
               src={`http://localhost:3010/images/${
-                props.activity.picture
-                  ? props.activity.picture
-                  : "https://via.placeholder.com/75"
+                props.profile.picture ? props.profile.picture : "default.png"
               }`}
               alt="Createur"
             />

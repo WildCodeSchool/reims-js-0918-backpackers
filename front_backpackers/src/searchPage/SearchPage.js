@@ -17,10 +17,7 @@ class SearchPage extends Component {
         collapseAdvanced: true
       }
     };
-    this.toggleCategories = this.toggleCategories.bind(this);
-    this.toggleParticipants = this.toggleParticipants.bind(this);
-    this.toggleDates = this.toggleDates.bind(this);
-    this.toggleAdvanced = this.toggleAdvanced.bind(this);
+    this.toggleCollapse = this.toggleCollapse.bind(this);
     this.getSearchView = this.getSearchView.bind(this);
     this.emptyForm = this.emptyForm.bind(this);
   }
@@ -28,38 +25,11 @@ class SearchPage extends Component {
     this.setState({ searchView: "searchForm" });
   }
 
-  toggleCategories() {
+  toggleCollapse(formPart) {
     this.setState({
       searchCollapse: {
         ...this.state.searchCollapse,
-        collapseCategories: !this.state.searchCollapse.collapseCategories
-      }
-    });
-  }
-
-  toggleParticipants() {
-    this.setState({
-      searchCollapse: {
-        ...this.state.searchCollapse,
-        collapseParticipants: !this.state.searchCollapse.collapseParticipants
-      }
-    });
-  }
-
-  toggleDates() {
-    this.setState({
-      searchCollapse: {
-        ...this.state.searchCollapse,
-        collapseDates: !this.state.searchCollapse.collapseDates
-      }
-    });
-  }
-
-  toggleAdvanced() {
-    this.setState({
-      searchCollapse: {
-        ...this.state.searchCollapse,
-        collapseAdvanced: !this.state.searchCollapse.collapseAdvanced
+        [formPart]: !this.state.searchCollapse[formPart]
       }
     });
   }
@@ -132,16 +102,8 @@ class SearchPage extends Component {
           <SearchActivityForm
             emptyForm={this.emptyForm}
             onSubmit={this.submit}
-            collapseCategories={this.state.searchCollapse.collapseCategories}
-            collapseDates={this.state.searchCollapse.collapseDates}
-            collapseParticipants={
-              this.state.searchCollapse.collapseParticipants
-            }
-            collapseAdvanced={this.state.searchCollapse.collapseAdvanced}
-            toggleCategories={this.toggleCategories}
-            toggleDates={this.toggleDates}
-            toggleParticipants={this.toggleParticipants}
-            toggleAdvanced={this.toggleAdvanced}
+            toggleCollapse={this.toggleCollapse}
+            searchCollapse={this.state.searchCollapse}
           />
         ) : this.props.search.searchResults.length > 0 ? (
           this.props.search.searchResults.map(activity => (
