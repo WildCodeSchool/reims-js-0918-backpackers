@@ -20,6 +20,7 @@ class CreateActivityPage extends Component {
       id_place: this.props.match.params.id
     };
     JSON.stringify(activity);
+    console.log(activity);
     const formData = new FormData();
     formData.append("monfichier", this.file);
     axios
@@ -29,7 +30,6 @@ class CreateActivityPage extends Component {
         }
       })
       .then(response => {
-        console.log(response.data);
         axios.post(`/activities/upload/${response.data.insertId}`, formData, {
           headers: {
             "content-type": "multipart/form-data"

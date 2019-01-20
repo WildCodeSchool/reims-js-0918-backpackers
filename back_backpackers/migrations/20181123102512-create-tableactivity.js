@@ -50,7 +50,8 @@ exports.up = function(db, callback) {
         }
       },
       contact: { type: "text" },
-      eventDate: { type: "date" }
+      eventDate: { type: "date" },
+      eventTime: { type: "text", length: 10 }
     },
     callback
   );

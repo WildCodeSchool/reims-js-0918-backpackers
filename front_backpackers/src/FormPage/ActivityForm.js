@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
+import { Input } from "reactstrap";
 import "./FormPage.scss";
 
 const validate = values => {
@@ -17,7 +18,7 @@ const validate = values => {
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
-    <input
+    <Input
       {...input}
       placeholder={label}
       type={type}
@@ -86,8 +87,15 @@ const ActivityForm = props => {
               id="eventDate"
               name="eventDate"
               component={renderField}
-              type="datetime-local"
+              type="date"
               label="date"
+            />
+            <Field
+              id="eventTime"
+              name="eventTime"
+              component={renderField}
+              type="time"
+              label="time"
             />
             <Field
               id="price"
