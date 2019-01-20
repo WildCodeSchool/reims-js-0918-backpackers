@@ -84,7 +84,6 @@ const ActivityThumbnail = ({
 );
 
 ActivityThumbnail.propTypes = {
-  city: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   // description: PropTypes.string.isRequired,
   price: PropTypes.number

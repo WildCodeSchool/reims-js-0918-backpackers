@@ -450,9 +450,10 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
+      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, eventDate FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
       req.params.username,
       (err, results) => {
+        console.log(results);
         if (err) {
           res.status(500).send("Error retrieving profile");
         } else {
