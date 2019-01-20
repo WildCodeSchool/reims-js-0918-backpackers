@@ -83,8 +83,8 @@ const ActivityForm = props => {
               label="participants"
             />
             <Field
-              id="date"
-              name="date"
+              id="eventDate"
+              name="eventDate"
               component={renderField}
               type="datetime-local"
               label="date"

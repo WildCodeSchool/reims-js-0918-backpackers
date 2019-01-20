@@ -71,22 +71,28 @@ app.post("/places", (req, res) => {
       console.log(err);
       res.status(500).send("Failed to add place");
     } else {
-      console.log(results);
       res.json(results.insertId);
     }
   });
 });
 
 app.post("/places/upload/:id", upload.single("monfichier"), (req, res) => {
+  currentDate = new Date()
+    .toLocaleString()
+    .split(":")
+    .join("")
+    .split(" ")
+    .join("-");
   fs.rename(
     req.file.path,
-    "public/images/" + req.file.originalname,
+    "public/images/" + currentDate + req.file.originalname,
     (err, results) => {
       if (err) {
         res.status(500).send(err);
       } else {
         connection.query(
-          `UPDATE places SET picture = "${req.file.originalname}" WHERE id=?`,
+          `UPDATE places SET picture = "${currentDate +
+            req.file.originalname}" WHERE id=?`,
           req.params.id,
           err => {
             if (err) {
@@ -135,7 +141,6 @@ app.get("/search", (req, res) => {
   dateEnd ? searchArray.push(`eventDate<="${dateEnd}"`) : "";
 
   const searchQuery = searchArray.join(" AND ");
-  console.log(searchQuery);
 
   connection.query(
     `SELECT *
@@ -167,7 +172,7 @@ app.get("/activities", (req, res) => {
     `SELECT activities.idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
     (activities.description) AS descriptionActivity, id_place, 
-    activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
+    activities.contact, eventDate, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
     FROM activities
@@ -175,34 +180,12 @@ app.get("/activities", (req, res) => {
     ON activities.id_place = places.id 
     LEFT JOIN participation 
     ON activities.idActivity = participation.idActivity
-    WHERE DATEDIFF(date,CURRENT_TIMESTAMP)>=0
+    WHERE DATEDIFF(eventDate,CURRENT_TIMESTAMP)>=0
     GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving activities");
       } else {
-        res.json(results);
-      }
-    }
-  );
-});
-
-app.get("/activities/search", (req, res) => {
-  const name =
-    req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
-  const creator = req.query.creator === undefined ? "" : req.query.creator;
-  connection.query(
-    creator === ""
-      ? `SELECT * FROM activities WHERE name ="${name}"`
-      : name === ""
-      ? `SELECT * FROM activities WHERE creator ="${creator}"`
-      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
-    (err, results) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("Error retrieving activities searched");
-      } else {
-        console.log(results);
         res.json(results);
       }
     }
@@ -246,23 +229,27 @@ app.post(
 );
 
 app.post("/activities/upload/:id", upload.single("monfichier"), (req, res) => {
+  currentDate = new Date()
+    .toLocaleString()
+    .split(":")
+    .join("")
+    .split(" ")
+    .join("-");
   fs.rename(
     req.file.path,
-    "public/images/" + req.file.originalname,
+    "public/images/" + currentDate + req.file.originalname,
     (err, results) => {
       if (err) {
         res.status(500).send(err);
       } else {
         connection.query(
-          `UPDATE activities SET picture = "${
-            req.file.originalname
-          }" WHERE idActivity= ?`,
+          `UPDATE activities SET picture = "${currentDate +
+            req.file.originalname}" WHERE idActivity= ?`,
           req.params.id,
           err => {
             if (err) {
               console.log("err", err);
             } else {
-              console.log(req.file.originalname);
               res.json(results);
             }
           }
@@ -290,7 +277,6 @@ app.post(
               roomId: req.body.idChat,
               userIds: [req.user.username]
             })
-            .then(() => console.log("added"))
             .catch(error => console.error(error));
           res.json(idActivity);
         }
@@ -317,7 +303,6 @@ app.post(
               roomId: req.body.idChat,
               userIds: [req.user.id]
             })
-            .then(() => console.log("removed"))
             .catch(err => console.error(err));
           res.sendStatus(200);
         }
@@ -332,7 +317,7 @@ app.get("/activity/:id", (req, res) => {
     `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
-            activities.contact, date, users.id, country, city,DATEDIFF(date, CURRENT_TIMESTAMP) as date_diff,
+            activities.contact, eventDate, users.id, country, city,DATEDIFF(eventDate, CURRENT_TIMESTAMP) as date_diff,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
             (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username
     FROM activities 
@@ -367,7 +352,6 @@ app.get("/activity/:id/participants", (req, res) => {
       if (err) {
         res.status(500).send("Erreur lors de la récupération des pseudos");
       } else {
-        console.log(results);
         res.json(results);
       }
     }
@@ -391,7 +375,7 @@ app.get("/place/:id", (req, res) => {
           `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
-            activities.contact, date, DATEDIFF(date, CURRENT_TIMESTAMP) as date_diff, id, country, city,
+            activities.contact, eventDate, DATEDIFF(eventDate, CURRENT_TIMESTAMP) as date_diff, id, country, city,
             address, type, (places.description) AS descriptionPlace,
             (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
           FROM activities
@@ -399,7 +383,7 @@ app.get("/place/:id", (req, res) => {
           ON activities.id_place = places.id
           LEFT JOIN participation
           ON activities.idActivity = participation.idActivity
-          WHERE id_place = ? AND date >= CURRENT_TIMESTAMP
+          WHERE id_place = ? AND eventDate >= CURRENT_TIMESTAMP
           GROUP BY activities.idActivity`,
           idPlace,
           (err, actiResults) => {
@@ -407,7 +391,6 @@ app.get("/place/:id", (req, res) => {
               res.status(500).send("Error retrieving activities of this place");
             } else {
               const place = { ...results, activities: actiResults };
-              console.log("test");
               res.json(place);
             }
           }
@@ -421,7 +404,6 @@ app.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user.id);
     connection.query(
       // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
 
@@ -468,9 +450,10 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
+      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, eventDate FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
       req.params.username,
       (err, results) => {
+        console.log(results);
         if (err) {
           res.status(500).send("Error retrieving profile");
         } else {
@@ -489,7 +472,7 @@ app.get(
       `SELECT participation.idActivity, activities.idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
     (activities.description) AS descriptionActivity, id_place, 
-    activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, places.id, country, city, 
+    activities.contact, eventDate, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, places.id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace
     FROM participation 
@@ -563,17 +546,24 @@ app.post(
   "/profile/:username/upload",
   upload.single("monfichier"),
   (req, res) => {
+    currentDate = new Date()
+      .toLocaleString()
+      .split(":")
+      .join("")
+      .split(" ")
+      .join("-");
     fs.rename(
       req.file.path,
-      "public/images/" + req.file.originalname,
+      "public/images/" + currentDate + req.file.originalname,
       (err, results) => {
         if (err) {
           res.status(500).send(err);
         } else {
           connection.query(
-            `UPDATE users SET picture = "${
-              req.file.originalname
-            }" WHERE username = "${req.params.username}"`,
+            `UPDATE users SET picture = "${currentDate +
+              req.file.originalname}" WHERE username = "${
+              req.params.username
+            }"`,
             err => {
               if (err) {
                 console.log(err);

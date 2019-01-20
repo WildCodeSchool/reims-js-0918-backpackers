@@ -45,10 +45,10 @@ class CreatePlacePage extends Component {
         getAddress={this.props.getAddress}
         position={
           !this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled
-            ? []
+            ? [48.861633, 2.332856]
             : this.props.coords
             ? [this.props.coords.latitude, this.props.coords.longitude]
-            : []
+            : [48.861633, 2.332856]
         }
       />
     );
