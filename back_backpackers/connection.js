@@ -148,7 +148,7 @@ app.get("/search", (req, res) => {
         ON activities.idActivity = participation.idActivity
         GROUP BY activities.idActivity
     ) AS searchQuery
-    WHERE date_diff>0 AND ${searchQuery}`,
+    WHERE ${searchQuery}`,
     (err, results) => {
       if (err) {
         console.log(err);

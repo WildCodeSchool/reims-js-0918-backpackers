@@ -24,6 +24,9 @@ h2.selected {
   border-radius: 15px;
   height: 30px;
   margin-left: 2px;
+  &[type="date"] {
+    text-align: center;
+  }
 }
 
 .categoriesSearch {
