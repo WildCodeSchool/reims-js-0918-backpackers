@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Map, TileLayer, Marker } from "react-leaflet";
 import { Row } from "reactstrap";
 
@@ -8,20 +8,6 @@ import PlaceThumbnail from "./HomePage/PlaceThumbnail";
 
 import "./Maps.scss";
 require("react-leaflet-markercluster/dist/styles.min.css");
-
-const MyPopupMarker = ({ content, position, getMarkerInfos }) =>
-  content ? (
-    <Marker onClick={() => getMarkerInfos(content)} position={position} />
-  ) : (
-    <Marker position={position} />
-  );
-
-const MyMarkersList = ({ markers, getMarkerInfos }) => {
-  const items = markers.map(({ key, ...props }) => (
-    <MyPopupMarker key={key} {...props} getMarkerInfos={getMarkerInfos} />
-  ));
-  return <Fragment>{items}</Fragment>;
-};
 
 class Maps extends Component {
   constructor(props) {
@@ -67,19 +53,26 @@ class Maps extends Component {
   }
 
   render() {
-    const markers = this.props.places
-      .filter(place =>
-        this.props.map.filter === "Pas de filtre"
-          ? place
-          : place.type === this.props.map.filter
-      )
-      .map(place => ({
-        key: place.id,
-        position: [place.latitude, place.longitude],
-        content: place
-      }));
-
-    console.log(markers.map(marker => marker.content.type));
+    const typePicture = type =>
+      `/images/map_${
+        type === "Apéritifs"
+          ? "aperitif"
+          : type === "Aquatique"
+          ? "aquatique"
+          : type === "Aventure"
+          ? "aventure"
+          : type === "Bien-être"
+          ? "bien-etre"
+          : type === "Culturel"
+          ? "culturel"
+          : type === "Déplacements"
+          ? "deplacement"
+          : type === "Enfants"
+          ? "enfants"
+          : type === "Nocturne"
+          ? "nocturne"
+          : "restauration"
+      }.png`;
 
     return (
       <Row>
@@ -98,10 +91,27 @@ class Maps extends Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <MarkerClusterGroup>
-            <MyMarkersList
-              markers={markers}
-              getMarkerInfos={this.getMarkerInfos}
-            />
+            {this.props.places
+              .filter(place =>
+                this.props.map.filter === "Pas de filtre"
+                  ? place
+                  : place.type === this.props.map.filter
+              )
+              .map(place => (
+                <Marker
+                  onClick={() => this.getMarkerInfos(place)}
+                  key={place.id}
+                  position={[place.latitude, place.longitude]}
+                  icon={
+                    new L.Icon({
+                      iconUrl: typePicture(place.type),
+                      iconSize: new L.Point(34, 53),
+                      shadowUrl: "/images/map_shadow.png",
+                      shadowSize: [34, 60]
+                    })
+                  }
+                />
+              ))}
           </MarkerClusterGroup>
         </Map>
         {this.state.markerInfos.name ? (
