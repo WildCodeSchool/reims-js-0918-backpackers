@@ -14,7 +14,8 @@ import {
   GET_CHATS,
   SELECT_PLACE_ADDRESS,
   VIEW_PROFILE_ACTIVITY,
-  GET_SEARCH_DATA
+  GET_SEARCH_DATA,
+  GET_MAP_FILTER
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -32,7 +33,8 @@ import {
   makeGetChatsAction,
   makeSelectPlaceAddressAction,
   makeViewProfileActivityAction,
-  makeGetSearchDataAction
+  makeGetSearchDataAction,
+  makeGetMapFilterAction
 } from "./actions";
 
 describe("makeViewProfileActivityAction", () => {
@@ -214,6 +216,18 @@ describe("makeGetGeoLocationAction", () => {
     };
 
     expect(makeGetGeolocationAction(coords)).toEqual(expected);
+  });
+});
+
+describe("makeGetMapFilterAction", () => {
+  it("should return a GET_MAP_FILTER", () => {
+    const filter = "bien-etre";
+    const expected = {
+      type: GET_MAP_FILTER,
+      filter
+    };
+
+    expect(makeGetMapFilterAction(filter)).toEqual(expected);
   });
 });
 

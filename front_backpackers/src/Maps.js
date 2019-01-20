@@ -29,7 +29,10 @@ class Maps extends Component {
     this.state = {
       markerInfos: {},
       markers: [
-        { key: "myPosition", position: this.props.map ? this.props.maps : "" }
+        {
+          key: "myPosition",
+          position: this.props.map.coords ? this.props.map.coords : ""
+        }
       ]
     };
     this.getMarkerInfos = this.getMarkerInfos.bind(this);
@@ -40,7 +43,7 @@ class Maps extends Component {
     if (this.props.isGeolocated && localStorage.getItem("BackpackersToken")) {
       const map = this.leafletMap.leafletElement;
 
-      var myIcon = L.icon({
+      const myIcon = L.icon({
         className: "myMarker",
         iconUrl: `http://localhost:3010/images/${
           this.props.profile[0].picture
@@ -51,7 +54,7 @@ class Maps extends Component {
         shadowUrl: "/images/marker_shadow.png",
         shadowSize: [60, 50]
       });
-      L.marker(this.props.map, { icon: myIcon }).addTo(map);
+      L.marker(this.props.map.coords, { icon: myIcon }).addTo(map);
     }
   }
 
@@ -77,7 +80,7 @@ class Maps extends Component {
             this.leafletMap = m;
           }}
           maxBounds={[[-90, -180], [90, 180]]}
-          center={this.props.map}
+          center={this.props.map.coords}
           zoom="15"
           maxZoom="20"
           onClick={() => this.resetMarkerInfos()}

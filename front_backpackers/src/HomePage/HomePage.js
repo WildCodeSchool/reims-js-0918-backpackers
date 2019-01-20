@@ -151,14 +151,23 @@ class HomePage extends Component {
             />
           </Col>
           <Col xs="8">
-            <DropdownButton
-              className="w-100"
-              view={this.props.displayHomePage}
-              dropdownOpen={this.state.dropdownOpen}
-              toggle={this.toggle}
-              changeViewToActivities={this.props.displayActivities}
-              changeViewToPlaces={this.props.displayPlaces}
-            />
+            {this.state.activeTab === "1" ? (
+              <DropdownButton
+                className="w-100"
+                view={this.props.displayHomePage}
+                dropdownOpen={this.state.dropdownOpen}
+                toggle={this.toggle}
+                changeViewToActivities={this.props.displayActivities}
+                changeViewToPlaces={this.props.displayPlaces}
+              />
+            ) : (
+              <DropdownButton
+                className="w-100"
+                view="maps"
+                dropdownOpen={this.state.dropdownOpen}
+                toggle={this.toggle}
+              />
+            )}
           </Col>
           <Col xs="2">
             <Nav tabs>

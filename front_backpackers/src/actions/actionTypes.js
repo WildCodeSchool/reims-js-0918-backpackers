@@ -18,6 +18,7 @@ export const VIEW_UPLOAD = "VIEW_UPLOAD";
 
 export const GET_CHATS = "GET_CHATS";
 export const GET_GEOLOCATION = "GET_GEOLOCATION";
+export const GET_MAP_FILTER = "GET_MAP_FILTER";
 
 export const SELECT_PLACE_ADDRESS = "SELECT_PLACE_ADDRESS";
 

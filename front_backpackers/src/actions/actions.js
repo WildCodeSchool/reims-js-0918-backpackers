@@ -18,7 +18,8 @@ import {
   VIEW_FORM,
   VIEW_UPLOAD,
   SELECT_PLACE_ADDRESS,
-  GET_SEARCH_DATA
+  GET_SEARCH_DATA,
+  GET_MAP_FILTER
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
@@ -96,6 +97,11 @@ export const makeAViewUploadAction = () => ({
 export const makeGetGeolocationAction = coords => ({
   type: GET_GEOLOCATION,
   coords
+});
+
+export const makeGetMapFilterAction = filter => ({
+  type: GET_MAP_FILTER,
+  filter
 });
 
 export const makeGetChatsAction = (chat, messages) => ({
