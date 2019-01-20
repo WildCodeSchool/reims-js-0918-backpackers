@@ -67,11 +67,19 @@ class Maps extends Component {
   }
 
   render() {
-    const markers = this.props.places.map(place => ({
-      key: place.name,
-      position: [place.latitude, place.longitude],
-      content: place
-    }));
+    const markers = this.props.places
+      .filter(place =>
+        this.props.map.filter === "Pas de filtre"
+          ? place
+          : place.type === this.props.map.filter
+      )
+      .map(place => ({
+        key: place.id,
+        position: [place.latitude, place.longitude],
+        content: place
+      }));
+
+    console.log(markers.map(marker => marker.content.type));
 
     return (
       <Row>

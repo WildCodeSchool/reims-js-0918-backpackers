@@ -11,7 +11,9 @@ const DropdownButton = ({
   view,
   dropdownOpen,
   changeViewToActivities,
-  changeViewToPlaces
+  changeViewToPlaces,
+  getMapFilter,
+  currentFilter
 }) => (
   <Fragment>
     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
@@ -20,7 +22,7 @@ const DropdownButton = ({
           ? "Lieux"
           : view === "places"
           ? "Activités"
-          : "Filtrer"}
+          : currentFilter}
       </DropdownToggle>
       <DropdownMenu>
         {view === "activities" && (
@@ -35,16 +37,36 @@ const DropdownButton = ({
         )}
         {view === "maps" && (
           <Fragment>
-            <DropdownItem>Tout</DropdownItem>
-            <DropdownItem>Apéritifs</DropdownItem>
-            <DropdownItem>Aquatique</DropdownItem>
-            <DropdownItem>Aventure</DropdownItem>
-            <DropdownItem>Bien-être</DropdownItem>
-            <DropdownItem>Culturel</DropdownItem>
-            <DropdownItem>Déplacement</DropdownItem>
-            <DropdownItem>Enfants</DropdownItem>
-            <DropdownItem>Nocturne</DropdownItem>
-            <DropdownItem>Restauration</DropdownItem>
+            <DropdownItem onClick={() => getMapFilter("Pas de filtre")}>
+              Tout
+            </DropdownItem>
+            <DropdownItem onClick={() => getMapFilter("Apéritifs")}>
+              Apéritifs
+            </DropdownItem>
+            <DropdownItem onClick={() => getMapFilter("Aquatique")}>
+              Aquatique
+            </DropdownItem>
+            <DropdownItem onClick={() => getMapFilter("Aventure")}>
+              Aventure
+            </DropdownItem>
+            <DropdownItem onClick={() => getMapFilter("Bien-être")}>
+              Bien-être
+            </DropdownItem>
+            <DropdownItem onClick={() => getMapFilter("Culturel")}>
+              Culturel
+            </DropdownItem>
+            <DropdownItem onClick={() => getMapFilter("Déplacements")}>
+              Déplacements
+            </DropdownItem>
+            <DropdownItem onClick={() => getMapFilter("Enfants")}>
+              Enfants
+            </DropdownItem>
+            <DropdownItem onClick={() => getMapFilter("Nocturne")}>
+              Nocturne
+            </DropdownItem>
+            <DropdownItem onClick={() => getMapFilter("Restauration")}>
+              Restauration
+            </DropdownItem>
           </Fragment>
         )}
       </DropdownMenu>

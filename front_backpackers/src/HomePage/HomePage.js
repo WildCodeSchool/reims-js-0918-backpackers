@@ -166,6 +166,8 @@ class HomePage extends Component {
                 view="maps"
                 dropdownOpen={this.state.dropdownOpen}
                 toggle={this.toggle}
+                getMapFilter={this.props.getMapFilter}
+                currentFilter={this.props.map.filter}
               />
             )}
           </Col>
