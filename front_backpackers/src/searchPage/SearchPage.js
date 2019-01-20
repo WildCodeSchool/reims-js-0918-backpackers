@@ -55,11 +55,15 @@ class SearchPage extends Component {
       delete searchData.typeChoice;
     }
     if (!this.state.searchCollapse.collapseDates) {
-      delete searchData.dateStart;
+      searchData.dateStart = new Date()
+        .toLocaleDateString()
+        .split("/")
+        .reverse()
+        .join("-");
       delete searchData.dateEnd;
     }
     if (!this.state.searchCollapse.collapseParticipants) {
-      delete searchData.placeNumber;
+      searchData.placeNumber = 1;
     }
     if (!this.state.searchCollapse.collapseAdvanced) {
       delete searchData.keywords;
@@ -69,7 +73,6 @@ class SearchPage extends Component {
     const searchQuery = Object.keys(searchData)
       .map(data => data + "=" + searchData[data])
       .join("&");
-    console.log(searchQuery);
     axios
       .get(`/search?` + searchQuery)
       .then(response => this.props.getSearchData(searchData, response.data));
@@ -100,6 +103,7 @@ class SearchPage extends Component {
         </Row>
         {this.state.searchView === "searchForm" ? (
           <SearchActivityForm
+            placeNumberValue={this.props.search.searchData.placeNumber}
             emptyForm={this.emptyForm}
             onSubmit={this.submit}
             toggleCollapse={this.toggleCollapse}

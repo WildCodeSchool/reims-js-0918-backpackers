@@ -131,8 +131,8 @@ app.get("/search", (req, res) => {
     : "";
   // keywords && keywords.length > 0 ? (const wordsQuoted = keyword.map(word => `"${word}"`)) : "";
   country ? searchArray.push(`country="${country}"`) : "";
-  dateStart ? searchArray.push(`date>"${dateStart}"`) : "";
-  dateEnd ? searchArray.push(`date<="${dateEnd}"`) : "";
+  dateStart ? searchArray.push(`eventDate>"${dateStart}"`) : "";
+  dateEnd ? searchArray.push(`eventDate<="${dateEnd}"`) : "";
 
   const searchQuery = searchArray.join(" AND ");
   console.log(searchQuery);
@@ -141,7 +141,7 @@ app.get("/search", (req, res) => {
     `SELECT *
     FROM(
     SELECT activities.idActivity, activities.name, activities.capacity, activities.picture as pictureActivity,
-        (activities.description) AS description, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
+        (activities.description) AS description, eventDate, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
         type, (activities.capacity - COUNT(participation.idParticipation)) AS capacityLeft
         FROM activities    
         INNER JOIN places 
@@ -150,7 +150,7 @@ app.get("/search", (req, res) => {
         ON activities.idActivity = participation.idActivity
         GROUP BY activities.idActivity
     ) AS searchQuery
-    WHERE date_diff>0 AND ${searchQuery}`,
+    WHERE ${searchQuery}`,
     (err, results) => {
       if (err) {
         console.log(err);
