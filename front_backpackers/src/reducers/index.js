@@ -11,8 +11,6 @@ import mapReducer from "./mapReducer";
 import displayHomePageReducer from "./displayHomePageReducer";
 import placeReducer from "./placeReducer";
 import chatsReducer from "./chatsReducer";
-import uploadReducer from "./uploadReducer";
-import viewReducer from "./viewReducer";
 import { SELECT_PLACE_ADDRESS } from "../actions/actionTypes";
 import selectAddressReducer from "./selectAddressReducer";
 import searchReducer from "./searchReducer";
@@ -46,8 +44,6 @@ const backpackersApp = history =>
     activity: activityReducer,
     place: placeReducer,
     chats: chatsReducer,
-    idCurrent: uploadReducer,
-    viewForm: viewReducer,
     selectAddress: selectAddressReducer,
     search: searchReducer
   });

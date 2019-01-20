@@ -16,7 +16,7 @@ const ActivityThumbnail = ({
   profil,
   viewActivity,
   date_diff,
-  date
+  eventDate
 }) => (
   <Row>
     <Col xs="12">
@@ -42,7 +42,7 @@ const ActivityThumbnail = ({
             <span>
               <i className="fas fa-calendar pr-1" />
               {date_diff < 0 ? (
-                <span>{date.split("T")[0]}</span>
+                <span>{eventDate.split("T")[0]}</span>
               ) : (
                 <span
                   className={

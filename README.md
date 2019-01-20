@@ -12,7 +12,7 @@ Use the following command to install packages in front_backpackers and back_back
 
 ## Database installation
 
-First, create a database in a database management application.
+First, create a database in a database management application and set it's encoding to utf8_general_ci.
 
 Create an .env file in back_backpackers folder, write and replace the following fields.
 
