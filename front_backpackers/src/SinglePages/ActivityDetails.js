@@ -203,7 +203,20 @@ class ActivityDetails extends Component {
                     </div>
                   </Col>
                 </Row>
-
+                <Row>
+                  <Col xs="6">
+                    <p>
+                      <i className="fas fa-calendar pr-1" />
+                      {this.props.activity.eventDate.split("T")[0]}
+                    </p>
+                  </Col>
+                  <Col xs="6">
+                    <p className="text-right">
+                      {this.props.activity.eventTime}
+                      <i className="far fa-clock pl-1" />
+                    </p>
+                  </Col>
+                </Row>
                 <Row>
                   <Col xs="12">
                     <p className="text-justify singleDescr mb-3 p-2">
