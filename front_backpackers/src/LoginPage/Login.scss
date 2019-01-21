@@ -1,6 +1,7 @@
-@import '../_styles.scss';
+@import "../_styles.scss";
 
-.loginBackground, .signUpBackground {
+.loginBackground,
+.signUpBackground {
   height: 100vh;
   position: relative;
   padding-right: 15px;
@@ -17,20 +18,19 @@ h1 {
 
 .formBack {
   .formRequired {
-  color: #f00;
+    color: #f00;
   }
   padding: 5px 10px;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.5);
-  input, .form-control {
+  input,
+  .form-control {
     border: none;
     background-color: rgba(255, 255, 255, 0);
     border-bottom: 1px solid #000;
     width: 100%;
   }
 }
-
-
 
 .facebookLogin {
   background-color: #3b5998;
@@ -42,7 +42,13 @@ h1 {
   border-radius: 20px;
 }
 
-.login, .signup {
+.nologed {
+  background-color: $blueColor;
+  border-radius: 20px;
+}
+
+.login,
+.signup {
   background-color: $blueColor;
   width: 100%;
   margin-top: 30px;
@@ -51,12 +57,11 @@ h1 {
   border-radius: 30px;
 }
 
-.newAccount, .account {
+.newAccount,
+.account {
   font-size: 0.7rem;
   a {
     font-weight: bold;
     color: #111;
   }
 }
-
-
