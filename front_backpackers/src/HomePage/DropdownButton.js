@@ -20,7 +20,7 @@ const DropdownButton = ({
       <DropdownToggle className="w-100" caret>
         {view === "places"
           ? "Lieux"
-          : view === "places"
+          : view === "activities"
           ? "Activités"
           : currentFilter}
       </DropdownToggle>

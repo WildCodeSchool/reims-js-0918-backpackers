@@ -44,21 +44,6 @@ const ActivityForm = props => {
       </Row>
       <h5 className="text-center pt-3 homeUnderline">Votre annonce</h5>
       <div className="mb-5">
-        {/* <div>  DON'T TOUCH ! ! ! ! ! !
-          <label htmlFor="category">Catégorie</label>
-          <Field type="select" name="category" id="Select" component="select">
-            <option>Apéritifs</option>
-            <option>Aquatique</option>
-            <option>Aventure</option>
-            <option>Bien-être</option>
-            <option>Culturel</option>
-            <option>Déplacements</option>
-            <option>Enfants</option>url
-            <option>Nocturne</option>
-            <option>Restauration</option>
-          </Field>
-        </div> */}
-
         <form onSubmit={handleSubmit}>
           <div>
             <Field

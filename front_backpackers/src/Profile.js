@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Button, Badge } from "reactstrap";
+import { Row, Col, Button, Badge, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
@@ -235,9 +235,10 @@ class Profile extends Component {
                 {this.state.modify ? (
                   <Col xs={{ size: 8, offset: 2 }}>
                     <div className="align-center">
-                      <input
+                      <Input
                         value={this.state.description}
-                        type="text"
+                        type="textarea"
+                        placeholder="Renseigne ta description"
                         onChange={e => this.handleDescription(e)}
                       />
                     </div>
@@ -245,10 +246,6 @@ class Profile extends Component {
                 ) : this.state.profile.description ? (
                   <Col xs={{ size: 8, offset: 2 }} className="text-center">
                     <p className="mb-0">{this.state.profile.description}</p>
-                  </Col>
-                ) : this.state.profile.description === null ? (
-                  <Col xs={{ size: 8, offset: 2 }} className="text-center">
-                    <p className="mb-0">Aucune description renseignée.</p>
                   </Col>
                 ) : (
                   <Col xs={{ size: 8, offset: 2 }} className="text-center">

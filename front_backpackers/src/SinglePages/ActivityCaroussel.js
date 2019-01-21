@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Row, Col } from "reactstrap";
-
+import { Link } from "react-router-dom";
 const ActivityCaroussel = props => (
   <Fragment>
     {props.activity ? (
@@ -27,16 +27,18 @@ const ActivityCaroussel = props => (
 
         <Row>
           <Col xs="6" className="creatorFrame">
-            <img
-              className="rounded-circle"
-              src={`http://localhost:3010/images/${
-                props.profile.picture ? props.profile.picture : "default.png"
-              }`}
-              alt="Createur"
-            />
-            <p className="frame-name pl-3 pr-1 d-inline-block  bg-white ">
-              {props.activity.username}
-            </p>
+            <Link to={`/profil/${props.activity.username}`}>
+              <img
+                className="rounded-circle"
+                src={`http://localhost:3010/images/${
+                  props.profile.picture ? props.profile.picture : "default.png"
+                }`}
+                alt="Createur"
+              />
+              <p className="frame-name pl-3 pr-1 d-inline-block  bg-white ">
+                {props.activity.username}
+              </p>
+            </Link>
             {/* <p className="d-inline-block text-white pr-1 pl-3">
             4.5
             <i className=" pl-1 fas fa-star" />
