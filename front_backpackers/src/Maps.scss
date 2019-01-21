@@ -10,6 +10,8 @@
 
 .myMarker {
   z-index: 1000 !important;
+  object-fit: cover;
+  border-radius: 20px;
 }
 
 .marker-cluster div {
