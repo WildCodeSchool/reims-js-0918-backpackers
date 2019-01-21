@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios, { post } from "axios";
+import axios from "axios";
 import ActivityFormContainer from "./ActivityForm";
 
 class CreateActivityPage extends Component {
@@ -11,21 +11,6 @@ class CreateActivityPage extends Component {
 
   onChange(e) {
     this.file = e.target.files[0];
-  }
-
-  fileUpload(file) {
-    const url = "/upload";
-    const idActivity = this.props.id;
-    const formData = new FormData();
-    formData.append("monfichier", file);
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data"
-      }
-    };
-    return post(url, formData, idActivity, config).then(res =>
-      this.props.viewForm()
-    );
   }
 
   submit = activities => {

@@ -187,28 +187,6 @@ app.get("/activities", (req, res) => {
   );
 });
 
-app.get("/activities/search", (req, res) => {
-  const name =
-    req.query.name === undefined ? "" : req.query.name.split("_").join(" ");
-  const creator = req.query.creator === undefined ? "" : req.query.creator;
-  connection.query(
-    creator === ""
-      ? `SELECT * FROM activities WHERE name ="${name}"`
-      : name === ""
-      ? `SELECT * FROM activities WHERE creator ="${creator}"`
-      : `SELECT * FROM activities WHERE name ="${name}" AND creator ="${creator}"`,
-    (err, results) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("Error retrieving activities searched");
-      } else {
-        console.log(results);
-        res.json(results);
-      }
-    }
-  );
-});
-
 app.post(
   "/activities",
   passport.authenticate("jwt", { session: false }),
