@@ -54,8 +54,7 @@ const ActivityThumbnail = ({
                       : " text-success")
                   }
                 >
-                  {date_diff}
-                  jours restants
+                  {date_diff} jours restants
                 </span>
               )}
             </span>

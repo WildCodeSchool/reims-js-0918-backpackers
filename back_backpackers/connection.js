@@ -77,7 +77,7 @@ app.post("/places", (req, res) => {
   });
 });
 
-app.post("/places/upload", upload.single("monfichier"), (req, res) => {
+app.post("/places/upload/:id", upload.single("monfichier"), (req, res) => {
   fs.rename(
     req.file.path,
     "public/images/" + req.file.originalname,
@@ -86,9 +86,8 @@ app.post("/places/upload", upload.single("monfichier"), (req, res) => {
         res.status(500).send(err);
       } else {
         connection.query(
-          `UPDATE places SET picture = "${
-            req.file.originalname
-          }" WHERE id= (SELECT LAST_INSERT_ID())`,
+          `UPDATE places SET picture = "${req.file.originalname}" WHERE id=?`,
+          req.params.id,
           err => {
             if (err) {
               console.log(err);
@@ -132,8 +131,8 @@ app.get("/search", (req, res) => {
     : "";
   // keywords && keywords.length > 0 ? (const wordsQuoted = keyword.map(word => `"${word}"`)) : "";
   country ? searchArray.push(`country="${country}"`) : "";
-  dateStart ? searchArray.push(`date>"${dateStart}"`) : "";
-  dateEnd ? searchArray.push(`date<="${dateEnd}"`) : "";
+  dateStart ? searchArray.push(`eventDate>"${dateStart}"`) : "";
+  dateEnd ? searchArray.push(`eventDate<="${dateEnd}"`) : "";
 
   const searchQuery = searchArray.join(" AND ");
   console.log(searchQuery);
@@ -142,7 +141,7 @@ app.get("/search", (req, res) => {
     `SELECT *
     FROM(
     SELECT activities.idActivity, activities.name, activities.capacity, activities.picture as pictureActivity,
-        (activities.description) AS description, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
+        (activities.description) AS description, eventDate, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
         type, (activities.capacity - COUNT(participation.idParticipation)) AS capacityLeft
         FROM activities    
         INNER JOIN places 
@@ -151,7 +150,7 @@ app.get("/search", (req, res) => {
         ON activities.idActivity = participation.idActivity
         GROUP BY activities.idActivity
     ) AS searchQuery
-    WHERE date_diff>0 AND ${searchQuery}`,
+    WHERE ${searchQuery}`,
     (err, results) => {
       if (err) {
         console.log(err);
@@ -246,7 +245,7 @@ app.post(
   }
 );
 
-app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
+app.post("/activities/upload/:id", upload.single("monfichier"), (req, res) => {
   fs.rename(
     req.file.path,
     "public/images/" + req.file.originalname,
@@ -257,11 +256,13 @@ app.post("/activities/upload", upload.single("monfichier"), (req, res) => {
         connection.query(
           `UPDATE activities SET picture = "${
             req.file.originalname
-          }" WHERE idActivity= (SELECT LAST_INSERT_ID())`,
+          }" WHERE idActivity= ?`,
+          req.params.id,
           err => {
             if (err) {
-              console.log(err);
+              console.log("err", err);
             } else {
+              console.log(req.file.originalname);
               res.json(results);
             }
           }
@@ -406,6 +407,7 @@ app.get("/place/:id", (req, res) => {
               res.status(500).send("Error retrieving activities of this place");
             } else {
               const place = { ...results, activities: actiResults };
+              console.log("test");
               res.json(place);
             }
           }

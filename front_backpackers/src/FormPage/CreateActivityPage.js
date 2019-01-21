@@ -44,7 +44,8 @@ class CreateActivityPage extends Component {
         }
       })
       .then(response => {
-        axios.post("/activities/upload", formData, {
+        console.log(response.data);
+        axios.post(`/activities/upload/${response.data.insertId}`, formData, {
           headers: {
             "content-type": "multipart/form-data"
           }
