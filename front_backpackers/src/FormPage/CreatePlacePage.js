@@ -16,7 +16,7 @@ class CreatePlacePage extends Component {
     const formData = new FormData();
     formData.append("monfichier", this.file);
     axios
-      .post("/places", place, {
+      .post("/api/places", place, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
@@ -24,7 +24,7 @@ class CreatePlacePage extends Component {
       .then(response => {
         console.log("response", response);
         axios
-          .post(`/places/upload/${response.data}`, formData, {
+          .post(`/api/places/upload/${response.data}`, formData, {
             headers: {
               "content-type": "multipart/form-data"
             }
