@@ -25,7 +25,8 @@ exports.up = function(db, callback) {
       "id_place",
       "description",
       "contact",
-      "date"
+      "eventDate",
+      "eventTime"
     ],
     [
       "Visite de la Tokyo Tower",
@@ -35,7 +36,8 @@ exports.up = function(db, callback) {
       1,
       "Cherche petit groupe pour visiter ensemble la Tokyo Tower ce Samedi !",
       "0612345678",
-      "2019-02-09"
+      "2019-06-09",
+      "19:23"
     ],
     callback
   );
@@ -48,7 +50,8 @@ exports.up = function(db, callback) {
       "id_place",
       "description",
       "contact",
-      "date"
+      "eventDate",
+      "eventTime"
     ],
     [
       "Tour du musée de Ueno",
@@ -57,7 +60,8 @@ exports.up = function(db, callback) {
       2,
       "Je cherche des gens pour apprécier la culture jap au musée de Ueno !",
       "0612345678",
-      "2019-02-20"
+      "2019-06-20",
+      "19:23"
     ],
     callback
   );
