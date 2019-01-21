@@ -218,10 +218,7 @@ class ActivityDetails extends Component {
             <Row className="mapDetails">
               <Col xs="12">
                 {this.state.activeTab === "2" ? (
-                  <MapPlace
-                    lat={this.props.activity.latitude}
-                    long={this.props.activity.longitude}
-                  />
+                  <MapPlace informations={this.props.activity} />
                 ) : (
                   ""
                 )}
