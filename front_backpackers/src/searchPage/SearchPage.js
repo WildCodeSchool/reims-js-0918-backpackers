@@ -10,7 +10,6 @@ class SearchPage extends Component {
     super(props);
     this.state = {
       searchView: "searchForm",
-      searchResults: [],
       searchCollapse: {
         collapseCategories: true,
         collapseParticipants: false,
@@ -18,50 +17,36 @@ class SearchPage extends Component {
         collapseAdvanced: true
       }
     };
-    this.toggleCategories = this.toggleCategories.bind(this);
-    this.toggleParticipants = this.toggleParticipants.bind(this);
-    this.toggleDates = this.toggleDates.bind(this);
-    this.toggleAdvanced = this.toggleAdvanced.bind(this);
+    this.toggleCollapse = this.toggleCollapse.bind(this);
     this.getSearchView = this.getSearchView.bind(this);
+    this.emptyForm = this.emptyForm.bind(this);
   }
   getSearchView() {
     this.setState({ searchView: "searchForm" });
   }
 
-  toggleCategories() {
+  toggleCollapse(formPart) {
     this.setState({
       searchCollapse: {
         ...this.state.searchCollapse,
-        collapseCategories: !this.state.searchCollapse.collapseCategories
+        [formPart]: !this.state.searchCollapse[formPart]
       }
     });
   }
 
-  toggleParticipants() {
+  emptyForm() {
+    const resetData = {};
+    const resetResults = [];
     this.setState({
       searchCollapse: {
-        ...this.state.searchCollapse,
-        collapseParticipants: !this.state.searchCollapse.collapseParticipants
+        collapseCategories: true,
+        collapseParticipants: false,
+        collapseDates: false,
+        collapseAdvanced: true
       }
     });
-  }
-
-  toggleDates() {
-    this.setState({
-      searchCollapse: {
-        ...this.state.searchCollapse,
-        collapseDates: !this.state.searchCollapse.collapseDates
-      }
-    });
-  }
-
-  toggleAdvanced() {
-    this.setState({
-      searchCollapse: {
-        ...this.state.searchCollapse,
-        collapseAdvanced: !this.state.searchCollapse.collapseAdvanced
-      }
-    });
+    this.props.getSearchData(resetData, resetResults);
+    this.forceUpdate();
   }
 
   submit = searchData => {
@@ -70,32 +55,40 @@ class SearchPage extends Component {
       delete searchData.typeChoice;
     }
     if (!this.state.searchCollapse.collapseDates) {
-      delete searchData.dateStart;
+      searchData.dateStart = new Date()
+        .toLocaleDateString()
+        .split("/")
+        .reverse()
+        .join("-");
       delete searchData.dateEnd;
     }
     if (!this.state.searchCollapse.collapseParticipants) {
-      delete searchData.placeNumber;
+      searchData.placeNumber = 1;
     }
     if (!this.state.searchCollapse.collapseAdvanced) {
       delete searchData.keywords;
       delete searchData.country;
       delete searchData.city;
     }
-    this.setState({ searchData: { ...searchData } });
     const searchQuery = Object.keys(searchData)
       .map(data => data + "=" + searchData[data])
       .join("&");
     axios
       .get(`/search?` + searchQuery)
-      .then(response => this.setState({ searchResults: response.data }));
+      .then(response => this.props.getSearchData(searchData, response.data));
   };
+
   render() {
     return (
       <Fragment>
         <Row className="blueHeader">
           <Col xs="2">
             {this.state.searchView === "searchForm" ? (
-              <Link to="/" className="price text-primary">
+              <Link
+                to="/"
+                onClick={this.emptyForm}
+                className="price text-primary"
+              >
                 <i className="fas fa-chevron-left text-white" />
               </Link>
             ) : (
@@ -110,24 +103,18 @@ class SearchPage extends Component {
         </Row>
         {this.state.searchView === "searchForm" ? (
           <SearchActivityForm
+            placeNumberValue={this.props.search.searchData.placeNumber}
+            emptyForm={this.emptyForm}
             onSubmit={this.submit}
-            collapseCategories={this.state.searchCollapse.collapseCategories}
-            collapseDates={this.state.searchCollapse.collapseDates}
-            collapseParticipants={
-              this.state.searchCollapse.collapseParticipants
-            }
-            collapseAdvanced={this.state.searchCollapse.collapseAdvanced}
-            toggleCategories={this.toggleCategories}
-            toggleDates={this.toggleDates}
-            toggleParticipants={this.toggleParticipants}
-            toggleAdvanced={this.toggleAdvanced}
+            toggleCollapse={this.toggleCollapse}
+            searchCollapse={this.state.searchCollapse}
           />
-        ) : this.state.searchResults.length > 0 ? (
-          this.state.searchResults.map(activity => (
-            <ActivityThumbnail {...activity} />
+        ) : this.props.search.searchResults.length > 0 ? (
+          this.props.search.searchResults.map(activity => (
+            <ActivityThumbnail key={activity.id} {...activity} />
           ))
         ) : (
-          <p className="text-center">Aucun résultats</p>
+          <p className="text-center">Aucun résultat</p>
         )}
       </Fragment>
     );

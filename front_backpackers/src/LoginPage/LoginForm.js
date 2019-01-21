@@ -81,6 +81,13 @@ const LoginForm = props => {
         </Col>
       </Row>
       <Row>
+        <Col xs={{ size: 8, offset: 2 }}>
+          <Link to="/">
+            <Button className="nologed">Mode invité</Button>
+          </Link>
+        </Col>
+      </Row>
+      <Row>
         <Col xs="12">
           <p className="newAccount mt-5 text-white text-center">
             Je n'ai pas de compte.<Link to="/signup">Créer un compte</Link>

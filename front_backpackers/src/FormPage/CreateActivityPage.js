@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios, { post } from "axios";
+import axios from "axios";
 import ActivityFormContainer from "./ActivityForm";
 
 class CreateActivityPage extends Component {
@@ -13,24 +13,14 @@ class CreateActivityPage extends Component {
     this.file = e.target.files[0];
   }
 
-  fileUpload(file) {
-    const url = "/upload";
-    const idActivity = this.props.id;
-    const formData = new FormData();
-    formData.append("monfichier", file);
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data"
-      }
-    };
-    return post(url, formData, idActivity, config).then(res =>
-      this.props.viewForm()
-    );
-  }
-
   submit = activities => {
-    const activity = { ...activities, date: activities.date.split("T")[0], id_place: this.props.match.params.id };
+    const activity = {
+      ...activities,
+      eventDate: activities.eventDate.split("T")[0],
+      id_place: this.props.match.params.id
+    };
     JSON.stringify(activity);
+    console.log(activity);
     const formData = new FormData();
     formData.append("monfichier", this.file);
     axios
@@ -40,21 +30,31 @@ class CreateActivityPage extends Component {
         }
       })
       .then(response => {
-        // this.props.idCurrent(response.data);
-        // this.props.viewUpload();
-        axios
-          .post("/activities/upload", formData, {
+        axios.post(`/activities/upload/${response.data.insertId}`, formData, {
+          headers: {
+            "content-type": "multipart/form-data"
+          }
+        });
+        axios.post(
+          `/participate/${response.data.insertId}`,
+          { idChat: response.data.id },
+          {
             headers: {
-              "content-type": "multipart/form-data"
+              accept: "application/json",
+              authorization:
+                "Bearer " + localStorage.getItem("BackpackersToken")
             }
-          })
-          .then(() => this.props.history.push(`/activity/${response.data}`))
-
+          }
+        );
+        this.props.history.push(`/activity/${response.data.insertId}`);
       });
   };
   render() {
     return (
-      <ActivityFormContainer uploadFile={this.onChange} onSubmit={this.submit} />
+      <ActivityFormContainer
+        uploadFile={this.onChange}
+        onSubmit={this.submit}
+      />
     );
   }
 }

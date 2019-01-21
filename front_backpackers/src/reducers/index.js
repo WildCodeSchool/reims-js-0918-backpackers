@@ -11,11 +11,9 @@ import mapReducer from "./mapReducer";
 import displayHomePageReducer from "./displayHomePageReducer";
 import placeReducer from "./placeReducer";
 import chatsReducer from "./chatsReducer";
-import uploadReducer from "./uploadReducer";
-import viewReducer from "./viewReducer";
 import { SELECT_PLACE_ADDRESS } from "../actions/actionTypes";
 import selectAddressReducer from "./selectAddressReducer";
-import searchParticipantsReducer from "./searchParticipantsReducer";
+import searchReducer from "./searchReducer";
 
 const backpackersApp = history =>
   combineReducers({
@@ -34,9 +32,9 @@ const backpackersApp = history =>
                 ...state.values,
                 ...action.address
               }
-            }
+            };
           default:
-            return state
+            return state;
         }
       }
     }),
@@ -46,10 +44,8 @@ const backpackersApp = history =>
     activity: activityReducer,
     place: placeReducer,
     chats: chatsReducer,
-    idCurrent: uploadReducer,
-    viewForm: viewReducer,
     selectAddress: selectAddressReducer,
-    count: searchParticipantsReducer
+    search: searchReducer
   });
 
 export default backpackersApp;

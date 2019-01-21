@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom"
-import { Row, Col } from "reactstrap"
+import { Link } from "react-router-dom";
+import { Row, Col } from "reactstrap";
 
 import "./Chat.scss";
 
@@ -21,8 +21,8 @@ class UsersList extends Component {
         >
           {this.props.users ? (
             <Fragment>
-              <h2 className="px-3">En ligne :</h2>
-              <ul>
+              <h3 className="px-3">En ligne :</h3>
+              <ul className="online">
                 {this.props.users
                   .filter(user => user.presence.state === "online")
                   .map((user, index) => (
@@ -43,7 +43,9 @@ class UsersList extends Component {
                       {this.props.users
                         .filter(user => user.presence.state === "offline")
                         .map((user, index) => (
-                          <li key={index}>{user.name}</li>
+                          <li key={index}>
+                            <Link to={`/profil/${user.name}`}>{user.name}</Link>
+                          </li>
                         ))}
                     </ul>
                   </Col>

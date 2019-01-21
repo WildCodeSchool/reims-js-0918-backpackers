@@ -151,14 +151,25 @@ class HomePage extends Component {
             />
           </Col>
           <Col xs="8">
-            <DropdownButton
-              className="w-100"
-              view={this.props.displayHomePage}
-              dropdownOpen={this.state.dropdownOpen}
-              toggle={this.toggle}
-              changeViewToActivities={this.props.displayActivities}
-              changeViewToPlaces={this.props.displayPlaces}
-            />
+            {this.state.activeTab === "1" ? (
+              <DropdownButton
+                className="w-100"
+                view={this.props.displayHomePage}
+                dropdownOpen={this.state.dropdownOpen}
+                toggle={this.toggle}
+                changeViewToActivities={this.props.displayActivities}
+                changeViewToPlaces={this.props.displayPlaces}
+              />
+            ) : (
+              <DropdownButton
+                className="w-100"
+                view="maps"
+                dropdownOpen={this.state.dropdownOpen}
+                toggle={this.toggle}
+                getMapFilter={this.props.getMapFilter}
+                currentFilter={this.props.map.filter}
+              />
+            )}
           </Col>
           <Col xs="2">
             <Nav tabs>
@@ -181,10 +192,17 @@ class HomePage extends Component {
                   })}
                   onClick={() => {
                     this.toggleMap("2");
-                    this.props.getCoords([
-                      this.props.coords.latitude,
-                      this.props.coords.longitude
-                    ]);
+
+                    this.props.getCoords(
+                      this.props.isGeolocationEnabled
+                        ? this.props.coords
+                          ? [
+                              this.props.coords.latitude,
+                              this.props.coords.longitude
+                            ]
+                          : [48.861633, 2.332856]
+                        : [48.861633, 2.332856]
+                    );
                   }}
                 >
                   <i className="text-white fas fa-map-marked-alt" />
@@ -204,10 +222,10 @@ class HomePage extends Component {
                     .filter(
                       place =>
                         Math.abs(place.latitude - this.props.coords.latitude) <
-                          0.02 &&
+                          0.1 &&
                         Math.abs(
                           place.longitude - this.props.coords.longitude
-                        ) < 0.02
+                        ) < 0.1
                     )
                     .sort(
                       (a, b) =>
@@ -245,7 +263,7 @@ class HomePage extends Component {
                 onClick={() => this.props.getCoords([1, 1])}
                 className="w-50 listPostBtn text-white text-center"
               >
-                <i className="fas fa-pencil-alt" /> Publier{" "}
+                <i className="fas fa-pencil-alt" /> Publier un lieu
               </Link>
             </Row>
             <Row>
@@ -256,7 +274,15 @@ class HomePage extends Component {
             </Row>
           </TabPane>
           <TabPane tabId="2">
-            {this.state.activeTab === "2" ? <MapsContainer /> : ""}
+            {this.state.activeTab === "2" ? (
+              <MapsContainer
+                isGeolocated={
+                  this.props.isGeolocationEnabled && this.props.coords
+                }
+              />
+            ) : (
+              ""
+            )}
           </TabPane>
         </TabContent>
       </div>
