@@ -120,7 +120,7 @@ class Sidebar extends Component {
                   to="/login"
                   className="pl-0 my-1"
                 >
-                  <i class="mr-2 fas fa-sign-in-alt" />
+                  <i className="mr-2 fas fa-sign-in-alt" />
                   Se connecter
                 </NavLink>
               </NavItem>

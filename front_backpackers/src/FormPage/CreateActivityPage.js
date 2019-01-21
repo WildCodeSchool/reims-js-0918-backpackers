@@ -49,9 +49,14 @@ class CreateActivityPage extends Component {
         this.props.history.push(`/activity/${response.data.insertId}`);
       });
   };
+  goBack() {
+    this.props.history.goBack();
+  }
   render() {
     return (
       <ActivityFormContainer
+        goBack={this.goBack}
+        {...this.props.history}
         uploadFile={this.onChange}
         onSubmit={this.submit}
       />

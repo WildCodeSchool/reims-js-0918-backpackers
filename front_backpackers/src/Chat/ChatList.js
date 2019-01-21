@@ -74,9 +74,9 @@ class ChatList extends Component {
           <Fragment>
             <Row className="blueHeader fixed-top px-4">
               <Col xs="3">
-                <Link to="/">
+                <button onClick={() => this.props.history.goBack()}>
                   <i className="fas fa-chevron-left text-white" />
-                </Link>
+                </button>
               </Col>
               <Col xs="6">
                 <p className="text-white text-center mb-0">Mes conversations</p>
@@ -88,21 +88,21 @@ class ChatList extends Component {
                 this.state.currentUser.rooms.length === 0 ? (
                   <p>vous n'êtes inscrit à aucune activité</p>
                 ) : (
-                    this.state.currentUser.rooms.map((room, index) => (
-                      <button
-                        onClick={() => this.viewChat(room)}
-                        key={index}
-                        className="my-2"
-                      >
-                        {room.name}
-                      </button>
-                    ))
-                  )
+                  this.state.currentUser.rooms.map((room, index) => (
+                    <button
+                      onClick={() => this.viewChat(room)}
+                      key={index}
+                      className="my-2"
+                    >
+                      {room.name}
+                    </button>
+                  ))
+                )
               ) : (
-                  <p className="text-center my-3">
-                    <i className="fas fa-spinner fa-spin" />
-                  </p>
-                )}
+                <p className="text-center my-3">
+                  <i className="fas fa-spinner fa-spin" />
+                </p>
+              )}
               <div className="homeUnderline" />
             </div>
           </Fragment>
@@ -115,8 +115,8 @@ class ChatList extends Component {
             changeView={this.viewChatList}
           />
         ) : (
-              ""
-            )}
+          ""
+        )}
       </Fragment>
     );
   }

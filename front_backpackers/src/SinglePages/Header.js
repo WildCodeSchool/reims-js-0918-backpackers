@@ -8,9 +8,9 @@ const Header = props => (
   <Fragment>
     <Row className="blueHeader mb-2 fixed-top px-4">
       <Col xs="1">
-        <Link to="/">
+        <button onClick={() => props.goBack()}>
           <i className="fas fa-chevron-left text-white" />
-        </Link>
+        </button>
       </Col>
       <Col xs="10">
         <p className="text-white text-center mb-0">{props.place}</p>

@@ -34,9 +34,9 @@ const ActivityForm = props => {
     <Fragment>
       <Row className="greenHeader text-white">
         <Col xs="2">
-          <Link to="/" className="price text-primary">
+          <button onClick={() => props.goBack()} className="price text-primary">
             <i className="fas fa-chevron-left text-white" />
-          </Link>
+          </button>
         </Col>
         <Col xs="8">
           <p className="text-center mb-0">Publier une annonce</p>

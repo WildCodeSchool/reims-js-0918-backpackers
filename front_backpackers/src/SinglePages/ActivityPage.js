@@ -35,6 +35,10 @@ class ActivityPage extends Component {
       .then(response => this.props.viewProfile(response.data[0]));
   }
 
+  goBack() {
+    this.props.history.goBack();
+  }
+
   render() {
     return (
       <div>
@@ -42,6 +46,7 @@ class ActivityPage extends Component {
           {this.props.activity.name ? (
             <Fragment>
               <Header
+                goBack={this.goBack}
                 {...this.props.history}
                 place={this.props.activity.city}
               />

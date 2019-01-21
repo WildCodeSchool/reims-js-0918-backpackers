@@ -15,18 +15,26 @@ class PlacePage extends Component {
     );
   }
 
+  goBack() {
+    this.props.history.goBack();
+  }
+
   render() {
     return (
       <Fragment>
         {this.props.place.name ? (
           <Fragment>
-            <Header place={this.props.place.name} />
+            <Header
+              goBack={this.goBack}
+              {...this.props.history}
+              place={this.props.place.name}
+            />
             <PlaceCaroussel place={this.props.place} />
             <PlaceDetails place={this.props.place} />
           </Fragment>
         ) : (
-            ""
-          )}
+          ""
+        )}
       </Fragment>
     );
   }

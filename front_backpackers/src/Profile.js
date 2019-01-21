@@ -135,13 +135,13 @@ class Profile extends Component {
       <Fragment>
         <Row>
           <Col xs="4" className="mt-4">
-            <Link
-              to="/"
+            <button
+              onClick={() => this.props.history.goBack()}
               className="previousPage py-0 px-3 d-inline-block text-white"
             >
               <i className="fas pr-2 fa-angle-left" />
               Retour
-            </Link>
+            </button>
           </Col>
         </Row>
         {this.state.profile ? (
