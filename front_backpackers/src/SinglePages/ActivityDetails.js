@@ -287,14 +287,22 @@ class ActivityDetails extends Component {
                       creator => creator.id === this.props.activity.id_creator
                     )
                     .map((creator, index) => (
-                      <li key={index}>{creator.username} (Créateur)</li>
+                      <li key={index}>
+                        <Link to={`/profil/${creator.username}`}>
+                          {creator.username} (Créateur)
+                        </Link>
+                      </li>
                     ))}
                   {this.state.participants
                     .filter(
                       creator => creator.id !== this.props.activity.id_creator
                     )
                     .map(user => (
-                      <li key={user.id}>{user.username}</li>
+                      <li key={user.id}>
+                        <Link to={`/profil/${user.username}`}>
+                          {user.username}
+                        </Link>
+                      </li>
                     ))}
                 </Fragment>
               )}

@@ -142,6 +142,9 @@
 
 .listParticipants {
   list-style-type: none;
+  a {
+    color: $blueColor;
+  }
 }
 
 .new_activity {
