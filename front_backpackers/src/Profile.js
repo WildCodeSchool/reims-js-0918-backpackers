@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import { toast } from "react-toastify";
+import PositionToast from "./Toast/Toastify";
 
 import ActivityThumbnail from "./HomePage/ActivityThumbnail";
 
@@ -42,11 +43,6 @@ class Profile extends Component {
         }
       })
       .then(response => {
-        if (response.status === 200) {
-          toast.success("Ton activité est prête !", {
-            position: toast.POSITION.BOTTOM_CENTER
-          });
-        }
         this.setState({
           profile: { ...response.data[0], activities: [] },
           tags: response.data[0].hobbies.split(","),
@@ -118,19 +114,24 @@ class Profile extends Component {
           }
         }
       )
-      .then(response =>
-        this.state.file
-          ? axios.post(
-              `/profile/${this.state.profile.username}/upload`,
-              formData,
-              {
-                headers: {
-                  "content-type": "multipart/form-data"
-                }
+      .then(response => {
+        if (response.status === 200) {
+          toast.success("Ton profil a bien été changé !", {
+            position: toast.POSITION.BOTTOM_CENTER
+          });
+        }
+        if (this.state.file) {
+          axios.post(
+            `/profile/${this.state.profile.username}/upload`,
+            formData,
+            {
+              headers: {
+                "content-type": "multipart/form-data"
               }
-            )
-          : ""
-      )
+            }
+          );
+        }
+      })
       .then(this.setState({ modify: false }))
       .then(() => this.componentDidMount());
   }
@@ -139,6 +140,7 @@ class Profile extends Component {
     let { imagePreviewUrl } = this.state;
     return (
       <Fragment>
+        <PositionToast />
         <Row>
           <Col xs="4" className="mt-4">
             <Link

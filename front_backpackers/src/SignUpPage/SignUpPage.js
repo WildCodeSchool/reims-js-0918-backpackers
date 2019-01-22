@@ -15,11 +15,11 @@ class SignUpPage extends Component {
         })
       })
       .then(response => {
-        // if (response.status === 200) {
-        //   toast.success("Tu es maintenant inscrit ! connecte toi !", {
-        //     position: toast.POSITION.BOTTOM_CENTER
-        //   });
-        // }
+        if (response.status === 200) {
+          toast.success("Tu es maintenant inscrit ! connecte toi !", {
+            position: toast.POSITION.BOTTOM_CENTER
+          });
+        }
         this.props.history.push("/login");
       });
   };

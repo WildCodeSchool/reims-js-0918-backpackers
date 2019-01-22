@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import LoginFormContainer from "./LoginForm";
 import { toast } from "react-toastify";
+import PositionToast from "../Toast/Toastify";
 
 class LoginPage extends Component {
   submit = logs => {
@@ -9,6 +10,7 @@ class LoginPage extends Component {
     axios
       .post("/auth/login", { mail: log.mail, password: log.password })
       .then(response => {
+        console.log("ahouai", response);
         if (response.status === 200) {
           toast.success("Tu es en ligne !", {
             position: toast.POSITION.BOTTOM_CENTER
@@ -29,6 +31,7 @@ class LoginPage extends Component {
     return (
       <div>
         <LoginFormContainer onSubmit={this.submit} />
+        <PositionToast />
       </div>
     );
   }

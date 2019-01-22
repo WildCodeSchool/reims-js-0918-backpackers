@@ -6,7 +6,7 @@ class PositionToast extends Component {
   render() {
     return (
       <div>
-        <ToastContainer autoClose={9000} draggablePercent={60} />
+        <ToastContainer autoClose={3000} draggablePercent={60} />
       </div>
     );
   }
