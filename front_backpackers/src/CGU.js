@@ -17,11 +17,13 @@ export default class CGU extends Component {
           </Col>
         </Row>
         <p>
-          <p className="h3 text-center ">CONDITIONS GÉNÉRALES D’UTILISATION</p>
+          <div className="h3 text-center ">
+            CONDITIONS GÉNÉRALES D’UTILISATION
+          </div>
           <br />
-          <p className="h4 text-center ">Backpakers. Application mobile.</p>
+          <div className="h4 text-center ">Backpakers. Application mobile.</div>
           <br />
-          <p className="h4 text-center ">Novembre 2018</p>
+          <div className="h4 text-center ">Novembre 2018</div>
           <br />
           <div className="mt-3">
             <strong>OBJECTIF DU DOCUMENT</strong>

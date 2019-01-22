@@ -16,8 +16,8 @@ export default class MentionsLegale extends Component {
             <p className="text-white text-center mb-0">Mentions Légales</p>
           </Col>
         </Row>
-        <p>
-          <p className="h3 text-center">Mentions Légales</p>
+        <div>
+          <div className="h3 text-center">Mentions Légales</div>
           <div className="mt-3">
             <strong>1. Mentions Légales :</strong>
           </div>
@@ -704,7 +704,7 @@ export default class MentionsLegale extends Component {
           http//:backpakers.com est soumis au droit français. <br />
           En dehors des cas où la loi ne le permet pas, il est fait attribution
           exclusive de juridiction aux tribunaux compétents de Reims.
-        </p>
+        </div>
       </Fragment>
     );
   }
