@@ -19,8 +19,10 @@ import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
 import BurgerButton from "./BurgerButton";
 import Sidebar from "./Sidebar";
+import Position from "../Toast/Toastify";
 
 import "./HomePage.scss";
+import "react-toastify/dist/ReactToastify.css";
 import MapsContainer from "../containers/MapsContainer";
 
 class HomePage extends Component {
@@ -56,9 +58,9 @@ class HomePage extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response =>
-        this.props.viewProfile([{ ...response.data[0], activities: [] }])
-      )
+      .then(response => {
+        this.props.viewProfile([{ ...response.data[0], activities: [] }]);
+      })
       .then(() =>
         axios
           .post("/users", {
@@ -139,6 +141,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className="homePage">
+        <Position />
         <Row className="blueHeader">
           <Col xs="2">
             <BurgerButton

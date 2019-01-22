@@ -12,6 +12,7 @@ import CreateActivityPage from "../FormPage/CreateActivityPage";
 import CreatePlacePageContainer from "../containers/CreatePlacePageContainer";
 import ActivitesListContainer from "../containers/ActivitiesListContainer";
 import SearchContainer from "../containers/SearchContainer";
+import Toastify from "../Toast/Toastify";
 
 class Routes extends Component {
   render() {
@@ -40,6 +41,7 @@ class Routes extends Component {
             <Route path="/profil/:username" component={ProfileContainer} />
             <Route path="/chatlist" component={ChatContainer} />
             <Route path="/search" component={SearchContainer} />
+            <Route path="/toast" component={Toastify} />
           </Switch>
         ) : (
           <Switch>
