@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import PlaceFormContainer from "./PlaceForm";
 import { geolocated } from "react-geolocated";
+import { toast } from "react-toastify";
 
 class CreatePlacePage extends Component {
   constructor(props) {
@@ -22,6 +23,12 @@ class CreatePlacePage extends Component {
         }
       })
       .then(response => {
+        if (response.status === 200) {
+          console.log("ok", response.status);
+          toast.success("Le lieu a bien été publié !", {
+            position: toast.POSITION.BOTTOM_CENTER
+          });
+        }
         console.log("response", response);
         axios
           .post(`/places/upload/${response.data}`, formData, {

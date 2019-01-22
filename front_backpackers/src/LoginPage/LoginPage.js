@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import LoginFormContainer from "./LoginForm";
 import { toast } from "react-toastify";
-import Position from "../Toast/Toastify";
-
-import "react-toastify/dist/ReactToastify.css";
 
 class LoginPage extends Component {
   submit = logs => {
@@ -32,7 +29,6 @@ class LoginPage extends Component {
     return (
       <div>
         <LoginFormContainer onSubmit={this.submit} />
-        <Position />
       </div>
     );
   }

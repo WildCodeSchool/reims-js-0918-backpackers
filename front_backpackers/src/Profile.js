@@ -3,6 +3,7 @@ import { Row, Col, Button, Badge } from "reactstrap";
 import { Link } from "react-router-dom";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
+import { toast } from "react-toastify";
 
 import ActivityThumbnail from "./HomePage/ActivityThumbnail";
 
@@ -40,13 +41,18 @@ class Profile extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response =>
+      .then(response => {
+        if (response.status === 200) {
+          toast.success("Ton activité est prête !", {
+            position: toast.POSITION.BOTTOM_CENTER
+          });
+        }
         this.setState({
           profile: { ...response.data[0], activities: [] },
           tags: response.data[0].hobbies.split(","),
           description: response.data[0].description
-        })
-      );
+        });
+      });
 
     axios
       .get(`/profile/${this.props.match.params.username}/activitiescreated`, {

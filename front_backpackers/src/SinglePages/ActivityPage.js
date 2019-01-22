@@ -4,6 +4,7 @@ import axios from "axios";
 import Header from "./Header.js";
 import ActivityDetails from "./ActivityDetails";
 import ActivityCaroussel from "./ActivityCaroussel.js";
+import PositionToast from "../Toast/Toastify";
 
 class ActivityPage extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class ActivityPage extends Component {
     return (
       <div>
         <Fragment>
+          <PositionToast />
           {this.props.activity.name ? (
             <Fragment>
               <Header

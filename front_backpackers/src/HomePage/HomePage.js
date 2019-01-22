@@ -19,11 +19,10 @@ import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
 import BurgerButton from "./BurgerButton";
 import Sidebar from "./Sidebar";
-import Position from "../Toast/Toastify";
 
 import "./HomePage.scss";
-import "react-toastify/dist/ReactToastify.css";
 import MapsContainer from "../containers/MapsContainer";
+import PositionToast from "../Toast/Toastify";
 
 class HomePage extends Component {
   constructor() {
@@ -141,7 +140,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className="homePage">
-        <Position />
+        <PositionToast />
         <Row className="blueHeader">
           <Col xs="2">
             <BurgerButton

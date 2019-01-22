@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import ActivityFormContainer from "./ActivityForm";
+import { toast } from "react-toastify";
 
 class CreateActivityPage extends Component {
   constructor(props) {
@@ -30,6 +31,11 @@ class CreateActivityPage extends Component {
         }
       })
       .then(response => {
+        if (response.status === 200) {
+          toast.success("Ton activité est prête !", {
+            position: toast.POSITION.BOTTOM_CENTER
+          });
+        }
         axios.post(`/activities/upload/${response.data.insertId}`, formData, {
           headers: {
             "content-type": "multipart/form-data"

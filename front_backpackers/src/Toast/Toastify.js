@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-class Position extends Component {
+class PositionToast extends Component {
   render() {
     return (
       <div>
@@ -11,4 +12,4 @@ class Position extends Component {
   }
 }
 
-export default Position;
+export default PositionToast;

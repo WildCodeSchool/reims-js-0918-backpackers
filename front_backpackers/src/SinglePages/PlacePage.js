@@ -4,6 +4,7 @@ import axios from "axios";
 import Header from "./Header.js";
 import PlaceDetails from "./PlaceDetails.js";
 import PlaceCaroussel from "./PlaceCaroussel";
+import PositionToast from "../Toast/Toastify";
 
 class PlacePage extends Component {
   componentDidMount() {
@@ -18,6 +19,7 @@ class PlacePage extends Component {
   render() {
     return (
       <Fragment>
+        <PositionToast />
         {this.props.place.name ? (
           <Fragment>
             <Header place={this.props.place.name} />
@@ -25,8 +27,8 @@ class PlacePage extends Component {
             <PlaceDetails place={this.props.place} />
           </Fragment>
         ) : (
-            ""
-          )}
+          ""
+        )}
       </Fragment>
     );
   }
