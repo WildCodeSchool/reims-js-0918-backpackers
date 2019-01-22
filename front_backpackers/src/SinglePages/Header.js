@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Row, Col } from "reactstrap";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import "./SinglePage.scss";
@@ -8,9 +9,15 @@ const Header = props => (
   <Fragment>
     <Row className="blueHeader mb-2 fixed-top px-4">
       <Col xs="1">
-        <button onClick={() => props.goBack()}>
-          <i className="fas fa-chevron-left text-white" />
-        </button>
+        {props.prevPage.length === 0 ? (
+          <Link to="/">
+            <i className="fas fa-chevron-left text-white" />
+          </Link>
+        ) : (
+          <a role="button" onClick={() => props.goBack()}>
+            <i className="fas fa-chevron-left text-white" />
+          </a>
+        )}
       </Col>
       <Col xs="10">
         <p className="text-white text-center mb-0">{props.place}</p>
@@ -24,4 +31,6 @@ const Header = props => (
     </Row>
   </Fragment>
 );
-export default Header;
+export default connect(state => ({
+  prevPage: state.prevPage
+}))(Header);

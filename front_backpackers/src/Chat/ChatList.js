@@ -74,9 +74,15 @@ class ChatList extends Component {
           <Fragment>
             <Row className="blueHeader fixed-top px-4">
               <Col xs="3">
-                <button onClick={() => this.props.history.goBack()}>
-                  <i className="fas fa-chevron-left text-white" />
-                </button>
+                {this.props.prevPage.length === 0 ? (
+                  <Link to="/">
+                    <i className="fas fa-chevron-left text-white" />
+                  </Link>
+                ) : (
+                  <a role="button" onClick={() => this.props.history.goBack()}>
+                    <i className="fas fa-chevron-left text-white" />
+                  </a>
+                )}
               </Col>
               <Col xs="6">
                 <p className="text-white text-center mb-0">Mes conversations</p>
