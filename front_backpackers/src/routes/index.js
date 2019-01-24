@@ -12,6 +12,7 @@ import CreateActivityPage from "../FormPage/CreateActivityPage";
 import CreatePlacePageContainer from "../containers/CreatePlacePageContainer";
 import ActivitesListContainer from "../containers/ActivitiesListContainer";
 import SearchContainer from "../containers/SearchContainer";
+import { Spring } from "react-spring";
 
 class Routes extends Component {
   render() {
@@ -19,12 +20,12 @@ class Routes extends Component {
       <Container fluid>
         {localStorage.getItem("BackpackersToken") ? (
           <Switch>
-            <Route path="/login" component={LoginPage} />
+            <Redirect from="/login" to="/" />
             <Route
               path="/place/:id/newactivity"
               component={CreateActivityPage}
             />
-            <Route path="/signup" component={SignUpPage} />
+            <Redirect from="/signup" to="/" />
             <Route exact path="/" component={HomePageContainer} />
             <Route path="/activity/:id" component={ActivityContainer} />
             <Route path="/place/:id" component={PlaceContainer} />

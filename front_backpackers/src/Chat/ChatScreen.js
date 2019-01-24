@@ -6,6 +6,7 @@ import { Row, Col } from "reactstrap";
 import "./Chat.scss";
 import TypingIndicator from "./UserWhoAreTyping";
 import UsersList from "./UsersList";
+import { Spring } from "react-spring";
 
 class ChatScreen extends Component {
   constructor(props) {
@@ -107,24 +108,33 @@ class ChatScreen extends Component {
             </button>
           </Col>
         </Row>
-        <Row>
-          <Col xs="12" className="d-flex flex-column chatPage">
-            <UsersList
-              users={this.state.currentRoom.users}
-              show={this.state.collapsed}
-              backdropClickHandler={this.toggleNavbar}
-            />
-            <MessageList
-              messages={this.state.messages}
-              currentUser={this.state.currentUser}
-            />
-            <TypingIndicator userWhoAreTyping={this.state.userWhoAreTyping} />
-            <SendMessageForm
-              onSubmit={this.sendMessage}
-              onChange={this.sendTypingEvent}
-            />
-          </Col>
-        </Row>
+        <Spring
+          from={{ position: "relative", left: 100 }}
+          to={{ position: "relative", left: 0 }}
+        >
+          {propsChatScreen => (
+            <Row style={propsChatScreen}>
+              <Col xs="12" className="d-flex flex-column chatPage">
+                <UsersList
+                  users={this.state.currentRoom.users}
+                  show={this.state.collapsed}
+                  backdropClickHandler={this.toggleNavbar}
+                />
+                <MessageList
+                  messages={this.state.messages}
+                  currentUser={this.state.currentUser}
+                />
+                <TypingIndicator
+                  userWhoAreTyping={this.state.userWhoAreTyping}
+                />
+                <SendMessageForm
+                  onSubmit={this.sendMessage}
+                  onChange={this.sendTypingEvent}
+                />
+              </Col>
+            </Row>
+          )}
+        </Spring>
       </div>
     );
   }

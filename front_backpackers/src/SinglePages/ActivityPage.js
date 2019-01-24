@@ -4,6 +4,7 @@ import axios from "axios";
 import Header from "./Header.js";
 import ActivityDetails from "./ActivityDetails";
 import ActivityCaroussel from "./ActivityCaroussel.js";
+import { Spring } from "react-spring";
 
 class ActivityPage extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class ActivityPage extends Component {
   componentDidMount() {
     this.callApiProfile();
     this.callApiActivity();
+    window.scrollTo(0, 0);
   }
 
   callApiActivity() {
@@ -40,16 +42,19 @@ class ActivityPage extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <Fragment>
-          {this.props.activity.name ? (
-            <Fragment>
-              <Header
-                goBack={this.goBack}
-                {...this.props.history}
-                place={this.props.activity.city}
-              />
+    return this.props.activity.name ? (
+      <Fragment>
+        <Header
+          goBack={this.goBack}
+          {...this.props.history}
+          place={this.props.activity.city}
+        />
+        <Spring
+          from={{ opacity: 0, position: "relative", left: 100 }}
+          to={{ opacity: 1, position: "relative", left: 0 }}
+        >
+          {props => (
+            <div style={props}>
               <ActivityCaroussel
                 activity={this.props.activity}
                 profile={this.props.profile}
@@ -60,12 +65,12 @@ class ActivityPage extends Component {
                 activity={this.props.activity}
                 profile={this.props.profile.id}
               />
-            </Fragment>
-          ) : (
-            ""
+            </div>
           )}
-        </Fragment>
-      </div>
+        </Spring>
+      </Fragment>
+    ) : (
+      ""
     );
   }
 }

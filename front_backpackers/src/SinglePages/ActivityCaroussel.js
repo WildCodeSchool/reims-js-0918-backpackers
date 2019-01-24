@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
+
 const ActivityCaroussel = props => (
   <Fragment>
     {props.activity ? (

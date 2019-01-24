@@ -46,6 +46,7 @@ class SearchPage extends Component {
       }
     });
     this.props.getSearchData(resetData, resetResults);
+    this.props.doNewSearch();
     this.forceUpdate();
   }
 

@@ -4,15 +4,19 @@ import axios from "axios";
 import Header from "./Header.js";
 import PlaceDetails from "./PlaceDetails.js";
 import PlaceCaroussel from "./PlaceCaroussel";
+import { Spring } from "react-spring";
 
 class PlacePage extends Component {
   componentDidMount() {
-    axios.get(`/place/${this.props.match.params.id}`).then(response =>
-      this.props.viewPlace({
-        ...response.data[0],
-        activities: response.data.activities
-      })
-    );
+    axios
+      .get(`/place/${this.props.match.params.id}`)
+      .then(response =>
+        this.props.viewPlace({
+          ...response.data[0],
+          activities: response.data.activities
+        })
+      )
+      .then(() => window.scrollTo(0, 0));
   }
 
   goBack() {
@@ -29,8 +33,17 @@ class PlacePage extends Component {
               {...this.props.history}
               place={this.props.place.name}
             />
-            <PlaceCaroussel place={this.props.place} />
-            <PlaceDetails place={this.props.place} />
+            <Spring
+              from={{ opacity: 0, position: "relative", right: 100 }}
+              to={{ opacity: 1, position: "relative", right: 0 }}
+            >
+              {props => (
+                <div style={props}>
+                  <PlaceCaroussel place={this.props.place} />
+                  <PlaceDetails place={this.props.place} />
+                </div>
+              )}
+            </Spring>
           </Fragment>
         ) : (
           ""
