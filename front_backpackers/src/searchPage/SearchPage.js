@@ -83,7 +83,7 @@ class SearchPage extends Component {
       <Fragment>
         <Row className="blueHeader">
           <Col xs="2">
-            {this.state.searchView === "searchForm" ? (
+            {this.props.search.searchView === "searchForm" ? (
               <Link
                 to="/"
                 onClick={this.emptyForm}
@@ -92,7 +92,7 @@ class SearchPage extends Component {
                 <i className="fas fa-chevron-left text-white" />
               </Link>
             ) : (
-              <button onClick={() => this.getSearchView()}>
+              <button onClick={() => this.props.doNewSearch()}>
                 <i className="fas fa-chevron-left text-white" />
               </button>
             )}
@@ -101,7 +101,7 @@ class SearchPage extends Component {
             <p className="text-white text-center mb-0">Rechercher</p>
           </Col>
         </Row>
-        {this.state.searchView === "searchForm" ? (
+        {this.props.search.searchView === "searchForm" ? (
           <SearchActivityForm
             placeNumberValue={this.props.search.searchData.placeNumber}
             emptyForm={this.emptyForm}

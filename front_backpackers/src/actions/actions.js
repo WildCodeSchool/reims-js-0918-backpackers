@@ -17,7 +17,8 @@ import {
   FETCH_ID_ACTIVITY,
   SELECT_PLACE_ADDRESS,
   GET_SEARCH_DATA,
-  GET_MAP_FILTER
+  GET_MAP_FILTER,
+  DO_NEW_SEARCH
 } from "./actionTypes";
 
 export const makeDisplayPlacesAction = () => ({
@@ -109,4 +110,8 @@ export const makeGetSearchDataAction = (searchData, searchResults) => ({
   type: GET_SEARCH_DATA,
   searchData,
   searchResults
+});
+
+export const makeDoNewSearchAction = () => ({
+  type: DO_NEW_SEARCH
 });
