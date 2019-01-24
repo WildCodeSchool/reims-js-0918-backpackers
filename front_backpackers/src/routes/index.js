@@ -12,7 +12,6 @@ import CreateActivityPage from "../FormPage/CreateActivityPage";
 import CreatePlacePageContainer from "../containers/CreatePlacePageContainer";
 import ActivitesListContainer from "../containers/ActivitiesListContainer";
 import SearchContainer from "../containers/SearchContainer";
-import { Spring } from "react-spring";
 
 class Routes extends Component {
   render() {
