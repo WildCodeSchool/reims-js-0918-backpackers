@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import ActivityFormContainer from "./ActivityForm";
 import { toast } from "react-toastify";
+import PositionToast from "../Toast/Toastify";
 
 class CreateActivityPage extends Component {
   constructor(props) {
@@ -57,10 +58,13 @@ class CreateActivityPage extends Component {
   };
   render() {
     return (
-      <ActivityFormContainer
-        uploadFile={this.onChange}
-        onSubmit={this.submit}
-      />
+      <div>
+        <ActivityFormContainer
+          uploadFile={this.onChange}
+          onSubmit={this.submit}
+        />
+        <PositionToast />
+      </div>
     );
   }
 }

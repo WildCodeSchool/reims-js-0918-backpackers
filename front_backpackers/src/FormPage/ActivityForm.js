@@ -3,15 +3,16 @@ import { Row, Col } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 import { Input } from "reactstrap";
+import { toast } from "react-toastify";
 import "./FormPage.scss";
 
 const validate = values => {
   const errors = {};
   if (!values.name) {
-    errors.name = "Required";
+    errors.name = "Veuillez entrer un nom valide !";
   }
   if (!values.capacity) {
-    errors.capacity = "Required";
+    errors.capacity = "Veuillez entrer un nombre de places !";
   }
   return errors;
 };
@@ -24,7 +25,12 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
       type={type}
       className="field w-100 mt-2"
     />
-    {touched && (error && <span className="formRequired">{error}</span>)}
+    {touched &&
+      (error &&
+        toast.error(`${error}`, {
+          position: toast.POSITION.BOTTOM_CENTER
+        }),
+      "")}
   </div>
 );
 
@@ -44,21 +50,6 @@ const ActivityForm = props => {
       </Row>
       <h5 className="text-center pt-3 homeUnderline">Votre annonce</h5>
       <div className="mb-5">
-        {/* <div>  DON'T TOUCH ! ! ! ! ! !
-          <label htmlFor="category">Catégorie</label>
-          <Field type="select" name="category" id="Select" component="select">
-            <option>Apéritifs</option>
-            <option>Aquatique</option>
-            <option>Aventure</option>
-            <option>Bien-être</option>
-            <option>Culturel</option>
-            <option>Déplacements</option>
-            <option>Enfants</option>url
-            <option>Nocturne</option>
-            <option>Restauration</option>
-          </Field>
-        </div> */}
-
         <form onSubmit={handleSubmit}>
           <div>
             <Field
@@ -81,7 +72,7 @@ const ActivityForm = props => {
               name="capacity"
               component={renderField}
               type="number"
-              label="participants"
+              label="Participants"
             />
             <Field
               id="eventDate"
