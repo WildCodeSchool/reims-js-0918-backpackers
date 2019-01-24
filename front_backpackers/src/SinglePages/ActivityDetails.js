@@ -203,7 +203,20 @@ class ActivityDetails extends Component {
                     </div>
                   </Col>
                 </Row>
-
+                <Row>
+                  <Col xs="6">
+                    <p>
+                      <i className="fas fa-calendar pr-1" />
+                      {this.props.activity.eventDate.split("T")[0]}
+                    </p>
+                  </Col>
+                  <Col xs="6">
+                    <p className="text-right">
+                      {this.props.activity.eventTime}
+                      <i className="far fa-clock pl-1" />
+                    </p>
+                  </Col>
+                </Row>
                 <Row>
                   <Col xs="12">
                     <p className="text-justify singleDescr mb-3 p-2">
@@ -218,10 +231,7 @@ class ActivityDetails extends Component {
             <Row className="mapDetails">
               <Col xs="12">
                 {this.state.activeTab === "2" ? (
-                  <MapPlace
-                    lat={this.props.activity.latitude}
-                    long={this.props.activity.longitude}
-                  />
+                  <MapPlace informations={this.props.activity} />
                 ) : (
                   ""
                 )}
@@ -290,14 +300,22 @@ class ActivityDetails extends Component {
                       creator => creator.id === this.props.activity.id_creator
                     )
                     .map((creator, index) => (
-                      <li key={index}>{creator.username} (Créateur)</li>
+                      <li key={index}>
+                        <Link to={`/profil/${creator.username}`}>
+                          {creator.username} (Créateur)
+                        </Link>
+                      </li>
                     ))}
                   {this.state.participants
                     .filter(
                       creator => creator.id !== this.props.activity.id_creator
                     )
                     .map(user => (
-                      <li key={user.id}>{user.username}</li>
+                      <li key={user.id}>
+                        <Link to={`/profil/${user.username}`}>
+                          {user.username}
+                        </Link>
+                      </li>
                     ))}
                 </Fragment>
               )}

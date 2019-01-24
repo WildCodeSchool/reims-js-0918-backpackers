@@ -30,7 +30,7 @@ const PlaceThumbnail = ({
               {city}
             </span>
             <span>
-              <i className="fas fa-calendar pr-1" />
+              <i class="fas fa-archway pr-1" />
               {name}
             </span>
           </Media>
