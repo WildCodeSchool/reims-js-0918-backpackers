@@ -2,22 +2,23 @@ import React, { Component, Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./FormPage.scss";
 import MapPlaceCreation from "./MapPlaceCreation";
 
 const validate = values => {
   const errors = {};
   if (!values.name) {
-    errors.name = "Required";
+    errors.name = "Veuillez entrer un nom valide !";
   }
   if (!values.type) {
-    errors.type = "Required";
+    errors.type = "Veuillez renseigner une catégorie valide ! ";
   }
   if (!values.description) {
-    errors.description = "Required";
+    errors.description = "Veuillez décrire le lieu !";
   }
   if (!values.price) {
-    errors.price = "Required";
+    errors.price = "Veuillez entrer un prix !";
   }
   console.log(errors);
   return errors;
@@ -31,7 +32,12 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
       type={type}
       className="field w-100 mt-2"
     />
-    {touched && (error && <span className="formRequired">{error}</span>)}
+    {touched &&
+      (error &&
+        toast.error(`${error}`, {
+          position: toast.POSITION.BOTTOM_CENTER
+        }),
+      "")}
   </div>
 );
 

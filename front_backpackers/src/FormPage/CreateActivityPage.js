@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import ActivityFormContainer from "./ActivityForm";
+import { toast } from "react-toastify";
+import PositionToast from "../Toast/Toastify";
 
 class CreateActivityPage extends Component {
   constructor(props) {
@@ -30,13 +32,14 @@ class CreateActivityPage extends Component {
         }
       })
       .then(response => {
-        axios.post(
-          `/api/activities/upload/${response.data.insertId}`,
-          formData,
-          {
-            headers: {
-              "content-type": "multipart/form-data"
-            }
+        if (response.status === 200) {
+          toast.success("Ton activité est prête !", {
+            position: toast.POSITION.BOTTOM_CENTER
+          });
+        }
+        axios.post(`/api/activities/upload/${response.data.insertId}`, formData, {
+          headers: {
+            "content-type": "multipart/form-data"
           }
         );
         axios.post(
@@ -55,10 +58,13 @@ class CreateActivityPage extends Component {
   };
   render() {
     return (
-      <ActivityFormContainer
-        uploadFile={this.onChange}
-        onSubmit={this.submit}
-      />
+      <div>
+        <ActivityFormContainer
+          uploadFile={this.onChange}
+          onSubmit={this.submit}
+        />
+        <PositionToast />
+      </div>
     );
   }
 }

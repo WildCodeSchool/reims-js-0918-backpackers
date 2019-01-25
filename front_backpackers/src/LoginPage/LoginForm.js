@@ -3,6 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { Row, Col, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./Login.scss";
+import PositionToast from "../Toast/Toastify";
 
 const validate = values => {
   const errors = {};
@@ -92,6 +93,7 @@ const LoginForm = props => {
           </p>
         </Col>
       </Row>
+      <PositionToast />
     </div>
   );
 };

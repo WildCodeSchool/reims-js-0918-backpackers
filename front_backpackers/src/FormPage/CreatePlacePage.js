@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import PlaceFormContainer from "./PlaceForm";
 import { geolocated } from "react-geolocated";
+import { toast } from "react-toastify";
+import PositionToast from "../Toast/Toastify";
 
 class CreatePlacePage extends Component {
   constructor(props) {
@@ -22,6 +24,12 @@ class CreatePlacePage extends Component {
         }
       })
       .then(response => {
+        if (response.status === 200) {
+          console.log("ok", response.status);
+          toast.success("Le lieu a bien été publié !", {
+            position: toast.POSITION.BOTTOM_CENTER
+          });
+        }
         console.log("response", response);
         axios
           .post(`/api/places/upload/${response.data}`, formData, {
@@ -39,18 +47,22 @@ class CreatePlacePage extends Component {
 
   render() {
     return (
-      <PlaceFormContainer
-        uploadFile={this.onChange}
-        onSubmit={this.submit}
-        getAddress={this.props.getAddress}
-        position={
-          !this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled
-            ? [48.861633, 2.332856]
-            : this.props.coords
-            ? [this.props.coords.latitude, this.props.coords.longitude]
-            : [48.861633, 2.332856]
-        }
-      />
+      <div>
+        <PlaceFormContainer
+          uploadFile={this.onChange}
+          onSubmit={this.submit}
+          getAddress={this.props.getAddress}
+          position={
+            !this.props.isGeolocationAvailable ||
+            !this.props.isGeolocationEnabled
+              ? [48.861633, 2.332856]
+              : this.props.coords
+              ? [this.props.coords.latitude, this.props.coords.longitude]
+              : [48.861633, 2.332856]
+          }
+        />
+        <PositionToast />
+      </div>
     );
   }
 }

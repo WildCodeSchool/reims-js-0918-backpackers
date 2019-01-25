@@ -22,6 +22,7 @@ import Sidebar from "./Sidebar";
 
 import "./HomePage.scss";
 import MapsContainer from "../containers/MapsContainer";
+import PositionToast from "../Toast/Toastify";
 
 class HomePage extends Component {
   constructor() {
@@ -141,6 +142,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className="homePage">
+        <PositionToast />
         <Row className="blueHeader">
           <Col xs="2">
             <BurgerButton
