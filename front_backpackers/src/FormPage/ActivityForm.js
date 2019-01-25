@@ -2,16 +2,17 @@ import React, { Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { Input } from "reactstrap";
+import { toast } from "react-toastify";
 import "./FormPage.scss";
 import { Spring } from "react-spring";
 
 const validate = values => {
   const errors = {};
   if (!values.name) {
-    errors.name = "Required";
+    errors.name = "Veuillez entrer un nom valide !";
   }
   if (!values.capacity) {
-    errors.capacity = "Required";
+    errors.capacity = "Veuillez entrer un nombre de places !";
   }
   return errors;
 };
@@ -24,7 +25,12 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
       type={type}
       className="field w-100 mt-2"
     />
-    {touched && (error && <span className="formRequired">{error}</span>)}
+    {touched &&
+      (error &&
+        toast.error(`${error}`, {
+          position: toast.POSITION.BOTTOM_CENTER
+        }),
+      "")}
   </div>
 );
 

@@ -14,7 +14,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.use("/auth", auth);
+app.use("/api/auth", auth);
 
 const multer = require("multer");
 const upload = multer({
@@ -43,7 +43,7 @@ const currentUserId = 1;
 
 app.use(cors());
 
-app.get("/places", (req, res) => {
+app.get("/api/places", (req, res) => {
   connection.query("SELECT * FROM places", (err, results) => {
     if (err) {
       res.status(500).send("Error retrieving places");
@@ -53,7 +53,7 @@ app.get("/places", (req, res) => {
   });
 });
 
-app.post("/places", (req, res) => {
+app.post("/api/places", (req, res) => {
   const formData = {
     name: req.body.name,
     country: req.body.country,
@@ -76,7 +76,7 @@ app.post("/places", (req, res) => {
   });
 });
 
-app.post("/places/upload/:id", upload.single("monfichier"), (req, res) => {
+app.post("/api/places/upload/:id", upload.single("monfichier"), (req, res) => {
   currentDate = new Date()
     .toLocaleString()
     .split(":")
@@ -85,7 +85,7 @@ app.post("/places/upload/:id", upload.single("monfichier"), (req, res) => {
     .join("-");
   fs.rename(
     req.file.path,
-    "public/images/" + currentDate + req.file.originalname,
+    "public/api/images/" + currentDate + req.file.originalname,
     (err, results) => {
       if (err) {
         res.status(500).send(err);
@@ -107,7 +107,7 @@ app.post("/places/upload/:id", upload.single("monfichier"), (req, res) => {
   );
 });
 
-app.get("/search", (req, res) => {
+app.get("/api/search", (req, res) => {
   const type = req.query.typeChoice;
   const participation = req.query.placeNumber;
   const keywords = req.query.keywords;
@@ -167,7 +167,7 @@ app.get("/search", (req, res) => {
   );
 });
 
-app.get("/activities", (req, res) => {
+app.get("/api/activities", (req, res) => {
   connection.query(
     `SELECT activities.idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
@@ -193,7 +193,7 @@ app.get("/activities", (req, res) => {
 });
 
 app.post(
-  "/activities",
+  "/api/activities",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     chatkit
@@ -228,39 +228,43 @@ app.post(
   }
 );
 
-app.post("/activities/upload/:id", upload.single("monfichier"), (req, res) => {
-  currentDate = new Date()
-    .toLocaleString()
-    .split(":")
-    .join("")
-    .split(" ")
-    .join("-");
-  fs.rename(
-    req.file.path,
-    "public/images/" + currentDate + req.file.originalname,
-    (err, results) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        connection.query(
-          `UPDATE activities SET picture = "${currentDate +
-            req.file.originalname}" WHERE idActivity= ?`,
-          req.params.id,
-          err => {
-            if (err) {
-              console.log("err", err);
-            } else {
-              res.json(results);
+app.post(
+  "/api/activities/upload/:id",
+  upload.single("monfichier"),
+  (req, res) => {
+    currentDate = new Date()
+      .toLocaleString()
+      .split(":")
+      .join("")
+      .split(" ")
+      .join("-");
+    fs.rename(
+      req.file.path,
+      "public/api/images/" + currentDate + req.file.originalname,
+      (err, results) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          connection.query(
+            `UPDATE activities SET picture = "${currentDate +
+              req.file.originalname}" WHERE idActivity= ?`,
+            req.params.id,
+            err => {
+              if (err) {
+                console.log("err", err);
+              } else {
+                res.json(results);
+              }
             }
-          }
-        );
+          );
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 app.post(
-  "/participate/:idActivity",
+  "/api/participate/:idActivity",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const idActivity = req.params.idActivity;
@@ -286,7 +290,7 @@ app.post(
 );
 
 app.post(
-  "/participate/remove/:idActivity",
+  "/api/participate/remove/:idActivity",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -311,7 +315,7 @@ app.post(
   }
 );
 
-app.get("/activity/:id", (req, res) => {
+app.get("/api/activity/:id", (req, res) => {
   const idActivity = req.params.id;
   connection.query(
     `SELECT activities.idActivity, activities.name, id_creator, activities.price,
@@ -343,7 +347,7 @@ app.get("/activity/:id", (req, res) => {
   );
 });
 
-app.get("/activity/:id/participants", (req, res) => {
+app.get("/api/activity/:id/participants", (req, res) => {
   const idActivity = req.params.id;
   connection.query(
     `SELECT username, id FROM users JOIN participation ON users.id = participation.idUser WHERE participation.idActivity = ?`,
@@ -358,7 +362,7 @@ app.get("/activity/:id/participants", (req, res) => {
   );
 });
 
-app.get("/place/:id", (req, res) => {
+app.get("/api/place/:id", (req, res) => {
   const idPlace = req.params.id;
   connection.query(
     `SELECT * FROM places WHERE id =? `,
@@ -401,7 +405,7 @@ app.get("/place/:id", (req, res) => {
 });
 
 app.get(
-  "/profile",
+  "/api/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -427,7 +431,7 @@ app.get(
 );
 
 app.get(
-  "/profile/:username",
+  "/api/profile/:username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -446,7 +450,7 @@ app.get(
 );
 
 app.get(
-  "/profile/:username/activitiescreated",
+  "/api/profile/:username/activitiescreated",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -465,7 +469,7 @@ app.get(
 );
 
 app.get(
-  "/profile/:id/activities",
+  "/api/profile/:id/activities",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -496,7 +500,7 @@ app.get(
   }
 );
 
-app.get("/profile/favorite", (req, res) => {
+app.get("/api/profile/favorite", (req, res) => {
   connection.query(
     "SELECT favorite FROM users WHERE idUser = ?",
     currentUserId,
@@ -510,7 +514,7 @@ app.get("/profile/favorite", (req, res) => {
   );
 });
 
-app.post("/profile/signup", (req, res) => {
+app.post("/api/profile/signup", (req, res) => {
   const formData = req.body;
   connection.query("INSERT INTO users SET ?", formData, (err, results) => {
     if (err) {
@@ -523,7 +527,7 @@ app.post("/profile/signup", (req, res) => {
 });
 
 app.post(
-  "/profile/:username",
+  "/api/profile/:username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
@@ -543,7 +547,7 @@ app.post(
 );
 
 app.post(
-  "/profile/:username/upload",
+  "/api/profile/:username/upload",
   upload.single("monfichier"),
   (req, res) => {
     currentDate = new Date()
@@ -554,7 +558,7 @@ app.post(
       .join("-");
     fs.rename(
       req.file.path,
-      "public/images/" + currentDate + req.file.originalname,
+      "public/api/images/" + currentDate + req.file.originalname,
       (err, results) => {
         if (err) {
           res.status(500).send(err);
@@ -578,7 +582,7 @@ app.post(
   }
 );
 
-app.post("/users", (req, res) => {
+app.post("/api/users", (req, res) => {
   chatkit
     .createUser({
       name: req.body.username,
@@ -594,7 +598,7 @@ app.post("/users", (req, res) => {
     });
 });
 
-app.post("/authenticate", (req, res) => {
+app.post("/api/authenticate", (req, res) => {
   const authData = chatkit.authenticate({
     userId: req.query.user_id
   });

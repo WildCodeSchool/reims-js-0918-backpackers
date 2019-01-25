@@ -4,6 +4,7 @@ import { Row, Col, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Spring } from "react-spring";
 import "./Login.scss";
+import PositionToast from "../Toast/Toastify";
 
 const validate = values => {
   const errors = {};
@@ -100,6 +101,7 @@ const LoginForm = props => {
                 </p>
               </Col>
             </Row>
+            <PositionToast />
           </div>
         )}
       </Spring>

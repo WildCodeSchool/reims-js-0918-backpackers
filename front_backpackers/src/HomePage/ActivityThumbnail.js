@@ -33,8 +33,8 @@ const ActivityThumbnail = ({
                   object
                   src={
                     pictureActivity
-                      ? `http://localhost:3010/images/${pictureActivity}`
-                      : `http://localhost:3010/images/${picturePlace}`
+                      ? `http://localhost:3010/api/images/${pictureActivity}`
+                      : `http://localhost:3010/api/images/${picturePlace}`
                   }
                   alt="picture of activity"
                   className="activityPicture"

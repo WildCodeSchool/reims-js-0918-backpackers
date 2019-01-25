@@ -6,10 +6,12 @@ import PlaceDetails from "./PlaceDetails.js";
 import PlaceCaroussel from "./PlaceCaroussel";
 import { Spring } from "react-spring";
 
+import PositionToast from "../Toast/Toastify";
+
 class PlacePage extends Component {
   componentDidMount() {
     axios
-      .get(`/place/${this.props.match.params.id}`)
+      .get(`/api/place/${this.props.match.params.id}`)
       .then(response =>
         this.props.viewPlace({
           ...response.data[0],
@@ -26,6 +28,7 @@ class PlacePage extends Component {
   render() {
     return (
       <Fragment>
+        <PositionToast />
         {this.props.place.name ? (
           <Fragment>
             <Header

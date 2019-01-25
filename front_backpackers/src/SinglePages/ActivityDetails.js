@@ -41,7 +41,7 @@ class ActivityDetails extends Component {
   activeParticipation() {
     axios
       .post(
-        `/participate/${this.props.activity.idActivity}`,
+        `/api/participate/${this.props.activity.idActivity}`,
         { idChat: this.props.activity.idChat },
         {
           headers: {
@@ -58,7 +58,7 @@ class ActivityDetails extends Component {
   callApiIdActivity() {
     const participations = [];
     axios
-      .get(`/profile/${this.props.profile}/activities`, {
+      .get(`/api/profile/${this.props.profile}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -73,7 +73,7 @@ class ActivityDetails extends Component {
   callApiParticipants() {
     const participant = [];
     axios
-      .get(`/activity/${this.props.activity.idActivity}/participants`)
+      .get(`/api/activity/${this.props.activity.idActivity}/participants`)
       .then(response => response.data.map(user => participant.push(user)))
       .then(() => this.setState({ participants: participant }));
   }
@@ -81,7 +81,7 @@ class ActivityDetails extends Component {
   desinscriptionParticipation() {
     axios
       .post(
-        `/participate/remove/${this.props.activity.idActivity}`,
+        `/api/participate/remove/${this.props.activity.idActivity}`,
         { idChat: this.props.activity.idChat },
         {
           headers: {

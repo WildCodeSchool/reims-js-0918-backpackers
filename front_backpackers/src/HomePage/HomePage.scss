@@ -168,3 +168,21 @@
   height: 50px;
   box-shadow: none;
 }
+
+.Toastify__close-button.Toastify__close-button--success {
+  width: 20px;
+}
+
+.Toastify__toast.Toastify__toast--success {
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 20px;
+}
+
+.Toastify__toast-body {
+  text-align: center;
+}
+
+.Toastify__toast-container.Toastify__toast-container--bottom-center {
+  margin-bottom: 25px;
+}
