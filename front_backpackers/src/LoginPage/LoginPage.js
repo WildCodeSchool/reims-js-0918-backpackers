@@ -8,7 +8,7 @@ class LoginPage extends Component {
   submit = logs => {
     const log = logs;
     axios
-      .post("/auth/login", { mail: log.mail, password: log.password })
+      .post("/api/auth/login", { mail: log.mail, password: log.password })
       .then(response => {
         localStorage.setItem("BackpackersToken", response.data.token);
         this.props.history.push("/");

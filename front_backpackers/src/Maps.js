@@ -31,14 +31,14 @@ class Maps extends Component {
 
       const myIcon = L.icon({
         className: "myMarker",
-        iconUrl: `http://localhost:3010/images/${
+        iconUrl: `http://localhost:3010/api/images/${
           this.props.profile[0].picture
             ? this.props.profile[0].picture
             : "default.png"
         }`,
         iconSize: [30, 30],
         shadowUrl: "/images/marker_shadow.png",
-        shadowSize: [60, 50]
+        shadowSize: [60, 30]
       });
       L.marker(this.props.map.coords, { icon: myIcon }).addTo(map);
     }

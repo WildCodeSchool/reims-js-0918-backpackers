@@ -8,7 +8,7 @@ class SignUpPage extends Component {
     const user = users;
     JSON.stringify(user);
     axios
-      .post("/auth/signup", user, {
+      .post("/api/auth/signup", user, {
         method: "POST",
         headers: new Headers({
           "Content-Type": "application/json"

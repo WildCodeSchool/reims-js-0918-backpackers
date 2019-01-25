@@ -41,7 +41,7 @@ class ActivityDetails extends Component {
   activeParticipation() {
     axios
       .post(
-        `/participate/${this.props.activity.idActivity}`,
+        `/api/participate/${this.props.activity.idActivity}`,
         { idChat: this.props.activity.idChat },
         {
           headers: {
@@ -58,7 +58,7 @@ class ActivityDetails extends Component {
   callApiIdActivity() {
     const participations = [];
     axios
-      .get(`/profile/${this.props.profile}/activities`, {
+      .get(`/api/profile/${this.props.profile}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -73,7 +73,7 @@ class ActivityDetails extends Component {
   callApiParticipants() {
     const participant = [];
     axios
-      .get(`/activity/${this.props.activity.idActivity}/participants`)
+      .get(`/api/activity/${this.props.activity.idActivity}/participants`)
       .then(response => response.data.map(user => participant.push(user)))
       .then(() => this.setState({ participants: participant }));
   }
@@ -81,7 +81,7 @@ class ActivityDetails extends Component {
   desinscriptionParticipation() {
     axios
       .post(
-        `/participate/remove/${this.props.activity.idActivity}`,
+        `/api/participate/remove/${this.props.activity.idActivity}`,
         { idChat: this.props.activity.idChat },
         {
           headers: {
@@ -203,7 +203,20 @@ class ActivityDetails extends Component {
                     </div>
                   </Col>
                 </Row>
-
+                <Row>
+                  <Col xs="6">
+                    <p>
+                      <i className="fas fa-calendar pr-1" />
+                      {this.props.activity.eventDate.split("T")[0]}
+                    </p>
+                  </Col>
+                  <Col xs="6">
+                    <p className="text-right">
+                      {this.props.activity.eventTime}
+                      <i className="far fa-clock pl-1" />
+                    </p>
+                  </Col>
+                </Row>
                 <Row>
                   <Col xs="12">
                     <p className="text-justify singleDescr mb-3 p-2">
@@ -218,10 +231,7 @@ class ActivityDetails extends Component {
             <Row className="mapDetails">
               <Col xs="12">
                 {this.state.activeTab === "2" ? (
-                  <MapPlace
-                    lat={this.props.activity.latitude}
-                    long={this.props.activity.longitude}
-                  />
+                  <MapPlace informations={this.props.activity} />
                 ) : (
                   ""
                 )}
@@ -290,14 +300,22 @@ class ActivityDetails extends Component {
                       creator => creator.id === this.props.activity.id_creator
                     )
                     .map((creator, index) => (
-                      <li key={index}>{creator.username} (Créateur)</li>
+                      <li key={index}>
+                        <Link to={`/profil/${creator.username}`}>
+                          {creator.username} (Créateur)
+                        </Link>
+                      </li>
                     ))}
                   {this.state.participants
                     .filter(
                       creator => creator.id !== this.props.activity.id_creator
                     )
                     .map(user => (
-                      <li key={user.id}>{user.username}</li>
+                      <li key={user.id}>
+                        <Link to={`/profil/${user.username}`}>
+                          {user.username}
+                        </Link>
+                      </li>
                     ))}
                 </Fragment>
               )}

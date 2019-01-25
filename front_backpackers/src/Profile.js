@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Button, Badge } from "reactstrap";
+import { Row, Col, Button, Badge, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
@@ -25,7 +25,7 @@ class Profile extends Component {
   componentDidMount() {
     if (!this.props.profile[0]) {
       axios
-        .get(`/profile`, {
+        .get(`/api/profile`, {
           headers: {
             accept: "application/json",
             authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -36,7 +36,7 @@ class Profile extends Component {
         );
     }
     axios
-      .get(`/profile/${this.props.match.params.username}`, {
+      .get(`/api/profile/${this.props.match.params.username}`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -51,19 +51,22 @@ class Profile extends Component {
       });
 
     axios
-      .get(`/profile/${this.props.match.params.username}/activitiescreated`, {
-        headers: {
-          accept: "application/json",
-          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+      .get(
+        `/api/profile/${this.props.match.params.username}/activitiescreated`,
+        {
+          headers: {
+            accept: "application/json",
+            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+          }
         }
-      })
+      )
       .then(response =>
         this.setState({
           profile: { ...this.state.profile, activities: response.data }
         })
       );
     axios
-      .get(`/profile/${this.props.match.params.username}/activities`, {
+      .get(`/api/profile/${this.props.match.params.username}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -106,7 +109,7 @@ class Profile extends Component {
     formData.append("monfichier", this.state.file);
     axios
       .post(
-        `/profile/${this.state.profile.username}`,
+        `/api/profile/${this.state.profile.username}`,
         { description: this.state.description, hobbies: hobby },
         {
           headers: {
@@ -122,7 +125,7 @@ class Profile extends Component {
         }
         if (this.state.file) {
           axios.post(
-            `/profile/${this.state.profile.username}/upload`,
+            `/api/profile/${this.state.profile.username}/upload`,
             formData,
             {
               headers: {
@@ -184,10 +187,10 @@ class Profile extends Component {
                           className="rounded-circle preview"
                           src={
                             this.state.profile.picture
-                              ? `http://localhost:3010/images/${
+                              ? `http://localhost:3010/api/images/${
                                   this.state.profile.picture
                                 }`
-                              : `http://localhost:3010/images/default.png`
+                              : `http://localhost:3010/api/images/default.png`
                           }
                           alt="Profile"
                         />
@@ -200,10 +203,10 @@ class Profile extends Component {
                       className="rounded-circle preview"
                       src={
                         this.state.profile.picture
-                          ? `http://localhost:3010/images/${
+                          ? `http://localhost:3010/api/images/${
                               this.state.profile.picture
                             }`
-                          : `http://localhost:3010/images/default.png`
+                          : `http://localhost:3010/api/images/default.png`
                       }
                       alt="Profile"
                     />
@@ -243,9 +246,10 @@ class Profile extends Component {
                 {this.state.modify ? (
                   <Col xs={{ size: 8, offset: 2 }}>
                     <div className="align-center">
-                      <input
+                      <Input
                         value={this.state.description}
-                        type="text"
+                        type="textarea"
+                        placeholder="Renseigne ta description"
                         onChange={e => this.handleDescription(e)}
                       />
                     </div>
@@ -253,10 +257,6 @@ class Profile extends Component {
                 ) : this.state.profile.description ? (
                   <Col xs={{ size: 8, offset: 2 }} className="text-center">
                     <p className="mb-0">{this.state.profile.description}</p>
-                  </Col>
-                ) : this.state.profile.description === null ? (
-                  <Col xs={{ size: 8, offset: 2 }} className="text-center">
-                    <p className="mb-0">Aucune description renseignée.</p>
                   </Col>
                 ) : (
                   <Col xs={{ size: 8, offset: 2 }} className="text-center">
