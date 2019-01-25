@@ -1,8 +1,3 @@
-const removeLast = state => {
-  state.pop();
-  return state;
-};
-
 const prevPageReducer = (previousState = [], action) => {
   switch (action.type) {
     case "@@router/LOCATION_CHANGE":
