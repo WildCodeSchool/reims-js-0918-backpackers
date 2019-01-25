@@ -55,7 +55,7 @@ class CreateActivityPage extends Component {
         this.props.history.push(`/activity/${response.data.insertId}`);
       })
       .then(() =>
-        toast.success("Le lieu a bien été publié !", {
+        toast.success("L'activité a bien été publié !", {
           position: toast.POSITION.BOTTOM_CENTER
         })
       );

@@ -75,7 +75,7 @@ class SearchPage extends Component {
       .map(data => data + "=" + searchData[data])
       .join("&");
     axios
-      .get(`/search?` + searchQuery)
+      .get(`/api/search?` + searchQuery)
       .then(response => this.props.getSearchData(searchData, response.data));
   };
 
