@@ -4,6 +4,7 @@ import axios from "axios";
 import Header from "./Header.js";
 import ActivityDetails from "./ActivityDetails";
 import ActivityCaroussel from "./ActivityCaroussel.js";
+import PositionToast from "../Toast/Toastify";
 
 class ActivityPage extends Component {
   constructor(props) {
@@ -20,13 +21,13 @@ class ActivityPage extends Component {
 
   callApiActivity() {
     axios
-      .get(`/activity/${this.props.match.params.id}`)
+      .get(`/api/activity/${this.props.match.params.id}`)
       .then(response => this.props.viewActivity(response.data[0]));
   }
 
   callApiProfile() {
     axios
-      .get("/profile", {
+      .get("/api/profile", {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -43,6 +44,7 @@ class ActivityPage extends Component {
     return (
       <div>
         <Fragment>
+          <PositionToast />
           {this.props.activity.name ? (
             <Fragment>
               <Header

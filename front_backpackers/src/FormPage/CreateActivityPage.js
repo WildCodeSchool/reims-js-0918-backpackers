@@ -1,6 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "axios";
 import ActivityFormContainer from "./ActivityForm";
+import { toast } from "react-toastify";
+import PositionToast from "../Toast/Toastify";
 
 class CreateActivityPage extends Component {
   constructor(props) {
@@ -24,19 +26,23 @@ class CreateActivityPage extends Component {
     const formData = new FormData();
     formData.append("monfichier", this.file);
     axios
-      .post("/activities", activity, {
+      .post("/api/activities", activity, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
       .then(response => {
-        axios.post(`/activities/upload/${response.data.insertId}`, formData, {
-          headers: {
-            "content-type": "multipart/form-data"
-          }
-        });
         axios.post(
-          `/participate/${response.data.insertId}`,
+          `/api/activities/upload/${response.data.insertId}`,
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data"
+            }
+          }
+        );
+        axios.post(
+          `/api/participate/${response.data.insertId}`,
           { idChat: response.data.id },
           {
             headers: {
@@ -47,19 +53,27 @@ class CreateActivityPage extends Component {
           }
         );
         this.props.history.push(`/activity/${response.data.insertId}`);
-      });
+      })
+      .then(() =>
+        toast.success("Le lieu a bien été publié !", {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+      );
   };
   goBack() {
     this.props.history.goBack();
   }
   render() {
     return (
-      <ActivityFormContainer
-        goBack={this.goBack}
-        {...this.props.history}
-        uploadFile={this.onChange}
-        onSubmit={this.submit}
-      />
+      <div>
+        <ActivityFormContainer
+          goBack={this.goBack}
+          {...this.props.history}
+          uploadFile={this.onChange}
+          onSubmit={this.submit}
+        />
+        <PositionToast />
+      </div>
     );
   }
 }

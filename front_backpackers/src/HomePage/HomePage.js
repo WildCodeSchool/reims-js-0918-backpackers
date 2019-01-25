@@ -22,6 +22,7 @@ import Sidebar from "./Sidebar";
 
 import "./HomePage.scss";
 import MapsContainer from "../containers/MapsContainer";
+import PositionToast from "../Toast/Toastify";
 
 class HomePage extends Component {
   constructor() {
@@ -50,18 +51,18 @@ class HomePage extends Component {
 
   callApiProfile() {
     axios
-      .get(`/profile`, {
+      .get(`/api/profile`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response =>
-        this.props.viewProfile([{ ...response.data[0], activities: [] }])
-      )
+      .then(response => {
+        this.props.viewProfile([{ ...response.data[0], activities: [] }]);
+      })
       .then(() =>
         axios
-          .post("/users", {
+          .post("/api/users", {
             username: this.props.profile[0].username
           })
           .catch(error => {
@@ -73,7 +74,7 @@ class HomePage extends Component {
           instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
           userId: this.props.profile[0].username,
           tokenProvider: new Chatkit.TokenProvider({
-            url: "/authenticate"
+            url: "/api/authenticate"
           })
         });
         chatManager.connect().then(currentUser => {
@@ -83,12 +84,14 @@ class HomePage extends Component {
   }
 
   callApiPlaces() {
-    axios.get("/places").then(response => this.props.viewPlaces(response.data));
+    axios
+      .get("/api/places")
+      .then(response => this.props.viewPlaces(response.data));
   }
 
   callApiParticipation() {
     axios
-      .get(`/profile/${this.props.profile.id}/activities`, {
+      .get(`/api/profile/${this.props.profile.id}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -99,7 +102,7 @@ class HomePage extends Component {
 
   callApiActivities() {
     axios
-      .get("/activities")
+      .get("/api/activities")
       .then(response => this.props.viewActivities(response.data));
     // .then(() =>
     //   console.log(
@@ -139,6 +142,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className="homePage">
+        <PositionToast />
         <Row className="blueHeader">
           <Col xs="2">
             <BurgerButton

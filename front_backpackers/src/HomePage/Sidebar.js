@@ -27,8 +27,8 @@ class Sidebar extends Component {
                 className="rounded-circle"
                 src={
                   this.props.picture
-                    ? `http://localhost:3010/images/${this.props.picture}`
-                    : `http://localhost:3010/images/default.png`
+                    ? `http://localhost:3010/api/images/${this.props.picture}`
+                    : `http://localhost:3010/api/images/default.png`
                 }
                 alt="Profile"
               />

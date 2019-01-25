@@ -3,6 +3,8 @@ import { Row, Col, Button, Badge, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
+import { toast } from "react-toastify";
+import PositionToast from "./Toast/Toastify";
 
 import ActivityThumbnail from "./HomePage/ActivityThumbnail";
 
@@ -23,7 +25,7 @@ class Profile extends Component {
   componentDidMount() {
     if (!this.props.profile[0]) {
       axios
-        .get(`/profile`, {
+        .get(`/api/profile`, {
           headers: {
             accept: "application/json",
             authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -34,34 +36,37 @@ class Profile extends Component {
         );
     }
     axios
-      .get(`/profile/${this.props.match.params.username}`, {
+      .get(`/api/profile/${this.props.match.params.username}`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response =>
+      .then(response => {
         this.setState({
           profile: { ...response.data[0], activities: [] },
           tags: response.data[0].hobbies.split(","),
           description: response.data[0].description
-        })
-      );
+        });
+      });
 
     axios
-      .get(`/profile/${this.props.match.params.username}/activitiescreated`, {
-        headers: {
-          accept: "application/json",
-          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+      .get(
+        `/api/profile/${this.props.match.params.username}/activitiescreated`,
+        {
+          headers: {
+            accept: "application/json",
+            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+          }
         }
-      })
+      )
       .then(response =>
         this.setState({
           profile: { ...this.state.profile, activities: response.data }
         })
       );
     axios
-      .get(`/profile/${this.props.match.params.username}/activities`, {
+      .get(`/api/profile/${this.props.match.params.username}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -104,7 +109,7 @@ class Profile extends Component {
     formData.append("monfichier", this.state.file);
     axios
       .post(
-        `/profile/${this.state.profile.username}`,
+        `/api/profile/${this.state.profile.username}`,
         { description: this.state.description, hobbies: hobby },
         {
           headers: {
@@ -112,19 +117,24 @@ class Profile extends Component {
           }
         }
       )
-      .then(response =>
-        this.state.file
-          ? axios.post(
-              `/profile/${this.state.profile.username}/upload`,
-              formData,
-              {
-                headers: {
-                  "content-type": "multipart/form-data"
-                }
+      .then(response => {
+        if (response.status === 200) {
+          toast.success("Ton profil a bien été changé !", {
+            position: toast.POSITION.BOTTOM_CENTER
+          });
+        }
+        if (this.state.file) {
+          axios.post(
+            `/api/profile/${this.state.profile.username}/upload`,
+            formData,
+            {
+              headers: {
+                "content-type": "multipart/form-data"
               }
-            )
-          : ""
-      )
+            }
+          );
+        }
+      })
       .then(this.setState({ modify: false }))
       .then(() => this.componentDidMount());
   }
@@ -133,6 +143,7 @@ class Profile extends Component {
     let { imagePreviewUrl } = this.state;
     return (
       <Fragment>
+        <PositionToast />
         <Row>
           <Col xs="4" className="mt-4">
             <button
@@ -176,10 +187,10 @@ class Profile extends Component {
                           className="rounded-circle preview"
                           src={
                             this.state.profile.picture
-                              ? `http://localhost:3010/images/${
+                              ? `http://localhost:3010/api/images/${
                                   this.state.profile.picture
                                 }`
-                              : `http://localhost:3010/images/default.png`
+                              : `http://localhost:3010/api/images/default.png`
                           }
                           alt="Profile"
                         />
@@ -192,10 +203,10 @@ class Profile extends Component {
                       className="rounded-circle preview"
                       src={
                         this.state.profile.picture
-                          ? `http://localhost:3010/images/${
+                          ? `http://localhost:3010/api/images/${
                               this.state.profile.picture
                             }`
-                          : `http://localhost:3010/images/default.png`
+                          : `http://localhost:3010/api/images/default.png`
                       }
                       alt="Profile"
                     />

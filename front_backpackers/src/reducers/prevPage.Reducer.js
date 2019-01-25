@@ -9,7 +9,7 @@ const prevPageReducer = (previousState = [], action) => {
       return action.payload.action === "PUSH"
         ? [...previousState, action.payload]
         : previousState.length > 0
-        ? removeLast(previousState)
+        ? previousState.slice(0, -1)
         : previousState;
     default:
       return previousState;

@@ -65,3 +65,21 @@ h1 {
     color: #111;
   }
 }
+
+.Toastify__toast-container.Toastify__toast-container--bottom-center {
+  margin-bottom: 25px;
+}
+
+.Toastify__close-button.Toastify__close-button--error {
+  width: 20px;
+}
+
+.Toastify__toast.Toastify__toast--error {
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 20px;
+}
+
+.Toastify__toast-body {
+  text-align: center;
+}
