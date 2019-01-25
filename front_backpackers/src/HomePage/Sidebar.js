@@ -27,8 +27,8 @@ class Sidebar extends Component {
                 className="rounded-circle"
                 src={
                   this.props.picture
-                    ? `http://localhost:3010/images/${this.props.picture}`
-                    : `http://localhost:3010/images/default.png`
+                    ? `http://localhost:3010/api/images/${this.props.picture}`
+                    : `http://localhost:3010/api/images/default.png`
                 }
                 alt="Profile"
               />
@@ -120,7 +120,7 @@ class Sidebar extends Component {
                   to="/login"
                   className="pl-0 my-1"
                 >
-                  <i class="mr-2 fas fa-sign-in-alt" />
+                  <i className="mr-2 fas fa-sign-in-alt" />
                   Se connecter
                 </NavLink>
               </NavItem>

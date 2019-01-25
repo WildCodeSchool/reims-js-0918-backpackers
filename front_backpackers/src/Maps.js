@@ -31,7 +31,7 @@ class Maps extends Component {
 
       const myIcon = L.icon({
         className: "myMarker",
-        iconUrl: `http://localhost:3010/images/${
+        iconUrl: `http://localhost:3010/api/images/${
           this.props.profile[0].picture
             ? this.props.profile[0].picture
             : "default.png"

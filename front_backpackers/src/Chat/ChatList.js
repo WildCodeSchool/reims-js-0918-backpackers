@@ -21,7 +21,7 @@ class ChatList extends Component {
 
   componentDidMount() {
     axios
-      .get("/profile", {
+      .get("/api/profile", {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -30,7 +30,7 @@ class ChatList extends Component {
       .then(response => this.props.viewProfile(response.data))
       .then(() =>
         axios
-          .post("/users", {
+          .post("/api/users", {
             username: this.props.profile[0].username
           })
           .catch(error => {
@@ -42,7 +42,7 @@ class ChatList extends Component {
           instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
           userId: this.props.profile[0].username,
           tokenProvider: new Chatkit.TokenProvider({
-            url: "/authenticate"
+            url: "/api/authenticate"
           })
         });
         chatManager.connect().then(currentUser => {
@@ -88,21 +88,21 @@ class ChatList extends Component {
                 this.state.currentUser.rooms.length === 0 ? (
                   <p>vous n'êtes inscrit à aucune activité</p>
                 ) : (
-                    this.state.currentUser.rooms.map((room, index) => (
-                      <button
-                        onClick={() => this.viewChat(room)}
-                        key={index}
-                        className="my-2"
-                      >
-                        {room.name}
-                      </button>
-                    ))
-                  )
+                  this.state.currentUser.rooms.map((room, index) => (
+                    <button
+                      onClick={() => this.viewChat(room)}
+                      key={index}
+                      className="my-2"
+                    >
+                      {room.name}
+                    </button>
+                  ))
+                )
               ) : (
-                  <p className="text-center my-3">
-                    <i className="fas fa-spinner fa-spin" />
-                  </p>
-                )}
+                <p className="text-center my-3">
+                  <i className="fas fa-spinner fa-spin" />
+                </p>
+              )}
               <div className="homeUnderline" />
             </div>
           </Fragment>
@@ -115,8 +115,8 @@ class ChatList extends Component {
             changeView={this.viewChatList}
           />
         ) : (
-              ""
-            )}
+          ""
+        )}
       </Fragment>
     );
   }
