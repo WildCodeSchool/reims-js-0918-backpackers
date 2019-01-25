@@ -486,7 +486,7 @@ app.get(
     ON participation.idUser = users.id
     LEFT JOIN places
     ON activities.id_place = places.id
-    WHERE participation.idUser = ?
+    WHERE users.username = ?
     GROUP BY activities.idActivity`,
       req.user.id,
       (err, results) => {
