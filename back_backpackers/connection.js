@@ -323,7 +323,7 @@ app.get("/api/activity/:id", (req, res) => {
             (activities.description) AS descriptionActivity, id_place,
             activities.contact, eventDate, eventTime, users.id, country, city,DATEDIFF(eventDate, CURRENT_TIMESTAMP) as date_diff,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
-            (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username
+            (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username, users.picture as creator_picture
     FROM activities 
     INNER JOIN places 
     ON activities.id_place = places.id
@@ -486,7 +486,7 @@ app.get(
     ON participation.idUser = users.id
     LEFT JOIN places
     ON activities.id_place = places.id
-    WHERE users.username = ?
+    WHERE users.id = ?
     GROUP BY activities.idActivity`,
       req.user.id,
       (err, results) => {

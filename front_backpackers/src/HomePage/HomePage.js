@@ -31,8 +31,8 @@ class HomePage extends Component {
     this.state = {
       dropdownOpen: false,
       collapsed: true,
-      activeTab: "1",
-      idParticipation: []
+      activeTab: "1"
+      // idParticipation: []
     };
     this.toggle = this.toggle.bind(this);
     this.toggleMap = this.toggleMap.bind(this);
@@ -43,11 +43,11 @@ class HomePage extends Component {
 
   componentDidMount() {
     this.callApiProfile();
-    this.props.fetchActivities();
+    //  this.props.fetchActivities();
     this.callApiActivities();
-    this.props.fetchPlaces();
+    // this.props.fetchPlaces();
     this.callApiPlaces();
-    this.callApiParticipation();
+    // this.callApiParticipation();
   }
 
   callApiProfile() {

@@ -35,6 +35,7 @@ const renderField = ({
 class SearchActivityForm extends Component {
   constructor(props) {
     super(props);
+    this.resetForm = this.resetForm.bind(this);
     this.addCount = this.addCount.bind(this);
     this.removeCount = this.removeCount.bind(this);
     this.state = {
@@ -66,6 +67,11 @@ class SearchActivityForm extends Component {
 
   clickSubmit(e) {
     e.preventDefault();
+  }
+
+  resetForm() {
+    this.props.emptyForm();
+    this.props.reset();
   }
 
   render() {
@@ -444,7 +450,7 @@ class SearchActivityForm extends Component {
                 <Col xs="4">
                   <button
                     type="button"
-                    onClick={() => (this.props.emptyForm(), this.props.reset())}
+                    onClick={() => this.resetForm()}
                     disabled={this.props.submitting}
                     className="resetBtn mt-4"
                   >

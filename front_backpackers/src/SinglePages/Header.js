@@ -13,6 +13,12 @@ const Header = props => (
           <Link to="/">
             <i className="fas fa-chevron-left text-white" />
           </Link>
+        ) : props.prevPage[
+            props.prevPage.length - 2
+          ].location.pathname.endsWith("newactivity") ? (
+          <Link to="/">
+            <i className="fas fa-chevron-left text-white" />
+          </Link>
         ) : (
           <a role="button" onClick={() => props.goBack()}>
             <i className="fas fa-chevron-left text-white" />

@@ -18,7 +18,11 @@ class ActivitiesList extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response => this.props.viewActivities(response.data));
+      .then(response =>
+        this.props.viewActivities(
+          response.data.filter(activity => activity.date_diff >= 0)
+        )
+      );
   }
 
   render() {
