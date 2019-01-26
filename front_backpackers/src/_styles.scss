@@ -25,6 +25,14 @@ $peachColor: #ff896d;
     overflow: hidden;
     height: 100%;
   }
+  button,
+  a {
+    padding: 0px;
+    height: 100%;
+    font-size: 1.2rem;
+    display: block;
+    text-align: center;
+  }
 }
 
 .greenHeader {

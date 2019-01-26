@@ -29,12 +29,12 @@ class ActivitiesList extends Component {
     return (
       <Fragment>
         <Row className="blueHeader mb-2 px-4">
-          <Col xs="3">
+          <Col xs="2">
             <Link to="/">
               <i className="fas fa-chevron-left text-white" />
             </Link>
           </Col>
-          <Col xs="6">
+          <Col xs="8">
             <p className="text-white text-center mb-0">Activités inscrites</p>
           </Col>
         </Row>

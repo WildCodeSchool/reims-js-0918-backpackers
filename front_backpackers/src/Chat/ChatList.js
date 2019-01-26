@@ -79,26 +79,23 @@ class ChatList extends Component {
                   {props => (
                     <div style={props}>
                       <Row className="blueHeader fixed-top px-4">
-                        <Col xs="3">
+                        <Col xs="2">
                           {this.props.prevPage.length === 0 ? (
                             <Link to="/">
                               <i className="fas fa-chevron-left text-white" />
                             </Link>
                           ) : (
-                            <a
-                              role="button"
-                              onClick={() => this.props.history.goBack()}
-                            >
+                            <button onClick={() => this.props.history.goBack()}>
                               <i className="fas fa-chevron-left text-white" />
-                            </a>
+                            </button>
                           )}
                         </Col>
-                        <Col xs="6">
+                        <Col xs="8">
                           <p className="text-white text-center mb-0">
                             Messages
                           </p>
                         </Col>
-                        <Col xs="3" />
+                        <Col xs="2" />
                       </Row>
                       <div className="chatList">
                         {this.state.currentUser.rooms ? (

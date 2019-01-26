@@ -111,8 +111,8 @@ class SearchPage extends Component {
             searchCollapse={this.state.searchCollapse}
           />
         ) : this.props.search.searchResults.length > 0 ? (
-          this.props.search.searchResults.map(activity => (
-            <ActivityThumbnail key={activity.id} {...activity} />
+          this.props.search.searchResults.map((activity, index) => (
+            <ActivityThumbnail key={index} {...activity} />
           ))
         ) : (
           <p className="text-center">Aucun résultat</p>

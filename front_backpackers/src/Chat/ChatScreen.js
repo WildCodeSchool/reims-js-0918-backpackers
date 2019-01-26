@@ -92,17 +92,17 @@ class ChatScreen extends Component {
     return (
       <div className="d-flex flex-column">
         <Row className="blueHeader fixed-top px-4">
-          <Col xs="3">
+          <Col xs="2">
             <button onClick={() => this.props.changeView()}>
               <i className="fas fa-chevron-left text-white" />
             </button>
           </Col>
-          <Col xs="6">
+          <Col xs="8">
             <p className="text-white text-center mb-0">
               {this.props.currentChat.name}
             </p>
           </Col>
-          <Col xs="3">
+          <Col xs="2">
             <button onClick={() => this.toggleNavbar()}>
               <i className="fas fa-users" />
             </button>
