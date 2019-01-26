@@ -11,6 +11,10 @@ $peachColor: #ff896d;
   border-bottom: 1px solid $grayColor;
 }
 
+input {
+  position: relative;
+}
+
 .blueHeader {
   position: -webkit-sticky;
   position: sticky;
@@ -22,7 +26,10 @@ $peachColor: #ff896d;
   line-height: 45px;
   height: 45px;
   p {
+    text-overflow: ellipsis;
     overflow: hidden;
+
+    white-space: nowrap;
     height: 100%;
   }
   button,
