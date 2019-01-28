@@ -18,19 +18,23 @@ class ActivitiesList extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response => this.props.viewActivities(response.data));
+      .then(response =>
+        this.props.viewActivities(
+          response.data.filter(activity => activity.date_diff >= 0)
+        )
+      );
   }
 
   render() {
     return (
       <Fragment>
         <Row className="blueHeader mb-2 px-4">
-          <Col xs="3">
+          <Col xs="2">
             <Link to="/">
               <i className="fas fa-chevron-left text-white" />
             </Link>
           </Col>
-          <Col xs="6">
+          <Col xs="8">
             <p className="text-white text-center mb-0">Activités inscrites</p>
           </Col>
         </Row>

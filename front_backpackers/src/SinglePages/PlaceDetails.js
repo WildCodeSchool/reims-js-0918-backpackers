@@ -68,7 +68,9 @@ class PlaceDetails extends Component {
         <Nav tabs className="mb-2">
           <NavItem className="text-center w-50">
             <NavLink
-              className={classnames({ active: this.state.activeTab === "1" })}
+              className={classnames({
+                active: this.state.activeTab === "1"
+              })}
               onClick={() => {
                 this.toggle("1");
               }}
@@ -78,7 +80,9 @@ class PlaceDetails extends Component {
           </NavItem>
           <NavItem className="text-center w-50">
             <NavLink
-              className={classnames({ active: this.state.activeTab === "2" })}
+              className={classnames({
+                active: this.state.activeTab === "2"
+              })}
               onClick={() => {
                 this.toggle("2");
               }}
