@@ -12,7 +12,8 @@ import CreateActivityPage from "../FormPage/CreateActivityPage";
 import CreatePlacePageContainer from "../containers/CreatePlacePageContainer";
 import ActivitesListContainer from "../containers/ActivitiesListContainer";
 import SearchContainer from "../containers/SearchContainer";
-import Toastify from "../Toast/Toastify";
+import MentionsLegales from "../MentionsLegales";
+import CGU from "../CGU";
 
 class Routes extends Component {
   render() {
@@ -41,7 +42,8 @@ class Routes extends Component {
             <Route path="/profil/:username" component={ProfileContainer} />
             <Route path="/chatlist" component={ChatContainer} />
             <Route path="/search" component={SearchContainer} />
-            <Route path="/toast" component={Toastify} />
+            <Route path="/mentions" component={MentionsLegales} />
+            <Route path="/cgu" component={CGU} />
           </Switch>
         ) : (
           <Switch>
@@ -55,6 +57,8 @@ class Routes extends Component {
             <Redirect from="/newplace" to="/login" />
             <Redirect from="/profil" to="/login" />
             <Redirect from="/chatlist" to="/login" component={ChatContainer} />
+            <Route path="/mentions" component={MentionsLegales} />
+            <Route path="/cgu" component={CGU} />
           </Switch>
         )}
       </Container>

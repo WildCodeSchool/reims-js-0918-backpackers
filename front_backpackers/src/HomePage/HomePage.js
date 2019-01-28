@@ -249,28 +249,38 @@ class HomePage extends Component {
                             <PlaceThumbnail {...place} key={place.id} />
                           )))}
                   {this.props.displayHomePage === "activities" &&
-                    this.props.activities
-                      .filter(
-                        place =>
-                          Math.abs(
-                            place.latitude - this.props.coords.latitude
-                          ) < 0.1 &&
-                          Math.abs(
-                            place.longitude - this.props.coords.longitude
-                          ) < 0.1
-                      )
-                      .sort((a, b) => a.date_diff - b.date_diff)
-                      .map(activity =>
-                        activity.capacity - 1 - activity.participants > 0 ? (
-                          <ActivityThumbnail
-                            {...activity}
-                            profil={this.props.profile[0]}
-                            key={activity.idActivity}
-                          />
-                        ) : (
-                          ""
-                        )
-                      )}
+                    (this.props.isGeolocationAvailable &&
+                    this.props.isGeolocationEnabled &&
+                    this.props.coords
+                      ? this.props.activities
+                          .filter(
+                            activity =>
+                              Math.abs(
+                                activity.latitude - this.props.coords.latitude
+                              ) < 0.1 &&
+                              Math.abs(
+                                activity.longitude - this.props.coords.longitude
+                              ) < 0.1
+                          )
+                          .sort(
+                            (a, b) =>
+                              a.latitude - b.latitude &&
+                              a.longitude - b.longitude
+                          )
+                          .map(activity => (
+                            <ActivityThumbnail
+                              {...activity}
+                              key={activity.id}
+                            />
+                          ))
+                      : this.props.activities
+                          .filter(activity => activity.country === "France")
+                          .map(activity => (
+                            <ActivityThumbnail
+                              {...activity}
+                              key={activity.id}
+                            />
+                          )))}
                   <Row className="fixed-bottom listFooter">
                     <Link
                       to="/search"
