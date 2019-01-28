@@ -5,6 +5,18 @@ import { NavLink } from "react-router-dom";
 import "./Sidebar.scss";
 
 class Sidebar extends Component {
+  constructor() {
+    super();
+    this.state = {
+      modal: false
+    };
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+
+  toggleModal() {
+    this.setState({ modal: !this.state.modal });
+  }
+
   logOut() {
     this.props.backdropClickHandler();
     localStorage.removeItem("BackpackersToken");
@@ -128,12 +140,18 @@ class Sidebar extends Component {
           </div>
           <div className="d-flex mb-2 flex-column mt-auto align-items-center">
             <NavItem>
-              <NavLink onClick={() => this.props.backdropClickHandler()} to="/">
+              <NavLink
+                onClick={() => this.props.backdropClickHandler()}
+                to="/mentions"
+              >
                 Mentions légales
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink onClick={() => this.props.backdropClickHandler()} to="/">
+              <NavLink
+                onClick={() => this.props.backdropClickHandler()}
+                to="/cgu"
+              >
                 CGU
               </NavLink>
             </NavItem>
