@@ -14,6 +14,7 @@ const ActivityThumbnail = ({
   picturePlace,
   price,
   profil,
+  time_diff,
   viewActivity,
   date_diff,
   eventDate
@@ -26,8 +27,8 @@ const ActivityThumbnail = ({
             object
             src={
               pictureActivity
-                ? `http://localhost:3010/images/${pictureActivity}`
-                : `http://localhost:3010/images/${picturePlace}`
+                ? `http://localhost:3010/api/images/${pictureActivity}`
+                : `http://localhost:3010/api/images/${picturePlace}`
             }
             alt="picture of activity"
             className="activityPicture"
@@ -41,9 +42,8 @@ const ActivityThumbnail = ({
             </span>
             <span>
               <i className="fas fa-calendar pr-1" />
-              {date_diff < 0 ? (
-                <span>{eventDate.split("T")[0]}</span>
-              ) : (
+              {date_diff > 0 ? (
+                // <span>{eventDate.split("T")[0]}</span>
                 <span
                   className={
                     "timeLeft" +
@@ -55,6 +55,19 @@ const ActivityThumbnail = ({
                   }
                 >
                   {date_diff} jours restants
+                </span>
+              ) : (
+                <span
+                  className={
+                    "timeLeft" +
+                    (time_diff.split(":")[0] * -1 <= 2
+                      ? " text-danger"
+                      : time_diff.split(":")[0] * -1 < 7
+                      ? " text-warning"
+                      : " text-success")
+                  }
+                >
+                  {time_diff.split(":")[0] * -1} heures restantes
                 </span>
               )}
             </span>

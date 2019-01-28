@@ -241,7 +241,7 @@ class HomePage extends Component {
               this.props.activities
                 .sort((a, b) => a.date_diff - b.date_diff)
                 .map(activity =>
-                  activity.capacity - 1 - activity.participants > 0 ? (
+                  activity.capacity - activity.participants > 0 ? (
                     <ActivityThumbnail
                       {...activity}
                       profil={this.props.profile[0]}

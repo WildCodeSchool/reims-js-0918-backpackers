@@ -164,7 +164,7 @@ class PlaceDetails extends Component {
         {this.props.place.activities
           .sort((a, b) => a.date_diff - b.date_diff)
           .map(activity =>
-            activity.capacity - 1 - activity.participants > 0 ? (
+            activity.capacity - activity.participants > 0 ? (
               <ActivityThumbnail
                 profil={this.state.profil}
                 {...activity}
