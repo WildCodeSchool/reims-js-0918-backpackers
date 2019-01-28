@@ -33,18 +33,16 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.profile[0]) {
-      axios
-        .get(`/api/profile`, {
-          headers: {
-            accept: "application/json",
-            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
-          }
-        })
-        .then(response =>
-          this.props.viewProfile([{ ...response.data[0], activities: [] }])
-        );
-    }
+    axios
+      .get(`/api/profile`, {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response =>
+        this.props.viewProfile([{ ...response.data[0], activities: [] }])
+      );
     axios
       .get(`/api/profile/${this.props.match.params.username}`, {
         headers: {
@@ -87,7 +85,8 @@ class Profile extends Component {
             activities: response.data
           }
         })
-      );
+      )
+      .then(() => this.forceUpdate());
   }
 
   handleDescription(e) {
