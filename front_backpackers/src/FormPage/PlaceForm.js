@@ -21,7 +21,6 @@ const validate = values => {
   if (!values.price) {
     errors.price = "Veuillez entrer un prix !";
   }
-  console.log(errors);
   return errors;
 };
 
