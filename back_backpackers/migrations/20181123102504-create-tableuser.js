@@ -26,13 +26,13 @@ exports.up = function(db, callback) {
       favorites: {
         type: "int"
       },
-      hobbies: { type: "string", length: 50 },
+      hobbies: { type: "string", length: 50, defaultValue: "" },
       historic: {
         type: "int"
       },
       rights: { type: "string", length: 50 },
       picture: { type: "text" },
-      description: { type: "string", length: 255 }
+      description: { type: "string", length: 255, defaultValue: "" }
     },
     callback
   );

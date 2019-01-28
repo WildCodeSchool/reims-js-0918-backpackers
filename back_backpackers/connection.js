@@ -71,25 +71,29 @@ app.post("/api/places", (req, res) => {
       console.log(err);
       res.status(500).send("Failed to add place");
     } else {
-      console.log(results);
       res.json(results.insertId);
     }
   });
 });
 
-app.post("/api/places/upload", upload.single("monfichier"), (req, res) => {
-  console.log(req.file);
+app.post("/api/places/upload/:id", upload.single("monfichier"), (req, res) => {
+  currentDate = new Date()
+    .toLocaleString()
+    .split(":")
+    .join("")
+    .split(" ")
+    .join("-");
   fs.rename(
     req.file.path,
-    "public/api/images/" + req.file.originalname,
+    "public/api/images/" + currentDate + req.file.originalname,
     (err, results) => {
       if (err) {
         res.status(500).send(err);
       } else {
         connection.query(
-          `UPDATE places SET picture = "${
-            req.file.originalname
-          }" WHERE id= (SELECT LAST_INSERT_ID())`,
+          `UPDATE places SET picture = "${currentDate +
+            req.file.originalname}" WHERE id=?`,
+          req.params.id,
           err => {
             if (err) {
               console.log(err);
@@ -104,7 +108,6 @@ app.post("/api/places/upload", upload.single("monfichier"), (req, res) => {
 });
 
 app.get("/api/search", (req, res) => {
-  console.log(req.query);
   const type = req.query.typeChoice;
   const participation = req.query.placeNumber;
   const keywords = req.query.keywords;
@@ -117,31 +120,33 @@ app.get("/api/search", (req, res) => {
   type ? searchArray.push(`type="${type}"`) : "";
   participation ? searchArray.push(`capacityLeft>=${participation}`) : "";
   city ? searchArray.push(`city="${city}"`) : "";
-  keywords > 0
+  keywords && keywords.length > 0
     ? searchArray.push(
-        keywords
-          .split(" ")
-          .map(word => `description LIKE "%${word}%"`)
-          .join(" AND ") +
-          " OR " +
+        "((" +
+          keywords
+            .split(" ")
+            .map(word => `description LIKE "%${word}%"`)
+            .join(" AND ") +
+          ") OR (" +
           keywords
             .split(" ")
             .map(word => `name LIKE "%${word}%"`)
-            .join(" AND ")
+            .join(" AND ") +
+          "))"
       )
     : "";
+  // keywords && keywords.length > 0 ? (const wordsQuoted = keyword.map(word => `"${word}"`)) : "";
   country ? searchArray.push(`country="${country}"`) : "";
-  dateStart ? searchArray.push(`date>"${dateStart}"`) : "";
-  dateEnd ? searchArray.push(`date<="${dateEnd}"`) : "";
+  dateStart ? searchArray.push(`eventDate>"${dateStart}"`) : "";
+  dateEnd ? searchArray.push(`eventDate<="${dateEnd}"`) : "";
 
   const searchQuery = searchArray.join(" AND ");
-  console.log("query", searchQuery);
 
   connection.query(
     `SELECT *
     FROM(
     SELECT activities.idActivity, activities.name, activities.capacity, activities.picture as pictureActivity,
-        (activities.description) AS description, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
+        (activities.description) AS description, eventDate, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
         type, (activities.capacity - COUNT(participation.idParticipation)) AS capacityLeft
         FROM activities    
         INNER JOIN places 
@@ -150,13 +155,12 @@ app.get("/api/search", (req, res) => {
         ON activities.idActivity = participation.idActivity
         GROUP BY activities.idActivity
     ) AS searchQuery
-    WHERE date_diff>0 AND ${searchQuery}`,
+    WHERE ${searchQuery}`,
     (err, results) => {
       if (err) {
         console.log(err);
         res.status(500).send("Error retrieving place search");
       } else {
-        console.log(results);
         res.json(results);
       }
     }
@@ -168,7 +172,7 @@ app.get("/api/activities", (req, res) => {
     `SELECT activities.idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
     (activities.description) AS descriptionActivity, id_place, 
-    activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
+    activities.contact, eventDate, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
     FROM activities
@@ -176,7 +180,7 @@ app.get("/api/activities", (req, res) => {
     ON activities.id_place = places.id 
     LEFT JOIN participation 
     ON activities.idActivity = participation.idActivity
-    WHERE DATEDIFF(date,CURRENT_TIMESTAMP)>=0
+    WHERE DATEDIFF(eventDate,CURRENT_TIMESTAMP)>=0
     GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
@@ -187,15 +191,6 @@ app.get("/api/activities", (req, res) => {
     }
   );
 });
-
-app.get(
-  "/api/test",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log("connected user", req.user);
-    res.send(`authorized for user ${req.user.mail} with an id ${req.user.id}`);
-  }
-);
 
 app.post(
   "/api/activities",
@@ -222,7 +217,7 @@ app.post(
                 .then(() => res.status(500).send("Failed to add activity"))
                 .catch(deleteErr => console.error(deleteErr));
             } else {
-              res.json(results.insertId);
+              res.json({ insertId: results.insertId, id: idChat });
             }
           }
         );
@@ -233,23 +228,29 @@ app.post(
   }
 );
 
-app.post("/api/activities/upload", upload.single("monfichier"), (req, res) => {
+app.post("/api/activities/upload/:id", upload.single("monfichier"), (req, res) => {
+  currentDate = new Date()
+    .toLocaleString()
+    .split(":")
+    .join("")
+    .split(" ")
+    .join("-");
   fs.rename(
     req.file.path,
-    "public/api/images/" + req.file.originalname,
+    "public/api/images/" + currentDate + req.file.originalname,
     (err, results) => {
       if (err) {
         res.status(500).send(err);
       } else {
         connection.query(
-          `UPDATE activities SET picture = "${
-            req.file.originalname
-          }" WHERE idActivity= (SELECT LAST_INSERT_ID())`,
+          `UPDATE activities SET picture = "${currentDate +
+            req.file.originalname}" WHERE idActivity= ?`,
+          req.params.id,
           err => {
             if (err) {
-              console.log(err);
+              console.log("err", err);
             } else {
-              res.sendStatus(200);
+              res.json(results);
             }
           }
         );
@@ -262,6 +263,7 @@ app.post(
   "/api/participate/:idActivity",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const idActivity = req.params.idActivity;
     connection.query(
       "INSERT INTO participation SET ?",
       { idActivity: req.params.idActivity, idUser: req.user.id },
@@ -275,8 +277,8 @@ app.post(
               roomId: req.body.idChat,
               userIds: [req.user.username]
             })
-            .then(() => console.log("added"))
             .catch(error => console.error(error));
+          res.json(idActivity);
         }
       }
     );
@@ -301,7 +303,6 @@ app.post(
               roomId: req.body.idChat,
               userIds: [req.user.id]
             })
-            .then(() => console.log("removed"))
             .catch(err => console.error(err));
           res.sendStatus(200);
         }
@@ -316,7 +317,7 @@ app.get("/api/activity/:id", (req, res) => {
     `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
-            activities.contact, date, users.id, country, city,
+            activities.contact, eventDate, eventTime, users.id, country, city,DATEDIFF(eventDate, CURRENT_TIMESTAMP) as date_diff,
             address, latitude, longitude, type, (places.description) AS descriptionPlace,
             (places.picture) AS picturePlace, idChat, COUNT(participation.idParticipation) AS participants, users.picture, users.username
     FROM activities 
@@ -351,7 +352,6 @@ app.get("/api/activity/:id/participants", (req, res) => {
       if (err) {
         res.status(500).send("Erreur lors de la récupération des pseudos");
       } else {
-        console.log(results);
         res.json(results);
       }
     }
@@ -375,7 +375,7 @@ app.get("/api/place/:id", (req, res) => {
           `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
             (activities.description) AS descriptionActivity, id_place,
-            activities.contact, date, DATEDIFF(date, CURRENT_TIMESTAMP) as date_diff, id, country, city,
+            activities.contact, eventDate, DATEDIFF(eventDate, CURRENT_TIMESTAMP) as date_diff, id, country, city,
             address, type, (places.description) AS descriptionPlace,
             (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
           FROM activities
@@ -383,7 +383,7 @@ app.get("/api/place/:id", (req, res) => {
           ON activities.id_place = places.id
           LEFT JOIN participation
           ON activities.idActivity = participation.idActivity
-          WHERE id_place = ? 
+          WHERE id_place = ? AND eventDate >= CURRENT_TIMESTAMP
           GROUP BY activities.idActivity`,
           idPlace,
           (err, actiResults) => {
@@ -404,7 +404,6 @@ app.get(
   "/api/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user.id);
     connection.query(
       // "SELECT id, username, birthDate, adress, mail, favorites, hobbies,historic, rights, (users.picture) AS pictureUser, (users.description) AS descriptionUser, idActivity, name,id_creator, price, capacity, (activities.picture) AS pictureActivities, (activities.description) AS descriptionActivities, id_place, contact, date FROM users JOIN activities ON users.id = activities.id_creator WHERE id=?",
 
@@ -451,9 +450,10 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, date FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
+      "SELECT idActivity, name, (activities.picture) AS pictureActivity, id_creator, price, capacity, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, contact, eventDate FROM activities JOIN users ON activities.id_creator = users.id WHERE username=?",
       req.params.username,
       (err, results) => {
+        console.log(results);
         if (err) {
           res.status(500).send("Error retrieving profile");
         } else {
@@ -472,7 +472,7 @@ app.get(
       `SELECT participation.idActivity, activities.idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
     (activities.description) AS descriptionActivity, id_place, 
-    activities.contact, date, DATEDIFF(date,CURRENT_TIMESTAMP) as date_diff, places.id, country, city, 
+    activities.contact, eventDate, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, places.id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace
     FROM participation 
@@ -522,43 +522,61 @@ app.post("/api/profile/signup", (req, res) => {
   });
 });
 
-app.post("/api/profile/:username",
+app.post(
+  "/api/profile/:username",
   passport.authenticate("jwt", { session: false }),
-    (req, res) => {
-  connection.query(`UPDATE users SET description = "${req.body.description}", hobbies = "${req.body.hobbies}" WHERE username = "${req.params.username}"`, (err, results)=>{
-    if(err) {
-      console.log(err);
-      res.status(500).send("Failed to modify profile")
-    } else {
-      res.sendStatus(200)
-    }
-  })
-})
-
-app.post("/api/profile/:username/upload", upload.single("monfichier"), (req, res) => {
-  fs.rename(
-    req.file.path,
-    "public/api/images/" + req.file.originalname,
-    (err, results) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        connection.query(
-          `UPDATE users SET picture = "${
-            req.file.originalname
-          }" WHERE username = "${req.params.username}"`,
-          err => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.sendStatus(200);
-            }
-          }
-        );
+  (req, res) => {
+    connection.query(
+      `UPDATE users SET description = "${req.body.description}", hobbies = "${
+        req.body.hobbies
+      }" WHERE username = "${req.params.username}"`,
+      (err, results) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Failed to modify profile");
+        } else {
+          res.sendStatus(200);
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
+
+app.post(
+  "/api/profile/:username/upload",
+  upload.single("monfichier"),
+  (req, res) => {
+    currentDate = new Date()
+      .toLocaleString()
+      .split(":")
+      .join("")
+      .split(" ")
+      .join("-");
+    fs.rename(
+      req.file.path,
+      "public/api/images/" + currentDate + req.file.originalname,
+      (err, results) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          connection.query(
+            `UPDATE users SET picture = "${currentDate +
+              req.file.originalname}" WHERE username = "${
+              req.params.username
+            }"`,
+            err => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.sendStatus(200);
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+);
 
 app.post("/api/users", (req, res) => {
   chatkit

@@ -1,20 +1,20 @@
-'use strict';
+"use strict";
 
 var dbm;
 var type;
 var seed;
 
 /**
-  * We receive the dbmigrate dependency from dbmigrate initially.
-  * This enables us to not have to rely on NODE_PATH.
-  */
-exports.setup = function (options, seedLink) {
+ * We receive the dbmigrate dependency from dbmigrate initially.
+ * This enables us to not have to rely on NODE_PATH.
+ */
+exports.setup = function(options, seedLink) {
   dbm = options.dbmigrate;
   type = dbm.dataType;
   seed = seedLink;
 };
 
-exports.up = function (db, callback) {
+exports.up = function(db, callback) {
   db.insert(
     "places",
     [
@@ -39,7 +39,7 @@ exports.up = function (db, callback) {
       "35.658611",
       "139.745556",
       "Culturel",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/TaroTokyo20110213-TokyoTower-01.jpg/270px-TaroTokyo20110213-TokyoTower-01.jpg",
+      "default.png",
       "La tour Eiffel Japonaise ! Une géante structure rouge et blanche. Endroit incontournable à visiter à Tokyo!",
       "tél : +81 3-3433-5111"
     ],
@@ -73,7 +73,7 @@ exports.up = function (db, callback) {
       "4.83",
       "Culturel",
       "10",
-      "https://tokyohotspots.com/wp-content/uploads/2016/06/3054_tokyo_11.jpg",
+      "default.png",
       "Le musée national de Tokyo avec un parcours chronologique retraçant l’évolution de l’art japonais mêlée à l’histoire très ancienne de la civilisation nippone..",
       "tél : +81 3-3822-1111"
     ],
@@ -81,10 +81,10 @@ exports.up = function (db, callback) {
   );
 };
 
-exports.down = function (db) {
+exports.down = function(db) {
   return null;
 };
 
 exports._meta = {
-  "version": 1
+  version: 1
 };

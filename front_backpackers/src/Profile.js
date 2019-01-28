@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Button, Media, Badge } from "reactstrap";
+import { Row, Col, Button, Badge, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
@@ -126,7 +126,7 @@ class Profile extends Component {
           : ""
       )
       .then(this.setState({ modify: false }))
-      .then(this.componentDidMount());
+      .then(() => this.componentDidMount());
   }
 
   render() {
@@ -235,9 +235,10 @@ class Profile extends Component {
                 {this.state.modify ? (
                   <Col xs={{ size: 8, offset: 2 }}>
                     <div className="align-center">
-                      <input
+                      <Input
                         value={this.state.description}
-                        type="text"
+                        type="textarea"
+                        placeholder="Renseigne ta description"
                         onChange={e => this.handleDescription(e)}
                       />
                     </div>
@@ -294,14 +295,12 @@ class Profile extends Component {
             <Col xs="12" className="text-center">
               <TagsInput
                 maxTags="4"
-                value={this.state.tags}
+                value={this.state.tags[0] === "" ? [] : this.state.tags}
                 onChange={tags => this.handleTags(tags)}
               />
             </Col>
           ) : this.state.tags.length < 1 ? (
-            <Col xs="12" className="text-center">
-              <Badge className="py-1 px-2 mx-1">Utilisateur</Badge>
-            </Col>
+            ""
           ) : (
             <Col xs="12" className="text-center">
               {this.state.tags.map((tag, index) => (
@@ -348,7 +347,6 @@ class Profile extends Component {
             <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
         </Row>
-        {console.log("date", this.state.historic.activities)}
         {!this.state.historic.activities ? (
           <p className="text-center">
             <i className="fas fa-spinner fa-spin" />

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import PlaceFormContainer from "./PlaceForm";
-import { geolocated } from "react-geolocated"
-
+import { geolocated } from "react-geolocated";
 
 class CreatePlacePage extends Component {
   constructor(props) {
@@ -10,7 +9,6 @@ class CreatePlacePage extends Component {
     this.file = null;
     this.onChange = this.onChange.bind(this);
   }
-
 
   submit = places => {
     const place = { ...places, ...this.props.selectAddress };
@@ -24,14 +22,14 @@ class CreatePlacePage extends Component {
         }
       })
       .then(response => {
+        console.log("response", response);
         axios
-          .post("/api/places/upload", formData, {
+          .post(`/api/places/upload/${response.data}`, formData, {
             headers: {
               "content-type": "multipart/form-data"
             }
           })
-          .then(() => this.props.history.push(`/place/${response.data}`))
-
+          .then(() => this.props.history.push(`/place/${response.data}`));
       });
   };
 
@@ -40,17 +38,20 @@ class CreatePlacePage extends Component {
   }
 
   render() {
-
     return (
-      <PlaceFormContainer uploadFile={this.onChange} onSubmit={this.submit} getAddress={this.props.getAddress}
-        position={!this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled
-          ? []
-          : this.props.coords
+      <PlaceFormContainer
+        uploadFile={this.onChange}
+        onSubmit={this.submit}
+        getAddress={this.props.getAddress}
+        position={
+          !this.props.isGeolocationAvailable || !this.props.isGeolocationEnabled
+            ? [48.861633, 2.332856]
+            : this.props.coords
             ? [this.props.coords.latitude, this.props.coords.longitude]
-            : []}
+            : [48.861633, 2.332856]
+        }
       />
-    )
-
+    );
   }
 }
 

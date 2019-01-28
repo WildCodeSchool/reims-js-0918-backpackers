@@ -25,7 +25,8 @@ a.previousPage {
 }
 
 .preview {
-  min-height: 100px;
+  height: 100px;
+  width: 100px;
 }
 
 .profilePicture button {
@@ -46,6 +47,7 @@ a.previousPage {
     font-weight: 100;
   }
   p {
+    word-break: break-all;
     font-size: 0.7rem;
     font-weight: 400;
   }

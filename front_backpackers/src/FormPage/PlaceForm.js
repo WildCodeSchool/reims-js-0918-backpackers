@@ -53,10 +53,15 @@ class PlaceForm extends Component {
         <div className="activitiesTitleUnderline mb-3 w-100" />
 
         <div className="mb-5">
-
           <form onSubmit={this.props.handleSubmit} className="placeForm">
             <Row>
-              <Field type="select" name="type" id="type" component="select" label="Type">
+              <Field
+                type="select"
+                name="type"
+                id="type"
+                component="select"
+                label="Type"
+              >
                 <option>Catégorie</option>
                 <option value="Apéritifs">Apéritifs</option>
                 <option value="Aquatique">Aquatique</option>
@@ -102,34 +107,44 @@ class PlaceForm extends Component {
 
               <h2 className="pt-3">Ajouter une image</h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
-              <input className="mt-3" type="file" onChange={e => this.props.uploadFile(e)} />
-
+              <input
+                className="mt-3"
+                type="file"
+                onChange={e => this.props.uploadFile(e)}
+              />
 
               <h2 className="pt-3">Localisation</h2>
               <div className="activitiesTitleUnderline mb-3 w-100" />
 
-              {this.props.position.length !== 2 ?
-                "" :
+              {this.props.position.length !== 2 ? (
+                ""
+              ) : (
                 <div className="mapForm">
-                  <MapPlaceCreation center={this.props.position} getAddress={this.props.getAddress} />
+                  <MapPlaceCreation
+                    center={this.props.position}
+                    getAddress={this.props.getAddress}
+                  />
                 </div>
-              }
-
+              )}
             </div>
 
-            <button type="submit" disabled={this.props.submitting} className="mt-3 postBtn">
+            <button
+              type="submit"
+              disabled={this.props.submitting}
+              className="mt-3 postBtn"
+            >
               Créer le lieu
-          </button>
+            </button>
           </form>
         </div>
       </Fragment>
     );
   }
-};
+}
 
 const PlaceFormContainer = reduxForm({
   form: "createPlace",
   validate
 })(PlaceForm);
 
-export default PlaceFormContainer
+export default PlaceFormContainer;

@@ -26,8 +26,8 @@ class ActivityDetails extends Component {
   }
 
   componentDidMount() {
-    this.callApiIdActivity();
     this.callApiParticipants();
+    this.callApiIdActivity();
   }
 
   toggle(tab) {
@@ -50,7 +50,8 @@ class ActivityDetails extends Component {
           }
         }
       )
-      .then(() => this.setState({ participate: true }))
+      .then(() => this.props.callApiActivity())
+      .then(this.setState({ participate: true }))
       .then(this.componentDidMount());
   }
 
@@ -89,6 +90,7 @@ class ActivityDetails extends Component {
           }
         }
       )
+      .then(() => this.props.callApiActivity())
       .then(() => this.setState({ participate: false }))
       .then(this.componentDidMount());
   }
@@ -187,24 +189,34 @@ class ActivityDetails extends Component {
                       <p className="mb-0">
                         <i className="fas fa-user-alt" />
                       </p>
-
-                      {this.props.activity.capacity -
-                        this.props.activity.participants -
-                        1 <
+                      {this.props.activitycapacity -
+                        this.props.activity.participants <
                       0 ? (
                         <p>0 Places Restantes</p>
                       ) : (
                         <p>
                           {this.props.activity.capacity -
-                            this.props.activity.participants -
-                            1}{" "}
+                            this.props.activity.participants}{" "}
                           Places Restantes
                         </p>
                       )}
                     </div>
                   </Col>
                 </Row>
-
+                <Row>
+                  <Col xs="6">
+                    <p>
+                      <i className="fas fa-calendar pr-1" />
+                      {this.props.activity.eventDate.split("T")[0]}
+                    </p>
+                  </Col>
+                  <Col xs="6">
+                    <p className="text-right">
+                      {this.props.activity.eventTime}
+                      <i className="far fa-clock pl-1" />
+                    </p>
+                  </Col>
+                </Row>
                 <Row>
                   <Col xs="12">
                     <p className="text-justify singleDescr mb-3 p-2">
@@ -219,10 +231,7 @@ class ActivityDetails extends Component {
             <Row className="mapDetails">
               <Col xs="12">
                 {this.state.activeTab === "2" ? (
-                  <MapPlace
-                    lat={this.props.activity.latitude}
-                    long={this.props.activity.longitude}
-                  />
+                  <MapPlace informations={this.props.activity} />
                 ) : (
                   ""
                 )}
@@ -254,29 +263,78 @@ class ActivityDetails extends Component {
         {this.state.idParticipation.includes(this.props.activity.idActivity) ||
         this.props.activity.id_creator === this.props.profile ? (
           <Fragment>
-            <div className="chat mb-2">
-              <Link to="/chatlist">
-                <button type="button">Chat</button>
-              </Link>
-            </div>
-            <h3 className="text-center">Liste des participants</h3>
+            {this.state.idParticipation.includes(
+              this.props.activity.idActivity
+            ) ? (
+              <div className="chat mb-2">
+                <Link to="/chatlist">
+                  <button type="button">Chat</button>
+                </Link>
+              </div>
+            ) : (
+              ""
+            )}
+            {!this.state.idParticipation.includes(
+              this.props.activity.idActivity
+            ) ? (
+              <div className="participate">
+                <button
+                  onClick={() => this.activeParticipation()}
+                  type="button"
+                  className="btn"
+                >
+                  Participer
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+            <h3 className="text-center mt-2">Liste des participants</h3>
             <ul className="text-center listParticipants mr-5">
-              <li>
-                {this.props.activity.username} <span>(Créateur)</span>
-              </li>
-              {this.state.participants.map(user => (
-                <li key={user.id}>{user.username}</li>
-              ))}
+              {this.state.participants.length < 1 ? (
+                "Aucun participants"
+              ) : (
+                <Fragment>
+                  {this.state.participants
+                    .filter(
+                      creator => creator.id === this.props.activity.id_creator
+                    )
+                    .map((creator, index) => (
+                      <li key={index}>
+                        <Link to={`/profil/${creator.username}`}>
+                          {creator.username} (Créateur)
+                        </Link>
+                      </li>
+                    ))}
+                  {this.state.participants
+                    .filter(
+                      creator => creator.id !== this.props.activity.id_creator
+                    )
+                    .map(user => (
+                      <li key={user.id}>
+                        <Link to={`/profil/${user.username}`}>
+                          {user.username}
+                        </Link>
+                      </li>
+                    ))}
+                </Fragment>
+              )}
             </ul>
-            <div>
-              <button
-                type="button"
-                className="desinscription"
-                onClick={() => this.desinscriptionParticipation()}
-              >
-                Se désinscrire
-              </button>
-            </div>
+            {this.state.idParticipation.includes(
+              this.props.activity.idActivity
+            ) ? (
+              <Fragment>
+                <button
+                  type="button"
+                  className="desinscription"
+                  onClick={() => this.desinscriptionParticipation()}
+                >
+                  Se désinscrire
+                </button>
+              </Fragment>
+            ) : (
+              ""
+            )}
           </Fragment>
         ) : (
           ""

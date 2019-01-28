@@ -41,9 +41,17 @@ class ActivityPage extends Component {
         <Fragment>
           {this.props.activity.name ? (
             <Fragment>
-              <Header place={this.props.activity.city} />
-              <ActivityCaroussel activity={this.props.activity} />
+              <Header
+                {...this.props.history}
+                place={this.props.activity.city}
+              />
+              <ActivityCaroussel
+                activity={this.props.activity}
+                profile={this.props.profile}
+              />
               <ActivityDetails
+                callApiActivity={() => this.callApiActivity()}
+                callApiProfile={() => this.callApiProfile()}
                 activity={this.props.activity}
                 profile={this.props.profile.id}
               />
