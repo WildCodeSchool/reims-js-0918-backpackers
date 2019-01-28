@@ -14,6 +14,7 @@ import chatsReducer from "./chatsReducer";
 import { SELECT_PLACE_ADDRESS } from "../actions/actionTypes";
 import selectAddressReducer from "./selectAddressReducer";
 import searchReducer from "./searchReducer";
+import prevPageReducer from "./prevPage.Reducer";
 
 const backpackersApp = history =>
   combineReducers({
@@ -45,7 +46,8 @@ const backpackersApp = history =>
     place: placeReducer,
     chats: chatsReducer,
     selectAddress: selectAddressReducer,
-    search: searchReducer
+    search: searchReducer,
+    prevPage: prevPageReducer
   });
 
 export default backpackersApp;

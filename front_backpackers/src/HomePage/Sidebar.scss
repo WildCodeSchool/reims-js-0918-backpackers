@@ -13,18 +13,18 @@
   transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
-.navbar{
+.navbar {
   justify-content: inherit;
 }
 
-.side-drawer{
+.side-drawer {
   &.open {
-  transform: translateX(0);
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+    transform: translateX(0);
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
   }
   a {
-  color: $darkGrayColor;
-  text-decoration: none;
+    color: $darkGrayColor;
+    text-decoration: none;
   }
 }
 
@@ -44,7 +44,7 @@
   object-fit: cover;
 }
 
-.menu{
+.menu {
   border-top: $darkGrayColor solid 1px;
   width: 100%;
   li:nth-child(1n) {
@@ -56,4 +56,17 @@
     width: 16px;
     color: $darkGrayColor;
   }
+}
+
+.modal-header {
+  justify-content: center;
+}
+
+.close {
+  width: 50px;
+}
+
+.modal-title {
+  width: 400px;
+  text-align: center;
 }
