@@ -250,6 +250,15 @@ class HomePage extends Component {
                           )))}
                   {this.props.displayHomePage === "activities" &&
                     this.props.activities
+                      .filter(
+                        place =>
+                          Math.abs(
+                            place.latitude - this.props.coords.latitude
+                          ) < 0.1 &&
+                          Math.abs(
+                            place.longitude - this.props.coords.longitude
+                          ) < 0.1
+                      )
                       .sort((a, b) => a.date_diff - b.date_diff)
                       .map(activity =>
                         activity.capacity - 1 - activity.participants > 0 ? (
@@ -271,7 +280,18 @@ class HomePage extends Component {
                     </Link>
                     <Link
                       to="/newplace"
-                      onClick={() => this.props.getCoords([1, 1])}
+                      onClick={() =>
+                        this.props.getCoords(
+                          this.props.isGeolocationEnabled
+                            ? this.props.coords
+                              ? [
+                                  this.props.coords.latitude,
+                                  this.props.coords.longitude
+                                ]
+                              : [48.861633, 2.332856]
+                            : [48.861633, 2.332856]
+                        )
+                      }
                       className="w-50 listPostBtn text-white text-center"
                     >
                       <i className="fas fa-pencil-alt" /> Publier un lieu
