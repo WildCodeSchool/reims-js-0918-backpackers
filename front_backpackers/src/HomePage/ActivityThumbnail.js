@@ -15,6 +15,7 @@ const ActivityThumbnail = ({
   picturePlace,
   price,
   profil,
+  time_diff,
   viewActivity,
   date_diff,
   eventDate
