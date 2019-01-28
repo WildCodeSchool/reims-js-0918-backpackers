@@ -172,7 +172,7 @@ app.get("/api/activities", (req, res) => {
     `SELECT activities.idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
     (activities.description) AS descriptionActivity, id_place, 
-    activities.contact, eventDate, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
+    activities.contact, eventDate, TIMEDIFF(CURTIME(),eventTime) as time_diff , DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
     FROM activities
@@ -180,7 +180,7 @@ app.get("/api/activities", (req, res) => {
     ON activities.id_place = places.id 
     LEFT JOIN participation 
     ON activities.idActivity = participation.idActivity
-    WHERE DATEDIFF(eventDate,CURRENT_TIMESTAMP)>=0
+    WHERE DATEDIFF(eventDate,CURRENT_TIMESTAMP)>=0 AND TIMEDIFF(eventTime, CURTIME()) > 0
     GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
@@ -378,7 +378,7 @@ app.get("/api/place/:id", (req, res) => {
         connection.query(
           `SELECT activities.idActivity, activities.name, id_creator, activities.price,
             activities.capacity, (activities.picture) AS pictureActivity,
-            (activities.description) AS descriptionActivity, id_place,
+            (activities.description) AS descriptionActivity, id_place, eventTime, TIMEDIFF(CURTIME(),eventTime) as time_diff,
             activities.contact, eventDate, DATEDIFF(eventDate, CURRENT_TIMESTAMP) as date_diff, id, country, city,
             address, type, (places.description) AS descriptionPlace,
             (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
@@ -387,7 +387,7 @@ app.get("/api/place/:id", (req, res) => {
           ON activities.id_place = places.id
           LEFT JOIN participation
           ON activities.idActivity = participation.idActivity
-          WHERE id_place = ? AND eventDate >= CURRENT_TIMESTAMP
+          WHERE id_place = ? AND eventDate >= CURRENT_DATE AND eventTime >= CURRENT_TIME
           GROUP BY activities.idActivity`,
           idPlace,
           (err, actiResults) => {
@@ -454,7 +454,7 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     connection.query(
-      "SELECT idActivity, activities.name, (places.picture) as picturePlace, (activities.picture) AS pictureActivity, id_creator, activities.price, activities.capacity, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, eventDate FROM activities JOIN users ON activities.id_creator = users.id JOIN places ON places.id=activities.id_place WHERE username=?",
+      "SELECT idActivity, activities.name, (places.picture) as picturePlace, (activities.picture) AS pictureActivity,TIMEDIFF(CURTIME(),eventTime) as time_diff, id_creator, activities.price, activities.capacity, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, eventDate FROM activities JOIN users ON activities.id_creator = users.id JOIN places ON places.id=activities.id_place WHERE username=?",
       req.params.username,
       (err, results) => {
         console.log(results);
@@ -474,7 +474,7 @@ app.get(
   (req, res) => {
     connection.query(
       `SELECT participation.idActivity, activities.idActivity, activities.name, id_creator, activities.price, 
-    activities.capacity, (activities.picture) AS pictureActivity, 
+    activities.capacity, (activities.picture) AS pictureActivity,TIMEDIFF(CURTIME(),eventTime) as time_diff, 
     (activities.description) AS descriptionActivity, id_place, 
     activities.contact, eventDate, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, places.id, country, city, 
     address, type, (places.description) AS descriptionPlace, 

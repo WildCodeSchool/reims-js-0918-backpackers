@@ -15,6 +15,7 @@ const ActivityThumbnail = ({
   picturePlace,
   price,
   profil,
+  time_diff,
   viewActivity,
   date_diff,
   eventDate
@@ -51,9 +52,7 @@ const ActivityThumbnail = ({
                   </span>
                   <span>
                     <i className="fas fa-calendar pr-1" />
-                    {date_diff < 0 ? (
-                      <span>{eventDate.split("T")[0]}</span>
-                    ) : (
+                    {date_diff > 0 ? (
                       <span
                         className={
                           "timeLeft" +
@@ -63,8 +62,23 @@ const ActivityThumbnail = ({
                             ? " text-warning"
                             : " text-success")
                         }
+                        alt="picture of activity"
+                        className="activityPicture"
                       >
                         {date_diff} jours restants
+                      </span>
+                    ) : (
+                      <span
+                        className={
+                          "timeLeft" +
+                          (time_diff.split(":")[0] * -1 <= 2
+                            ? " text-danger"
+                            : time_diff.split(":")[0] * -1 < 7
+                            ? " text-warning"
+                            : " text-success")
+                        }
+                      >
+                        {time_diff.split(":")[0] * -1} heures restantes
                       </span>
                     )}
                   </span>
