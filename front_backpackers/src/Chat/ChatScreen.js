@@ -6,6 +6,7 @@ import { Row, Col } from "reactstrap";
 import "./Chat.scss";
 import TypingIndicator from "./UserWhoAreTyping";
 import UsersList from "./UsersList";
+import { Spring } from "react-spring";
 
 class ChatScreen extends Component {
   constructor(props) {
@@ -91,40 +92,49 @@ class ChatScreen extends Component {
     return (
       <div className="d-flex flex-column">
         <Row className="blueHeader fixed-top px-4">
-          <Col xs="3">
+          <Col xs="2">
             <button onClick={() => this.props.changeView()}>
               <i className="fas fa-chevron-left text-white" />
             </button>
           </Col>
-          <Col xs="6">
+          <Col xs="8">
             <p className="text-white text-center mb-0">
               {this.props.currentChat.name}
             </p>
           </Col>
-          <Col xs="3">
+          <Col xs="2">
             <button onClick={() => this.toggleNavbar()}>
               <i className="fas fa-users" />
             </button>
           </Col>
         </Row>
-        <Row>
-          <Col xs="12" className="d-flex flex-column chatPage">
-            <UsersList
-              users={this.state.currentRoom.users}
-              show={this.state.collapsed}
-              backdropClickHandler={this.toggleNavbar}
-            />
-            <MessageList
-              messages={this.state.messages}
-              currentUser={this.state.currentUser}
-            />
-            <TypingIndicator userWhoAreTyping={this.state.userWhoAreTyping} />
-            <SendMessageForm
-              onSubmit={this.sendMessage}
-              onChange={this.sendTypingEvent}
-            />
-          </Col>
-        </Row>
+        <Spring
+          from={{ position: "relative", left: 100 }}
+          to={{ position: "relative", left: 0 }}
+        >
+          {propsChatScreen => (
+            <Row style={propsChatScreen}>
+              <Col xs="12" className="d-flex flex-column chatPage">
+                <UsersList
+                  users={this.state.currentRoom.users}
+                  show={this.state.collapsed}
+                  backdropClickHandler={this.toggleNavbar}
+                />
+                <MessageList
+                  messages={this.state.messages}
+                  currentUser={this.state.currentUser}
+                />
+                <TypingIndicator
+                  userWhoAreTyping={this.state.userWhoAreTyping}
+                />
+                <SendMessageForm
+                  onSubmit={this.sendMessage}
+                  onChange={this.sendTypingEvent}
+                />
+              </Col>
+            </Row>
+          )}
+        </Spring>
       </div>
     );
   }

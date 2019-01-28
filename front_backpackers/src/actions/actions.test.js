@@ -15,7 +15,8 @@ import {
   SELECT_PLACE_ADDRESS,
   VIEW_PROFILE_ACTIVITY,
   GET_SEARCH_DATA,
-  GET_MAP_FILTER
+  GET_MAP_FILTER,
+  DO_NEW_SEARCH
 } from "./actionTypes";
 import {
   makeViewPlacesAction,
@@ -34,7 +35,8 @@ import {
   makeSelectPlaceAddressAction,
   makeViewProfileActivityAction,
   makeGetSearchDataAction,
-  makeGetMapFilterAction
+  makeGetMapFilterAction,
+  makeDoNewSearchAction
 } from "./actions";
 
 describe("makeViewProfileActivityAction", () => {
@@ -280,5 +282,15 @@ describe("makeGetSearchDataAction", () => {
     expect(makeGetSearchDataAction(searchData, searchResults)).toEqual(
       expected
     );
+  });
+});
+
+describe("makedoNewSearchAction", () => {
+  it("should return a DO_NEW_SEARCH", () => {
+    const expected = {
+      type: DO_NEW_SEARCH
+    };
+
+    expect(makeDoNewSearchAction()).toEqual(expected);
   });
 });

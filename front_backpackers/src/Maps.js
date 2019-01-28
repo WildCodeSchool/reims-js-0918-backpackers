@@ -66,7 +66,7 @@ class Maps extends Component {
           : type === "Culturel"
           ? "culturel"
           : type === "Déplacements"
-          ? "deplacement"
+          ? "deplacements"
           : type === "Enfants"
           ? "enfants"
           : type === "Nocturne"

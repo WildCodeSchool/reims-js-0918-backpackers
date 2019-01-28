@@ -24,20 +24,19 @@ class CreatePlacePage extends Component {
         }
       })
       .then(response => {
-        if (response.status === 200) {
-          console.log("ok", response.status);
-          toast.success("Le lieu a bien été publié !", {
-            position: toast.POSITION.BOTTOM_CENTER
-          });
-        }
-        console.log("response", response);
         axios
           .post(`/api/places/upload/${response.data}`, formData, {
             headers: {
               "content-type": "multipart/form-data"
             }
           })
-          .then(() => this.props.history.push(`/place/${response.data}`));
+          .then(() => this.props.history.push(`/place/${response.data}`))
+
+          .then(() =>
+            toast.success("Le lieu a bien été publié !", {
+              position: toast.POSITION.BOTTOM_CENTER
+            })
+          );
       });
   };
 

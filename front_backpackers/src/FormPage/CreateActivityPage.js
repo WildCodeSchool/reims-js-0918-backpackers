@@ -32,14 +32,13 @@ class CreateActivityPage extends Component {
         }
       })
       .then(response => {
-        if (response.status === 200) {
-          toast.success("Ton activité est prête !", {
-            position: toast.POSITION.BOTTOM_CENTER
-          });
-        }
-        axios.post(`/api/activities/upload/${response.data.insertId}`, formData, {
-          headers: {
-            "content-type": "multipart/form-data"
+        axios.post(
+          `/api/activities/upload/${response.data.insertId}`,
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data"
+            }
           }
         );
         axios.post(
@@ -54,12 +53,22 @@ class CreateActivityPage extends Component {
           }
         );
         this.props.history.push(`/activity/${response.data.insertId}`);
-      });
+      })
+      .then(() =>
+        toast.success("L'activité a bien été publié !", {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+      );
   };
+  goBack() {
+    this.props.history.goBack();
+  }
   render() {
     return (
       <div>
         <ActivityFormContainer
+          goBack={this.goBack}
+          {...this.props.history}
           uploadFile={this.onChange}
           onSubmit={this.submit}
         />
