@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Button, Badge, Input } from "reactstrap";
+import { Collapse, Row, Col, Button, Badge, Input } from "reactstrap";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import { Spring } from "react-spring";
@@ -13,15 +13,25 @@ import axios from "axios";
 import "./Profile.scss";
 
 class Profile extends Component {
-  state = {
-    profile: {},
-    modify: false,
-    file: "",
-    imagePreviewUrl: "",
-    description: "",
-    tags: [],
-    historic: {}
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapseParticipated: false,
+      collapseCreated: true,
+      profile: {},
+      modify: false,
+      file: "",
+      imagePreviewUrl: "",
+      description: "",
+      tags: [],
+      historic: {}
+    };
+    this.toggleCollapseParticipated = this.toggleCollapseParticipated.bind(
+      this
+    );
+    this.toggleCollapseCreated = this.toggleCollapseCreated.bind(this);
+  }
+
   componentDidMount() {
     if (!this.props.profile[0]) {
       axios
@@ -136,6 +146,13 @@ class Profile extends Component {
       })
       .then(this.setState({ modify: false }))
       .then(() => this.componentDidMount());
+  }
+
+  toggleCollapseCreated() {
+    this.setState({ collapseCreated: !this.state.collapseCreated });
+  }
+  toggleCollapseParticipated() {
+    this.setState({ collapseParticipated: !this.state.collapseParticipated });
   }
 
   render() {
@@ -323,55 +340,74 @@ class Profile extends Component {
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
         </Row>
         <Row>
-          <Col xs="12">
-            <h2 className="pr-3">Vos activités créées</h2>
+          <Col xs="12" onClick={() => this.toggleCollapseCreated()}>
+            <h2 className="pr-3">
+              {" "}
+              {this.state.collapseCreated ? (
+                <i className="pr-3 fas fa-minus" />
+              ) : (
+                <i className="pr-3 fas fa-plus" />
+              )}
+              Vos activités créées
+            </h2>
             <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
         </Row>
-        {!this.state.profile.activities ? (
-          <p className="text-center">
-            <i className="fas fa-spinner fa-spin" />
-          </p>
-        ) : this.state.profile.activities[0] ? (
-          this.state.profile.activities.map(activity => (
-            <ActivityThumbnail {...activity} key={activity.idActivity} />
-          ))
-        ) : (
-          <Row className="activityCreated">
-            <Col xs="12" className="text-center mt-2">
-              <p>Vous n'avez proposé pour le moment aucune activité.</p>
-            </Col>
-          </Row>
-        )}
+        <Collapse isOpen={this.state.collapseCreated}>
+          {!this.state.profile.activities ? (
+            <p className="text-center">
+              <i className="fas fa-spinner fa-spin" />
+            </p>
+          ) : this.state.profile.activities[0] ? (
+            this.state.profile.activities.map(activity => (
+              <ActivityThumbnail {...activity} key={activity.idActivity} />
+            ))
+          ) : (
+            <Row className="activityCreated">
+              <Col xs="12" className="text-center mt-2">
+                <p>Vous n'avez proposé pour le moment aucune activité.</p>
+              </Col>
+            </Row>
+          )}
+        </Collapse>
 
         <Row>
           <Col xs={{ size: 8, offset: 2 }} className="homeUnderline my-2" />
         </Row>
 
         <Row>
-          <Col xs="12">
-            <h2 className="pr-3">Historique des anciennes activitées</h2>
+          <Col xs="12" onClick={() => this.toggleCollapseParticipated()}>
+            <h2 className="pr-3">
+              {this.state.collapseParticipated ? (
+                <i className="pr-3 fas fa-minus" />
+              ) : (
+                <i className="pr-3 fas fa-plus" />
+              )}
+              Historique des anciennes activitées
+            </h2>
             <div className="activitiesTitleUnderline mb-3 w-100" />
           </Col>
         </Row>
-        {!this.state.historic.activities ? (
-          <p className="text-center">
-            <i className="fas fa-spinner fa-spin" />
-          </p>
-        ) : this.state.historic.activities[0] ? (
-          this.state.historic.activities
-            .filter(activity => activity.date_diff < 0)
-            .sort(activity => !activity.date_diff)
-            .map(activity => (
-              <ActivityThumbnail {...activity} key={activity.idActivity} />
-            ))
-        ) : (
-          <Row className="activityCreated">
-            <Col xs="12" className="text-center mt-2">
-              <p>Vous n'avez participé pour le moment à aucune activité.</p>
-            </Col>
-          </Row>
-        )}
+        <Collapse isOpen={this.state.collapseParticipated}>
+          {!this.state.historic.activities ? (
+            <p className="text-center">
+              <i className="fas fa-spinner fa-spin" />
+            </p>
+          ) : this.state.historic.activities[0] ? (
+            this.state.historic.activities
+              .filter(activity => activity.date_diff < 0)
+              .sort(activity => !activity.date_diff)
+              .map(activity => (
+                <ActivityThumbnail {...activity} key={activity.idActivity} />
+              ))
+          ) : (
+            <Row className="activityCreated">
+              <Col xs="12" className="text-center mt-2">
+                <p>Vous n'avez participé pour le moment à aucune activité.</p>
+              </Col>
+            </Row>
+          )}
+        </Collapse>
       </Fragment>
     );
   }
