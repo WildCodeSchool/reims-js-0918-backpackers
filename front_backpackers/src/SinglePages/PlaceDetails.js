@@ -68,7 +68,9 @@ class PlaceDetails extends Component {
         <Nav tabs className="mb-2">
           <NavItem className="text-center w-50">
             <NavLink
-              className={classnames({ active: this.state.activeTab === "1" })}
+              className={classnames({
+                active: this.state.activeTab === "1"
+              })}
               onClick={() => {
                 this.toggle("1");
               }}
@@ -78,7 +80,9 @@ class PlaceDetails extends Component {
           </NavItem>
           <NavItem className="text-center w-50">
             <NavLink
-              className={classnames({ active: this.state.activeTab === "2" })}
+              className={classnames({
+                active: this.state.activeTab === "2"
+              })}
               onClick={() => {
                 this.toggle("2");
               }}
@@ -164,7 +168,7 @@ class PlaceDetails extends Component {
         {this.props.place.activities
           .sort((a, b) => a.date_diff - b.date_diff)
           .map(activity =>
-            activity.capacity - 1 - activity.participants > 0 ? (
+            activity.capacity - activity.participants > 0 ? (
               <ActivityThumbnail
                 profil={this.state.profil}
                 {...activity}

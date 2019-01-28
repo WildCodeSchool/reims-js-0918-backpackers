@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
+
 const ActivityCaroussel = props => (
   <Fragment>
     {props.activity ? (
@@ -24,8 +25,10 @@ const ActivityCaroussel = props => (
             <Link to={`/profil/${props.activity.username}`}>
               <img
                 className="rounded-circle"
-                src={`http://localhost:3010/images/${
-                  props.profile.picture ? props.profile.picture : "default.png"
+                src={`http://localhost:3010/api/images/${
+                  props.activity.creator_picture
+                    ? props.activity.creator_picture
+                    : "default.png"
                 }`}
                 alt="Createur"
               />

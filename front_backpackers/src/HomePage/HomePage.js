@@ -19,9 +19,11 @@ import PlaceThumbnail from "./PlaceThumbnail";
 import DropdownButton from "./DropdownButton";
 import BurgerButton from "./BurgerButton";
 import Sidebar from "./Sidebar";
+import { Spring } from "react-spring";
 
 import "./HomePage.scss";
 import MapsContainer from "../containers/MapsContainer";
+import PositionToast from "../Toast/Toastify";
 
 class HomePage extends Component {
   constructor() {
@@ -29,8 +31,8 @@ class HomePage extends Component {
     this.state = {
       dropdownOpen: false,
       collapsed: true,
-      activeTab: "1",
-      idParticipation: []
+      activeTab: "1"
+      // idParticipation: []
     };
     this.toggle = this.toggle.bind(this);
     this.toggleMap = this.toggleMap.bind(this);
@@ -41,11 +43,11 @@ class HomePage extends Component {
 
   componentDidMount() {
     this.callApiProfile();
-    this.props.fetchActivities();
+    //  this.props.fetchActivities();
     this.callApiActivities();
-    this.props.fetchPlaces();
+    // this.props.fetchPlaces();
     this.callApiPlaces();
-    this.callApiParticipation();
+    // this.callApiParticipation();
   }
 
   callApiProfile() {
@@ -56,9 +58,9 @@ class HomePage extends Component {
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
-      .then(response =>
-        this.props.viewProfile([{ ...response.data[0], activities: [] }])
-      )
+      .then(response => {
+        this.props.viewProfile([{ ...response.data[0], activities: [] }]);
+      })
       .then(() =>
         axios
           .post("/api/users", {
@@ -83,7 +85,9 @@ class HomePage extends Component {
   }
 
   callApiPlaces() {
-    axios.get("/api/places").then(response => this.props.viewPlaces(response.data));
+    axios
+      .get("/api/places")
+      .then(response => this.props.viewPlaces(response.data));
   }
 
   callApiParticipation() {
@@ -139,6 +143,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className="homePage">
+        <PositionToast />
         <Row className="blueHeader">
           <Col xs="2">
             <BurgerButton
@@ -211,80 +216,89 @@ class HomePage extends Component {
             </Nav>
           </Col>
         </Row>
-
-        <TabContent activeTab={this.state.activeTab}>
-          <TabPane tabId="1">
-            {this.props.displayHomePage === "places" &&
-              (this.props.isGeolocationAvailable &&
-              this.props.isGeolocationEnabled &&
-              this.props.coords
-                ? this.props.places
-                    .filter(
-                      place =>
-                        Math.abs(place.latitude - this.props.coords.latitude) <
-                          0.1 &&
-                        Math.abs(
-                          place.longitude - this.props.coords.longitude
-                        ) < 0.1
-                    )
-                    .sort(
-                      (a, b) =>
-                        a.latitude - b.latitude && a.longitude - b.longitude
-                    )
-                    .map(place => <PlaceThumbnail {...place} key={place.id} />)
-                : this.props.places
-                    .filter(place => place.country === "France")
-                    .map(place => (
-                      <PlaceThumbnail {...place} key={place.id} />
-                    )))}
-            {this.props.displayHomePage === "activities" &&
-              this.props.activities
-                .sort((a, b) => a.date_diff - b.date_diff)
-                .map(activity =>
-                  activity.capacity - 1 - activity.participants > 0 ? (
-                    <ActivityThumbnail
-                      {...activity}
-                      profil={this.props.profile[0]}
-                      key={activity.idActivity}
+        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+          {props => (
+            <div style={props}>
+              <TabContent activeTab={this.state.activeTab}>
+                <TabPane tabId="1">
+                  {this.props.displayHomePage === "places" &&
+                    (this.props.isGeolocationAvailable &&
+                    this.props.isGeolocationEnabled &&
+                    this.props.coords
+                      ? this.props.places
+                          .filter(
+                            place =>
+                              Math.abs(
+                                place.latitude - this.props.coords.latitude
+                              ) < 0.1 &&
+                              Math.abs(
+                                place.longitude - this.props.coords.longitude
+                              ) < 0.1
+                          )
+                          .sort(
+                            (a, b) =>
+                              a.latitude - b.latitude &&
+                              a.longitude - b.longitude
+                          )
+                          .map(place => (
+                            <PlaceThumbnail {...place} key={place.id} />
+                          ))
+                      : this.props.places
+                          .filter(place => place.country === "France")
+                          .map(place => (
+                            <PlaceThumbnail {...place} key={place.id} />
+                          )))}
+                  {this.props.displayHomePage === "activities" &&
+                    this.props.activities
+                      .sort((a, b) => a.date_diff - b.date_diff)
+                      .map(activity =>
+                        activity.capacity - activity.participants > 0 ? (
+                          <ActivityThumbnail
+                            {...activity}
+                            profil={this.props.profile[0]}
+                            key={activity.idActivity}
+                          />
+                        ) : (
+                          ""
+                        )
+                      )}
+                  <Row className="fixed-bottom listFooter">
+                    <Link
+                      to="/search"
+                      className="w-50 listSearchBtn text-white text-center"
+                    >
+                      Rechercher <i className="fas fa-search-location" />
+                    </Link>
+                    <Link
+                      to="/newplace"
+                      onClick={() => this.props.getCoords([1, 1])}
+                      className="w-50 listPostBtn text-white text-center"
+                    >
+                      <i className="fas fa-pencil-alt" /> Publier un lieu
+                    </Link>
+                  </Row>
+                  <Row>
+                    <Col
+                      xs={{ size: 8, offset: 2 }}
+                      className="homeUnderline mt-3 mb-4"
+                    />
+                  </Row>
+                </TabPane>
+                <TabPane tabId="2">
+                  {this.state.activeTab === "2" ? (
+                    <MapsContainer
+                      isGeolocated={
+                        this.props.isGeolocationEnabled && this.props.coords
+                      }
                     />
                   ) : (
                     ""
-                  )
-                )}
-            <Row className="fixed-bottom listFooter">
-              <Link
-                to="/search"
-                className="w-50 listSearchBtn text-white text-center"
-              >
-                Rechercher <i className="fas fa-search-location" />
-              </Link>
-              <Link
-                to="/newplace"
-                onClick={() => this.props.getCoords([1, 1])}
-                className="w-50 listPostBtn text-white text-center"
-              >
-                <i className="fas fa-pencil-alt" /> Publier un lieu
-              </Link>
-            </Row>
-            <Row>
-              <Col
-                xs={{ size: 8, offset: 2 }}
-                className="homeUnderline mt-3 mb-4"
-              />
-            </Row>
-          </TabPane>
-          <TabPane tabId="2">
-            {this.state.activeTab === "2" ? (
-              <MapsContainer
-                isGeolocated={
-                  this.props.isGeolocationEnabled && this.props.coords
-                }
-              />
-            ) : (
-              ""
-            )}
-          </TabPane>
-        </TabContent>
+                  )}
+                </TabPane>
+              </TabContent>
+            </div>
+          )}
+        </Spring>
       </div>
     );
   }

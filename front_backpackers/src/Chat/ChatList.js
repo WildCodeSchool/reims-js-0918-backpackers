@@ -4,6 +4,7 @@ import Chatkit from "@pusher/chatkit";
 import ChatScreen from "./ChatScreen";
 import { Link } from "react-router-dom";
 import { Row, Col } from "reactstrap";
+import { Spring } from "react-spring";
 
 import "./Chat.scss";
 
@@ -69,55 +70,73 @@ class ChatList extends Component {
 
   render() {
     return (
-      <Fragment>
-        {this.state.currentScreen === "ChatList" ? (
-          <Fragment>
-            <Row className="blueHeader fixed-top px-4">
-              <Col xs="3">
-                <Link to="/">
-                  <i className="fas fa-chevron-left text-white" />
-                </Link>
-              </Col>
-              <Col xs="6">
-                <p className="text-white text-center mb-0">Mes conversations</p>
-              </Col>
-              <Col xs="3" />
-            </Row>
-            <div className="chatList">
-              {this.state.currentUser.rooms ? (
-                this.state.currentUser.rooms.length === 0 ? (
-                  <p>vous n'êtes inscrit à aucune activité</p>
-                ) : (
-                    this.state.currentUser.rooms.map((room, index) => (
-                      <button
-                        onClick={() => this.viewChat(room)}
-                        key={index}
-                        className="my-2"
-                      >
-                        {room.name}
-                      </button>
-                    ))
-                  )
-              ) : (
-                  <p className="text-center my-3">
-                    <i className="fas fa-spinner fa-spin" />
-                  </p>
-                )}
-              <div className="homeUnderline" />
-            </div>
-          </Fragment>
-        ) : this.state.currentScreen === "ChatScreen" ? (
-          <ChatScreen
-            currentUsername={this.props.profile[0].username}
-            getChat={this.props.addChat}
-            chats={this.props.chats}
-            currentChat={this.state.currentChat}
-            changeView={this.viewChatList}
-          />
-        ) : (
+      <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+        {props => (
+          <div style={props}>
+            {this.state.currentScreen === "ChatList" ? (
+              <Fragment>
+                <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                  {props => (
+                    <div style={props}>
+                      <Row className="blueHeader fixed-top px-4">
+                        <Col xs="2">
+                          {this.props.prevPage.length === 0 ? (
+                            <Link to="/">
+                              <i className="fas fa-chevron-left text-white" />
+                            </Link>
+                          ) : (
+                            <button onClick={() => this.props.history.goBack()}>
+                              <i className="fas fa-chevron-left text-white" />
+                            </button>
+                          )}
+                        </Col>
+                        <Col xs="8">
+                          <p className="text-white text-center mb-0">
+                            Messages
+                          </p>
+                        </Col>
+                        <Col xs="2" />
+                      </Row>
+                      <div className="chatList">
+                        {this.state.currentUser.rooms ? (
+                          this.state.currentUser.rooms.length === 0 ? (
+                            <p>vous n'êtes inscrit à aucune activité</p>
+                          ) : (
+                            this.state.currentUser.rooms.map((room, index) => (
+                              <button
+                                onClick={() => this.viewChat(room)}
+                                key={index}
+                                className="my-2"
+                              >
+                                {room.name}
+                              </button>
+                            ))
+                          )
+                        ) : (
+                          <p className="text-center my-3">
+                            <i className="fas fa-spinner fa-spin" />
+                          </p>
+                        )}
+                        <div className="homeUnderline" />
+                      </div>
+                    </div>
+                  )}
+                </Spring>
+              </Fragment>
+            ) : this.state.currentScreen === "ChatScreen" ? (
+              <ChatScreen
+                currentUsername={this.props.profile[0].username}
+                getChat={this.props.addChat}
+                chats={this.props.chats}
+                currentChat={this.state.currentChat}
+                changeView={this.viewChatList}
+              />
+            ) : (
               ""
             )}
-      </Fragment>
+          </div>
+        )}
+      </Spring>
     );
   }
 }

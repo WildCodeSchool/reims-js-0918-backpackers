@@ -1,15 +1,18 @@
-import { GET_SEARCH_DATA } from "../actions/actionTypes";
+import { GET_SEARCH_DATA, DO_NEW_SEARCH } from "../actions/actionTypes";
 
 const searchReducer = (
-  prevState = { searchData: {}, searchResults: [] },
+  prevState = { searchData: {}, searchResults: [], searchView: "searchForm" },
   action
 ) => {
   switch (action.type) {
     case GET_SEARCH_DATA:
       return {
         searchResults: action.searchResults,
-        searchData: action.searchData
+        searchData: action.searchData,
+        searchView: "searchResults"
       };
+    case DO_NEW_SEARCH:
+      return { ...prevState, searchView: "searchForm" };
     default:
       return prevState;
   }

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import ActivityFormContainer from "./ActivityForm";
+import { toast } from "react-toastify";
+import PositionToast from "../Toast/Toastify";
 
 class CreateActivityPage extends Component {
   constructor(props) {
@@ -30,11 +32,15 @@ class CreateActivityPage extends Component {
         }
       })
       .then(response => {
-        axios.post(`/api/activities/upload/${response.data.insertId}`, formData, {
-          headers: {
-            "content-type": "multipart/form-data"
+       axios.post(
+          `/api/activities/upload/${response.data.insertId}`,
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data"
+            }
           }
-        });
+        );
         axios.post(
           `/api/participate/${response.data.insertId}`,
           { idChat: response.data.id },
@@ -47,14 +53,27 @@ class CreateActivityPage extends Component {
           }
         );
         this.props.history.push(`/activity/${response.data.insertId}`);
-      });
+      })
+      .then(() =>
+        toast.success("L'activité a bien été publié !", {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+      );
   };
+  goBack() {
+    this.props.history.goBack();
+  }
   render() {
     return (
-      <ActivityFormContainer
-        uploadFile={this.onChange}
-        onSubmit={this.submit}
-      />
+      <div>
+        <ActivityFormContainer
+          goBack={this.goBack}
+          {...this.props.history}
+          uploadFile={this.onChange}
+          onSubmit={this.submit}
+        />
+        <PositionToast />
+      </div>
     );
   }
 }

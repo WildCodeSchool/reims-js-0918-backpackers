@@ -1,9 +1,11 @@
 @import "_styles.scss";
 
-a.previousPage {
+a.previousPage,
+button.previousPage {
   background-color: $blueColor;
   border-radius: 10px;
   line-height: 25px;
+  font-size: 0.8rem;
 }
 
 .file-upload {
