@@ -387,7 +387,7 @@ app.get("/api/place/:id", (req, res) => {
           ON activities.id_place = places.id
           LEFT JOIN participation
           ON activities.idActivity = participation.idActivity
-          WHERE id_place = ? AND eventDate >= CURRENT_DATE AND eventTime >= CURRENT_TIME
+          WHERE id_place = ? AND eventDate >= CURRENT_DATE
           GROUP BY activities.idActivity`,
           idPlace,
           (err, actiResults) => {

@@ -52,7 +52,9 @@ const ActivityThumbnail = ({
                   </span>
                   <span>
                     <i className="fas fa-calendar pr-1" />
-                    {date_diff > 0 ? (
+                    {date_diff < 0 ? (
+                      <span>{eventDate.split("T")[0]}</span>
+                    ) : date_diff > 0 ? (
                       <span
                         className={
                           "timeLeft" +
