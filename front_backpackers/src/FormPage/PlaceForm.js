@@ -119,11 +119,15 @@ class PlaceForm extends Component {
 
                     <h2 className="pt-3">Ajouter une image</h2>
                     <div className="activitiesTitleUnderline mb-3 w-100" />
-                    <input
-                      className="mt-3"
-                      type="file"
-                      onChange={e => this.props.uploadFile(e)}
-                    />
+                    <Row>
+                      <Col>
+                        <input
+                          className="mt-3"
+                          type="file"
+                          onChange={e => this.props.uploadFile(e)}
+                        />
+                      </Col>
+                    </Row>
 
                     <h2 className="pt-3">Localisation</h2>
                     <div className="activitiesTitleUnderline mb-3 w-100" />

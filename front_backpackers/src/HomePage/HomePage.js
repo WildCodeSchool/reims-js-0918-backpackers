@@ -221,98 +221,102 @@ class HomePage extends Component {
             <div style={props}>
               <TabContent activeTab={this.state.activeTab}>
                 <TabPane tabId="1">
-                  {this.props.displayHomePage === "places" &&
-                    (this.props.isGeolocationAvailable &&
-                    this.props.isGeolocationEnabled &&
-                    this.props.coords
-                      ? this.props.places
-                          .filter(
-                            place =>
-                              Math.abs(
-                                place.latitude - this.props.coords.latitude
-                              ) < 0.1 &&
-                              Math.abs(
-                                place.longitude - this.props.coords.longitude
-                              ) < 0.1
-                          )
-                          .sort(
-                            (a, b) =>
-                              a.latitude - b.latitude &&
-                              a.longitude - b.longitude
-                          )
-                          .map(place => (
-                            <PlaceThumbnail {...place} key={place.id} />
-                          ))
-                      : this.props.places
-                          .filter(place => place.country === "France")
-                          .map(place => (
-                            <PlaceThumbnail {...place} key={place.id} />
-                          )))}
-                  {this.props.displayHomePage === "activities" &&
-                    (this.props.isGeolocationAvailable &&
-                    this.props.isGeolocationEnabled &&
-                    this.props.coords
-                      ? this.props.activities
-                          .filter(
-                            activity =>
-                              Math.abs(
-                                activity.latitude - this.props.coords.latitude
-                              ) < 0.1 &&
-                              Math.abs(
-                                activity.longitude - this.props.coords.longitude
-                              ) < 0.1
-                          )
-                          .sort(
-                            (a, b) =>
-                              a.latitude - b.latitude &&
-                              a.longitude - b.longitude
-                          )
-                          .map(activity => (
-                            <ActivityThumbnail
-                              {...activity}
-                              key={activity.id}
-                            />
-                          ))
-                      : this.props.activities
-                          .filter(activity => activity.country === "France")
-                          .map(activity => (
-                            <ActivityThumbnail
-                              {...activity}
-                              key={activity.id}
-                            />
-                          )))}
-                  <Row className="fixed-bottom listFooter">
-                    <Link
-                      to="/search"
-                      className="w-50 listSearchBtn text-white text-center"
-                    >
-                      Rechercher <i className="fas fa-search-location" />
-                    </Link>
-                    <Link
-                      to="/newplace"
-                      onClick={() =>
-                        this.props.getCoords(
-                          this.props.isGeolocationEnabled
-                            ? this.props.coords
-                              ? [
-                                  this.props.coords.latitude,
-                                  this.props.coords.longitude
-                                ]
+                  <Col xs="12" md={{ size: 8, offset: 2 }}>
+                    {this.props.displayHomePage === "places" &&
+                      (this.props.isGeolocationAvailable &&
+                      this.props.isGeolocationEnabled &&
+                      this.props.coords
+                        ? this.props.places
+                            .filter(
+                              place =>
+                                Math.abs(
+                                  place.latitude - this.props.coords.latitude
+                                ) < 0.1 &&
+                                Math.abs(
+                                  place.longitude - this.props.coords.longitude
+                                ) < 0.1
+                            )
+                            .sort(
+                              (a, b) =>
+                                a.latitude - b.latitude &&
+                                a.longitude - b.longitude
+                            )
+                            .map(place => (
+                              <PlaceThumbnail {...place} key={place.id} />
+                            ))
+                        : this.props.places
+                            .filter(place => place.country === "France")
+                            .map(place => (
+                              <PlaceThumbnail {...place} key={place.id} />
+                            )))}
+                    {this.props.displayHomePage === "activities" &&
+                      (this.props.isGeolocationAvailable &&
+                      this.props.isGeolocationEnabled &&
+                      this.props.coords
+                        ? this.props.activities
+                            .filter(
+                              activity =>
+                                Math.abs(
+                                  activity.latitude - this.props.coords.latitude
+                                ) < 0.1 &&
+                                Math.abs(
+                                  activity.longitude -
+                                    this.props.coords.longitude
+                                ) < 0.1
+                            )
+                            .sort(
+                              (a, b) =>
+                                a.latitude - b.latitude &&
+                                a.longitude - b.longitude
+                            )
+                            .map(activity => (
+                              <ActivityThumbnail
+                                {...activity}
+                                key={activity.id}
+                              />
+                            ))
+                        : this.props.activities
+                            .filter(activity => activity.country === "France")
+                            .map(activity => (
+                              <ActivityThumbnail
+                                {...activity}
+                                key={activity.id}
+                              />
+                            )))}
+
+                    <Row>
+                      <Col
+                        xs={{ size: 8, offset: 2 }}
+                        className="homeUnderline mt-3 mb-4"
+                      />
+                    </Row>
+                    <Row className="fixed-bottom listFooter">
+                      <Link
+                        to="/search"
+                        className="w-50 listSearchBtn text-white text-center"
+                      >
+                        Rechercher <i className="fas fa-search-location" />
+                      </Link>
+                      <Link
+                        to="/newplace"
+                        onClick={() =>
+                          this.props.getCoords(
+                            this.props.isGeolocationEnabled
+                              ? this.props.coords
+                                ? [
+                                    this.props.coords.latitude,
+                                    this.props.coords.longitude
+                                  ]
+                                : [48.861633, 2.332856]
                               : [48.861633, 2.332856]
-                            : [48.861633, 2.332856]
-                        )
-                      }
-                      className="w-50 listPostBtn text-white text-center"
-                    >
-                      <i className="fas fa-pencil-alt" /> Publier un lieu
-                    </Link>
-                  </Row>
-                  <Row>
-                    <Col
-                      xs={{ size: 8, offset: 2 }}
-                      className="homeUnderline mt-3 mb-4"
-                    />
-                  </Row>
+                          )
+                        }
+                        className="w-50 listPostBtn text-white text-center"
+                      >
+                        <i className="fas fa-pencil-alt" /> Publier un lieu
+                      </Link>
+                    </Row>
+                  </Col>
                 </TabPane>
                 <TabPane tabId="2">
                   {this.state.activeTab === "2" ? (
