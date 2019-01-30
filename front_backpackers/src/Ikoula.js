@@ -29,19 +29,21 @@ export class Ikoula extends Component {
             zIndex: 1000
           }}
         >
-          <p
-            className="withBorder"
-            style={{
-              textAlign: "center",
-              paddingTop: "10px",
-              margin: 0,
-              color: "#321656",
-              textTransform: "uppercase",
-              fontWeight: "bold"
-            }}
-          >
-            Optimisé pour mobile
-          </p>
+          {window.innerWidth > 600 && (
+            <p
+              className="withBorder"
+              style={{
+                textAlign: "center",
+                paddingTop: "10px",
+                margin: 0,
+                color: "#321656",
+                textTransform: "uppercase",
+                fontWeight: "bold"
+              }}
+            >
+              Optimisé pour mobile
+            </p>
+          )}
           <div
             style={{
               display: "flex",
