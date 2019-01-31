@@ -7,14 +7,16 @@ const PlaceCaroussel = props =>
       {/* <UncontrolledCarousel 
           items={[{ src: `http://localhost:3010/images/${props.place.picture}` }]}
         /> */}
-        <img
-          src={`process.env.REACT_APP_API_URL/api/images/${props.place.picture}`}
-          alt={props.place.name}
-          className="singlePageImg"
-        />
-      </Fragment>
-    ) : (
-      ""
-    );
+      <img
+        src={`${process.env.REACT_APP_API_URL}/api/images/${
+          props.place.picture
+        }`}
+        alt={props.place.name}
+        className="singlePageImg"
+      />
+    </Fragment>
+  ) : (
+    ""
+  );
 
 export default PlaceCaroussel;

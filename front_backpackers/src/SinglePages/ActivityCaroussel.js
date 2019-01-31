@@ -16,16 +16,22 @@ const ActivityCaroussel = props => (
           ]}
         /> */}
 
-        <img src={`process.env.REACT_APP_API_URL/api/images/${props.activity.pictureActivity
-          ? props.activity.pictureActivity
-          : props.activity.picturePlace}`} alt={props.activity.name} className="singlePageImg" />
+        <img
+          src={`${process.env.REACT_APP_API_URL}/api/images/${
+            props.activity.pictureActivity
+              ? props.activity.pictureActivity
+              : props.activity.picturePlace
+          }`}
+          alt={props.activity.name}
+          className="singlePageImg"
+        />
 
         <Row>
           <Col xs="6" className="creatorFrame">
             <Link to={`/profil/${props.activity.username}`}>
               <img
                 className="rounded-circle"
-                src={`process.env.REACT_APP_API_URL/api/images/${
+                src={`${process.env.REACT_APP_API_URL}/api/images/${
                   props.activity.creator_picture
                     ? props.activity.creator_picture
                     : "default.png"
