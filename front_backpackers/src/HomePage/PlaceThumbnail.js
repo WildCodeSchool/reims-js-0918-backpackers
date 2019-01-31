@@ -12,12 +12,6 @@ const PlaceThumbnail = ({
   price,
   viewPlace
 }) => (
-  <Spring
-    from={{ opacity: 0, position: "relative", right: 100 }}
-    to={{ opacity: 1, position: "relative", right: 0 }}
-  >
-    {props => (
-      <div style={props}>
         <Row>
           <Col xs="12">
             <Media className="d-flex align-items-stretch">
@@ -65,9 +59,6 @@ const PlaceThumbnail = ({
             </Media>
           </Col>
         </Row>
-      </div>
-    )}
-  </Spring>
 );
 
 PlaceThumbnail.propTypes = {
