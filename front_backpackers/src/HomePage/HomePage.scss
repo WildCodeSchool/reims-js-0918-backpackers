@@ -1,0 +1,189 @@
+@import "../_styles.scss";
+
+.homePage {
+  background-color: $blueGreycolor;
+  margin-right: -15px;
+  margin-left: -15px;
+  padding: 0 15px;
+  min-height: 100vh;
+}
+
+.homePage_Header {
+  background-color: $blueColor;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.homePage .dropdown {
+  border-left: 1px solid $blueGreycolor;
+  border-right: 1px solid $blueGreycolor;
+  transition: all 0.2s;
+  height: 100%;
+}
+
+.homePage .nav-tabs {
+  position: relative;
+  border: 0px;
+  .nav-item {
+    position: absolute;
+    top: 0;
+    z-index: 0;
+    right: 10;
+    .nav-link {
+      border: 0px;
+      z-index: 20;
+      font-size: 1.7rem;
+      padding: 0;
+      &.active {
+        display: none;
+        background-color: inherit;
+      }
+    }
+  }
+}
+
+/* CSS That negate some reactstrap style*/
+.btn-secondary.focus,
+.btn-secondary:focus,
+.btn-secondary:not(:disabled):not(.disabled).active:focus,
+.btn-secondary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-secondary.dropdown-toggle:focus {
+  box-shadow: none;
+  background-color: $blueColor;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show > .btn-secondary.dropdown-toggle {
+  color: #fff;
+  background-color: $blueColor;
+}
+
+.homePage .dropdown button.btn-secondary {
+  background: none;
+  border: none;
+}
+
+.dropdown-toggle::after {
+  margin: 0;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+/* DropDown choices */
+.homePage .dropdown .dropdown-menu.show {
+  padding: 0;
+  width: 100%;
+}
+
+.homePage .dropdown .dropdown-menu.show button {
+  width: 100%;
+  line-height: 40px;
+  background-color: $blueColor;
+  color: #fff;
+  text-align: center;
+}
+
+.placePicture,
+.activityPicture {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.media {
+  margin: 5px 0;
+  padding: 7px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 5px 0 $darkGrayColor;
+  box-shadow: 0 0 5px 0 $darkGrayColor;
+  font-family: "Raleway", sans-serif;
+}
+
+.media-left img {
+  margin-right: 5px;
+}
+
+.media-body h4 {
+  font-size: 10px;
+  font-weight: 800;
+  color: $blueColor;
+}
+
+.media-body {
+  font-size: 10px;
+  background-color: $grayColor;
+  border-radius: 10px 10px 10px 0;
+  padding: 5px;
+  line-height: 12px;
+  .seeItem {
+    background-color: $lightBlueColor;
+    border: none;
+    border-radius: 10px;
+    width: 90px;
+    height: 20px;
+    font-size: 0.9rem;
+    padding: 0;
+  }
+  .itemListPrice {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #054762;
+    margin: 0 15px;
+  }
+}
+
+.listFooter {
+  z-index: 5;
+  div {
+    padding-left: 0;
+    padding-right: 0;
+    z-index: 10;
+  }
+  a {
+    line-height: 40px;
+  }
+  .listSearchBtn {
+    background-color: $blueColor;
+    padding-left: 30px;
+  }
+  .listPostBtn {
+    background-color: $greenColor;
+    padding-right: 30px;
+  }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gif {
+  width: 110px;
+  height: 150px;
+}
+
+.creator {
+  width: 50px;
+  height: 50px;
+  box-shadow: none;
+}
+
+.Toastify__close-button.Toastify__close-button--success {
+  width: 20px;
+}
+
+.Toastify__toast.Toastify__toast--success {
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 20px;
+}
+
+.Toastify__toast-body {
+  text-align: center;
+}
+
+.Toastify__toast-container.Toastify__toast-container--bottom-center {
+  margin-bottom: 25px;
+}

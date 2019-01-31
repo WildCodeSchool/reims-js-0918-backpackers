@@ -1,0 +1,84 @@
+$blueColor: #054762;
+$lightBlueColor: #00d3e5;
+$darkGrayColor: #8c8c8c;
+$blueGreycolor: #ededee;
+$grayColor: #e5e4e9;
+$greenColor: #03aa6f;
+$orangeColor: #ffb900;
+$peachColor: #ff896d;
+
+.homeUnderline {
+  border-bottom: 1px solid $grayColor;
+}
+
+input {
+  position: relative;
+}
+
+.blueHeader {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  z-index: 100;
+  background-color: $blueColor;
+  margin-right: -15px;
+  margin-left: -15px;
+  line-height: 45px;
+  height: 45px;
+  p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    white-space: nowrap;
+    height: 100%;
+  }
+  button,
+  a {
+    padding: 0px;
+    height: 100%;
+    font-size: 1.2rem;
+    display: block;
+    text-align: center;
+  }
+}
+
+.greenHeader {
+  @extend .blueHeader;
+  background-color: $greenColor;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 800;
+  display: inline-block;
+  background-color: #fff;
+  z-index: 10;
+}
+
+.activitiesTitleUnderline {
+  z-index: 9;
+  margin-top: -15px;
+  height: 1px;
+  border-bottom: 1px solid #000;
+}
+.selected .activitiesTitleUnderline {
+  border-bottom: 1px solid $darkGrayColor !important;
+}
+
+h3 {
+  background-color: $grayColor;
+  font-size: 1.1rem;
+  color: $blueColor;
+  font-weight: 800;
+}
+
+.ikoula p.withBorder::after {
+  content: "";
+  position: relative;
+  display: block;
+  margin: 5px auto 0;
+  width: 40px;
+  background: none;
+  height: 1px;
+  border-bottom: 1px solid #321656;
+}

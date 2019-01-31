@@ -1,0 +1,72 @@
+@import "_styles.scss";
+
+a.previousPage,
+button.previousPage {
+  background-color: $blueColor;
+  border-radius: 10px;
+  line-height: 25px;
+  font-size: 0.8rem;
+}
+
+.file-upload {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  .inputImage {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    font-size: 20px;
+  }
+  .inputFile {
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    z-index: 0;
+  }
+}
+
+.preview {
+  height: 100px;
+  width: 100px;
+}
+
+.profilePicture button {
+  width: 100px;
+  height: 100px;
+  padding: 0;
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.userInfos {
+  h4 {
+    color: $lightBlueColor;
+  }
+  span {
+    font-weight: 100;
+  }
+  p {
+    word-break: break-word;
+    font-size: 0.7rem;
+    font-weight: 400;
+  }
+}
+
+.achievements {
+  background-color: $grayColor;
+}
+
+.activityCreated p {
+  font-style: italic;
+  font-weight: 100;
+  font-size: 0.8rem;
+}
+
+.badge {
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
