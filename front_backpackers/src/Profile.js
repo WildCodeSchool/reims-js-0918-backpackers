@@ -34,7 +34,7 @@ class Profile extends Component {
 
   componentDidMount() {
     axios
-      .get(`process.env.REACT_APP_API_URL/api/profile`, {
+      .get(`${process.env.REACT_APP_API_URL}/api/profile`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -44,7 +44,7 @@ class Profile extends Component {
         this.props.viewProfile([{ ...response.data[0], activities: [] }])
       );
     axios
-      .get(`process.env.REACT_APP_API_URL/api/profile/${this.props.match.params.username}`, {
+      .get(`${process.env.REACT_APP_API_URL}/api/profile/${this.props.match.params.username}`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -58,7 +58,7 @@ class Profile extends Component {
         });
       });
     axios
-      .get(`process.env.REACT_APP_API_URL/api/profile/${this.props.match.params.username}/activitiescreated`, {
+      .get(`${process.env.REACT_APP_API_URL}/api/profile/${this.props.match.params.username}/activitiescreated`, {
 	headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -115,7 +115,7 @@ class Profile extends Component {
     formData.append("monfichier", this.state.file);
     axios
       .post(
-        `process.env.REACT_APP_API_URL/api/profile/${this.state.profile.username}`,
+        `${process.env.REACT_APP_API_URL}/api/profile/${this.state.profile.username}`,
         { description: this.state.description, hobbies: hobby },
         {
           headers: {
@@ -131,7 +131,7 @@ class Profile extends Component {
         }
         if (this.state.file) {
           axios.post(
-            `process.env.REACT_APP_API_URL/api/profile/${this.state.profile.username}/upload`,
+            `${process.env.REACT_APP_API_URL}/api/profile/${this.state.profile.username}/upload`,
             formData,
             {
               headers: {
@@ -206,10 +206,10 @@ class Profile extends Component {
                           className="rounded-circle preview"
                           src={
                             this.state.profile.picture
-                              ? `process.env.REACT_APP_API_URL/api/images/${
+                              ? `${process.env.REACT_APP_API_URL}/api/images/${
                                   this.state.profile.picture
                                 }`
-                              : `process.env.REACT_APP_API_URL/api/images/default.png`
+                              : `${process.env.REACT_APP_API_URL}/api/images/default.png`
                           }
                           alt="Profile"
                         />
@@ -222,10 +222,10 @@ class Profile extends Component {
                       className="rounded-circle preview"
                       src={
                         this.state.profile.picture
-                          ? `process.env.REACT_APP_API_URL/api/images/${
+                          ? `${process.env.REACT_APP_API_URL}/api/images/${
                               this.state.profile.picture
                             }`
-                          : `process.env.REACT_APP_API_URL/api/images/default.png`
+                          : `${process.env.REACT_APP_API_URL}/api/images/default.png`
                       }
                       alt="Profile"
                     />

@@ -39,8 +39,8 @@ class Sidebar extends Component {
                 className="rounded-circle"
                 src={
                   this.props.picture
-                    ? `process.env.REACT_APP_API_URL/api/images/${this.props.picture}`
-                    : `process.env.REACT_APP_API_URL/api/images/default.png`
+                    ? `${process.env.REACT_APP_API_URL}/api/images/${this.props.picture}`
+                    : `${process.env.REACT_APP_API_URL}/api/images/default.png`
                 }
                 alt="Profile"
               />
