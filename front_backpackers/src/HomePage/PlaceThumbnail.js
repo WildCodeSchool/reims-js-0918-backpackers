@@ -24,7 +24,7 @@ const PlaceThumbnail = ({
               <Media left href="#">
                 <Media
                   object
-                  src={`http://178.170.56.29:5080/api/images/${picture}`}
+                  src={`process.env.REACT_APP_API_URL/api/images/${picture}`}
                   alt="picture of place"
                   className="placePicture"
                 />

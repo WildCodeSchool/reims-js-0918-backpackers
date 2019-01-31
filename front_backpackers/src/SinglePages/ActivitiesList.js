@@ -12,7 +12,7 @@ class ActivitiesList extends Component {
 
   callApiActivities() {
     axios
-      .get(`/api/profile/${this.props.match.params.id}/activities`, {
+      .get(`process.env.REACT_APP_API_URL/api/profile/${this.props.match.params.id}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")

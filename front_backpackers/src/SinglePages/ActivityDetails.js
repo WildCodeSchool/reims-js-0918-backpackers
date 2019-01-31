@@ -41,7 +41,7 @@ class ActivityDetails extends Component {
   activeParticipation() {
     axios
       .post(
-        `/api/participate/${this.props.activity.idActivity}`,
+        `process.env.REACT_APP_API_URL/api/participate/${this.props.activity.idActivity}`,
         { idChat: this.props.activity.idChat },
         {
           headers: {
@@ -58,7 +58,7 @@ class ActivityDetails extends Component {
   callApiIdActivity() {
     const participations = [];
     axios
-      .get(`/api/profile/${this.props.profile}/activities`, {
+      .get(`process.env.REACT_APP_API_URL/api/profile/${this.props.profile}/activities`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -73,7 +73,7 @@ class ActivityDetails extends Component {
   callApiParticipants() {
     const participant = [];
     axios
-      .get(`/api/activity/${this.props.activity.idActivity}/participants`)
+      .get(`process.env.REACT_APP_API_URL/api/activity/${this.props.activity.idActivity}/participants`)
       .then(response => response.data.map(user => participant.push(user)))
       .then(() => this.setState({ participants: participant }));
   }
@@ -81,7 +81,7 @@ class ActivityDetails extends Component {
   desinscriptionParticipation() {
     axios
       .post(
-        `/api/participate/remove/${this.props.activity.idActivity}`,
+        `process.env.REACT_APP_API_URL/api/participate/remove/${this.props.activity.idActivity}`,
         { idChat: this.props.activity.idChat },
         {
           headers: {
