@@ -44,12 +44,17 @@ class Profile extends Component {
         this.props.viewProfile([{ ...response.data[0], activities: [] }])
       );
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/profile/${this.props.match.params.username}`, {
-        headers: {
-          accept: "application/json",
-          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/profile/${
+          this.props.match.params.username
+        }`,
+        {
+          headers: {
+            accept: "application/json",
+            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+          }
         }
-      })
+      )
       .then(response => {
         this.setState({
           profile: { ...response.data[0], activities: [] },
@@ -58,12 +63,16 @@ class Profile extends Component {
         });
       });
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/profile/${this.props.match.params.username}/activitiescreated`, {
-	headers: {
-          accept: "application/json",
-          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/profile/${
+          this.props.match.params.username
+        }/activitiescreated`,
+        {
+          headers: {
+            accept: "application/json",
+            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+          }
         }
-       }
       )
       .then(response =>
         this.setState({
@@ -71,12 +80,17 @@ class Profile extends Component {
         })
       );
     axios
-      .get(`/api/profile/${this.props.match.params.username}/activities`, {
-        headers: {
-          accept: "application/json",
-          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/profile/${
+          this.props.match.params.username
+        }/activities`,
+        {
+          headers: {
+            accept: "application/json",
+            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+          }
         }
-      })
+      )
       .then(response =>
         this.setState({
           historic: {
@@ -115,7 +129,9 @@ class Profile extends Component {
     formData.append("monfichier", this.state.file);
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/api/profile/${this.state.profile.username}`,
+        `${process.env.REACT_APP_API_URL}/api/profile/${
+          this.state.profile.username
+        }`,
         { description: this.state.description, hobbies: hobby },
         {
           headers: {
@@ -131,7 +147,9 @@ class Profile extends Component {
         }
         if (this.state.file) {
           axios.post(
-            `${process.env.REACT_APP_API_URL}/api/profile/${this.state.profile.username}/upload`,
+            `${process.env.REACT_APP_API_URL}/api/profile/${
+              this.state.profile.username
+            }/upload`,
             formData,
             {
               headers: {
@@ -192,74 +210,88 @@ class Profile extends Component {
                             />
                           </div>
 
-                    {imagePreviewUrl ? (
-                      <Button className="bg-transparent border-0 mb-3 rounded-circle">
-                        <img
-                          className="rounded-circle preview "
-                          src={imagePreviewUrl}
-                          alt="preview"
-                        />
-                      </Button>
-                    ) : (
-                      <Button className="bg-transparent border-0 mb-3 rounded-circle">
-                        <img
-                          className="rounded-circle preview"
-                          src={
-                            this.state.profile.picture
-                              ? `${process.env.REACT_APP_API_URL}/api/images/${
+                          {imagePreviewUrl ? (
+                            <Button className="bg-transparent border-0 mb-3 rounded-circle">
+                              <img
+                                className="rounded-circle preview "
+                                src={imagePreviewUrl}
+                                alt="preview"
+                              />
+                            </Button>
+                          ) : (
+                            <Button className="bg-transparent border-0 mb-3 rounded-circle">
+                              <img
+                                className="rounded-circle preview"
+                                src={
                                   this.state.profile.picture
-                                }`
-                              : `${process.env.REACT_APP_API_URL}/api/images/default.png`
-                          }
-                          alt="Profile"
-                        />
-                      </Button>
-                    )}
-                  </div>
-                ) : (
-                  <Button className="bg-transparent border-0 mb-3 rounded-circle">
-                    <img
-                      className="rounded-circle preview"
-                      src={
-                        this.state.profile.picture
-                          ? `${process.env.REACT_APP_API_URL}/api/images/${
+                                    ? `${
+                                        process.env.REACT_APP_API_URL
+                                      }/api/images/${
+                                        this.state.profile.picture
+                                      }`
+                                    : `${
+                                        process.env.REACT_APP_API_URL
+                                      }/api/images/default.png`
+                                }
+                                alt="Profile"
+                              />
+                            </Button>
+                          )}
+                        </div>
+                      ) : (
+                        <Button className="bg-transparent border-0 mb-3 rounded-circle">
+                          <img
+                            className="rounded-circle preview"
+                            src={
                               this.state.profile.picture
-                            }`
-                          : `${process.env.REACT_APP_API_URL}/api/images/default.png`
-                      }
-                      alt="Profile"
-                    />
-                  </Button>
-                )}
-              </Col>
-            </Row>
-            <div className="userInfos">
-              <Row>
-                <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
-                  <h4 className="mb-0">{`${this.state.profile.username} `}</h4>
-                  <span>{this.state.profile.mail}</span>
-                </Col>
-                <Col xs="2">
-                  {this.state.modify ? (
-                    <Button
-                      onClick={() => this.uploadModify()}
-                      className="bg-transparent border-0 text-secondary p-0"
-                    >
-                      <i
-                        className="fas fa-check-circle"
-                        alt="Photo de profil"
-                      />
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={() => this.handleModify()}
-                      className="bg-transparent border-0 text-secondary p-0"
-                    >
-                      <i className="fas fa-pencil-alt" alt="Photo de profil" />
-                    </Button>
-                  )}
-                </Col>
-              </Row>
+                                ? `${
+                                    process.env.REACT_APP_API_URL
+                                  }/api/images/${this.state.profile.picture}`
+                                : `${
+                                    process.env.REACT_APP_API_URL
+                                  }/api/images/default.png`
+                            }
+                            alt="Profile"
+                          />
+                        </Button>
+                      )}
+                    </Col>
+                  </Row>
+                  <div className="userInfos">
+                    <Row>
+                      <Col
+                        xs={{ size: 8, offset: 2 }}
+                        className="text-center mb-2"
+                      >
+                        <h4 className="mb-0">{`${
+                          this.state.profile.username
+                        } `}</h4>
+                        <span>{this.state.profile.mail}</span>
+                      </Col>
+                      <Col xs="2">
+                        {this.state.modify ? (
+                          <Button
+                            onClick={() => this.uploadModify()}
+                            className="bg-transparent border-0 text-secondary p-0"
+                          >
+                            <i
+                              className="fas fa-check-circle"
+                              alt="Photo de profil"
+                            />
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={() => this.handleModify()}
+                            className="bg-transparent border-0 text-secondary p-0"
+                          >
+                            <i
+                              className="fas fa-pencil-alt"
+                              alt="Photo de profil"
+                            />
+                          </Button>
+                        )}
+                      </Col>
+                    </Row>
 
                     <Row>
                       {this.state.modify ? (

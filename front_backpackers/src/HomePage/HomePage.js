@@ -63,7 +63,7 @@ class HomePage extends Component {
       })
       .then(() =>
         axios
-          .post("${process.env.REACT_APP_API_URL}/api/users", {
+          .post(`${process.env.REACT_APP_API_URL}/api/users`, {
             username: this.props.profile[0].username
           })
           .catch(error => {
@@ -75,7 +75,7 @@ class HomePage extends Component {
           instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
           userId: this.props.profile[0].username,
           tokenProvider: new Chatkit.TokenProvider({
-            url: "${process.env.REACT_APP_API_URL}/api/authenticate"
+            url: `${process.env.REACT_APP_API_URL}/api/authenticate`
           })
         });
         chatManager.connect().then(currentUser => {
@@ -86,24 +86,29 @@ class HomePage extends Component {
 
   callApiPlaces() {
     axios
-      .get("${process.env.REACT_APP_API_URL}/api/places")
+      .get(`${process.env.REACT_APP_API_URL}/api/places`)
       .then(response => this.props.viewPlaces(response.data));
   }
 
   callApiParticipation() {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/profile/${this.props.profile.id}/activities`, {
-        headers: {
-          accept: "application/json",
-          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/profile/${
+          this.props.profile.id
+        }/activities`,
+        {
+          headers: {
+            accept: "application/json",
+            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+          }
         }
-      })
+      )
       .then(response => this.setState({ idParticipation: response.data }));
   }
 
   callApiActivities() {
     axios
-      .get("${process.env.REACT_APP_API_URL}/api/activities")
+      .get(`${process.env.REACT_APP_API_URL}/api/activities`)
       .then(response => this.props.viewActivities(response.data));
     // .then(() =>
     //   console.log(
