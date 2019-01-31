@@ -85,8 +85,9 @@ const SignUpForm = props => {
             </Row>
             <Row>
               <Col xs="12">
-                <p className="Account mt-5 text-center text-white">
-                  J'ai déjà un compte.<Link to="/login">Se connecter</Link>
+                <p className="newAccount mt-5 text-center text-white">
+                  J'ai déjà un compte.
+                  <Link to="/login">Se connecter</Link>
                 </p>
               </Col>
             </Row>

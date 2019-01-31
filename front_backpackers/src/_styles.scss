@@ -71,3 +71,14 @@ h3 {
   color: $blueColor;
   font-weight: 800;
 }
+
+.ikoula p.withBorder::after {
+  content: "";
+  position: relative;
+  display: block;
+  margin: 5px auto 0;
+  width: 40px;
+  background: none;
+  height: 1px;
+  border-bottom: 1px solid #321656;
+}

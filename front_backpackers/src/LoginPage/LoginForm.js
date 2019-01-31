@@ -81,12 +81,7 @@ const LoginForm = props => {
                 </form>
               </Col>
             </Row>
-            <Row>
-              <Col xs={{ size: 8, offset: 2 }}>
-                <Button className="facebookLogin">Facebook</Button>
-              </Col>
-            </Row>
-            <Row>
+            <Row className="mt-3">
               <Col xs={{ size: 8, offset: 2 }}>
                 <Link to="/">
                   <Button className="nologed">Mode invité</Button>

@@ -33,18 +33,16 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.profile[0]) {
-      axios
-        .get(`/api/profile`, {
-          headers: {
-            accept: "application/json",
-            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
-          }
-        })
-        .then(response =>
-          this.props.viewProfile([{ ...response.data[0], activities: [] }])
-        );
-    }
+    axios
+      .get(`/api/profile`, {
+        headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
+        }
+      })
+      .then(response =>
+        this.props.viewProfile([{ ...response.data[0], activities: [] }])
+      );
     axios
       .get(`/api/profile/${this.props.match.params.username}`, {
         headers: {
@@ -87,7 +85,8 @@ class Profile extends Component {
             activities: response.data
           }
         })
-      );
+      )
+      .then(() => this.forceUpdate());
   }
 
   handleDescription(e) {
@@ -354,21 +353,23 @@ class Profile extends Component {
           </Col>
         </Row>
         <Collapse isOpen={this.state.collapseCreated}>
-          {!this.state.profile.activities ? (
-            <p className="text-center">
-              <i className="fas fa-spinner fa-spin" />
-            </p>
-          ) : this.state.profile.activities[0] ? (
-            this.state.profile.activities.map(activity => (
-              <ActivityThumbnail {...activity} key={activity.idActivity} />
-            ))
-          ) : (
-            <Row className="activityCreated">
-              <Col xs="12" className="text-center mt-2">
-                <p>Vous n'avez proposé pour le moment aucune activité.</p>
-              </Col>
-            </Row>
-          )}
+          <Col xs="12" md={{ size: 6, offset: 3 }}>
+            {!this.state.profile.activities ? (
+              <p className="text-center">
+                <i className="fas fa-spinner fa-spin" />
+              </p>
+            ) : this.state.profile.activities[0] ? (
+              this.state.profile.activities.map(activity => (
+                <ActivityThumbnail {...activity} key={activity.idActivity} />
+              ))
+            ) : (
+              <Row className="activityCreated">
+                <Col xs="12" className="text-center mt-2">
+                  <p>Vous n'avez proposé pour le moment aucune activité.</p>
+                </Col>
+              </Row>
+            )}
+          </Col>
         </Collapse>
 
         <Row>
@@ -389,24 +390,26 @@ class Profile extends Component {
           </Col>
         </Row>
         <Collapse isOpen={this.state.collapseParticipated}>
-          {!this.state.historic.activities ? (
-            <p className="text-center">
-              <i className="fas fa-spinner fa-spin" />
-            </p>
-          ) : this.state.historic.activities[0] ? (
-            this.state.historic.activities
-              .filter(activity => activity.date_diff < 0)
-              .sort(activity => !activity.date_diff)
-              .map(activity => (
-                <ActivityThumbnail {...activity} key={activity.idActivity} />
-              ))
-          ) : (
-            <Row className="activityCreated">
-              <Col xs="12" className="text-center mt-2">
-                <p>Vous n'avez participé pour le moment à aucune activité.</p>
-              </Col>
-            </Row>
-          )}
+          <Col xs="12" md={{ size: 6, offset: 3 }}>
+            {!this.state.historic.activities ? (
+              <p className="text-center">
+                <i className="fas fa-spinner fa-spin" />
+              </p>
+            ) : this.state.historic.activities[0] ? (
+              this.state.historic.activities
+                .filter(activity => activity.date_diff < 0)
+                .sort(activity => !activity.date_diff)
+                .map(activity => (
+                  <ActivityThumbnail {...activity} key={activity.idActivity} />
+                ))
+            ) : (
+              <Row className="activityCreated">
+                <Col xs="12" className="text-center mt-2">
+                  <p>Vous n'avez participé pour le moment à aucune activité.</p>
+                </Col>
+              </Row>
+            )}
+          </Col>
         </Collapse>
       </Fragment>
     );

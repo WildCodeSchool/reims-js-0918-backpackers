@@ -14,6 +14,7 @@ import ActivitesListContainer from "../containers/ActivitiesListContainer";
 import SearchContainer from "../containers/SearchContainer";
 import MentionsLegales from "../MentionsLegales";
 import CGU from "../CGU";
+import Ikoula from "../Ikoula";
 
 class Routes extends Component {
   render() {
@@ -61,6 +62,7 @@ class Routes extends Component {
             <Route path="/cgu" component={CGU} />
           </Switch>
         )}
+        <Ikoula />
       </Container>
     );
   }
