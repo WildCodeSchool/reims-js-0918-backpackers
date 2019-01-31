@@ -61,10 +61,11 @@ class Profile extends Component {
       });
     axios
       .get(`/api/profile/${this.props.match.params.username}/activitiescreated`, {
-        headers: {
+	headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
+       }
       )
       .then(response =>
         this.setState({

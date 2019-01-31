@@ -15,8 +15,6 @@ const PlaceCaroussel = props =>
       </Fragment>
     ) : (
       ""
-    )}
-  </Fragment>
-);
+    );
 
 export default PlaceCaroussel;
