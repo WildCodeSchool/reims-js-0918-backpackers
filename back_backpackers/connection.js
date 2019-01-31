@@ -171,7 +171,7 @@ app.get("/api/activities", (req, res) => {
   connection.query(
     `SELECT activities.idActivity, activities.name, id_creator, activities.price, 
     activities.capacity, (activities.picture) AS pictureActivity, 
-    (activities.description) AS descriptionActivity, id_place, 
+    (activities.description) AS descriptionActivity, id_place, latitude,longitude,
     activities.contact, eventDate, TIMEDIFF(CURTIME(),eventTime) as time_diff , DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, id, country, city, 
     address, type, (places.description) AS descriptionPlace, 
     (places.picture) AS picturePlace, COUNT(participation.idParticipation) AS participants
@@ -180,7 +180,7 @@ app.get("/api/activities", (req, res) => {
     ON activities.id_place = places.id 
     LEFT JOIN participation 
     ON activities.idActivity = participation.idActivity
-    WHERE DATEDIFF(eventDate,CURRENT_TIMESTAMP)>=0 AND TIMEDIFF(eventTime, CURTIME()) > 0
+    WHERE DATEDIFF(eventDate,CURRENT_TIMESTAMP)>=0
     GROUP BY activities.idActivity`,
     (err, results) => {
       if (err) {
@@ -457,7 +457,6 @@ app.get(
       "SELECT idActivity, activities.name, (places.picture) as picturePlace, (activities.picture) AS pictureActivity,TIMEDIFF(CURTIME(),eventTime) as time_diff, id_creator, activities.price, activities.capacity, DATEDIFF(eventDate,CURRENT_TIMESTAMP) as date_diff, (activities.description) AS description, id_place, eventDate FROM activities JOIN users ON activities.id_creator = users.id JOIN places ON places.id=activities.id_place WHERE username=?",
       req.params.username,
       (err, results) => {
-        console.log(results);
         if (err) {
           res.status(500).send("Error retrieving profile");
         } else {

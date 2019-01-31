@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Media, Button } from "reactstrap";
 import { Link } from "react-router-dom";
-import { Spring } from "react-spring";
 
 const PlaceThumbnail = ({
   id,

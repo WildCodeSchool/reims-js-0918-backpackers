@@ -49,7 +49,7 @@ button.previousPage {
     font-weight: 100;
   }
   p {
-    word-break: break-all;
+    word-break: break-word;
     font-size: 0.7rem;
     font-weight: 400;
   }
@@ -67,6 +67,6 @@ button.previousPage {
 
 .badge {
   border-radius: 10px;
-  font-size: 0.9rem;
-  font-weight: 100;
+  font-size: 0.8rem;
+  font-weight: 500;
 }

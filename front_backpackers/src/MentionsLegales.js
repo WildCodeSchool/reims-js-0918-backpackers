@@ -370,8 +370,8 @@ export default class MentionsLegale extends Component {
           <br />
           <br />
           http//:backpakers.com agit en tant qu’éditeur du site.
-          //:backpakers.com est responsable de la qualité et de la véracité du
-          Contenu qu’il publie. <br />
+          http//:backpakers.com est responsable de la qualité et de la véracité
+          du Contenu qu’il publie. <br />
           <br />
           http//:backpakers.com ne pourra être tenu responsable des dommages
           directs et indirects causés au matériel de l’utilisateur, lors de

@@ -57,7 +57,7 @@ const ActivityThumbnail = ({
                     ) : date_diff > 0 ? (
                       <span
                         className={
-                          "timeLeft" +
+                          "activityPicture timeLeft" +
                           (date_diff <= 2
                             ? " text-danger"
                             : date_diff < 7
@@ -65,7 +65,6 @@ const ActivityThumbnail = ({
                             : " text-success")
                         }
                         alt="picture of activity"
-                        className="activityPicture"
                       >
                         {date_diff} jours restants
                       </span>
