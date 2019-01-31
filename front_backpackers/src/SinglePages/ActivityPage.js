@@ -23,13 +23,17 @@ class ActivityPage extends Component {
 
   callApiActivity() {
     axios
-      .get(`process.env.REACT_APP_API_URL/api/activity/${this.props.match.params.id}`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/activity/${
+          this.props.match.params.id
+        }`
+      )
       .then(response => this.props.viewActivity(response.data[0]));
   }
 
   callApiProfile() {
     axios
-      .get("process.env.REACT_APP_API_URL/api/profile", {
+      .get(`${process.env.REACT_APP_API_URL}/api/profile`, {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")

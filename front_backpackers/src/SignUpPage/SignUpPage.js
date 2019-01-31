@@ -8,7 +8,7 @@ class SignUpPage extends Component {
     const user = users;
     JSON.stringify(user);
     axios
-      .post("process.env.REACT_APP_API_URL/api/auth/signup", user, {
+      .post(`${process.env.REACT_APP_API_URL}/api/auth/signup`, user, {
         method: "POST",
         headers: new Headers({
           "Content-Type": "application/json"
