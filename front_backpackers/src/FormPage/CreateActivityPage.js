@@ -32,7 +32,7 @@ class CreateActivityPage extends Component {
         }
       })
       .then(response => {
-        axios.post(
+       axios.post(
           `/api/activities/upload/${response.data.insertId}`,
           formData,
           {

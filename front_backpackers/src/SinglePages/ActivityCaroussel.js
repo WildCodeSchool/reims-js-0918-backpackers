@@ -16,15 +16,9 @@ const ActivityCaroussel = props => (
           ]}
         /> */}
 
-        <img
-          src={`http://localhost:3010/api/images/${
-            props.activity.pictureActivity
-              ? props.activity.pictureActivity
-              : props.activity.picturePlace
-          }`}
-          alt={props.activity.name}
-          className="singlePageImg"
-        />
+        <img src={`http://178.170.56.29:5080/api/images/${props.activity.pictureActivity
+          ? props.activity.pictureActivity
+          : props.activity.picturePlace}`} alt={props.activity.name} className="singlePageImg" />
 
         <Row>
           <Col xs="6" className="creatorFrame">

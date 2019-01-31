@@ -58,14 +58,12 @@ class Profile extends Component {
         });
       });
     axios
-      .get(
-        `/api/profile/${this.props.match.params.username}/activitiescreated`,
-        {
-          headers: {
-            accept: "application/json",
-            authorization: "Bearer " + localStorage.getItem("BackpackersToken")
-          }
+      .get(`/api/profile/${this.props.match.params.username}/activitiescreated`, {
+	headers: {
+          accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
+       }
       )
       .then(response =>
         this.setState({
@@ -194,82 +192,74 @@ class Profile extends Component {
                             />
                           </div>
 
-                          {imagePreviewUrl ? (
-                            <Button className="bg-transparent border-0 mb-3 rounded-circle">
-                              <img
-                                className="rounded-circle preview "
-                                src={imagePreviewUrl}
-                                alt="preview"
-                              />
-                            </Button>
-                          ) : (
-                            <Button className="bg-transparent border-0 mb-3 rounded-circle">
-                              <img
-                                className="rounded-circle preview"
-                                src={
+                    {imagePreviewUrl ? (
+                      <Button className="bg-transparent border-0 mb-3 rounded-circle">
+                        <img
+                          className="rounded-circle preview "
+                          src={imagePreviewUrl}
+                          alt="preview"
+                        />
+                      </Button>
+                    ) : (
+                      <Button className="bg-transparent border-0 mb-3 rounded-circle">
+                        <img
+                          className="rounded-circle preview"
+                          src={
+                            this.state.profile.picture
+                              ? `http://178.170.56.29:5080/api/images/${
                                   this.state.profile.picture
-                                    ? `http://localhost:3010/api/images/${
-                                        this.state.profile.picture
-                                      }`
-                                    : `http://localhost:3010/api/images/default.png`
-                                }
-                                alt="Profile"
-                              />
-                            </Button>
-                          )}
-                        </div>
-                      ) : (
-                        <Button className="bg-transparent border-0 mb-3 rounded-circle">
-                          <img
-                            className="rounded-circle preview"
-                            src={
+                                }`
+                              : `http://178.170.56.29:5080/api/images/default.png`
+                          }
+                          alt="Profile"
+                        />
+                      </Button>
+                    )}
+                  </div>
+                ) : (
+                  <Button className="bg-transparent border-0 mb-3 rounded-circle">
+                    <img
+                      className="rounded-circle preview"
+                      src={
+                        this.state.profile.picture
+                          ? `http://178.170.56.29:5080/api/images/${
                               this.state.profile.picture
-                                ? `http://localhost:3010/api/images/${
-                                    this.state.profile.picture
-                                  }`
-                                : `http://localhost:3010/api/images/default.png`
-                            }
-                            alt="Profile"
-                          />
-                        </Button>
-                      )}
-                    </Col>
-                  </Row>
-                  <div className="userInfos">
-                    <Row>
-                      <Col
-                        xs={{ size: 8, offset: 2 }}
-                        className="text-center mb-2"
-                      >
-                        <h4 className="mb-0">{`${
-                          this.state.profile.username
-                        } `}</h4>
-                        <span>{this.state.profile.mail}</span>
-                      </Col>
-                      <Col xs="2">
-                        {this.state.modify ? (
-                          <Button
-                            onClick={() => this.uploadModify()}
-                            className="bg-transparent border-0 text-secondary p-0"
-                          >
-                            <i
-                              className="fas fa-check-circle"
-                              alt="Photo de profil"
-                            />
-                          </Button>
-                        ) : (
-                          <Button
-                            onClick={() => this.handleModify()}
-                            className="bg-transparent border-0 text-secondary p-0"
-                          >
-                            <i
-                              className="fas fa-pencil-alt"
-                              alt="Photo de profil"
-                            />
-                          </Button>
-                        )}
-                      </Col>
-                    </Row>
+                            }`
+                          : `http://178.170.56.29:5080/api/images/default.png`
+                      }
+                      alt="Profile"
+                    />
+                  </Button>
+                )}
+              </Col>
+            </Row>
+            <div className="userInfos">
+              <Row>
+                <Col xs={{ size: 8, offset: 2 }} className="text-center mb-2">
+                  <h4 className="mb-0">{`${this.state.profile.username} `}</h4>
+                  <span>{this.state.profile.mail}</span>
+                </Col>
+                <Col xs="2">
+                  {this.state.modify ? (
+                    <Button
+                      onClick={() => this.uploadModify()}
+                      className="bg-transparent border-0 text-secondary p-0"
+                    >
+                      <i
+                        className="fas fa-check-circle"
+                        alt="Photo de profil"
+                      />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => this.handleModify()}
+                      className="bg-transparent border-0 text-secondary p-0"
+                    >
+                      <i className="fas fa-pencil-alt" alt="Photo de profil" />
+                    </Button>
+                  )}
+                </Col>
+              </Row>
 
                     <Row>
                       {this.state.modify ? (
