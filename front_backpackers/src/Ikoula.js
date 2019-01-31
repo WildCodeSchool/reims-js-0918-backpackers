@@ -19,7 +19,7 @@ export class Ikoula extends Component {
           className="ikoula"
           style={{
             position: "fixed",
-            bottom: "10px",
+            bottom: "50px",
             width: "94%",
             background: "#fff",
             borderRadius: "7px",
