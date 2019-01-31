@@ -34,8 +34,8 @@ const ActivityThumbnail = ({
                   object
                   src={
                     pictureActivity
-                      ? `http://178.170.56.29:5080/api/images/${pictureActivity}`
-                      : `http://178.170.56.29:5080/api/images/${picturePlace}`
+                      ? `process.env.REACT_APP_API_URL/api/images/${pictureActivity}`
+                      : `process.env.REACT_APP_API_URL/api/images/${picturePlace}`
                   }
                   alt="picture of activity"
                   className="activityPicture"

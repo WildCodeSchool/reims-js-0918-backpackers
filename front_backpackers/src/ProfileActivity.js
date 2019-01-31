@@ -23,7 +23,7 @@ const ProfileActivity = ({
             object
             src={
               pictureActivity
-                ? `http://localhost:3010/api/images/${pictureActivity}`
+                ? `process.env.REACT_APP_API_URL/api/images/${pictureActivity}`
                 : picturePlace
             }
             alt="picture of activity"

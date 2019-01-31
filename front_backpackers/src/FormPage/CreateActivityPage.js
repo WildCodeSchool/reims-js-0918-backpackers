@@ -26,14 +26,14 @@ class CreateActivityPage extends Component {
     const formData = new FormData();
     formData.append("monfichier", this.file);
     axios
-      .post("/api/activities", activity, {
+      .post("process.env.REACT_APP_API_URL/api/activities", activity, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("BackpackersToken")
         }
       })
       .then(response => {
        axios.post(
-          `/api/activities/upload/${response.data.insertId}`,
+          `process.env.REACT_APP_API_URL/api/activities/upload/${response.data.insertId}`,
           formData,
           {
             headers: {
@@ -42,7 +42,7 @@ class CreateActivityPage extends Component {
           }
         );
         axios.post(
-          `/api/participate/${response.data.insertId}`,
+          `process.env.REACT_APP_API_URL/api/participate/${response.data.insertId}`,
           { idChat: response.data.id },
           {
             headers: {

@@ -22,7 +22,7 @@ class ChatList extends Component {
 
   componentDidMount() {
     axios
-      .get("/api/profile", {
+      .get("process.env.REACT_APP_API_URL/api/profile", {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
@@ -31,7 +31,7 @@ class ChatList extends Component {
       .then(response => this.props.viewProfile(response.data))
       .then(() =>
         axios
-          .post("/api/users", {
+          .post("process.env.REACT_APP_API_URL/api/users", {
             username: this.props.profile[0].username
           })
           .catch(error => {
@@ -43,7 +43,7 @@ class ChatList extends Component {
           instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
           userId: this.props.profile[0].username,
           tokenProvider: new Chatkit.TokenProvider({
-            url: "/api/authenticate"
+            url: "process.env.REACT_APP_API_URL/api/authenticate"
           })
         });
         chatManager.connect().then(currentUser => {

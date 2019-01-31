@@ -16,7 +16,7 @@ const ActivityCaroussel = props => (
           ]}
         /> */}
 
-        <img src={`http://178.170.56.29:5080/api/images/${props.activity.pictureActivity
+        <img src={`process.env.REACT_APP_API_URL/api/images/${props.activity.pictureActivity
           ? props.activity.pictureActivity
           : props.activity.picturePlace}`} alt={props.activity.name} className="singlePageImg" />
 
@@ -25,7 +25,7 @@ const ActivityCaroussel = props => (
             <Link to={`/profil/${props.activity.username}`}>
               <img
                 className="rounded-circle"
-                src={`http://localhost:3010/api/images/${
+                src={`process.env.REACT_APP_API_URL/api/images/${
                   props.activity.creator_picture
                     ? props.activity.creator_picture
                     : "default.png"

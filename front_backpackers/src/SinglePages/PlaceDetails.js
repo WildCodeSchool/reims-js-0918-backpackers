@@ -34,7 +34,7 @@ class PlaceDetails extends Component {
 
   componentDidMount() {
     axios
-      .get("/api/profile", {
+      .get("process.env.REACT_APP_API_URL/api/profile", {
         headers: {
           accept: "application/json",
           authorization: "Bearer " + localStorage.getItem("BackpackersToken")
