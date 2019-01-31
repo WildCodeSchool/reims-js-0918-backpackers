@@ -11,7 +11,7 @@ import PositionToast from "../Toast/Toastify";
 class PlacePage extends Component {
   componentDidMount() {
     axios
-      .get(`process.env.REACT_APP_API_URL/api/place/${this.props.match.params.id}`)
+      .get(`${process.env.REACT_APP_API_URL}/api/place/${this.props.match.params.id}`)
       .then(response =>
         this.props.viewPlace({
           ...response.data[0],
